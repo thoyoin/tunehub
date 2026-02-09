@@ -6,7 +6,7 @@ import { ref } from "vue";
 const audioRef = ref(null);
 const auth = useAuthStore();
 
-const {prev, toggleTrack, volume, next, toggle,
+const {prev, toggleTrack, hasTrack, volume, next, toggle,
     isPlaying, currentTrack, formatTime, currentTime,
     seek, progress, toggleVolume, isMuted, setVolume,
 } = useAudioPlayer(audioRef);
@@ -46,38 +46,52 @@ const {prev, toggleTrack, volume, next, toggle,
                         <img src="@/assets/svg/next.svg" alt="next">
                     </button>
                 </div>
-                <div class="d-flex flex-column align-items-start mt-1 w-100" style="max-width: 350px">
-                    <div class="d-flex flex-row my-1">
-                        <img
-                            :src="currentTrack?.cover_url"
-                            style="width: 35px; height: 35px"
-                            class="rounded-3"
-                            alt="cover"
-                        >
-                        <div class="d-flex flex-column ms-2">
-                            <span style="color: rgb(228,228,228);font-size:12px;font-weight: bold" v-text="currentTrack?.title"></span>
-                            <span style="color: rgb(228,228,228);font-size:12px;opacity: 50%" v-text="currentTrack?.artist"></span>
+                <div class="d-flex flex-column align-items-start w-100" style="max-width: 350px">
+                    <template v-if="hasTrack">
+                        <div class="d-flex flex-row my-1">
+                            <img
+                                :src="currentTrack?.cover_url"
+                                style="width: 35px; height: 35px"
+                                class="rounded-3"
+                                alt="cover"
+                            >
+                            <div class="d-flex flex-column ms-2">
+                                <span
+                                    style="color: rgb(228,228,228);font-size:12px;font-weight: bold"
+                                    v-text="currentTrack?.title"></span>
+                                <span style="color: rgb(228,228,228);font-size:12px;opacity: 50%"
+                                      v-text="currentTrack?.artist"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex flex-row w-100 align-items-center justify-content-between">
+                        <div
+                            class="d-flex flex-row w-100 align-items-center justify-content-between">
                         <span
                             v-text="formatTime(currentTime)"
                             style="color: rgb(228,228,228);font-size:12px;opacity: 50%"
                             class="d-flex me-2"
                         ></span>
-                        <div
-                            style="max-width: 260px"
-                            class="progress-container w-100"
-                            @click="seek"
-                        >
-                            <div class="progress" :style="`width: ${progress}%`"></div>
+                            <div
+                                style="max-width: 260px"
+                                class="progress-container w-100"
+                                @click="seek"
+                            >
+                                <div class="progress" :style="`width: ${progress}%`"></div>
+                            </div>
+                            <span
+                                style="color: rgb(228,228,228);font-size:12px;opacity: 50%"
+                                class="d-flex ms-2"
+                                v-text="currentTrack?.formatted_duration"
+                            ></span>
                         </div>
-                        <span
-                            style="color: rgb(228,228,228);font-size:12px;opacity: 50%"
-                            class="d-flex ms-2"
-                            v-text="currentTrack?.formatted_duration"
-                        ></span>
-                    </div>
+                    </template>
+                    <template v-if="!hasTrack">
+                        <div
+                            class="ms-5"
+                            style="color: rgb(228,228,228);font-size:15px;opacity: 50%"
+                        >
+                                Choose track to listen to
+                        </div>
+                    </template>
                 </div>
                 <div class="d-flex align-items-center volume-bg">
                     <button class="btn btn-play pe-1" @click="toggleVolume">

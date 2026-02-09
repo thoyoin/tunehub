@@ -14,6 +14,7 @@ export const useAudioPlayer = (audioRef) => {
     const duration = ref(0)
     const volume = ref(0.2)
     const isMuted = ref(false)
+    const hasTrack = computed(() => !!currentTrack.value)
 
     const onTimeUpdate = () => {
         if (!audioRef.value?.duration) return
@@ -142,7 +143,7 @@ export const useAudioPlayer = (audioRef) => {
         currentTrack, queue, currentIndex, isPlaying, progress,
         currentTime, duration, volume, isMuted, hasNext, hasPrev,
         playTrack, toggle, toggleVolume, toggleTrack,
-        next, prev, seek, formatTime, setVolume
+        next, prev, seek, formatTime, setVolume, hasTrack
     }
 
     return singleton;
