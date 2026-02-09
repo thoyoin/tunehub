@@ -22,14 +22,22 @@
 </script>
 
 <template>
-    <Header/>
-    <Library/>
-    <Content/>
-    <settings-modal v-if="auth.isReady" />
-    <edit-playlist-modal v-if="libraryStore.libraryItem" />
-    <authenticate-modal />
+    <div class="app-wrapper">
+        <Header/>
+        <Library/>
+        <Content/>
+        <settings-modal v-if="auth.isReady"/>
+        <edit-playlist-modal v-if="libraryStore.libraryItem"/>
+        <authenticate-modal/>
+    </div>
 </template>
 
 <style scoped>
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    min-height: 0;
+}
 
 </style>

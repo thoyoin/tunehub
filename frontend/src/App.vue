@@ -212,5 +212,13 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
             border: none !important;
         }
     }
-
+    html, body {
+        height: 100% !important;
+        margin: 0 !important;
+    }
+    #app {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 </style>

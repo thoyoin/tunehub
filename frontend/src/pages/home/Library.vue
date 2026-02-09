@@ -10,7 +10,8 @@
 <template>
     <div class="position-relative">
         <div
-            style="color: rgb(228,228,228); max-width: 280px; max-height: 645px; margin: 90px 0 15px 0"
+            style="color: rgb(228,228,228); max-width: 280px; max-height: 645px;
+                margin: 90px 0 15px 0; flex: 0 0 auto"
             class="d-flex h-100 z-1 border position-fixed w-100 rounded-5 ms-3 flex-column bg-minor"
         >
             <div class="d-flex justify-content-between">

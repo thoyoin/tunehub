@@ -15,7 +15,10 @@
 </script>
 
 <template>
-    <header class="position-fixed w-100 px-3 z-3" style="max-height: 60px; top: 10px">
+    <header
+        class="position-fixed w-100 px-3 z-3"
+        style="max-height: 60px; top: 10px; flex: 0 0 auto"
+    >
         <div
             style="border-bottom:1px solid rgba(228, 228, 228, 0.15);border-top: 1px solid rgba(228, 228, 228, 0.15)"
             class="d-flex rounded-5 flex-row bg-minor py-2 w-100 justify-content-between align-items-center"

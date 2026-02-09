@@ -39,7 +39,9 @@ onMounted(() => {
 
 <template>
     <template v-if="!libraryStore.libraryItem && !releaseStore.pickedRelease">
-        <div style="padding: 85px 30px 0 340px; color: rgb(228,228,228)" class="w-100">
+        <div
+            style="padding: 85px 30px 0 340px; color: rgb(228,228,228); flex: 1 1 auto; overflow-y: auto; min-height: 0;"
+            class="w-100">
             <div>
                 <div class="fw-bold w-100"
                      style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
@@ -445,6 +447,7 @@ onMounted(() => {
     flex: 1 !important;
     overflow-y: auto !important;
     padding: 100px 0 90px 0 !important;
+    min-height: 0 !important;
 }
 
 .btn-get-release {
