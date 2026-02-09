@@ -4,7 +4,6 @@ import Content from "@/pages/artist-studio/Content.vue";
 import UploadReleaseModal from "@/pages/artist-studio/modals/UploadReleaseModal.vue";
 import { useAuthStore } from "@/stores/auth.js";
 import {onMounted} from "vue";
-import {useArtistStore} from "@/stores/artistStudio.js";
 import EditTrackModal from "@/pages/artist-studio/modals/editTrackModal.vue";
 import EditReleaseModal from "@/pages/artist-studio/modals/editReleaseModal.vue";
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import api from "@/lib/api.js";
 import { useAuthStore } from "@/stores/auth.js";
 import { useToast } from "vue-toastification";
@@ -16,9 +16,10 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
     const uploadedTracks = ref([])
     const releaseType = ref(null)
     const cover_url = ref(null)
-    const albumTitle = ref(null)
+    const releaseTitle = ref(null)
     const release_date = ref(null)
     const artist = ref(auth.user.username)
+    const processing = ref(false)
 
     const onFilesUploaded = (e) => {
         editor.value = true
@@ -34,6 +35,8 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
 
     const handleReleaseUpload = async () => {
         try {
+            processing.value = true;
+
             const formData = new FormData()
 
             releaseType.value = uploadedTracks.value.length === 1 ? 'single' : 'album'
@@ -42,7 +45,8 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
                 formData.append('audio_url[]', track.file)
                 formData.append('title[]', track.title)
             })
-            formData.append('albumTitle', albumTitle.value)
+
+            formData.append('releaseTitle', releaseTitle.value)
             formData.append('cover_url', cover_url.value)
             formData.append('type', releaseType.value)
             formData.append('release_date', release_date.value)
@@ -58,8 +62,9 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
             console.error(e)
 
             toast.error('Something went wrong.')
+        } finally {
+            processing.value = false
         }
-
     }
 
     const setPreview = (e) => {
@@ -76,10 +81,11 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
         handleReleaseUpload,
         isCoverUploaded,
         coverPreview,
-        albumTitle,
+        releaseTitle,
         onFilesUploaded,
         setPreview,
         artist,
-        release_date
+        release_date,
+        processing,
     }
 })

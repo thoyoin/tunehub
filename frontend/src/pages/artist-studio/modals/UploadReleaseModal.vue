@@ -117,22 +117,20 @@ const uploadStore = useUploadReleaseStore();
                                                     Replace loaded tracks
                                                 </label>
                                             </div>
-                                            <div v-show="uploadStore.uploadedTracks.length > 1">
                                                 <label
-                                                    for="albumTitle"
+                                                    for="releaseTitle"
                                                     style="font-size: 13px"
                                                     class="fw-bold mb-2 mt-3"
                                                 >
-                                                    Album title
+                                                    Release title
                                                 </label>
                                                 <input
-                                                    name="albumTitle"
-                                                    v-model="uploadStore.albumTitle"
-                                                    id="albumTitle"
+                                                    name="releaseTitle"
+                                                    v-model="uploadStore.releaseTitle"
+                                                    id="releaseTitle"
                                                     class="mb-2 form-control bg-minor rounded-4"
                                                     required
                                                 >
-                                            </div>
                                             <label for="artist" style="font-size: 13px" class="fw-bold my-2">
                                                 Main artist
                                             </label>
@@ -192,8 +190,10 @@ const uploadStore = useUploadReleaseStore();
                         <button
                             @click="uploadStore.handleReleaseUpload"
                             class="btn btn-primary"
+                            :disabled="uploadStore.processing"
                         >
-                            Save changes
+                            <template v-if="uploadStore.processing">Loading...</template>
+                            <template v-else>Save changes</template>
                         </button>
                     </div>
                 </div>
@@ -230,11 +230,20 @@ const uploadStore = useUploadReleaseStore();
     height: 600px !important;
     overflow: hidden;
 }
-
 .btn-uploadCover {
     border: dashed rgba(228,228,228, 10%) !important;
     &:hover {
         border: dashed rgba(228,228,228, 30%) !important;
+    }
+    &:active {
+        border-color: rgba(228,228,228, 50%) !important;
+    }
+}
+.btn-replace-file {
+    padding: 0 5px 3px !important;
+    color: #ff2667 !important;
+    &:hover {
+        border: solid 1px rgba(228,228,228, 10%) !important;
     }
     &:active {
         border-color: rgba(228,228,228, 50%) !important;

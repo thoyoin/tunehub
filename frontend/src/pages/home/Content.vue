@@ -97,7 +97,7 @@ onMounted(() => {
                     </h5>
                     <div class="d-flex flex-row mt-1 align-items-center">
                         <img
-                            :src="libraryStore.libraryItem.user.profile_picture"
+                            :src="libraryStore.libraryItem.user?.profile_picture"
                             style="width: 30px; height: 30px;"
                             class="rounded-5 ms-4"
                             alt="profile"

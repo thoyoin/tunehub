@@ -27,7 +27,7 @@ class TrackController
         TrackStoreRequest $trackRequest,
         MinioService $minioService
     ): JsonResponse {
-        $releaseData = $trackRequest->only(['albumTitle', 'artist', 'type', 'cover_url', 'release_date']);
+        $releaseData = $trackRequest->only(['releaseTitle', 'artist', 'type', 'cover_url', 'release_date']);
 
         $coverUrl = $minioService->storeCover($releaseData['cover_url']);
 
@@ -35,7 +35,7 @@ class TrackController
             ->user()
             ->releases()
             ->create([
-                'title' => $releaseData['albumTitle'] ?? $trackRequest['title'],
+                'title' => $releaseData['releaseTitle'],
                 'type' => $releaseData['type'],
                 'artist' => $releaseData['artist'],
                 'cover_url' => $coverUrl,

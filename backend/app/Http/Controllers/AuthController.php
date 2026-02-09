@@ -10,13 +10,14 @@ use App\Models\LibraryItem;
 use App\Models\Playlist;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function signIn(SignInFormRequest $request)
+    public function signIn(SignInFormRequest $request): JsonResponse|RedirectResponse
     {
         if (! Auth::attempt($request->validated())) {
             return back()->withErrors([
@@ -37,7 +38,7 @@ class AuthController extends Controller
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'role' => '1',
+            'role' => '2',
         ]);
 
         $playlist = Playlist::create([

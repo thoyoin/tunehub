@@ -26,7 +26,8 @@ export const useAuthStore = defineStore('auth', () => {
             await api.delete('/api/logout');
 
             user.value = null;
-            window.location.reload();
+
+            await router.push('/login');
         } catch (error) {
             console.error(error);
         }
