@@ -1,0 +1,508 @@
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.form-control {
+    border: black solid 1px;
+
+    &:focus {
+        box-shadow: none;
+        border-color: #ff2667 !important;
+    }
+}
+
+.btn-primary {
+    background-color: #ff2667 !important;
+    border: 1px solid #ff2667;
+    color: rgb(228,228,228);
+
+    &:hover {
+        background-color: #4a0b1e;
+        border-color: #4a0b1e;
+        color: rgb(228,228,228)
+    }
+
+    &:active {
+        background-color: #c11c4c !important;
+        border-color: #c11c4c !important;
+    }
+}
+
+.btn-home {
+    border: none;
+    &:active {
+        text-decoration-color: #9e173f !important;
+    }
+}
+
+.btn-add {
+    padding: 0 5px 3px;
+    color: #9e173f;
+    &:hover {
+        background-color: rgb(40,40,41) !important;
+    }
+    &:active {
+        border-color:  rgb(75,75,75) !important;
+    }
+}
+.btn-artists {
+    background-color: rgb(32,32,32) !important;
+    padding: 0 5px 3px !important;
+    color: #ff2667 !important;
+    &:hover {
+        background-color: rgb(40,40,41) !important;
+        color: #ff2667 !important;
+    }
+    &:active {
+        border-color:  rgb(75,75,75) !important;
+    }
+}
+
+.btn-add-like {
+    padding: 0 ;
+    opacity: .8;
+    transition: .3s ;
+    &:hover {
+        outline: 1px dashed rgb(158, 23, 63) !important;
+        border-radius: 50% !important;
+    }
+    &:active {
+        border: 1px solid rgba(158, 23, 63, 1) !important;
+    }
+}
+
+.btn-get-release {
+    color: rgb(228,228,228);
+    border: none;
+    &:hover {
+        color: rgba(228, 228, 228, 0.4);
+    }
+    &:active {
+        border: none;
+    }
+}
+
+.btn-new {
+    padding: 0 5px 3px;
+    color: rgb(228,228,228) !important;
+    &:hover {
+        border-color:  rgb(75,75,75) !important;
+    }
+    &:active {
+        background-color: rgb(50,50,51) !important;
+    }
+}
+
+.btn-artists {
+    background-color: rgb(32,32,32) !important;
+    padding: 0 5px 3px;
+    color: #ff2667;
+    &:hover {
+        background-color: rgb(40,40,41) !important;
+        color: #ff2667 !important;
+    }
+    &:active {
+        border-color:  rgb(75,75,75) !important;
+    }
+}
+
+.btn-upload {
+    padding: 0 5px 3px;
+    color: #ff2667 !important;
+    &:hover {
+        border: dashed rgba(228,228,228, 10%) !important;
+    }
+    &:active {
+        border-color: rgba(228,228,228, 50%) !important;
+    }
+}
+
+.btn-replace-file {
+    padding: 0 5px 3px;
+    color: #ff2667 !important;
+    &:hover {
+        border: solid 1px rgba(228,228,228, 10%) !important;
+    }
+    &:active {
+        border-color: rgba(228,228,228, 50%) !important;
+    }
+}
+
+.btn-uploadCover,
+.btn-uploadedCover {
+    padding: 0 5px 3px;
+    color: #ff2667 !important;
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+}
+
+.btn-uploadCover {
+    border: dashed rgba(228,228,228, 10%) !important;
+    &:hover {
+        border: dashed rgba(228,228,228, 30%) !important;
+    }
+    &:active {
+        border-color: rgba(228,228,228, 50%) !important;
+    }
+}
+
+.btn-upgrade {
+    background-color: rgb(32,32,32) !important;
+    padding: 0 5px 3px;
+    color: rgb(228,228,228);
+    &:hover {
+        background-color: rgb(40,40,41) !important;
+        color: #ff2667 !important;
+    }
+    &:active {
+        border-color: #ff2667 !important;
+    }
+}
+
+.btn-settings {
+    border: none;
+    &:active {
+        border: none !important;
+        opacity: 1 !important;
+    }
+    &:hover {
+        opacity: .7 !important;
+    }
+}
+
+.btn-playlist {
+    color: rgb(228,228,228) !important;
+    background-color: rgba(30,30,31, 15%) !important;
+
+    &:hover {
+        box-shadow: 0 0 5px 3px rgb(41, 41, 41) !important;
+    }
+    &:active {
+        background-color: rgb(40,40,41) !important;
+    }
+}
+
+.btn-play {
+    padding: 0;
+    transition: .3s !important;
+    border: none;
+    &:hover {
+        opacity: .4 !important;
+    }
+    &:active {
+        border: none !important;
+    }
+}
+
+.btn-play-table {
+    opacity: 0;
+    padding: 0;
+    transition: .3s !important;
+    border: none;
+    &:hover {
+        opacity: .4 !important;
+    }
+    &:active {
+        border: none !important;
+    }
+}
+
+.btn-view {
+    border-radius: 30px;
+    &:active {
+        border: solid 1px rgb(75,75,75) !important;
+    }
+    &:hover {
+        border: solid 1px rgb(75,75,75) !important;
+    }
+}
+
+.btn-check + .btn-playlist {
+    border-color: rgb(75,75,75) !important;
+    box-shadow: 0 0 5px 3px rgb(32,32,32) !important;
+}
+
+.active-library-item {
+    border-color: rgb(75,75,75) !important;
+    box-shadow: 0 0 5px 3px rgb(32,32,32) !important;
+}
+
+.active-view {
+    border-bottom: solid 1px rgb(75,75,75) !important;
+    box-shadow: 0 0 5px 3px rgb(32,32,32) !important;
+}
+
+.bg-primary {
+    background-color: rgb(32,32,32) !important;
+}
+
+.bg-secondary {
+    background-color: rgba(50,50,51, 15%) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+.bg-player {
+    background-color: rgba(50,50,51, 15%) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid rgba(228, 228, 228, 0.15) !important;
+}
+
+.border-top {
+    border-top: 1px solid rgba(228, 228, 228, 0.15) !important;
+}
+
+.border-left {
+    border-left: 1px solid rgba(228, 228, 228, 0.15) !important;
+}
+
+.border-right {
+    border-right: 1px solid rgba(228, 228, 228, 0.15) !important;
+}
+
+.border {
+    border: 1px solid rgb(75,75,75) !important;
+}
+
+.link-light {
+    color: rgb(228,228,228) !important;
+    text-decoration: none !important;
+}
+
+.dropdown-menu {
+    background-color: transparentize(rgb(40,40,41), 0.2) !important;
+    z-index: 10000 !important;
+    .dropdown-item {
+        color: rgb(228,228,228) !important;
+        &:hover {
+            background-color: transparentize(rgb(30, 30, 31), 0.2) !important;
+        }
+    }
+}
+
+.custom-popover {
+    --bs-popover-max-width: 200px;
+    --bs-popover-bg: rgb(40,40,41);
+    --bs-popover-body-color: rgb(228,228,228);
+    --bs-popover-border-radius: 20px;
+}
+
+.playlist-cover {
+    width: 45px;
+    height: 45px;
+}
+
+.modal-content {
+    background: rgb(40,40,41);
+    color: rgb(228,228,228);
+    .modal-header {
+        border-color: rgb(75,75,75);
+    }
+    .modal-footer {
+        border-color: rgb(75,75,75);
+    }
+}
+
+.card {
+    margin-top: 15px;
+    backdrop-filter: blur(5px) !important;
+    background: none;
+    border: none !important;
+
+    .card-cover:hover {
+        opacity: .7 !important;
+        transition: .4s !important;
+    }
+
+    .card-title {
+        color: rgb(228,228,228);
+        font-size: 15px;
+        margin: 0 0 5px 0;
+    }
+    .card-text {
+        color: rgba(228,228,228, 40%);
+        font-size: 13px;
+        margin: 0 0 5px 0;
+    }
+}
+
+.position-number {
+    opacity: .5 !important;
+    transition: .3s !important;
+}
+
+.track-row {
+    &:hover td {
+        background-color: rgba(50,50,51, 50%) !important;
+        cursor: pointer;
+        transition: background-color .2s ease, box-shadow .15s ease;
+    }
+
+    &:hover {
+        box-shadow: inset 0 0 0 1px rgb(60,60,61);
+        .add-like {
+            opacity: .7 !important;
+        }
+        .btn-play-table {
+            opacity: 1 !important;
+        }
+        .position-number {
+            opacity: 0 !important;
+        }
+        .playing-wave {
+            opacity: 0 !important;
+        }
+    }
+
+    &:hover td:first-child {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    &:hover td:last-child {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+}
+
+.add-like {
+    padding: 0;
+    opacity: 0;
+    transition: .3s !important;
+}
+
+.progress-container {
+    background-color: rgb(32,32,32) !important;
+    border-radius: 5px !important;
+    width: 100%;
+    height: 4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: .3s !important;
+    &:hover {
+        height: 10px !important;
+        .progress {
+            height: 10px !important;
+        }
+    }
+    .progress {
+        border-radius: 5px !important;
+        background: rgba(228,228,228, 50%);
+        height: 4px;
+        width: 40%;
+        cursor: pointer;
+        transition: .3s !important;
+    }
+}
+
+.volume {
+    -webkit-appearance: none;
+    transition: .3s !important;
+    appearance: none;
+    width: 90px;
+    height: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: linear-gradient(
+            to right,
+            rgba(228,228,228, 50%) 0%,
+            rgba(228,228,228, 50%) var(--volume-percent),
+            rgb(35,35,35) var(--volume-percent),
+            rgb(45,45,45) 100%
+    );
+    &:hover {
+        height: 10px !important;
+    }
+}
+
+.volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+}
+
+.volume::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: rgb(228,228,228);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+.volume::-moz-range-track {
+    height: 5px;
+    background-color: rgb(32,32,32);
+    border-radius: 5px;
+}
+
+.volume-bg {
+    border-radius: 15px;
+    padding: 0 5px;
+}
+
+.playlist-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: 100px 0 90px 0px;
+}
+
+.release-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: 100px 0 100px 0;
+}
+
+.drag-handle {
+    cursor: pointer;
+}
+
+.playing-wave {
+    span {
+        width: .8px;
+        height: 4px;
+        background: #ff2667;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        animation: wave 1s infinite ease-in-out;
+    }
+    transition: .3s !important;
+}
+
+
+.playing-wave span:nth-child(2) {
+    animation-delay: .2s;
+}
+.playing-wave span:nth-child(3) {
+    animation-delay: .5s;
+}
+.playing-wave span:nth-child(4) {
+    animation-delay: .7s;
+}
+.playing-wave span:nth-child(5) {
+    animation-delay: .10s;
+}
+
+@keyframes wave {
+    0% { height: 4px }
+    50% { height: 12px }
+    100% { height: 4px }
+}
+
+.table {
+    --bs-table-bg: rgb(32,32,32);
+    --bs-table-color: rgb(228,228,228);
+}
