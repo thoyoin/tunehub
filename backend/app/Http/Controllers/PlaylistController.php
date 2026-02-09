@@ -9,8 +9,6 @@ use App\Models\LibraryItem;
 use App\Models\Playlist;
 use App\Services\MinioService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
 {

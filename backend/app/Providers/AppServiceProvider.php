@@ -6,7 +6,6 @@ use App\Models\Playlist;
 use App\Models\Release;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use Publitio\API;
 
 class AppServiceProvider extends ServiceProvider
 {

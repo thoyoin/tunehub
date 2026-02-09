@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::controller(HomeController::class)->group(function () {
-       Route::get('/releases', 'index');
+        Route::get('/releases', 'index');
     });
 
     Route::controller(PlaylistController::class)->group(function () {
@@ -53,10 +53,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::controller(TrackController::class)->group(function () {
-       Route::post('/track', 'store');
-       Route::delete('/track/{track}', 'destroy');
-       Route::post('/tracks/{track}/add', 'addToLikes');
-       Route::put('/track/{track}', 'update');
+        Route::post('/track', 'store');
+        Route::delete('/track/{track}', 'destroy');
+        Route::post('/tracks/{track}/add', 'addToLikes');
+        Route::put('/track/{track}', 'update');
     });
 
     Route::controller(ReleaseController::class)->group(function () {

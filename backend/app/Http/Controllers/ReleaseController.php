@@ -38,7 +38,7 @@ class ReleaseController extends Controller
         return response()->json([
             'release' => $release,
             'tracks' => $tracks,
-            'isReleaseLiked' => $isReleaseLiked
+            'isReleaseLiked' => $isReleaseLiked,
         ]);
     }
 

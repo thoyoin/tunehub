@@ -19,7 +19,7 @@ class ArtistStudioController extends Controller
             ->get() : collect();
 
         return response()->json([
-            'tracks' => $tracks
+            'tracks' => $tracks,
         ]);
     }
 
