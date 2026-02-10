@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import {onUnmounted, ref} from "vue";
 
 
 export function useImageUpload() {
@@ -10,6 +10,7 @@ export function useImageUpload() {
         if (!file) return
 
         if (previewUrl.value) {
+            URL.revokeObjectURL(previewUrl.value);
             previewUrl.value = null
         }
 
@@ -17,6 +18,13 @@ export function useImageUpload() {
         previewUrl.value = URL.createObjectURL(file);
 
     }
+
+    onUnmounted(() => {
+        if (previewUrl.value) {
+            URL.revokeObjectURL(previewUrl.value);
+            previewUrl.value = null
+        }
+    })
 
     return { previewUrl, fileToUpload, handleImageUpload };
 }
