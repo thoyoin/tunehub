@@ -13,10 +13,12 @@ class HomeController extends Controller
     public function index(): View
     {
         $user = Auth::user();
+
         $libraryItems = $user ? $user
             ->libraryItems()
             ->with('item')
             ->get() : collect();
+
         $releases = Release::with('user')->get();
 
         $likedPlaylist = $libraryItems

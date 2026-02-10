@@ -49,7 +49,7 @@ onMounted(() => {
                 </div>
                 <div class="d-flex flex-wrap">
                     <template v-for="release in releaseStore.releases">
-                        <div class="card me-4" style="width: 12rem;">
+                        <div class="card me-4" style="width: 12rem">
                             <button
                                 @click="releaseStore.getRelease(release.id)"
                                 class="btn btn-get-release p-0"
