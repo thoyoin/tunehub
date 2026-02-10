@@ -206,7 +206,10 @@ onMounted(() => {
                                     style="left:17px; top: 11px"
                                     class="btn z-3 btn-play-table position-absolute"
                                 >
-                                    <img src="@/assets/svg/play.svg" alt="play">
+                                    <img
+                                        src="@/assets/svg/play.svg"
+                                        alt="play"
+                                    >
                                 </button>
                             </template>
                             <div
@@ -377,7 +380,10 @@ onMounted(() => {
                                     style="left:17px; top: 11px"
                                     class="btn z-3 btn-play-table position-absolute"
                                 >
-                                    <img src="@/assets/svg/play.svg" alt="play">
+                                    <img
+                                        src="@/assets/svg/play.svg"
+                                        alt="play"
+                                    >
                                 </button>
                             </template>
                             <div

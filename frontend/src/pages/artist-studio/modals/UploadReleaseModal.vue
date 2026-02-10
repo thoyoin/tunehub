@@ -87,10 +87,11 @@ const uploadStore = useUploadReleaseStore();
                                                             alt="cover"
                                                         >
                                                         <span
-                                                            class="position-absolute bottom-0 start-50 translate-middle-x mb-2"
+                                                            class="position-absolute bottom-0 start-50
+                                                            translate-middle-x mb-2"
                                                         >
-                                                        Change cover
-                                                    </span>
+                                                            Change cover
+                                                        </span>
                                                     </div>
                                                 </template>
                                             </label>

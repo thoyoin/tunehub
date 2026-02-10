@@ -14,7 +14,13 @@ const router = useRouter();
                 <div
                     class="modal-body fw-bold d-flex flex-row align-items-start gap-5"
                 >
-                    <img :src="releaseStore.pickedRelease?.cover_url" alt="">
+                    <div>
+                        <img
+                        style="width: 300px; height: 300px; box-shadow: 0 0 5px 1px rgba(228,228,228, 10%)"
+                        :src="releaseStore.pickedRelease?.cover_url"
+                        alt="cover"
+                        >
+                    </div>
                     <div class="d-flex flex-column align-items-center">
                         <div class="fs-3 mb-5">
                             Listen to anything in the free version TuneHub!
