@@ -13,6 +13,7 @@ use getID3;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class TrackController
 {
@@ -71,6 +72,8 @@ class TrackController
 
     public function destroy(Track $track, MinioService $minioService): JsonResponse
     {
+        Gate::authorize('delete', $track);
+
         $minioService->destroyTrack($track);
 
         $track->delete();
@@ -139,6 +142,8 @@ class TrackController
         MinioService $minioService,
         TrackUpdateRequest $request
     ): JsonResponse {
+        Gate::authorize('update', $track);
+
         if ($request->hasFile('cover_url')) {
             $coverUrl = $minioService->storeCover($request->file('cover_url'));
 
