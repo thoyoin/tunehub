@@ -69,18 +69,18 @@
                                         </span>
                                         <span style="font-size: 13px; opacity: 50%; padding: 0 5px">•</span>
                                         <template v-if="libraryItem.item.title === 'Liked tracks'">
-                                        <span
-                                            style="font-size: 13px; opacity: 50%"
-                                            v-text="libraryItem.item.tracks.length + ' tracks'"
-                                        >
-                                        </span>
+                                            <span
+                                                style="font-size: 13px; opacity: 50%"
+                                                v-text="libraryItem.item.tracks.length + ' tracks'"
+                                            >
+                                            </span>
                                         </template>
-                                        <template v-else>
-                                        <span
-                                            style="font-size: 13px; opacity: 50%"
-                                            v-text="libraryItem.user?.username"
-                                        >
-                                        </span>
+                                        <template v-if="libraryItem.item.title !== 'Liked tracks'">
+                                            <span
+                                                style="font-size: 13px; opacity: 50%"
+                                                v-text="libraryItem.user?.username"
+                                            >
+                                            </span>
                                         </template>
                                     </div>
                                 </div>

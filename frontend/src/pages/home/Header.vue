@@ -90,7 +90,9 @@
                                     </button>
                                 </li>
                                 <li>
-                                    <button @click.prevent="logout" class="dropdown-item">Leave</button>
+                                    <button @click.prevent="logout" class="dropdown-item">
+                                        Leave
+                                    </button>
                                 </li>
                             </ul>
                         </form>

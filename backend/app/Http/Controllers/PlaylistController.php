@@ -72,7 +72,11 @@ class PlaylistController extends Controller
 
         $playlist->delete();
 
-        $minioService->destroyCover($url);
+        $defaultCover = 'http://localhost:9000/tunehub/defaults/default_cover.png';
+
+        if ($url !== $defaultCover) {
+            $minioService->destroyCover($url);
+        }
 
         return response()->json([
             'message' => 'Playlist successfully deleted',

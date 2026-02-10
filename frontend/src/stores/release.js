@@ -51,6 +51,8 @@ export const useReleaseStore = defineStore('release', () => {
         } else {
             await libraryStore.getPlaylist(libraryStore.libraryItem.id)
         }
+
+        await libraryStore.fetchItems()
     }
 
     const clearPickedRelease = () => {
