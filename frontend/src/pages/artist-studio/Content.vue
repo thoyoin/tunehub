@@ -17,8 +17,8 @@ onMounted(async () => {
 <template>
     <div>
         <div class="d-flex flex-column" style="height: 100vh">
-            <div class="release-content flex-grow-1 ">
-                <div class="d-flex flex-row">
+            <div class="release-content">
+                <div class="d-flex flex-row" style="flex: 0 0 auto">
                     <button
                         @click="artistStore.viewTracks"
                         class="btn btn-view fw-bold"
@@ -41,7 +41,7 @@ onMounted(async () => {
                     </button>
                 </div>
                 <template v-if="artistStore.selectedView === 'tracks'">
-                    <table class="table table-borderless align-middle">
+                    <table class="table table-borderless align-middle scrollable-table">
                         <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
                         <tr>
                             <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
@@ -53,14 +53,14 @@ onMounted(async () => {
                             <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="scrollable-tbody">
                         <template v-if="artistStore.tracks.tracks">
                             <template v-for="track in artistStore.tracks.tracks">
                                 <tr class="track-row rounded-3">
                                     <td
                                         scope="row"
                                         class="position-relative"
-                                        style="max-width: 27px; padding-left: 20px"
+                                        style="max-width: 30px; padding-left: 20px"
                                     >
                                         <button
                                             type="button"
@@ -89,7 +89,7 @@ onMounted(async () => {
                                             <span></span>
                                         </div>
                                     </td>
-                                    <td class="d-flex flex-row ">
+                                    <td class="d-flex flex-row">
                                         <img
                                             style="width:43px;height:43px;object-fit:cover; margin-right: 10px;"
                                             :src="track.cover_url"
@@ -191,7 +191,7 @@ onMounted(async () => {
                     </template>
                 </template>
                 <template v-if="artistStore.selectedView === 'releases'">
-                    <table class="table table-borderless align-middle">
+                    <table class="table table-borderless align-middle scrollable-table">
                         <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
                         <tr>
                             <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
@@ -202,7 +202,7 @@ onMounted(async () => {
                             <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="scrollable-tbody">
                         <template v-if="artistStore.releases.releases">
                             <template v-for="release in artistStore.releases.releases">
                                 <tr class="track-row rounded-3">
@@ -333,5 +333,23 @@ onMounted(async () => {
 .active-view {
     border-bottom: solid 1px rgb(75, 75, 75) !important;
     box-shadow: 0 0 5px 3px rgb(32, 32, 32) !important;
+}
+
+.scrollable-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.scrollable-table thead,
+.scrollable-table tbody tr {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+.scrollable-tbody {
+    display: block !important;
+    max-height: 60vh !important;
+    padding-bottom: 150px !important;
+    overflow-y: auto !important;
 }
 </style>
