@@ -26,7 +26,7 @@
         <Header/>
         <Library/>
         <Content/>
-        <settings-modal v-if="auth.isReady"/>
+        <settings-modal v-if="auth.user"/>
         <edit-playlist-modal v-if="libraryStore.libraryItem"/>
         <authenticate-modal/>
     </div>

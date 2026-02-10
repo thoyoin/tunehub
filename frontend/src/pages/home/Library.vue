@@ -1,9 +1,18 @@
 <script setup>
     import { useAuthStore } from "@/stores/auth.js";
     import { useLibraryStore } from "@/stores/library.js";
+    import {onMounted} from "vue";
+    import Popover from "bootstrap/js/dist/popover";
 
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
+
+    onMounted(() => {
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        [...popoverTriggerList].forEach(el => {
+            new Popover(el);
+        });
+    });
 
 </script>
 
@@ -116,5 +125,4 @@
         border-left:1px solid rgba(228, 228, 228, 0.15) !important;
         border-right:1px solid rgba(228, 228, 228, 0.15) !important;
     }
-
 </style>
