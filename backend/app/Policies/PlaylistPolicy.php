@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Playlist;
 use App\Models\User;
+use App\Services\MinioService;
 use Illuminate\Auth\Access\Response;
 
 class PlaylistPolicy
@@ -11,6 +12,15 @@ class PlaylistPolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function before(User $user): bool|null
+    {
+        if ($user->role === '3') {
+            return true;
+        }
+
+        return null;
+    }
+
     public function viewAny(User $user): bool
     {
         return false;
@@ -37,7 +47,7 @@ class PlaylistPolicy
      */
     public function update(User $user, Playlist $playlist): bool
     {
-        return false;
+        return $user->id === $playlist->user_id;
     }
 
     /**
@@ -45,7 +55,7 @@ class PlaylistPolicy
      */
     public function delete(User $user, Playlist $playlist): bool
     {
-        return false;
+        return $user->id === $playlist->user_id;
     }
 
     /**

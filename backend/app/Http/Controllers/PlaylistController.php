@@ -9,6 +9,7 @@ use App\Models\LibraryItem;
 use App\Models\Playlist;
 use App\Services\MinioService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 
 class PlaylistController extends Controller
 {
@@ -68,6 +69,8 @@ class PlaylistController extends Controller
 
     public function destroy(Playlist $playlist, MinioService $minioService): JsonResponse
     {
+        Gate::authorize('delete', $playlist);
+
         $url = $playlist->cover_url;
 
         $playlist->delete();
@@ -88,6 +91,8 @@ class PlaylistController extends Controller
         PlaylistUpdateRequest $request,
         MinioService $minioService
     ): JsonResponse {
+        Gate::authorize('update', $playlist);
+
         $data = $request->only(['title', 'description', 'cover_url']);
 
         if ($request->hasFile('cover_url')) {
