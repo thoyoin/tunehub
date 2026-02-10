@@ -18,13 +18,20 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Header/>
-    <Content/>
-    <upload-release-modal v-if="auth.user" />
-    <edit-track-modal v-if="auth.user" />
-    <edit-release-modal v-if="auth.user" />
+    <div class="app-wrapper">
+        <Header/>
+        <Content/>
+        <upload-release-modal v-if="auth.user"/>
+        <edit-track-modal v-if="auth.user"/>
+        <edit-release-modal v-if="auth.user"/>
+    </div>
 </template>
 
 <style scoped>
-
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    min-height: 0;
+}
 </style>

@@ -16,9 +16,9 @@ onMounted(async () => {
 
 <template>
     <div>
-        <div class="d-flex flex-column" style="height: 100vh">
-            <div class="release-content">
-                <div class="d-flex flex-row" style="flex: 0 0 auto">
+        <div class="d-flex flex-column ">
+            <div class="d-flex position-relative">
+                <div class="d-flex flex-row z-2 position-fixed bg-major w-100" style="padding-top: 100px">
                     <button
                         @click="artistStore.viewTracks"
                         class="btn btn-view fw-bold"
@@ -41,146 +41,154 @@ onMounted(async () => {
                     </button>
                 </div>
                 <template v-if="artistStore.selectedView === 'tracks'">
-                    <table class="table table-borderless align-middle scrollable-table">
-                        <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
-                        <tr>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%">Tracks</th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%">Release</th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%">Release date
-                            </th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%">Duration</th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="scrollable-tbody">
-                        <template v-if="artistStore.tracks.tracks">
-                            <template v-for="track in artistStore.tracks.tracks">
-                                <tr class="track-row rounded-3">
-                                    <td
-                                        scope="row"
-                                        class="position-relative"
-                                        style="max-width: 30px; padding-left: 20px"
-                                    >
-                                        <button
-                                            type="button"
-                                            style="left:19px; top: 13px"
-                                            class="btn z-3 btn-play-table position-absolute"
-                                            @click="toggleTrack(track, artistStore.tracks.tracks)"
+                    <div class="allTracks" style="margin-top: 100px">
+                        <table class="table table-borderless align-middle">
+                            <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
+                            <tr>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%">Tracks</th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%">Release
+                                </th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%">Release
+                                    date
+                                </th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%">Duration
+                                </th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <template v-if="artistStore.tracks.tracks">
+                                <template v-for="track in artistStore.tracks.tracks">
+                                    <tr class="track-row rounded-3">
+                                        <td
+                                            scope="row"
+                                            class="position-relative"
+                                            style="max-width: 30px; padding-left: 20px"
                                         >
-                                            <template v-if="currentTrack?.id !== track.id">
-                                                <img src="@/assets/svg/play.svg" alt="play">
-                                            </template>
-                                            <template v-if="currentTrack?.id === track.id && !isPlaying">
-                                                <img src="@/assets/svg/play.svg" alt="play">
-                                            </template>
-                                            <template v-if="currentTrack?.id === track.id && isPlaying">
-                                                <img src="@/assets/svg/pause.svg" alt="pause">
-                                            </template>
-                                        </button>
-                                        <div
-                                            style="left:30px; top: 25px"
-                                            class="playing-wave position-absolute"
-                                            v-if="currentTrack?.id === track.id && isPlaying"
-                                        >
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    </td>
-                                    <td class="d-flex flex-row">
-                                        <img
-                                            style="width:43px;height:43px;object-fit:cover; margin-right: 10px;"
-                                            :src="track.cover_url"
-                                            class="rounded-1"
-                                            alt="cover"
-                                        >
-                                        <div class="d-flex flex-column">
+                                            <button
+                                                type="button"
+                                                style="left:19px; top: 13px"
+                                                class="btn btn-play-table z-1 position-absolute"
+                                                @click="toggleTrack(track, artistStore.tracks.tracks)"
+                                            >
+                                                <template v-if="currentTrack?.id !== track.id">
+                                                    <img src="@/assets/svg/play.svg" alt="play">
+                                                </template>
+                                                <template
+                                                    v-if="currentTrack?.id === track.id && !isPlaying">
+                                                    <img src="@/assets/svg/play.svg" alt="play">
+                                                </template>
+                                                <template
+                                                    v-if="currentTrack?.id === track.id && isPlaying">
+                                                    <img src="@/assets/svg/pause.svg" alt="pause">
+                                                </template>
+                                            </button>
+                                            <div
+                                                style="left:30px; top: 25px"
+                                                class="playing-wave position-absolute"
+                                                v-if="currentTrack?.id === track.id && isPlaying"
+                                            >
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                        </td>
+                                        <td class="d-flex flex-row">
+                                            <img
+                                                style="width:43px;height:43px;object-fit:cover; margin-right: 10px;"
+                                                :src="track.cover_url"
+                                                class="rounded-1"
+                                                alt="cover"
+                                            >
+                                            <div class="d-flex flex-column">
                                             <span
                                                 class="fw-bold"
                                                 style="font-size: 15px; font-weight: normal"
                                             >
                                                 {{ track.title }}
                                             </span>
-                                            <div class="d-flex flex-row">
+                                                <div class="d-flex flex-row">
                                                 <span
                                                     style="opacity: 60%; font-size: 15px"
                                                 >
                                                     {{ track.release?.type }}
                                                 </span>
-                                                <span class="mx-2"
-                                                      style="opacity: 60%; font-size: 15px"
-                                                >
+                                                    <span class="mx-2"
+                                                          style="opacity: 60%; font-size: 15px"
+                                                    >
                                                     –
                                                 </span>
-                                                <span
-                                                    class="fw-normal"
-                                                    style="opacity: 60%; font-size: 15px"
-                                                >
+                                                    <span
+                                                        class="fw-normal"
+                                                        style="opacity: 60%; font-size: 15px"
+                                                    >
                                                 {{ track.artist }}
                                             </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="fw-lighter">
+                                        </td>
+                                        <td class="fw-lighter">
                                         <span
                                             style="opacity: 60%; font-size: 15px">
                                             {{ track.release?.title }}
                                         </span>
-                                    </td>
-                                    <td class="fw-lighter">
+                                        </td>
+                                        <td class="fw-lighter">
                                         <span
                                             style="opacity: 60%; font-size: 15px">
                                             {{ track.released_in }}
                                         </span>
-                                    </td>
-                                    <td class="fw-lighter">
+                                        </td>
+                                        <td class="fw-lighter">
                                         <span
                                             style="opacity: 60%; font-size: 15px">
                                             {{ track.formatted_duration }}
                                         </span>
-                                    </td>
-                                    <td>
-                                        <a
-                                            class="btn btn-settings p-0"
-                                            href="#"
-                                            role="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <img
-                                                style="opacity: 60%; font-size: 15px"
-                                                src="@/assets/svg/settingsWhite.svg" alt="settings"
+                                        </td>
+                                        <td>
+                                            <a
+                                                class="btn btn-settings p-0"
+                                                href="#"
+                                                role="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
                                             >
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <button
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editTrackModal"
-                                                    type="button"
-                                                    class="dropdown-item"
-                                                    @click="artistStore.pullEditingItem(track)"
+                                                <img
+                                                    style="opacity: 60%; font-size: 15px"
+                                                    src="@/assets/svg/settingsWhite.svg"
+                                                    alt="settings"
                                                 >
-                                                    Edit
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button
-                                                    @click="artistStore.deleteTrack(track.id)"
-                                                    class="dropdown-item"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <button
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editTrackModal"
+                                                        type="button"
+                                                        class="dropdown-item"
+                                                        @click="artistStore.pullEditingItem(track)"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button
+                                                        @click="artistStore.deleteTrack(track.id)"
+                                                        class="dropdown-item"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </template>
                             </template>
-                        </template>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                     <template v-if="artistStore.tracks.tracks?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
@@ -310,13 +318,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.release-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow-y: auto;
-    padding: 100px 0 100px 0;
-}
 
 .btn-view {
     border-radius: 30px;
@@ -348,8 +349,17 @@ onMounted(async () => {
 }
 .scrollable-tbody {
     display: block !important;
-    max-height: 60vh !important;
-    padding-bottom: 150px !important;
+    max-height: 75vh !important;
+    padding-bottom: 130px !important;
     overflow-y: auto !important;
+    width: 100% !important;
+}
+.allTracks {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    overflow-y: auto !important;
+    padding: 100px 0 90px 0 !important;
+    min-height: 0 !important;
 }
 </style>

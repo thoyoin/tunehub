@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/MinioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/MinioService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
