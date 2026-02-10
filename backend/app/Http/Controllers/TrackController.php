@@ -28,6 +28,8 @@ class TrackController
         TrackStoreRequest $trackRequest,
         MinioService $minioService
     ): JsonResponse {
+        Gate::authorize('create', Track::class);
+
         $releaseData = $trackRequest->only(['releaseTitle', 'artist', 'type', 'cover_url', 'release_date']);
 
         $coverUrl = $minioService->storeCover($releaseData['cover_url']);

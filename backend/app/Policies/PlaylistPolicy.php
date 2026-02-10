@@ -2,19 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Track;
+use App\Models\Playlist;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class TrackPolicy
+class PlaylistPolicy
 {
-    public function before(User $user)
-    {
-        if ($user->role === '3') {
-            return true;
-        }
-    }
-
     /**
      * Determine whether the user can view any models.
      */
@@ -26,7 +19,7 @@ class TrackPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Track $track): bool
+    public function view(User $user, Playlist $playlist): bool
     {
         return false;
     }
@@ -36,29 +29,29 @@ class TrackPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === '2';
+        return false;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Track $track): bool
+    public function update(User $user, Playlist $playlist): bool
     {
-        return $user->id === $track->user_id;
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Track $track): bool
+    public function delete(User $user, Playlist $playlist): bool
     {
-        return $user->id === $track->user_id;
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Track $track): bool
+    public function restore(User $user, Playlist $playlist): bool
     {
         return false;
     }
@@ -66,7 +59,7 @@ class TrackPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Track $track): bool
+    public function forceDelete(User $user, Playlist $playlist): bool
     {
         return false;
     }
