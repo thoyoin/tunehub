@@ -7,6 +7,7 @@ use App\Models\LibraryItem;
 use App\Models\Release;
 use App\Services\MinioService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 
 class ReleaseController extends Controller
 {
@@ -82,6 +83,8 @@ class ReleaseController extends Controller
 
     public function destroy(Release $release, MinioService $minioService): JsonResponse
     {
+        Gate::authorize('delete', $release);
+
         $releaseTracks = $release->tracks()->get();
 
         $release->delete();
@@ -97,6 +100,8 @@ class ReleaseController extends Controller
 
     public function update(Release $release, MinioService $minioService, ReleaseUpdateRequest $request)
     {
+        Gate::authorize('update', $release);
+
         if ($request->hasFile('cover_url')) {
             $coverUrl = $minioService->storeCover($request->file('cover_url'));
 

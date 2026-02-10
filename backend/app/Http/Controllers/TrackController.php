@@ -29,6 +29,7 @@ class TrackController
         MinioService $minioService
     ): JsonResponse {
         Gate::authorize('create', Track::class);
+        Gate::authorize('create', Release::class);
 
         $releaseData = $trackRequest->only(['releaseTitle', 'artist', 'type', 'cover_url', 'release_date']);
 
