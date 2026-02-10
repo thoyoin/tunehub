@@ -1,18 +1,9 @@
 <script setup>
     import { useAuthStore } from "@/stores/auth.js";
     import { useLibraryStore } from "@/stores/library.js";
-    import {onMounted} from "vue";
-    import * as bootstrap from "bootstrap";
 
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
-
-    onMounted(() => {
-        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-        [...popoverTriggerList].forEach(el => {
-            new bootstrap.Popover(el);
-        });
-    });
 
 </script>
 
@@ -102,11 +93,11 @@
                             data-bs-html="true"
                             data-bs-custom-class="custom-popover"
                             data-bs-content="
-                                <div class='d-flex flex-column'>
-                                    <div class='mb-2'>To create a playlist, log in to your account</div>
-                                    <a href='/login' class='btn btn-primary px-2 py-0'>Login</a>
-                                </div>
-                            "
+                                      <div class='d-flex flex-column'>
+                                          <div class='mb-2'>To create a playlist, log in to your account</div>
+                                          <a href='/login' class='btn btn-primary px-2 py-0'>Login</a>
+                                      </div>
+                                  "
                             class="btn btn-add"
                         >
                             Create
@@ -125,4 +116,5 @@
         border-left:1px solid rgba(228, 228, 228, 0.15) !important;
         border-right:1px solid rgba(228, 228, 228, 0.15) !important;
     }
+
 </style>

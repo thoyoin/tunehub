@@ -221,10 +221,4 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         flex-direction: column;
         height: 100%;
     }
-    .custom-popover {
-        --bs-popover-max-width: 200px !important;
-        --bs-popover-bg: rgb(40,40,41) !important;
-        --bs-popover-body-color: rgb(228,228,228) !important;
-        --bs-popover-border-radius: 20px !important;
-    }
 </style>
