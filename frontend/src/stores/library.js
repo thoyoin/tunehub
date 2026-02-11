@@ -75,7 +75,6 @@ export const useLibraryStore = defineStore('library',() => {
             if (isRelease.value) {
                 await releaseStore.getRelease(libraryItem.value.item.id)
 
-                clearSelectedItem()
             } else {
 
                 await getPlaylist(libraryItem.value.item.id)

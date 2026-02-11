@@ -41,7 +41,7 @@ onMounted(async () => {
                     </button>
                 </div>
                 <template v-if="artistStore.selectedView === 'tracks'">
-                    <div class="allTracks" style="margin-top: 100px">
+                    <div class="allItems" style="margin-top: 100px">
                         <table class="table table-borderless align-middle">
                             <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
                             <tr>
@@ -199,110 +199,114 @@ onMounted(async () => {
                     </template>
                 </template>
                 <template v-if="artistStore.selectedView === 'releases'">
-                    <table class="table table-borderless align-middle scrollable-table">
-                        <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
-                        <tr>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%">Releases</th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%">Release date
-                            </th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%">Status</th>
-                            <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="scrollable-tbody">
-                        <template v-if="artistStore.releases.releases">
-                            <template v-for="release in artistStore.releases.releases">
-                                <tr class="track-row rounded-3">
-                                    <td></td>
-                                    <td class="d-flex flex-row">
-                                        <img
-                                            :src="release.cover_url"
-                                            style="width:43px;height:43px;object-fit:cover; margin-right: 10px;"
-                                            class="rounded-1"
-                                            alt="cover"
-                                        >
-                                        <div class="d-flex flex-column">
+                    <div class="allItems" style="margin-top: 100px">
+                        <table class="table table-borderless align-middle">
+                            <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
+                            <tr>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%">Releases
+                                </th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%">Release
+                                    date
+                                </th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%">Status</th>
+                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <template v-if="artistStore.releases.releases">
+                                <template v-for="release in artistStore.releases.releases">
+                                    <tr class="track-row rounded-3">
+                                        <td></td>
+                                        <td class="d-flex flex-row">
+                                            <img
+                                                :src="release.cover_url"
+                                                style="width:43px;height:43px;object-fit:cover; margin-right: 10px;"
+                                                class="rounded-1"
+                                                alt="cover"
+                                            >
+                                            <div class="d-flex flex-column">
                                                     <span
                                                         class="fw-bold"
                                                         style="font-size: 15px; font-weight: normal"
                                                     >
                                                         {{ release.title }}
                                                     </span>
-                                            <div class="d-flex flex-row">
+                                                <div class="d-flex flex-row">
                                                 <span
                                                     style="opacity: 60%; font-size: 15px"
                                                 >
                                                     {{ release.type }}
                                                 </span>
-                                                <span
-                                                    class="mx-2"
-                                                    style="opacity: 60%; font-size: 15px"
-                                                >
+                                                    <span
+                                                        class="mx-2"
+                                                        style="opacity: 60%; font-size: 15px"
+                                                    >
                                                     –
                                                 </span>
-                                                <span
-                                                    class="fw-normal"
-                                                    style="opacity: 60%; font-size: 15px"
-                                                >
+                                                    <span
+                                                        class="fw-normal"
+                                                        style="opacity: 60%; font-size: 15px"
+                                                    >
                                                     {{ release.artist }}
                                                 </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="fw-lighter">
+                                        </td>
+                                        <td class="fw-lighter">
                                         <span
                                             style="opacity: 60%; font-size: 15px">
                                             {{ release.released_in }}
                                         </span>
-                                    </td>
-                                    <td class="fw-lighter">
+                                        </td>
+                                        <td class="fw-lighter">
                                         <span
                                             style="opacity: 60%; font-size: 15px">
                                             {{ release.status }}
                                         </span>
-                                    </td>
-                                    <td>
-                                        <a
-                                            class="btn btn-settings p-0"
-                                            href="#"
-                                            role="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <img
-                                                style="opacity: 60%; font-size: 15px"
-                                                src="@/assets/svg/settingsWhite.svg"
-                                                alt="settings"
+                                        </td>
+                                        <td>
+                                            <a
+                                                class="btn btn-settings p-0"
+                                                href="#"
+                                                role="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
                                             >
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <button
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editReleaseModal"
-                                                    type="button"
-                                                    class="dropdown-item"
-                                                    @click="artistStore.pullEditingItem(release)"
+                                                <img
+                                                    style="opacity: 60%; font-size: 15px"
+                                                    src="@/assets/svg/settingsWhite.svg"
+                                                    alt="settings"
                                                 >
-                                                    Edit
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button
-                                                    @click="artistStore.deleteRelease(release.id)"
-                                                    class="dropdown-item"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <button
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editReleaseModal"
+                                                        type="button"
+                                                        class="dropdown-item"
+                                                        @click="artistStore.pullEditingItem(release)"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button
+                                                        @click="artistStore.deleteRelease(release.id)"
+                                                        class="dropdown-item"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </template>
                             </template>
-                        </template>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                     <template v-if="artistStore.releases.releases?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
@@ -354,7 +358,7 @@ onMounted(async () => {
     overflow-y: auto !important;
     width: 100% !important;
 }
-.allTracks {
+.allItems {
     display: flex !important;
     flex-direction: column !important;
     flex: 1 !important;

@@ -12,6 +12,7 @@ class ArtistStudioController extends Controller
     public function getTracks(): JsonResponse
     {
         $user = Auth::user();
+
         $tracks = $user ? $user
             ->tracks()
             ->with('release')

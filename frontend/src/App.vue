@@ -38,9 +38,16 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         }
     }
     .btn-artists {
-        background-color: rgb(32,32,32) !important;
+        background-color: rgba(32,32,32, 30%) !important;
+        backdrop-filter: blur(10px) !important;
+
+        &::placeholder {
+            color: rgba(228,228,228, .5) !important;
+        }
+
         padding: 0 5px 3px !important;
         color: #ff2667 !important;
+
         &:hover {
             background-color: rgb(40,40,41) !important;
             color: #ff2667 !important;
@@ -184,7 +191,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         flex-direction: column !important;
         flex: 1 !important;
         overflow-y: auto !important;
-        padding: 100px 0 100px 0 !important;
+        padding: 0 0 100px 0 !important;
     }
     .btn-add-like {
         margin: 10px !important;

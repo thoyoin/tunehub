@@ -1,6 +1,5 @@
 import {onUnmounted, ref} from "vue";
 
-
 export function useImageUpload() {
     const previewUrl = ref(null);
     const fileToUpload = ref(null);

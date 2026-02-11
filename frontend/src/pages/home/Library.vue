@@ -31,7 +31,7 @@
                     <template v-if="auth.user">
                         <form method="POST" @submit.prevent="libraryStore.createPlaylist()">
                             <button @click.prevent="libraryStore.createPlaylist()"
-                                    class="btn btn-add bg-major rounded-5 px-2 py-0">
+                                    class="btn btn-artists rounded-5 px-2 py-0">
                                 <img src="@/assets/svg/add.svg" alt="add">
                             </button>
                         </form>
@@ -77,8 +77,10 @@
                                         </template>
                                         <template v-if="libraryItem.item.title !== 'Liked tracks'">
                                             <span
-                                                style="font-size: 13px; opacity: 50%"
-                                                v-text="libraryItem.user?.username"
+                                                style="font-size: 13px; opacity: 50%;max-width: 130px"
+                                                v-text="libraryItem.item.artist
+                                                    ?? libraryItem.user?.username"
+                                                class="text-truncate"
                                             >
                                             </span>
                                         </template>
