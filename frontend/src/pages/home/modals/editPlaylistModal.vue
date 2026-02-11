@@ -73,7 +73,7 @@
                                     :src="previewUrl ?? libraryStore.libraryItem.cover_url"
                                     alt="cover"
                                 >
-                                <div x-show="editingPlaylist.slug !== 'liked-tracks'">
+                                <div v-if="libraryStore.libraryItem.slug !== 'liked-tracks'">
                                     <label class="btn btn-add mt-2" for="uploadCover">
                                         Upload cover
                                     </label>
