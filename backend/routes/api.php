@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ArtistStudioController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LibraryItemController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\ReleaseController;
@@ -32,10 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'get');
         Route::post('/user/update', 'update');
-    });
-
-    Route::controller(HomeController::class)->group(function () {
-        Route::get('/releases', 'index');
     });
 
     Route::controller(PlaylistController::class)->group(function () {
