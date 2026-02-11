@@ -102,14 +102,14 @@ class TrackController
             ->first()
             ->item;
 
-        $playlistTracks = $playlist->tracks;
+        $trackIsLiked = $playlist->tracks()->whereKey($track->id)->exists();
 
         $currentPosition = DB::table('playlist_track')
             ->where('playlist_id', $playlist->id)
             ->where('track_id', $track->id)
             ->value('position');
 
-        if (! $playlistTracks->contains($track)) {
+        if (! $trackIsLiked) {
             DB::transaction(function () use ($playlist) {
                 DB::table('playlist_track')
                     ->where('playlist_id', $playlist->id)
