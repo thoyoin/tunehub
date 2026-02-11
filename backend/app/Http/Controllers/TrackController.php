@@ -79,10 +79,12 @@ class TrackController
 
         $minioService->destroyTrack($track);
 
+        $release = $track->release()->withCount('tracks')->first();
+
         $track->delete();
 
-        if (Release::all()->find($track->release_id)->tracks->count() <= 1) {
-            Release::all()->find($track->release_id)->delete();
+        if ($release && $release->tracks_count === 1) {
+            $release->delete();
         }
 
         return response()->json([
