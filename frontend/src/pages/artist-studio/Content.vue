@@ -1,11 +1,11 @@
 <script setup>
-import {useArtistStore} from "@/stores/artistStudio.js";
-import {onMounted} from "vue";
-import {useAudioPlayer} from "@/composables/useAudioPlayer.js";
+import { useArtistStore } from '@/stores/artistStudio.js'
+import { onMounted } from 'vue'
+import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
 
-const artistStore = useArtistStore();
+const artistStore = useArtistStore()
 
-const {currentTrack, isPlaying, toggleTrack} = useAudioPlayer();
+const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
 onMounted(async () => {
     await artistStore.fetchTracks()
@@ -16,16 +16,24 @@ onMounted(async () => {
 
 <template>
     <div>
-        <div class="d-flex flex-column ">
+        <div class="d-flex flex-column">
             <div class="d-flex position-relative">
-                <div class="d-flex flex-row z-2 position-fixed bg-major w-100" style="padding-top: 100px">
+                <div
+                    class="d-flex flex-row z-2 position-fixed bg-major w-100"
+                    style="padding-top: 100px"
+                >
                     <button
                         @click="artistStore.viewTracks"
                         class="btn btn-view fw-bold"
                         :class="{
-                            'active-view': artistStore.selectedView === 'tracks'
+                            'active-view': artistStore.selectedView === 'tracks',
                         }"
-                        style="color: rgb(228,228,228);margin: 0 0 20px 40px; font-size: 25px; cursor: pointer"
+                        style="
+                            color: rgb(228, 228, 228);
+                            margin: 0 0 20px 40px;
+                            font-size: 25px;
+                            cursor: pointer;
+                        "
                     >
                         All your tracks
                     </button>
@@ -33,9 +41,14 @@ onMounted(async () => {
                         @click="artistStore.viewReleases"
                         class="btn btn-view fw-bold"
                         :class="{
-                            'active-view': artistStore.selectedView === 'releases'
+                            'active-view': artistStore.selectedView === 'releases',
                         }"
-                        style="color: rgb(228,228,228);margin: 0 0 20px 40px; font-size: 25px; cursor: pointer"
+                        style="
+                            color: rgb(228, 228, 228);
+                            margin: 0 0 20px 40px;
+                            font-size: 25px;
+                            cursor: pointer;
+                        "
                     >
                         Releases
                     </button>
@@ -43,156 +56,189 @@ onMounted(async () => {
                 <template v-if="artistStore.selectedView === 'tracks'">
                     <div class="allItems" style="margin-top: 100px">
                         <table class="table table-borderless align-middle">
-                            <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
-                            <tr>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%">Tracks</th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%">Release
-                                </th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%">Release
-                                    date
-                                </th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%">Duration
-                                </th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                            </tr>
+                            <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
+                                <tr>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                                        Tracks
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                                        Release
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                                        Release date
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                                        Duration
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <template v-if="artistStore.tracks.tracks">
-                                <template v-for="track in artistStore.tracks.tracks">
-                                    <tr class="track-row rounded-3">
-                                        <td
-                                            scope="row"
-                                            class="position-relative"
-                                            style="max-width: 30px; padding-left: 20px"
-                                        >
-                                            <button
-                                                type="button"
-                                                style="left:19px; top: 13px"
-                                                class="btn btn-play-table z-1 position-absolute"
-                                                @click="toggleTrack(track, artistStore.tracks.tracks)"
+                                <template v-if="artistStore.tracks.tracks">
+                                    <template v-for="track in artistStore.tracks.tracks">
+                                        <tr class="track-row rounded-3">
+                                            <td
+                                                scope="row"
+                                                class="position-relative"
+                                                style="max-width: 30px; padding-left: 20px"
                                             >
-                                                <template v-if="currentTrack?.id !== track.id">
-                                                    <img src="@/assets/svg/play.svg" alt="play">
-                                                </template>
-                                                <template
-                                                    v-if="currentTrack?.id === track.id && !isPlaying">
-                                                    <img src="@/assets/svg/play.svg" alt="play">
-                                                </template>
-                                                <template
-                                                    v-if="currentTrack?.id === track.id && isPlaying">
-                                                    <img src="@/assets/svg/pause.svg" alt="pause">
-                                                </template>
-                                            </button>
-                                            <div
-                                                style="left:30px; top: 25px"
-                                                class="playing-wave position-absolute"
-                                                v-if="currentTrack?.id === track.id && isPlaying"
-                                            >
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                        </td>
-                                        <td class="d-flex flex-row">
-                                            <img
-                                                style="width:43px;height:43px;object-fit:cover; margin-right: 10px;"
-                                                :src="track.cover_url"
-                                                class="rounded-1"
-                                                alt="cover"
-                                            >
-                                            <div class="d-flex flex-column">
-                                            <span
-                                                class="fw-bold"
-                                                style="font-size: 15px; font-weight: normal"
-                                            >
-                                                {{ track.title }}
-                                            </span>
-                                                <div class="d-flex flex-row">
-                                                <span
-                                                    style="opacity: 60%; font-size: 15px"
+                                                <button
+                                                    type="button"
+                                                    style="left: 19px; top: 13px"
+                                                    class="btn btn-play-table z-1 position-absolute"
+                                                    @click="
+                                                        toggleTrack(
+                                                            track,
+                                                            artistStore.tracks.tracks,
+                                                        )
+                                                    "
                                                 >
-                                                    {{ track.release?.type }}
-                                                </span>
-                                                    <span class="mx-2"
-                                                          style="opacity: 60%; font-size: 15px"
+                                                    <template v-if="currentTrack?.id !== track.id">
+                                                        <img
+                                                            src="@/assets/svg/play.svg"
+                                                            alt="play"
+                                                        />
+                                                    </template>
+                                                    <template
+                                                        v-if="
+                                                            currentTrack?.id === track.id &&
+                                                            !isPlaying
+                                                        "
                                                     >
-                                                    –
-                                                </span>
-                                                    <span
-                                                        class="fw-normal"
-                                                        style="opacity: 60%; font-size: 15px"
+                                                        <img
+                                                            src="@/assets/svg/play.svg"
+                                                            alt="play"
+                                                        />
+                                                    </template>
+                                                    <template
+                                                        v-if="
+                                                            currentTrack?.id === track.id &&
+                                                            isPlaying
+                                                        "
                                                     >
-                                                {{ track.artist }}
-                                            </span>
+                                                        <img
+                                                            src="@/assets/svg/pause.svg"
+                                                            alt="pause"
+                                                        />
+                                                    </template>
+                                                </button>
+                                                <div
+                                                    style="left: 30px; top: 25px"
+                                                    class="playing-wave position-absolute"
+                                                    v-if="
+                                                        currentTrack?.id === track.id && isPlaying
+                                                    "
+                                                >
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="fw-lighter">
-                                        <span
-                                            style="opacity: 60%; font-size: 15px">
-                                            {{ track.release?.title }}
-                                        </span>
-                                        </td>
-                                        <td class="fw-lighter">
-                                        <span
-                                            style="opacity: 60%; font-size: 15px">
-                                            {{ track.released_in }}
-                                        </span>
-                                        </td>
-                                        <td class="fw-lighter">
-                                        <span
-                                            style="opacity: 60%; font-size: 15px">
-                                            {{ track.formatted_duration }}
-                                        </span>
-                                        </td>
-                                        <td>
-                                            <a
-                                                class="btn btn-settings p-0"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
+                                            </td>
+                                            <td class="d-flex flex-row">
                                                 <img
-                                                    style="opacity: 60%; font-size: 15px"
-                                                    src="@/assets/svg/settingsWhite.svg"
-                                                    alt="settings"
+                                                    style="
+                                                        width: 43px;
+                                                        height: 43px;
+                                                        object-fit: cover;
+                                                        margin-right: 10px;
+                                                    "
+                                                    :src="track.cover_url"
+                                                    class="rounded-1"
+                                                    alt="cover"
+                                                />
+                                                <div class="d-flex flex-column">
+                                                    <span
+                                                        class="fw-bold"
+                                                        style="font-size: 15px; font-weight: normal"
+                                                    >
+                                                        {{ track.title }}
+                                                    </span>
+                                                    <div class="d-flex flex-row">
+                                                        <span style="opacity: 60%; font-size: 15px">
+                                                            {{ track.release?.type }}
+                                                        </span>
+                                                        <span
+                                                            class="mx-2"
+                                                            style="opacity: 60%; font-size: 15px"
+                                                        >
+                                                            –
+                                                        </span>
+                                                        <span
+                                                            class="fw-normal"
+                                                            style="opacity: 60%; font-size: 15px"
+                                                        >
+                                                            {{ track.artist }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="fw-lighter">
+                                                <span style="opacity: 60%; font-size: 15px">
+                                                    {{ track.release?.title }}
+                                                </span>
+                                            </td>
+                                            <td class="fw-lighter">
+                                                <span style="opacity: 60%; font-size: 15px">
+                                                    {{ track.released_in }}
+                                                </span>
+                                            </td>
+                                            <td class="fw-lighter">
+                                                <span style="opacity: 60%; font-size: 15px">
+                                                    {{ track.formatted_duration }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    class="btn btn-settings p-0"
+                                                    href="#"
+                                                    role="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
                                                 >
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <button
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editTrackModal"
-                                                        type="button"
-                                                        class="dropdown-item"
-                                                        @click="artistStore.pullEditingItem(track)"
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button
-                                                        @click="artistStore.deleteTrack(track.id)"
-                                                        class="dropdown-item"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                                    <img
+                                                        style="opacity: 60%; font-size: 15px"
+                                                        src="@/assets/svg/settingsWhite.svg"
+                                                        alt="settings"
+                                                    />
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <button
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editTrackModal"
+                                                            type="button"
+                                                            class="dropdown-item"
+                                                            @click="
+                                                                artistStore.pullEditingItem(track)
+                                                            "
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            @click="
+                                                                artistStore.deleteTrack(track.id)
+                                                            "
+                                                            class="dropdown-item"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </template>
-                            </template>
                             </tbody>
                         </table>
                     </div>
                     <template v-if="artistStore.tracks.tracks?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
-                            style="color: rgb(228,228,228)"
+                            style="color: rgb(228, 228, 228)"
                         >
                             You have no tracks yet.
                         </div>
@@ -201,116 +247,126 @@ onMounted(async () => {
                 <template v-if="artistStore.selectedView === 'releases'">
                     <div class="allItems" style="margin-top: 100px">
                         <table class="table table-borderless align-middle">
-                            <thead style="border-bottom:1px solid rgba(228, 228, 228, 0.15)">
-                            <tr>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%">Releases
-                                </th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%">Release
-                                    date
-                                </th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%">Status</th>
-                                <th scope="col" style="font-weight:lighter;opacity: 60%"></th>
-                            </tr>
+                            <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
+                                <tr>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                                        Releases
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                                        Release date
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                                        Status
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <template v-if="artistStore.releases.releases">
-                                <template v-for="release in artistStore.releases.releases">
-                                    <tr class="track-row rounded-3">
-                                        <td></td>
-                                        <td class="d-flex flex-row">
-                                            <img
-                                                :src="release.cover_url"
-                                                style="width:43px;height:43px;object-fit:cover; margin-right: 10px;"
-                                                class="rounded-1"
-                                                alt="cover"
-                                            >
-                                            <div class="d-flex flex-column">
+                                <template v-if="artistStore.releases.releases">
+                                    <template v-for="release in artistStore.releases.releases">
+                                        <tr class="track-row rounded-3">
+                                            <td></td>
+                                            <td class="d-flex flex-row">
+                                                <img
+                                                    :src="release.cover_url"
+                                                    style="
+                                                        width: 43px;
+                                                        height: 43px;
+                                                        object-fit: cover;
+                                                        margin-right: 10px;
+                                                    "
+                                                    class="rounded-1"
+                                                    alt="cover"
+                                                />
+                                                <div class="d-flex flex-column">
                                                     <span
                                                         class="fw-bold"
                                                         style="font-size: 15px; font-weight: normal"
                                                     >
                                                         {{ release.title }}
                                                     </span>
-                                                <div class="d-flex flex-row">
-                                                <span
-                                                    style="opacity: 60%; font-size: 15px"
-                                                >
-                                                    {{ release.type }}
-                                                </span>
-                                                    <span
-                                                        class="mx-2"
-                                                        style="opacity: 60%; font-size: 15px"
-                                                    >
-                                                    –
-                                                </span>
-                                                    <span
-                                                        class="fw-normal"
-                                                        style="opacity: 60%; font-size: 15px"
-                                                    >
-                                                    {{ release.artist }}
-                                                </span>
+                                                    <div class="d-flex flex-row">
+                                                        <span style="opacity: 60%; font-size: 15px">
+                                                            {{ release.type }}
+                                                        </span>
+                                                        <span
+                                                            class="mx-2"
+                                                            style="opacity: 60%; font-size: 15px"
+                                                        >
+                                                            –
+                                                        </span>
+                                                        <span
+                                                            class="fw-normal"
+                                                            style="opacity: 60%; font-size: 15px"
+                                                        >
+                                                            {{ release.artist }}
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="fw-lighter">
-                                        <span
-                                            style="opacity: 60%; font-size: 15px">
-                                            {{ release.released_in }}
-                                        </span>
-                                        </td>
-                                        <td class="fw-lighter">
-                                        <span
-                                            style="opacity: 60%; font-size: 15px">
-                                            {{ release.status }}
-                                        </span>
-                                        </td>
-                                        <td>
-                                            <a
-                                                class="btn btn-settings p-0"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                <img
-                                                    style="opacity: 60%; font-size: 15px"
-                                                    src="@/assets/svg/settingsWhite.svg"
-                                                    alt="settings"
+                                            </td>
+                                            <td class="fw-lighter">
+                                                <span style="opacity: 60%; font-size: 15px">
+                                                    {{ release.released_in }}
+                                                </span>
+                                            </td>
+                                            <td class="fw-lighter">
+                                                <span style="opacity: 60%; font-size: 15px">
+                                                    {{ release.status }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    class="btn btn-settings p-0"
+                                                    href="#"
+                                                    role="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
                                                 >
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <button
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editReleaseModal"
-                                                        type="button"
-                                                        class="dropdown-item"
-                                                        @click="artistStore.pullEditingItem(release)"
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button
-                                                        @click="artistStore.deleteRelease(release.id)"
-                                                        class="dropdown-item"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                                    <img
+                                                        style="opacity: 60%; font-size: 15px"
+                                                        src="@/assets/svg/settingsWhite.svg"
+                                                        alt="settings"
+                                                    />
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <button
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editReleaseModal"
+                                                            type="button"
+                                                            class="dropdown-item"
+                                                            @click="
+                                                                artistStore.pullEditingItem(release)
+                                                            "
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            @click="
+                                                                artistStore.deleteRelease(
+                                                                    release.id,
+                                                                )
+                                                            "
+                                                            class="dropdown-item"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </template>
-                            </template>
                             </tbody>
                         </table>
                     </div>
                     <template v-if="artistStore.releases.releases?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
-                            style="color: rgb(228,228,228)"
+                            style="color: rgb(228, 228, 228)"
                         >
                             You have no releases yet.
                         </div>
@@ -322,7 +378,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
 .btn-view {
     border-radius: 30px;
 

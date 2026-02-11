@@ -180,17 +180,12 @@ onMounted(() => {
                     </form>
                 </div>
             </div>
-            <table
-                class="table table-borderless align-middle"
-            >
+            <table class="table table-borderless align-middle">
                 <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                     <tr>
                         <th
                             scope="col"
-                            style="
-                                font-weight: lighter;
-                                opacity: 60%;
-                                padding-left: 320px;
+                            style="font-weight: lighter;opacity: 60%;padding-left: 320px;
                                 padding-right: 20px;
                             "
                         >
@@ -246,7 +241,7 @@ onMounted(() => {
                                         type="button"
                                         data-bs-toggle="modal"
                                         data-bs-target="#authenticateModal"
-                                        style="left: 17px; top: 11px"
+                                        style="left: 308px; top: 11px"
                                         class="btn z-3 btn-play-table position-absolute"
                                     >
                                         <img src="@/assets/svg/play.svg" alt="play" />
@@ -335,12 +330,9 @@ onMounted(() => {
         </div>
     </template>
     <template
-        v-if="(libraryStore.libraryItem && libraryStore.isRelease) || releaseStore.pickedRelease"
+        v-if="releaseStore.pickedRelease"
     >
-        <div
-            style="color: rgb(228, 228, 228)"
-            class="flex-grow-1 release-content"
-        >
+        <div style="color: rgb(228, 228, 228)" class="flex-grow-1 release-content">
             <div
                 :style="{
                     background: `
@@ -353,19 +345,13 @@ onMounted(() => {
                     backdropFilter: 'blur(40px)',
                 }"
             >
-                <div
-                    style="padding: 95px 0 0 320px"
-                    class="d-flex flex-column"
-                >
+                <div style="padding: 95px 0 0 320px" class="d-flex flex-column">
                     <div class="d-flex flex-row">
                         <div>
                             <img
                                 :src="releaseStore.pickedRelease?.cover_url"
                                 alt="cover"
-                                :style="{
-                                    width: '210px',
-                                    height: '210px',
-                                }"
+                                :style="{width: '210px',height: '210px'}"
                                 class="rounded-2"
                             />
                         </div>
@@ -389,7 +375,9 @@ onMounted(() => {
                         <div class="pt-5">
                             <button
                                 class="btn btn-add-like mb-4"
-                                @click="releaseStore.addReleaseToLikes(releaseStore.pickedRelease.id)"
+                                @click="
+                                    releaseStore.addReleaseToLikes(releaseStore.pickedRelease.id)
+                                "
                             >
                                 <img
                                     style="width: 35px"
@@ -401,13 +389,8 @@ onMounted(() => {
                     </template>
                 </div>
             </div>
-            <table
-                class="table table-borderless align-middle"
-                style="padding: 25px 0 0 295px"
-            >
-                <thead
-                    style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)"
-                >
+            <table class="table table-borderless align-middle" style="padding: 25px 0 0 295px">
+                <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                     <tr>
                         <th
                             scope="col"
@@ -428,7 +411,7 @@ onMounted(() => {
                         </th>
                     </tr>
                 </thead>
-                <tbody >
+                <tbody>
                     <template v-for="track in releaseStore.pickedRelease?.tracks" :key="track.id">
                         <tr class="track-row rounded-5">
                             <td
@@ -468,7 +451,7 @@ onMounted(() => {
                                         type="button"
                                         data-bs-toggle="modal"
                                         data-bs-target="#authenticateModal"
-                                        style="left: 17px; top: 11px"
+                                        style="left: 308px; top: 11px"
                                         class="btn z-3 btn-play-table position-absolute"
                                     >
                                         <img src="@/assets/svg/play.svg" alt="play" />
@@ -526,10 +509,7 @@ onMounted(() => {
                     </template>
                 </tbody>
             </table>
-            <div
-                class="mt-4"
-                style="padding: 25px 0 0 320px"
-            >
+            <div class="mt-4" style="padding: 25px 0 0 320px">
                 <span
                     style="opacity: 60%; font-size: 15px; font-weight: lighter"
                     v-text="releaseStore.pickedRelease?.released_in"
