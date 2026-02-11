@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Requests/PlaylistUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Requests/PlaylistUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/editPlaylistModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/editPlaylistModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/release.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/release.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -455,7 +458,7 @@
       <workItem from="1770729526736" duration="3495000" />
       <workItem from="1770733256667" duration="841000" />
       <workItem from="1770782341793" duration="10113000" />
-      <workItem from="1770823209815" duration="2631000" />
+      <workItem from="1770823209815" duration="4341000" />
     </task>
     <servers />
   </component>

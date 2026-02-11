@@ -327,6 +327,11 @@ onMounted(() => {
                     </template>
                 </tbody>
             </table>
+            <template v-if="libraryStore.itemTracks.length === 0">
+                <div class="d-flex w-100 align-items-center justify-content-center">
+                    <span class="fw-light">You haven't added any tracks yet.</span>
+                </div>
+            </template>
         </div>
     </template>
     <template

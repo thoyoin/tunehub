@@ -104,7 +104,7 @@ class PlaylistController extends Controller
 
         return response()->json([
             'message' => 'Successfully updated playlist.',
-            'updatedPlaylist' => $playlist,
+            'playlist' => $playlist,
         ]);
     }
 }

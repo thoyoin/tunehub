@@ -15,7 +15,6 @@ export function useImageUpload() {
 
         fileToUpload.value = file;
         previewUrl.value = URL.createObjectURL(file);
-
     }
 
     onUnmounted(() => {

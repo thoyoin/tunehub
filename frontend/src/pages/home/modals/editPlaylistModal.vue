@@ -24,7 +24,7 @@
         const formData = new FormData();
 
         formData.append("title", title.value);
-        formData.append("description", description.value);
+        formData.append("description", description.value ?? '');
 
         if (fileToUpload.value) {
             formData.append("cover_url", fileToUpload.value);

@@ -26,7 +26,7 @@ class PlaylistUpdateRequest extends FormRequest
         return [
             'title' => 'string',
             'description' => 'nullable|string',
-            'cover_url' => 'nullable|url',
+            'cover_url' => 'nullable',
         ];
     }
 }
