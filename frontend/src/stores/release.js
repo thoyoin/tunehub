@@ -28,6 +28,8 @@ export const useReleaseStore = defineStore('release', () => {
             pickedRelease.value = response.data.release;
             releaseTracks.value = response.data.tracks;
             isReleaseLiked.value = response.data.isReleaseLiked
+
+            console.log(pickedRelease.value)
         } catch (error) {
             console.log(error)
         }

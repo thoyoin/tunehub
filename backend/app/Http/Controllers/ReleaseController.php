@@ -22,8 +22,8 @@ class ReleaseController extends Controller
                 ->where('slug', 'liked-tracks')
                 ->first();
 
-            $tracks = $release->tracks->map(function ($track) use ($playlist) {
-                $track->is_added = (bool) $playlist->tracks->contains($track->id);
+            $release->tracks->map(function ($track) use ($playlist) {
+                return $track->is_added = (bool) $playlist->tracks->contains($track->id);
             });
 
             $isReleaseLiked = auth()
@@ -33,12 +33,11 @@ class ReleaseController extends Controller
                 ->where('item_id', $release->id)
                 ->exists();
         } else {
-            $tracks = $release->tracks;
+            $release->tracks;
         }
 
         return response()->json([
             'release' => $release,
-            'tracks' => $tracks,
             'isReleaseLiked' => $isReleaseLiked,
         ]);
     }
