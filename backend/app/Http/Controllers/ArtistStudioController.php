@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -19,15 +20,9 @@ class ArtistStudioController extends Controller
         ]);
     }
 
-    public function getReleases(): JsonResponse
+    public function getReleases(GetUserReleases $getUserReleases): JsonResponse
     {
-        $user = Auth::user();
-
-        $releases = $user ? $user
-            ->releases()
-            ->with('tracks')
-            ->orderBy('created_at', 'desc')
-            ->get() : collect();
+        $releases = $getUserReleases->handle();
 
         return response()->json([
             'releases' => $releases,
