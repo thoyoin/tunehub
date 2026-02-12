@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Track\GetUserTracks;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class ArtistStudioController extends Controller
 {
-    public function getTracks(): JsonResponse
+    public function getTracks(GetUserTracks $getUserTracks): JsonResponse
     {
-        $user = Auth::user();
-
-        $tracks = $user ? $user
-            ->tracks()
-            ->with('release')
-            ->orderBy('created_at', 'desc')
-            ->get() : collect();
+        $tracks = $getUserTracks->handle();
 
         return response()->json([
             'tracks' => $tracks,
