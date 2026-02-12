@@ -10,7 +10,11 @@ class MinioService
 {
     public function storeCover($file): string
     {
-        $path = Storage::disk('s3')->putFile('covers', $file);
+        $path = Storage::disk('s3')->putFile('covers', $file, [
+            'Metadata' => [
+                'filename' => $file->getClientOriginalName(),
+            ],
+        ]);
 
         $url = Storage::disk('s3')->url($path);
 
@@ -19,7 +23,11 @@ class MinioService
 
     public function storeProfile($file): string
     {
-        $path = Storage::disk('s3')->putFile('profile_pictures', $file);
+        $path = Storage::disk('s3')->putFile('profile_pictures', $file, [
+            'Metadata' => [
+                'filename' => $file->getClientOriginalName(),
+            ],
+        ]);
 
         $url = Storage::disk('s3')->url($path);
 
@@ -28,7 +36,11 @@ class MinioService
 
     public function storeTrack($file): string
     {
-        $fileName = Storage::disk('s3')->putFile('tracks', $file);
+        $fileName = Storage::disk('s3')->putFile('tracks', $file, [
+            'Metadata' => [
+                'filename' => $file->getClientOriginalName(),
+            ],
+        ]);
 
         $url = Storage::disk('s3')->url($fileName);
 

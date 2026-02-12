@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/LibraryItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/LibraryItemController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/MinioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/MinioService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -457,7 +457,7 @@
       <workItem from="1770733256667" duration="841000" />
       <workItem from="1770782341793" duration="10113000" />
       <workItem from="1770823209815" duration="9578000" />
-      <workItem from="1770903104324" duration="12643000" />
+      <workItem from="1770903104324" duration="16515000" />
     </task>
     <servers />
   </component>
