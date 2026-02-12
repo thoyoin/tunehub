@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
 
             user.value = null;
 
-            await router.push('/login');
+            window.location.href = '/login';
         } catch (error) {
             console.error(error);
         }

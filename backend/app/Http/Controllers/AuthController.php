@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Auth\Logout;
 use App\Actions\Auth\SignIn;
-use App\Actions\Auth\SignUp;
-use App\Actions\LibraryItem\CreateLibraryItem;
-use App\Actions\Playlist\CreateStarterPlaylist;
 use App\Http\Requests\SignInFormRequest;
 use App\Http\Requests\SignUpFormRequest;
 use App\Services\SignUpService;
@@ -42,22 +40,17 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request): JsonResponse
-    {
-        try {
-            Auth::guard('web')->logout();
+    public function logout(
+        Request $request,
+        Logout $logout
+    ): JsonResponse {
+        $logout->handle();
 
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-            return response()->json([
-                'message' => 'Success'
-            ]);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'message' => 'Logged out successfully.',
+        ]);
     }
 }
