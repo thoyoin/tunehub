@@ -31,6 +31,7 @@ class ReleaseService
         $release = $track->release()->withCount('tracks')->first();
 
         if ($release && $release->tracks_count === 1) {
+            $this->minioService->destroyCover($track->cover_url);
             $release->delete();
         }
     }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Http\Requests\TrackStoreRequest;
 use App\Http\Requests\TrackUpdateRequest;
 use App\Models\Release;
 use App\Models\Track;
+use App\Services\DestroyTrackService;
 use App\Services\MinioService;
 use App\Services\ReleaseService;
 use App\Services\TrackService;
@@ -37,70 +39,24 @@ class TrackController
 
     public function destroy(
         Track $track,
-        TrackService $trackService,
-        ReleaseService $releaseService
+        DestroyTrackService $destroyTrackService,
     ): JsonResponse {
         Gate::authorize('delete', $track);
 
-        DB::transaction(function () use ($track, $trackService, $releaseService) {
-            $trackService->destroy($track);
-
-            $releaseService->destroy($track);
-        });
+        $destroyTrackService->handle($track);
 
         return response()->json([
             'message' => 'Track has been deleted successfully.',
         ]);
     }
 
-    public function addToLikes(Track $track): JsonResponse
-    {
-        $playlist = auth()
-            ->user()
-            ->libraryItems()
-            ->where('item_type', 'playlist')
-            ->with('item')
-            ->first()
-            ->item;
+    public function addToLikes(
+        Track $track,
+        TrackService $trackService,
+    ): JsonResponse {
+        $response = $trackService->addToLikes($track);
 
-        $trackIsLiked = $playlist->tracks()->whereKey($track->id)->exists();
-
-        $currentPosition = DB::table('playlist_track')
-            ->where('playlist_id', $playlist->id)
-            ->where('track_id', $track->id)
-            ->value('position');
-
-        if (! $trackIsLiked) {
-            DB::transaction(function () use ($playlist) {
-                DB::table('playlist_track')
-                    ->where('playlist_id', $playlist->id)
-                    ->increment('position');
-            });
-
-            $playlist->tracks()->attach($track, [
-                'position' => 1,
-            ]);
-
-            return response()->json([
-                'likedTrack' => $track->id,
-            ]);
-        } else {
-            DB::transaction(function () use ($playlist, $track, $currentPosition) {
-                DB::table('playlist_track')
-                    ->where('playlist_id', $playlist->id)
-                    ->where('position', '>', $currentPosition)
-                    ->decrement('position');
-
-                DB::table('playlist_track')
-                    ->where('playlist_id', $playlist->id)
-                    ->where('track_id', $track->id)
-                    ->delete();
-            });
-
-            return response()->json([
-                'liked' => false,
-            ]);
-        }
+        return response()->json($response);
     }
 
     public function update(
