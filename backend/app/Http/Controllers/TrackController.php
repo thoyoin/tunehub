@@ -9,9 +9,8 @@ use App\Http\Requests\TrackUpdateRequest;
 use App\Models\Release;
 use App\Models\Track;
 use App\Services\DestroyTrackService;
-use App\Services\MinioService;
+use App\Services\ReleaseService;
 use App\Services\TrackService;
-use App\Services\UploadReleaseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,16 +18,15 @@ class TrackController
 {
     public function store(
         TrackStoreRequest $trackRequest,
-        UploadReleaseService $uploadReleaseService,
+        ReleaseService $releaseService,
     ): JsonResponse {
         Gate::authorize('create', Track::class);
         Gate::authorize('create', Release::class);
 
-        $release = $uploadReleaseService->handle($trackRequest);
+        $releaseService->store($trackRequest);
 
         return response()->json([
             'message' => 'Release has been created successfully.',
-            'release' => $release,
         ]);
     }
 

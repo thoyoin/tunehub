@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Auth\SignIn;
+use App\Actions\Auth\SignUp;
+use App\Actions\LibraryItem\CreateLibraryItem;
+use App\Actions\Playlist\CreateStarterPlaylist;
 use App\Http\Requests\SignInFormRequest;
 use App\Http\Requests\SignUpFormRequest;
-use App\Models\LibraryItem;
-use App\Models\Playlist;
-use App\Models\User;
+use App\Services\SignUpService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -30,29 +30,12 @@ class AuthController extends Controller
         ]);
     }
 
-    public function signUp(SignUpFormRequest $request): JsonResponse
+    public function signUp(
+        SignUpFormRequest $request,
+        SignUpService $signUpService
+    ): JsonResponse
     {
-        $user = User::query()->create([
-            'username' => $request->get('username'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role' => '2',
-        ]);
-
-        $playlist = Playlist::create([
-            'title' => 'Liked tracks',
-            'description' => null,
-            'user_id' => $user->id,
-            'cover_url' => 'http://localhost:9000/tunehub/defaults/likedtracks.png',
-        ]);
-
-        LibraryItem::create([
-            'user_id' => $user->id,
-            'item_type' => 'playlist',
-            'item_id' => $playlist->id,
-        ]);
-
-        Auth::login($user);
+        $signUpService->handle($request);
 
         return response()->json([
             'message' => 'Register successfully',

@@ -4,26 +4,44 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
+
 class ReleaseService
 {
     public function __construct(
         public MinioService $minioService,
+        public TrackService $trackService,
     ) {}
 
-    public function store($data)
+    public function store($request): void
     {
-        $coverUrl = $this->minioService->storeCover($data['cover_url']);
-
-        return auth()
-            ->user()
-            ->releases()
-            ->create([
-                'title' => $data['releaseTitle'],
-                'type' => $data['type'],
-                'artist' => $data['artist'],
-                'cover_url' => $coverUrl,
-                'release_date' => $data['release_date'],
+        DB::transaction(function () use ($request) {
+            $releaseData = $request->only([
+                'releaseTitle',
+                'artist',
+                'type',
+                'cover_url',
+                'release_date'
             ]);
+
+            $files = $request->file('audio_url');
+            $titles = $request->input('title');
+
+            $coverUrl = $this->minioService->storeCover($releaseData['cover_url']);
+
+            $release = auth()
+                ->user()
+                ->releases()
+                ->create([
+                    'title' => $releaseData['releaseTitle'],
+                    'type' => $releaseData['type'],
+                    'artist' => $releaseData['artist'],
+                    'cover_url' => $coverUrl,
+                    'release_date' => $releaseData['release_date'],
+                ]);
+
+            $this->trackService->store($files, $titles, $release);
+        });
     }
 
     public function destroy($track): void
