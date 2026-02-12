@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Actions\Playlist\GetUserLikedPlaylist;
-use App\Models\Track;
+use App\Actions\Track\IsTrackLiked;
 use getID3;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +17,7 @@ class TrackService
         public MinioService $minioService,
         public getID3 $getID3,
         public GetUserLikedPlaylist $getUserLikedPlaylist,
+        public IsTrackLiked $isTrackLiked,
     ) {}
 
     public function store(
@@ -53,7 +54,7 @@ class TrackService
 
     public function addToLikes($track): JsonResponse
     {
-        $isLiked = $this->isTrackLiked($track);
+        $isLiked = $this->isTrackLiked->handle($track);
 
         $likedPlaylist = $this->getUserLikedPlaylist->handle();
 
@@ -96,10 +97,21 @@ class TrackService
         }
     }
 
-    public function isTrackLiked(Track $track): bool
+    public function update($track, $request): void
     {
-        $likedPlaylist = $this->getUserLikedPlaylist->handle();
+        if ($request->hasFile('cover_url')) {
+            $coverUrl = $this->minioService->storeCover($request->file('cover_url'));
 
-        return $likedPlaylist->tracks()->whereKey($track->id)->exists();
+            $track->update([
+                'title' => $request['trackTitle'],
+                'artist' => $request['artist'],
+                'cover_url' => $coverUrl,
+            ]);
+        } else {
+            $track->update([
+                'title' => $request['trackTitle'],
+                'artist' => $request['artist'],
+            ]);
+        }
     }
 }
