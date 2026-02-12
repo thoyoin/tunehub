@@ -9,6 +9,9 @@ use App\Http\Requests\TrackUpdateRequest;
 use App\Models\Release;
 use App\Models\Track;
 use App\Services\MinioService;
+use App\Services\ReleaseService;
+use App\Services\TrackService;
+use App\Services\UploadReleaseService;
 use getID3;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -17,58 +20,17 @@ use Illuminate\Support\Facades\Gate;
 
 class TrackController
 {
-    public GetID3 $getID3;
-
-    public function __construct(getID3 $getID3)
-    {
-        $this->getID3 = $getID3;
-    }
-
     public function store(
         TrackStoreRequest $trackRequest,
-        MinioService $minioService
+        UploadReleaseService $uploadReleaseService,
     ): JsonResponse {
         Gate::authorize('create', Track::class);
         Gate::authorize('create', Release::class);
 
-        $releaseData = $trackRequest->only(['releaseTitle', 'artist', 'type', 'cover_url', 'release_date']);
-
-        $coverUrl = $minioService->storeCover($releaseData['cover_url']);
-
-        $release = auth()
-            ->user()
-            ->releases()
-            ->create([
-                'title' => $releaseData['releaseTitle'],
-                'type' => $releaseData['type'],
-                'artist' => $releaseData['artist'],
-                'cover_url' => $coverUrl,
-                'release_date' => $releaseData['release_date'],
-            ]);
-
-        $files = $trackRequest->file('audio_url');
-        $titles = $trackRequest->input('title');
-
-        foreach ($files as $index => $file) {
-            $title = $titles[$index];
-            $fileInfo = $this->getID3->analyze($file->getPathname());
-            $duration = round($fileInfo['playtime_seconds']);
-            $audioUrl = $minioService->storeTrack($file);
-
-            $release->tracks()->create([
-                'title' => $title,
-                'artist' => $release->artist,
-                'user_id' => Auth::id(),
-                'release_date' => $release->release_date,
-                'audio_url' => $audioUrl,
-                'cover_url' => $release->cover_url,
-                'duration' => $duration,
-                'position' => $index + 1,
-            ]);
-        }
+        $release = $uploadReleaseService->handle($trackRequest);
 
         return response()->json([
-            'message' => 'Track has been created successfully.',
+            'message' => 'Release has been created successfully.',
             'release' => $release,
         ]);
     }
