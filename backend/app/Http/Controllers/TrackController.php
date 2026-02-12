@@ -35,19 +35,18 @@ class TrackController
         ]);
     }
 
-    public function destroy(Track $track, MinioService $minioService): JsonResponse
-    {
+    public function destroy(
+        Track $track,
+        TrackService $trackService,
+        ReleaseService $releaseService
+    ): JsonResponse {
         Gate::authorize('delete', $track);
 
-        $minioService->destroyTrack($track);
+        DB::transaction(function () use ($track, $trackService, $releaseService) {
+            $trackService->destroy($track);
 
-        $release = $track->release()->withCount('tracks')->first();
-
-        $track->delete();
-
-        if ($release && $release->tracks_count === 1) {
-            $release->delete();
-        }
+            $releaseService->destroy($track);
+        });
 
         return response()->json([
             'message' => 'Track has been deleted successfully.',

@@ -25,4 +25,13 @@ class ReleaseService
                 'release_date' => $data['release_date'],
             ]);
     }
+
+    public function destroy($track): void
+    {
+        $release = $track->release()->withCount('tracks')->first();
+
+        if ($release && $release->tracks_count === 1) {
+            $release->delete();
+        }
+    }
 }

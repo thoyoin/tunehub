@@ -38,4 +38,12 @@ class TrackService
             ]);
         }
     }
+
+    public function destroy($track): void
+    {
+        $this->minioService->destroyTrack($track);
+        $this->minioService->destroyCover($track->cover_url);
+
+        $track->delete();
+    }
 }
