@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class ArtistStudioController extends Controller
 {

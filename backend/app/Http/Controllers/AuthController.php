@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Auth\SignIn;
 use App\Http\Requests\SignInFormRequest;
 use App\Http\Requests\SignUpFormRequest;
 use App\Models\LibraryItem;
@@ -17,15 +18,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function signIn(SignInFormRequest $request): JsonResponse|RedirectResponse
+    public function signIn(
+        SignInFormRequest $request,
+        SignIn $signIn,
+    ): JsonResponse|RedirectResponse
     {
-        if (! Auth::attempt($request->validated())) {
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ]);
-        }
-
-        $request->session()->regenerate();
+        $signIn->handle($request);
 
         return response()->json([
             'message' => 'logged in successfully',
