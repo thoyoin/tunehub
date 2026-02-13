@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Release\GetLatestReleases;
 use App\Http\Requests\ReleaseUpdateRequest;
 use App\Models\LibraryItem;
 use App\Models\Release;
@@ -22,12 +23,9 @@ class ReleaseController extends Controller
         ]);
     }
 
-    public function getLatest(): JsonResponse
+    public function getLatest(GetLatestReleases $getLatestReleases): JsonResponse
     {
-        $releases = Release::with('user')
-            ->orderBy('release_date', 'desc')
-            ->limit(10)
-            ->get();
+        $releases = $getLatestReleases->handle();
 
         return response()->json($releases);
     }
