@@ -234,7 +234,6 @@ onMounted(async () => {
                                 </template>
                             </tbody>
                         </table>
-                    </div>
                     <template v-if="artistStore.tracks.tracks?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
@@ -243,6 +242,7 @@ onMounted(async () => {
                             You have no tracks yet.
                         </div>
                     </template>
+                    </div>
                 </template>
                 <template v-if="artistStore.selectedView === 'releases'">
                     <div class="allItems" style="margin-top: 100px">
@@ -362,7 +362,6 @@ onMounted(async () => {
                                 </template>
                             </tbody>
                         </table>
-                    </div>
                     <template v-if="artistStore.releases.releases?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
@@ -371,6 +370,7 @@ onMounted(async () => {
                             You have no releases yet.
                         </div>
                     </template>
+                    </div>
                 </template>
             </div>
         </div>

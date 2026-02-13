@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\LibraryItem\GetAllUserLibraryItems;
 use App\Actions\LibraryItem\GetItemTracks;
 use App\Actions\LibraryItem\GetUserLibraryItem;
 use App\Actions\LibraryItem\IsItemRelease;
@@ -32,15 +33,9 @@ class LibraryItemController extends Controller
         ]);
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(GetAllUserLibraryItems $getAllUserLibraryItems): JsonResponse
     {
-        $user = Auth::user();
-
-        $libraryItems = $user
-            ->libraryItems()
-            ->with('user')
-            ->with('item.tracks')
-            ->get();
+        $libraryItems = $getAllUserLibraryItems->handle();
 
         return response()->json([
             'libraryItems' => $libraryItems,
