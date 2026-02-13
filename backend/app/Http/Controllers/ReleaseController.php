@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Actions\Release\GetLatestReleases;
 use App\Http\Requests\ReleaseUpdateRequest;
-use App\Models\LibraryItem;
 use App\Models\Release;
-use App\Services\MinioService;
 use App\Services\ReleaseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
