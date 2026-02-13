@@ -23,10 +23,8 @@ class UserController extends Controller
 
     public function get(): JsonResponse
     {
-        $user = Auth::user();
-
         return response()->json([
-            'user' => $user,
+            'user' => Auth::user(),
         ]);
     }
 }
