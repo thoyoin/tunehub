@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Actions\Track\StoreTrack;
 use Illuminate\Support\Facades\DB;
 
 class ReleaseService
 {
     public function __construct(
         public MinioService $minioService,
-        public TrackService $trackService,
+        public StoreTrack $storeTrack,
     ) {}
 
     public function store($request): void
@@ -40,7 +41,7 @@ class ReleaseService
                     'release_date' => $releaseData['release_date'],
                 ]);
 
-            $this->trackService->store($files, $titles, $release);
+            $this->storeTrack->handle($files, $titles, $release);
         });
     }
 

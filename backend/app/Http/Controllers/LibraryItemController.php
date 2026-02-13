@@ -10,7 +10,6 @@ use App\Actions\LibraryItem\GetUserLibraryItem;
 use App\Actions\LibraryItem\IsItemRelease;
 use App\Models\LibraryItem;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class LibraryItemController extends Controller
 {
