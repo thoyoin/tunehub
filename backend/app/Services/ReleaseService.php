@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Actions\Release\CheckIfReleaseLiked;
 use App\Actions\Track\StoreTrack;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,7 @@ class ReleaseService
     public function __construct(
         public MinioService $minioService,
         public StoreTrack $storeTrack,
+        public CheckIfReleaseLiked $checkIfReleaseLiked,
     ) {}
 
     public function store($request): void
@@ -52,6 +54,28 @@ class ReleaseService
         if ($release && $release->tracks_count === 1) {
             $this->minioService->destroyCover($track->cover_url);
             $release->delete();
+        }
+    }
+
+    public function get($release)
+    {
+        if (auth()->check()) {
+            $playlist = auth()
+                ->user()
+                ->playlists()
+                ->where('slug', 'liked-tracks')
+                ->first();
+
+            $release->tracks->map(function ($track) use ($playlist) {
+                return $track->is_added = (bool) $playlist->tracks->contains($track->id);
+            });
+
+            $isReleaseLiked = $this->checkIfReleaseLiked->handle($release);
+
+            return [$release, $isReleaseLiked];
+        } else {
+
+            return $release->tracks;
         }
     }
 }

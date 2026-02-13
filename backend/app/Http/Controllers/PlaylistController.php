@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PlaylistUpdateRequest;
 use App\Models\Playlist;
-use App\Services\MinioService;
 use App\Services\PlaylistService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;

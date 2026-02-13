@@ -6,35 +6,15 @@ use App\Http\Requests\ReleaseUpdateRequest;
 use App\Models\LibraryItem;
 use App\Models\Release;
 use App\Services\MinioService;
+use App\Services\ReleaseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 
 class ReleaseController extends Controller
 {
-    public function show(Release $release): JsonResponse
+    public function show(Release $release, ReleaseService $releaseService): JsonResponse
     {
-        $isReleaseLiked = false;
-
-        if (auth()->check()) {
-            $playlist = auth()
-                ->user()
-                ->playlists()
-                ->where('slug', 'liked-tracks')
-                ->first();
-
-            $release->tracks->map(function ($track) use ($playlist) {
-                return $track->is_added = (bool) $playlist->tracks->contains($track->id);
-            });
-
-            $isReleaseLiked = auth()
-                ->user()
-                ->libraryItems()
-                ->where('item_type', 'release')
-                ->where('item_id', $release->id)
-                ->exists();
-        } else {
-            $release->tracks;
-        }
+        [$release, $isReleaseLiked] = $releaseService->get($release);
 
         return response()->json([
             'release' => $release,
