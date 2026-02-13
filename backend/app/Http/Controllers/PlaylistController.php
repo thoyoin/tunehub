@@ -46,18 +46,11 @@ class PlaylistController extends Controller
     public function update(
         Playlist $playlist,
         PlaylistUpdateRequest $request,
-        MinioService $minioService
+        PlaylistService $playlistService
     ): JsonResponse {
         Gate::authorize('update', $playlist);
 
-        $data = $request->only(['title', 'description', 'cover_url']);
-
-        if ($request->hasFile('cover_url')) {
-            $url = $minioService->storeCover($request->file('cover_url'));
-            $data['cover_url'] = $url;
-        }
-
-        $playlist->update($data);
+        $playlist = $playlistService->update($request, $playlist);
 
         return response()->json([
             'message' => 'Successfully updated playlist.',

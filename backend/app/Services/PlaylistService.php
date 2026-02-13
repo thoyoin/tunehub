@@ -67,4 +67,18 @@ class PlaylistService
             $this->minioService->destroyCover($url);
         }
     }
+
+    public function update($request, $playlist): Playlist
+    {
+        $data = $request->only(['title', 'description', 'cover_url']);
+
+        if ($request->hasFile('cover_url')) {
+            $url = $this->minioService->storeCover($request->file('cover_url'));
+            $data['cover_url'] = $url;
+        }
+
+        $playlist->update($data);
+
+        return $playlist;
+    }
 }
