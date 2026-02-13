@@ -24,7 +24,7 @@ class SignUpService
 
             $playlist = $this->createStarterPlaylist->handle($user);
 
-            $this->createLibraryItem->handle($user, $playlist);
+            $this->createLibraryItem->handle($user->id, $playlist->id, 'playlist');
         });
     }
 }

@@ -26,7 +26,7 @@ class TrackService
     public function destroy($track): void
     {
         DB::transaction(function () use ($track) {
-            $this->releaseService->destroy($track);
+            $this->releaseService->destroyByTrack($track);
 
             $this->minioService->destroyTrack($track);
 

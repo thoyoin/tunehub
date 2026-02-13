@@ -34,7 +34,7 @@ class PlaylistService
                 'cover_url' => 'http://localhost:9000/tunehub/defaults/default_cover.png',
             ]);
 
-            $libraryItem = $this->createLibraryItem->handle(auth()->id(), $playlist->id);
+            $libraryItem = $this->createLibraryItem->handle(auth()->id(), $playlist->id, 'playlist');
 
             return $libraryItem->with('item')->where('item_id', $playlist->id)->first();
         });

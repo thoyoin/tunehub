@@ -8,12 +8,12 @@ use App\Models\LibraryItem;
 
 class CreateLibraryItem
 {
-    public function handle($userId, $playlistId): LibraryItem
+    public function handle($userId, $itemId, $type): LibraryItem
     {
         return LibraryItem::create([
             'user_id' => $userId,
-            'item_type' => 'playlist',
-            'item_id' => $playlistId,
+            'item_type' => $type,
+            'item_id' => $itemId,
         ]);
     }
 }
