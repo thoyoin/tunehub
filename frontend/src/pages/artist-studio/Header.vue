@@ -1,15 +1,18 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
+import { useLibraryStore } from '@/stores/library.js'
 
 const router = useRouter();
 const auth = useAuthStore();
+const libraryStore = useLibraryStore();
 
 const logout = () => {
     auth.logout()
 };
 
 const routeHome = () => {
+    libraryStore.clearAllSelectedItems()
     router.push("/");
 }
 

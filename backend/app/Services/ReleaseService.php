@@ -56,7 +56,15 @@ class ReleaseService
 
         if ($release && $release->tracks_count === 1) {
             $this->minioService->destroyCover($track->cover_url);
+
             $release->delete();
+        } else {
+            $currentPosition = $track->position;
+
+            DB::table('tracks')
+                ->where('release_id', $release->id)
+                ->where('position', '>', $currentPosition)
+                ->decrement('position');
         }
     }
 
