@@ -5,37 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PlaylistUpdateRequest;
-use App\Models\LibraryItem;
 use App\Models\Playlist;
 use App\Services\MinioService;
+use App\Services\PlaylistService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 
 class PlaylistController extends Controller
 {
-    public function store(): JsonResponse
+    public function store(PlaylistService $playlistService): JsonResponse
     {
-        $userId = auth()->id();
-        $baseTitle = 'My Playlist';
-
-        $count = Playlist::where('user_id', $userId)
-            ->where('title', 'like', $baseTitle.'%')
-            ->count();
-
-        $playlist = Playlist::create([
-            'title' => 'My Playlist'.' #'.($count + 1),
-            'description' => null,
-            'user_id' => auth()->id(),
-            'cover_url' => 'http://localhost:9000/tunehub/defaults/default_cover.png',
-        ]);
-
-        $libraryItem = LibraryItem::create([
-            'user_id' => $userId,
-            'item_id' => $playlist->id,
-            'item_type' => 'playlist',
-        ]);
-
-        $newLibraryItem = $libraryItem->with('item')->where('item_id', $playlist->id)->first();
+        $newLibraryItem = $playlistService->store();
 
         return response()->json([
             'libraryItem' => $newLibraryItem,
