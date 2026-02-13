@@ -22,24 +22,9 @@ class PlaylistController extends Controller
         ]);
     }
 
-    public function show(Playlist $playlist): JsonResponse
+    public function show(Playlist $playlist, PlaylistService $playlistService): JsonResponse
     {
-        $playlist = $playlist
-            ->with(['user', 'tracks.release'])
-            ->where('id', $playlist->id)
-            ->first();
-
-        $tracks = $playlist
-            ->tracks()
-            ->orderBy('pivot_position')
-            ->with('release')
-            ->get();
-
-        $tracks = $tracks->map(function ($track) {
-            $track->is_added = true;
-
-            return $track;
-        });
+        [$playlist, $tracks] = $playlistService->get($playlist);
 
         return response()->json([
             'playlist' => $playlist,

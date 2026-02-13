@@ -6,6 +6,8 @@ namespace App\Services;
 
 use App\Actions\LibraryItem\CreateLibraryItem;
 use App\Actions\Playlist\CountUserPlaylists;
+use App\Actions\Playlist\GetOrderedPlaylistTracks;
+use App\Actions\Playlist\GetPlaylistById;
 use App\Models\LibraryItem;
 use App\Models\Playlist;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,8 @@ class PlaylistService
     public function __construct(
         public CountUserPlaylists $countUserPlaylists,
         public CreateLibraryItem $createLibraryItem,
+        public GetPlaylistById $getPlaylistById,
+        public GetOrderedPlaylistTracks $getOrderedPlaylistTracks,
     ) {}
 
     public function store(): LibraryItem
@@ -33,5 +37,20 @@ class PlaylistService
 
             return $libraryItem->with('item')->where('item_id', $playlist->id)->first();
         });
+    }
+
+    public function get($playlist): array
+    {
+        $playlist = $this->getPlaylistById->handle($playlist);
+
+        $tracks = $this->getOrderedPlaylistTracks->handle($playlist);
+
+        $tracks = $tracks->map(function ($track) {
+            $track->is_added = true;
+
+            return $track;
+        });
+
+        return [$playlist, $tracks];
     }
 }
