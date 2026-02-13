@@ -32,19 +32,11 @@ class PlaylistController extends Controller
         ]);
     }
 
-    public function destroy(Playlist $playlist, MinioService $minioService): JsonResponse
+    public function destroy(Playlist $playlist, PlaylistService $playlistService): JsonResponse
     {
         Gate::authorize('delete', $playlist);
 
-        $url = $playlist->cover_url;
-
-        $playlist->delete();
-
-        $defaultCover = 'http://localhost:9000/tunehub/defaults/default_cover.png';
-
-        if ($url !== $defaultCover) {
-            $minioService->destroyCover($url);
-        }
+        $playlistService->delete($playlist);
 
         return response()->json([
             'message' => 'Playlist successfully deleted',

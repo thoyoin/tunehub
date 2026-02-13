@@ -19,6 +19,7 @@ class PlaylistService
         public CreateLibraryItem $createLibraryItem,
         public GetPlaylistById $getPlaylistById,
         public GetOrderedPlaylistTracks $getOrderedPlaylistTracks,
+        public MinioService $minioService,
     ) {}
 
     public function store(): LibraryItem
@@ -52,5 +53,18 @@ class PlaylistService
         });
 
         return [$playlist, $tracks];
+    }
+
+    public function delete($playlist): void
+    {
+        $url = $playlist->cover_url;
+
+        $playlist->delete();
+
+        $defaultCover = 'http://localhost:9000/tunehub/defaults/default_cover.png';
+
+        if ($url !== $defaultCover) {
+            $this->minioService->destroyCover($url);
+        }
     }
 }
