@@ -15,7 +15,7 @@ class NoLock extends Lock
     }
 
     /**
-     * Release the lock.
+     * release the lock.
      *
      * @return bool
      */

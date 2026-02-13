@@ -3364,12 +3364,12 @@ class getid3_id3v2 extends getid3_handler
 			TDA	Date
 			TDAT	Date
 			TDEN	Encoding time
-			TDLY	Playlist delay
+			TDLY	playlist delay
 			TDOR	Original release time
 			TDRC	Recording time
-			TDRL	Release time
+			TDRL	release time
 			TDTG	Tagging time
-			TDY	Playlist delay
+			TDY	playlist delay
 			TEN	Encoded by
 			TENC	Encoded by
 			TEXT	Lyricist/Text writer
@@ -3837,7 +3837,7 @@ class getid3_id3v2 extends getid3_handler
 			'TCP' => 'TCMP', // Part of a compilation
 			'TCR' => 'TCOP', // Copyright message
 			'TDA' => 'TDAT', // Date
-			'TDY' => 'TDLY', // Playlist delay
+			'TDY' => 'TDLY', // playlist delay
 			'TEN' => 'TENC', // Encoded by
 			'TFT' => 'TFLT', // File type
 			'TIM' => 'TIME', // Time

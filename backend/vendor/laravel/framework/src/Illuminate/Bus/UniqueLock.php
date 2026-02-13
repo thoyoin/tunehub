@@ -43,7 +43,7 @@ class UniqueLock
     }
 
     /**
-     * Release the lock for the given job.
+     * release the lock for the given job.
      *
      * @param  mixed  $job
      * @return void

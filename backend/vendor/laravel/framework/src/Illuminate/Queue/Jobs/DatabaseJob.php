@@ -41,7 +41,7 @@ class DatabaseJob extends Job implements JobContract
     }
 
     /**
-     * Release the job back into the queue after (n) seconds.
+     * release the job back into the queue after (n) seconds.
      *
      * @param  int  $delay
      * @return void

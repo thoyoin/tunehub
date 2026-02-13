@@ -14,7 +14,7 @@ class Text extends \Faker\Provider\Text
      *
      * Title: Madame Bovary
      * Author: Gustave Flaubert
-     * Release Date: November 26, 2004 [EBook #14155]
+     * release Date: November 26, 2004 [EBook #14155]
      * [Last updated: November 28, 2011]
      * Language: French
      *

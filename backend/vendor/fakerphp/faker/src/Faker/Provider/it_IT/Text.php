@@ -14,7 +14,7 @@ class Text extends \Faker\Provider\Text
      *
      * Title: Una notte bizzarra
      * Author: Anton Giulio Barrili
-     * Release Date: August 8, 2009 [EBook #29636]
+     * release Date: August 8, 2009 [EBook #29636]
      * Language: Italian
      *
      * *** START OF THIS PROJECT GUTENBERG EBOOK UNA NOTTE BIZZARRA ***

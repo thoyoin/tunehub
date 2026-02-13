@@ -60,7 +60,7 @@ interface StreamLockable extends IStream
     const LOCK_EXCLUSIVE = \LOCK_EX;
 
     /**
-     * Release a lock (shared or exclusive).
+     * release a lock (shared or exclusive).
      *
      * @const int
      */

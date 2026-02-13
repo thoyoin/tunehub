@@ -25,7 +25,7 @@ class TrackController extends Controller
         $releaseService->store($trackRequest);
 
         return response()->json([
-            'message' => 'Release has been created successfully.',
+            'message' => 'release has been created successfully.',
         ]);
     }
 

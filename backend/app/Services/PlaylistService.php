@@ -28,7 +28,7 @@ class PlaylistService
             $numberOfPlaylists = $this->countUserPlaylists->handle();
 
             $playlist = Playlist::create([
-                'title' => 'My Playlist'.' #'.($numberOfPlaylists + 1),
+                'title' => 'My playlist'.' #'.($numberOfPlaylists + 1),
                 'description' => null,
                 'user_id' => auth()->id(),
                 'cover_url' => 'http://localhost:9000/tunehub/defaults/default_cover.png',

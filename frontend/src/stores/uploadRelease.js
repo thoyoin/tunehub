@@ -57,13 +57,14 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
             await artistStore.fetchReleases()
             await artistStore.fetchTracks()
 
-            toast.success('Release upload successfully!')
+            toast.success('release upload successfully!')
         } catch (e) {
             console.error(e)
 
             toast.error('Something went wrong.')
         } finally {
             processing.value = false
+
         }
     }
 

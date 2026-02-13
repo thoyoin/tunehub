@@ -38,7 +38,7 @@ class PlaylistController extends Controller
         $playlistService->delete($playlist);
 
         return response()->json([
-            'message' => 'Playlist successfully deleted',
+            'message' => 'playlist successfully deleted',
         ]);
     }
 

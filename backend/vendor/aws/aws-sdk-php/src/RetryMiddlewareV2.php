@@ -91,7 +91,7 @@ class RetryMiddlewareV2
             $result
         ) use ($options, $quotaManager, $retryCurlErrors, $maxAttempts) {
 
-            // Release retry tokens back to quota on a successful result
+            // release retry tokens back to quota on a successful result
             $quotaManager->releaseToQuota($result);
 
             // Allow command-level option to override this value

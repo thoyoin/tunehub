@@ -17,7 +17,7 @@ class Text extends \Faker\Provider\Text
      *
      * Title: Krakatit
      * Author: Karel Čapek
-     * Release Date: 25. 12. 1923 – 15. 4. 1924
+     * release Date: 25. 12. 1923 – 15. 4. 1924
      * Language: Czech
      *
      * @see https://cs.wikisource.org/wiki/Krakatit

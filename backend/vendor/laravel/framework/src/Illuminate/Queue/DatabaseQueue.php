@@ -221,7 +221,7 @@ class DatabaseQueue extends Queue implements QueueContract, ClearableQueue
     }
 
     /**
-     * Release a reserved job back onto the queue after (n) seconds.
+     * release a reserved job back onto the queue after (n) seconds.
      *
      * @param  string  $queue
      * @param  \Illuminate\Queue\Jobs\DatabaseJobRecord  $job

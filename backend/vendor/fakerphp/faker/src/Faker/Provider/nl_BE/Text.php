@@ -19,7 +19,7 @@ class Text extends \Faker\Provider\Text
      *
      * Author: Charles de Coster
      *
-     * Release Date: July 3, 2005 [EBook #11208]
+     * release Date: July 3, 2005 [EBook #11208]
      * [Last updated: March 14, 2015]
      *
      * Language: Dutch

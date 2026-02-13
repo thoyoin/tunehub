@@ -1,8 +1,8 @@
 import {defineStore} from "pinia";
-import { useReleaseStore } from "@/stores/release.js";
 import { useAuthStore } from "@/stores/auth.js";
 import {ref, watch} from "vue";
 import api from "@/lib/api.js";
+import { useRouter } from "vue-router";
 
 export const useLibraryStore = defineStore('library',() => {
     const items = ref([]);
@@ -12,8 +12,8 @@ export const useLibraryStore = defineStore('library',() => {
     const itemTracks = ref([]);
     const isRelease = ref(false);
 
-    const releaseStore = useReleaseStore();
     const auth = useAuthStore();
+    const router = useRouter();
 
     async function fetchItems() {
         if (auth.user) {
@@ -51,7 +51,6 @@ export const useLibraryStore = defineStore('library',() => {
     function clearAllSelectedItems() {
         libraryItem.value = null;
         selectedLibraryItem.value = null;
-        releaseStore.clearPickedRelease();
     }
 
     function clearSelectedItem() {
@@ -73,12 +72,16 @@ export const useLibraryStore = defineStore('library',() => {
             isRelease.value = response.data.isRelease;
 
             if (isRelease.value) {
-                await releaseStore.getRelease(libraryItem.value.item.id)
+                await router.push({
+                    name: "release",
+                    params: { releaseId: libraryItem.value.item.id }
+                })
 
             } else {
-
-                await getPlaylist(libraryItem.value.item.id)
-                releaseStore.clearPickedRelease();
+                await router.push({
+                    name: "playlist",
+                    params: { playlistId: libraryItem.value.item.id }
+                })
             }
         } catch (error) {
             console.error(error)

@@ -159,7 +159,7 @@ class LockableFile
     }
 
     /**
-     * Release the lock on the file.
+     * release the lock on the file.
      *
      * @return $this
      */

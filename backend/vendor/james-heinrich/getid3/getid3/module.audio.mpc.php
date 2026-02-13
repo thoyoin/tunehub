@@ -469,7 +469,7 @@ class getid3_mpc extends getid3_handler
 	 */
 	public function MPCencoderVersionLookup($encoderversion) {
 		//Encoder version * 100  (106 = 1.06)
-		//EncoderVersion % 10 == 0        Release (1.0)
+		//EncoderVersion % 10 == 0        release (1.0)
 		//EncoderVersion %  2 == 0        Beta (1.06)
 		//EncoderVersion %  2 == 1        Alpha (1.05a...z)
 

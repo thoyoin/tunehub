@@ -18,7 +18,7 @@ class Text extends \Faker\Provider\Text
      * Author: Lewis Carroll
      *
      * Posting Date: June 25, 2008 [EBook #11]
-     * Release Date: March, 1994
+     * release Date: March, 1994
      * [Last updated: December 20, 2011]
      *
      * Language: English

@@ -18,7 +18,7 @@ class Text extends \Faker\Provider\Text
      *
      * Author: Honoré Beaugrand
      *
-     * Release Date: July 5, 2005 [EBook #16210]
+     * release Date: July 5, 2005 [EBook #16210]
      *
      * Language: French
      *

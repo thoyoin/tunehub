@@ -30,8 +30,10 @@
                 <div class="p-4">
                     <template v-if="auth.user">
                         <form method="POST" @submit.prevent="libraryStore.createPlaylist()">
-                            <button @click.prevent="libraryStore.createPlaylist()"
-                                    class="btn btn-artists rounded-5 px-2 py-0">
+                            <button
+                                type="submit"
+                                class="btn btn-artists rounded-5 px-2 py-0"
+                            >
                                 <img src="@/assets/svg/add.svg" alt="add">
                             </button>
                         </form>
@@ -39,15 +41,18 @@
                 </div>
             </div>
             <div class="d-flex flex-row mt-3 p-2 overflow-auto">
-                <div v-if="libraryStore.isLoading" class="d-flex justify-content-center w-100">
-                    <div class="fw-bold ">Loading...</div>
+                <div
+                    v-if="libraryStore.isLoading"
+                    class="d-flex justify-content-center w-100 opacity-50"
+                >
+                    <div class="fw-bold">Loading...</div>
                 </div>
-                <template v-if="auth.user">
+                <template v-if="auth.user && !libraryStore.isLoading">
                     <div
                         class="btn-group d-flex flex-column p-1 mb-2 w-100"
                         role="group"
                     >
-                        <div v-for="libraryItem in libraryStore.items" :key="libraryItem.id">
+                        <div v-for="libraryItem in libraryStore.items">
                             <div
                                 @click="libraryStore.selectLibraryItem(libraryItem.id)"
                                 style="height: 58px"

@@ -66,7 +66,7 @@ trait InteractsWithQueue
     }
 
     /**
-     * Release the job back into the queue after (n) seconds.
+     * release the job back into the queue after (n) seconds.
      *
      * @param  \DateTimeInterface|\DateInterval|int  $delay
      * @return void

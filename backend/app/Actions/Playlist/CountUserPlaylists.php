@@ -10,7 +10,7 @@ class CountUserPlaylists
 {
     public function handle()
     {
-        $baseTitle = 'My Playlist';
+        $baseTitle = 'My playlist';
 
         return Playlist::where('user_id', auth()->id())
             ->where('title', 'like', $baseTitle.'%')

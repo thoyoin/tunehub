@@ -18,7 +18,7 @@ class Text extends \Faker\Provider\Text
      * Author: Johann Wolfgang von Goethe
      *
      * Posting Date: June 28, 2011 [EBook #2407]
-     * Release Date: November, 2000
+     * release Date: November, 2000
      *
      * Language: German
      *

@@ -17,7 +17,7 @@ interface CurlFactoryInterface
     public function create(RequestInterface $request, array $options): EasyHandle;
 
     /**
-     * Release an easy handle, allowing it to be reused or closed.
+     * release an easy handle, allowing it to be reused or closed.
      *
      * This function must call unset on the easy handle's "handle" property.
      */

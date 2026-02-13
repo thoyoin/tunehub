@@ -8,6 +8,7 @@ export const useReleaseStore = defineStore('release', () => {
     const pickedRelease = ref(null);
     const releaseTracks = ref(null);
     const isReleaseLiked = ref(false);
+    const isLoading = ref(false);
 
     const libraryStore = useLibraryStore();
 
@@ -23,6 +24,8 @@ export const useReleaseStore = defineStore('release', () => {
 
     const getRelease = async (id) => {
         try {
+            isLoading.value = true;
+
             const response = await api.get(`/api/release/${id}`)
 
             pickedRelease.value = response.data.release;
@@ -30,6 +33,8 @@ export const useReleaseStore = defineStore('release', () => {
             isReleaseLiked.value = response.data.isReleaseLiked
         } catch (error) {
             console.log(error)
+        } finally {
+            isLoading.value = false;
         }
     }
 
@@ -67,5 +72,6 @@ export const useReleaseStore = defineStore('release', () => {
         addTrackToLikes,
         clearPickedRelease,
         getRelease,
+        isLoading,
     }
 })

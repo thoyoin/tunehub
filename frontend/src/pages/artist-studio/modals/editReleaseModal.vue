@@ -35,7 +35,7 @@ const handleReleaseUpdate = async () => {
         await artistStore.fetchReleases()
         await artistStore.fetchTracks()
 
-        toast.success('Release has been successfully updated!');
+        toast.success('release has been successfully updated!');
     } catch (error) {
         console.log(error);
         toast.error('Something went wrong.');

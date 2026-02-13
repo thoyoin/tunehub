@@ -18,7 +18,7 @@ class Text extends \Faker\Provider\Text
      *
      * Author: Machado de Assis
      *
-     * Release Date: October 15, 2017 [EBook #55752]
+     * release Date: October 15, 2017 [EBook #55752]
      *
      * Language: Portuguese
      *

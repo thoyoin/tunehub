@@ -12,6 +12,11 @@
         auth.logout()
     };
 
+    const routeHome = () => {
+        router.push('/');
+        libraryStore.clearAllSelectedItems()
+    }
+
 </script>
 
 <template>
@@ -24,7 +29,7 @@
             class="d-flex rounded-5 flex-row bg-minor py-2 w-100 justify-content-between align-items-center"
         >
             <button
-                @click="libraryStore.clearAllSelectedItems"
+                @click="routeHome"
                 class="d-flex btn p-2 rounded-5 me-4 ms-3 align-items-center"
             >
                 <img src="@/assets/svg/logo.svg" alt="logo">
@@ -46,7 +51,7 @@
                     </template>
                     <template v-else>
                         <button
-                            @click="router.push('artists')"
+                            @click="router.push('/artists')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"
                         >
                             Artist Studio

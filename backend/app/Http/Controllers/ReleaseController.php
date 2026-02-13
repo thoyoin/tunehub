@@ -42,7 +42,7 @@ class ReleaseController extends Controller
         $releaseService->destroy($release);
 
         return response()->json([
-            'message' => 'Release deleted successfully',
+            'message' => 'release deleted successfully',
         ]);
     }
 
@@ -56,7 +56,7 @@ class ReleaseController extends Controller
         $releaseService->update($release, $request);
 
         return response()->json([
-            'message' => 'Release updated successfully',
+            'message' => 'release updated successfully',
         ]);
     }
 }

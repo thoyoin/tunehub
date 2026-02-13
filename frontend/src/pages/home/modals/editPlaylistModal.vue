@@ -35,7 +35,7 @@
 
             await libraryStore.fetchItems()
 
-            toast.success('Playlist updated successfully!');
+            toast.success('playlist updated successfully!');
         } catch (error) {
             console.log(error);
 

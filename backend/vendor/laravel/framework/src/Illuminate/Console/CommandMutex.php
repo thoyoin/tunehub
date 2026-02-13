@@ -21,7 +21,7 @@ interface CommandMutex
     public function exists($command);
 
     /**
-     * Release the mutex for the given command.
+     * release the mutex for the given command.
      *
      * @param  \Illuminate\Console\Command  $command
      * @return bool

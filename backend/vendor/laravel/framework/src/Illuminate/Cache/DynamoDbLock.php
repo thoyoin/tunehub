@@ -41,7 +41,7 @@ class DynamoDbLock extends Lock
     }
 
     /**
-     * Release the lock.
+     * release the lock.
      *
      * @return bool
      */
@@ -55,7 +55,7 @@ class DynamoDbLock extends Lock
     }
 
     /**
-     * Release this lock in disregard of ownership.
+     * release this lock in disregard of ownership.
      *
      * @return void
      */

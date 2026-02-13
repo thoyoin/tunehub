@@ -134,7 +134,7 @@ LUA;
     }
 
     /**
-     * Release the lock.
+     * release the lock.
      *
      * @param  string  $key
      * @param  string  $id

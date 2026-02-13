@@ -194,7 +194,7 @@ class getID3_cached_dbm extends getID3
                 $this->dba = null;
             }
 
-            // Release lock if acquired
+            // release lock if acquired
             if (is_resource($this->lock)) {
                 flock($this->lock, LOCK_UN);
                 fclose($this->lock);

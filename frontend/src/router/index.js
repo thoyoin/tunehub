@@ -4,6 +4,8 @@ import Home from "@/pages/home/Home.vue";
 import Register from "@/pages/auth/Register.vue";
 import ArtistStudio from "@/pages/artist-studio/ArtistStudio.vue";
 import { useAuthStore } from '@/stores/auth.js'
+import Release from '@/pages/release/Release.vue'
+import Playlist from '@/pages/playlist/Playlist.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +24,16 @@ const router = createRouter({
           path: '/',
           name: 'home',
           component: Home,
+      },
+      {
+          path: '/release/:releaseId',
+          name: 'release',
+          component: Release
+      },
+      {
+          path: '/playlist/:playlistId',
+          name: 'playlist',
+          component: Playlist
       },
       {
           path: '/artists',

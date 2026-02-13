@@ -24,7 +24,7 @@ interface Lock
     public function block($seconds, $callback = null);
 
     /**
-     * Release the lock.
+     * release the lock.
      *
      * @return bool
      */

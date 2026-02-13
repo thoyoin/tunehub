@@ -16,7 +16,7 @@ class Text extends \Faker\Provider\Text
      *
      * Author: Nescio
      *
-     * Release Date: August 17, 2009 [EBook #29719]
+     * release Date: August 17, 2009 [EBook #29719]
      *
      * Language: Dutch
      *

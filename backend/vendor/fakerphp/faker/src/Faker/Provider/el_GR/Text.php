@@ -16,7 +16,7 @@ class Text extends \Faker\Provider\Text
      * Author: Πηνελόπη Δέλτα
      *
      * Posting Date: January 6, 2016
-     * Release Date: 1932
+     * release Date: 1932
      * [Last updated: September 1, 2013]
      *
      * Language: Greek

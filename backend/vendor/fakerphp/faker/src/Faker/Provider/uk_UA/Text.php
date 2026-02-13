@@ -16,7 +16,7 @@ class Text extends \Faker\Provider\Text
      * Author: Іван Франко
      *
      * Posting Date: July 19, 2007
-     * Release Date: 1882
+     * release Date: 1882
      * [Last updated: November 14, 2012]
      *
      * Language: Ukrainian

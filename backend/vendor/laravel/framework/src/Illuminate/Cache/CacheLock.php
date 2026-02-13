@@ -49,7 +49,7 @@ class CacheLock extends Lock
     }
 
     /**
-     * Release the lock.
+     * release the lock.
      *
      * @return bool
      */
