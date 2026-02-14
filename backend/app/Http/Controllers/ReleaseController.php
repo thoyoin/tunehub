@@ -15,11 +15,11 @@ class ReleaseController extends Controller
 {
     public function show(Release $release, ReleaseService $releaseService): JsonResponse
     {
-        [$release, $isReleaseLiked] = $releaseService->get($release);
+        [$release, $tracks] = $releaseService->get($release);
 
         return response()->json([
             'release' => $release,
-            'isReleaseLiked' => $isReleaseLiked,
+            'tracks' => $tracks,
         ]);
     }
 

@@ -88,16 +88,18 @@ class ReleaseService
                 ->where('slug', 'liked-tracks')
                 ->first();
 
-            $release->tracks->map(function ($track) use ($playlist) {
+            $tracks = $release->tracks->map(function ($track) use ($playlist) {
                 return $track->is_added = (bool) $playlist->tracks->contains($track->id);
             });
 
             $isReleaseLiked = $this->checkIfReleaseLiked->handle($release);
 
-            return [$release, $isReleaseLiked];
+            $release->isReleaseLiked = $isReleaseLiked;
+
+            return [$release, $tracks];
         } else {
 
-            return $release->tracks;
+            return [$release, $release->tracks];
         }
     }
 

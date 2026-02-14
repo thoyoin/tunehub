@@ -7,6 +7,7 @@ import { useReleaseStore } from '@/stores/release.js'
 import { onMounted, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.js'
 import { useLibraryStore } from '@/stores/library.js'
+import AuthenticateModal from '@/pages/release/modals/authenticateModal.vue'
 
 const route = useRoute()
 const releaseStore = useReleaseStore()
@@ -36,6 +37,7 @@ onMounted(async () => {
     <Header></Header>
     <Library></Library>
     <Content></Content>
+    <authenticate-modal/>
 </template>
 
 <style scoped></style>

@@ -3,13 +3,11 @@ import { useLibraryStore } from '@/stores/library.js'
 import { useAuthStore } from '@/stores/auth.js'
 import { useReleaseStore } from '@/stores/release.js'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
-import { useToast } from 'vue-toastification'
 import { watch } from 'vue'
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
 import { useVibrantPalette } from '@/composables/useVibrantPalette.js'
 
-const libraryStore = useLibraryStore()
 const auth = useAuthStore()
 const releaseStore = useReleaseStore()
 const { palette, getCoverPalette } = useVibrantPalette()
@@ -47,7 +45,7 @@ watch(
                    }"
             >
                 <div style="padding: 95px 0 0 320px" class="d-flex flex-column">
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row mb-5">
                         <div>
                             <img
                                 :src="releaseStore.pickedRelease?.cover_url"
@@ -73,7 +71,7 @@ watch(
                         </div>
                     </div>
                     <template v-if="auth.user">
-                        <div class="pt-5">
+                        <div class="pb-3">
                             <button
                                 class="btn btn-add-like mb-4"
                                 @click="
