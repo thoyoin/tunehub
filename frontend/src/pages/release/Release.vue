@@ -43,4 +43,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    min-height: 0;
+}
 </style>

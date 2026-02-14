@@ -15,7 +15,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div>
+    <div class="flex-grow-1 release-content position-relative">
         <div class="d-flex flex-column">
             <div class="d-flex position-relative">
                 <div
