@@ -26,7 +26,7 @@ const handlePlaylistDeletion = async () => {
 
         libraryStore.clearSelectedItem()
 
-        toast.success('playlist deleted successfully.')
+        toast.success('Playlist deleted successfully.')
 
         await router.push('/')
     } catch (error) {
@@ -65,7 +65,7 @@ watch(
         >
             <div>
                 <img
-                    :src="libraryStore.libraryItem.cover_url"
+                    :src="libraryStore.libraryItem?.cover_url"
                     alt="cover"
                     :style="{
                         width: '210px',
@@ -78,16 +78,16 @@ watch(
                 <h1
                     style="font-size: 55px"
                     class="ms-4 fw-bold"
-                    v-text="libraryStore.libraryItem.title"
+                    v-text="libraryStore.libraryItem?.title"
                 ></h1>
                 <h5
                     style="opacity: 0.3; font-size: 20px"
                     class="ms-4 mt-1 fw-light"
-                    v-text="libraryStore.libraryItem.description"
+                    v-text="libraryStore.libraryItem?.description"
                 ></h5>
                 <div class="d-flex flex-row mt-1 align-items-center">
                     <img
-                        :src="libraryStore.libraryItem.user?.profile_picture"
+                        :src="libraryStore.libraryItem?.user.profile_picture"
                         style="width: 30px; height: 30px"
                         class="rounded-5 ms-4"
                         alt="profile"
@@ -95,13 +95,13 @@ watch(
                     <h3
                         style="opacity: 10"
                         class="ms-2 mb-0 fs-5 fw-bold"
-                        v-text="libraryStore.libraryItem.user.username"
+                        v-text="libraryStore.libraryItem?.user.username"
                     ></h3>
                     <span style="font-size: 25px; opacity: 50%; padding: 0 5px 2px 5px">•</span>
                     <h3
                         style="font-size: 18px; opacity: 50%"
                         class="fw-bold m-0"
-                        v-text="libraryStore.itemTracks.length + ' tracks'"
+                        v-text="libraryStore.itemTracks?.length + ' tracks'"
                     ></h3>
                 </div>
             </div>
@@ -127,7 +127,7 @@ watch(
                                 Edit
                             </button>
                         </li>
-                        <li v-if="libraryStore.libraryItem.slug !== 'liked-tracks'">
+                        <li v-if="libraryStore.libraryItem?.slug !== 'liked-tracks'">
                             <button type="submit" class="dropdown-item">Delete</button>
                         </li>
                     </ul>

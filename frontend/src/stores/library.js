@@ -11,6 +11,7 @@ export const useLibraryStore = defineStore('library',() => {
     const libraryItem = ref(null);
     const itemTracks = ref([]);
     const isRelease = ref(false);
+    const isReady = ref(false);
 
     const auth = useAuthStore();
     const router = useRouter();
@@ -27,6 +28,7 @@ export const useLibraryStore = defineStore('library',() => {
                 console.error(e);
             } finally {
                 isLoading.value = false;
+                isReady.value = true;
             }
         }
     }
@@ -101,5 +103,6 @@ export const useLibraryStore = defineStore('library',() => {
         libraryItem,
         itemTracks,
         isRelease,
+        isReady,
     };
 })

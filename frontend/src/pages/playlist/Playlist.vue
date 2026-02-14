@@ -24,7 +24,7 @@ onMounted(async () => {
         await auth.fetchUser()
     }
 
-    if (!libraryStore.items) {
+    if (!libraryStore.isReady) {
         await libraryStore.fetchItems()
     }
 })

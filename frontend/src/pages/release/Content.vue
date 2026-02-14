@@ -1,5 +1,4 @@
 <script setup>
-import { useLibraryStore } from '@/stores/library.js'
 import { useAuthStore } from '@/stores/auth.js'
 import { useReleaseStore } from '@/stores/release.js'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
