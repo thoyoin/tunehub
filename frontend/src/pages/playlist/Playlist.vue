@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router'
 import { useLibraryStore } from '@/stores/library.js'
 import { onMounted, watch } from 'vue'
 import { useAuthStore} from '@/stores/auth.js'
-import EditPlaylistModal from '@/pages/release/modals/editPlaylistModal.vue'
+import EditPlaylistModal from '@/pages/playlist/modals/editPlaylistModal.vue'
 
 const route = useRoute()
 const libraryStore = useLibraryStore()

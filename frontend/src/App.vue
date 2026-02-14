@@ -138,7 +138,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     .track-row {
         &:hover td {
             background-color: rgba(50,50,51, 50%) !important;
-            cursor: pointer !important;
+            cursor: default !important;
             transition: background-color .2s ease, box-shadow .15s ease !important;
         }
 

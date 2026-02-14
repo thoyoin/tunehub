@@ -395,24 +395,13 @@ onMounted(async () => {
     box-shadow: 0 0 5px 3px rgb(32, 32, 32) !important;
 }
 
-.scrollable-table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-}
-
 .scrollable-table thead,
 .scrollable-table tbody tr {
     display: table !important;
     width: 100% !important;
     table-layout: fixed !important;
 }
-.scrollable-tbody {
-    display: block !important;
-    max-height: 75vh !important;
-    padding-bottom: 130px !important;
-    overflow-y: auto !important;
-    width: 100% !important;
-}
+
 .allItems {
     display: flex !important;
     flex-direction: column !important;

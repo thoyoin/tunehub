@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/modals/editPlaylistModal.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/counter.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +305,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHELLCHECK.PATH": "I do mind",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/thoyoin/Desktop/TuneHub/frontend/src/pages/release/modals",
+    "last_opened_file_path": "/Users/thoyoin/Desktop/TuneHub/frontend/src/pages/playlist/modals",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -328,11 +330,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/pages/playlist/modals" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/release/modals" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Playlist" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
       <recent name="$PROJECT_DIR$/frontend" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
@@ -462,7 +464,7 @@
       <workItem from="1770903104324" duration="17178000" />
       <workItem from="1770976323302" duration="16683000" />
       <workItem from="1770995138792" duration="5367000" />
-      <workItem from="1771041660412" duration="7180000" />
+      <workItem from="1771041660412" duration="7603000" />
     </task>
     <servers />
   </component>
