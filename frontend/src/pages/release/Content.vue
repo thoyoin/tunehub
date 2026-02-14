@@ -24,13 +24,17 @@ watch(
 </script>
 
 <template>
-    <template v-if="releaseStore.isLoading">
-        <div class="fw-bold fs-5 mx-auto my-auto" style="color: rgba(228,228,228, 0.5)">
-            Loading...
-        </div>
-    </template>
-    <template v-else>
-        <div style="color: rgb(228, 228, 228)" class="flex-grow-1 release-content">
+        <div style="color: rgb(228, 228, 228)" class="flex-grow-1 release-content position-relative">
+            <transition name="fade">
+                <div
+                    v-if="releaseStore.isLoading"
+                    class="loading-overlay d-flex align-items-center justify-content-center"
+                >
+                    <span class="fw-bold fs-5 opacity-50">
+                        Loading...
+                    </span>
+                </div>
+            </transition>
             <div
                 :style="{
                        background: `
@@ -214,7 +218,6 @@ watch(
                 ></span>
             </div>
         </div>
-    </template>
 </template>
 
 <style scoped lang="scss">
@@ -305,4 +308,27 @@ watch(
         height: 4px;
     }
 }
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(32, 32, 32, 0.35);
+    backdrop-filter: blur(4px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
 </style>

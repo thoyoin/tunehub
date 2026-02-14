@@ -21,7 +21,7 @@
         <div
             style="color: rgb(228,228,228); max-width: 280px; max-height: 645px;
                 margin: 90px 0 15px 0; flex: 0 0 auto"
-            class="d-flex h-100 z-1 border position-fixed w-100 rounded-5 ms-3 flex-column bg-minor"
+            class="d-flex h-100 z-2 border position-fixed w-100 rounded-5 ms-3 flex-column bg-minor"
         >
             <div class="d-flex justify-content-between">
                 <div class="fw-bold p-4" >
@@ -42,12 +42,12 @@
             </div>
             <div class="d-flex flex-row mt-3 p-2 overflow-auto">
                 <div
-                    v-if="libraryStore.isLoading"
+                    v-if="libraryStore.isLibraryLoading"
                     class="d-flex justify-content-center w-100 opacity-50"
                 >
                     <div class="fw-bold">Loading...</div>
                 </div>
-                <template v-if="auth.user && !libraryStore.isLoading">
+                <template v-if="auth.user && !libraryStore.isLibraryLoading">
                     <div
                         class="btn-group d-flex flex-column p-1 mb-2 w-100"
                         role="group"
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                 </template>
-                <template v-if="!auth.user && !libraryStore.isLoading">
+                <template v-if="!auth.user && !libraryStore.isLibraryLoading">
                     <div
                         class="d-flex flex-column p-3 bg-major rounded-3 justify-content-center align-items-center w-100"
                     >

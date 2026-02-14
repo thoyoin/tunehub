@@ -11,6 +11,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
 </template>
 
 <style lang="scss">
+
     .bg-minor {
         background-color: rgba(50,50,51, 15%) !important;
         backdrop-filter: blur(8px) !important;

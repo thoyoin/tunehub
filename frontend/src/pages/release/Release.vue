@@ -34,10 +34,13 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Header></Header>
-    <Library></Library>
-    <Content></Content>
-    <authenticate-modal/>
+    <div class="app-wrapper">
+        <Header></Header>
+        <Library></Library>
+        <Content/>
+        <authenticate-modal />
+    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

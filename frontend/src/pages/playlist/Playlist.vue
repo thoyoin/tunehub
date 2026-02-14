@@ -33,10 +33,13 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Header></Header>
-    <Library></Library>
-    <Content></Content>
-    <edit-playlist-modal v-if="libraryStore.libraryItem" />
+    <div class="app-wrapper">
+        <Header></Header>
+        <Library></Library>
+        <Content/>
+        <edit-playlist-modal v-if="libraryStore.libraryItem" />
+    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

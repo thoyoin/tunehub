@@ -6,7 +6,8 @@ import { useRouter } from "vue-router";
 
 export const useLibraryStore = defineStore('library',() => {
     const items = ref([]);
-    const isLoading = ref(false);
+    const isLibraryLoading = ref(false);
+    const isPlaylistLoading = ref(false);
     const selectedLibraryItem = ref(null);
     const libraryItem = ref(null);
     const itemTracks = ref([]);
@@ -18,7 +19,7 @@ export const useLibraryStore = defineStore('library',() => {
 
     async function fetchItems() {
         if (auth.user) {
-            isLoading.value = true;
+            isLibraryLoading.value = true;
 
             try {
                 const { data } = await api.get(`/api/libraryItems`)
@@ -27,17 +28,25 @@ export const useLibraryStore = defineStore('library',() => {
             } catch (e) {
                 console.error(e);
             } finally {
-                isLoading.value = false;
+                isLibraryLoading.value = false;
                 isReady.value = true;
             }
         }
     }
 
     async function getPlaylist(playlist) {
-        const response = await api.get(`/api/playlist/${playlist}`)
+        try {
+            isPlaylistLoading.value = true;
 
-        libraryItem.value = response.data.playlist;
-        itemTracks.value = response.data.tracks;
+            const response = await api.get(`/api/playlist/${playlist}`)
+
+            libraryItem.value = response.data.playlist;
+            itemTracks.value = response.data.tracks;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isPlaylistLoading.value = false;
+        }
     }
 
     async function createPlaylist() {
@@ -92,7 +101,8 @@ export const useLibraryStore = defineStore('library',() => {
 
     return {
         items,
-        isLoading,
+        isLibraryLoading,
+        isPlaylistLoading,
         fetchItems,
         createPlaylist,
         selectLibraryItem,
