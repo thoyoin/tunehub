@@ -105,34 +105,36 @@ watch(
                     ></h3>
                 </div>
             </div>
-            <div class="w-50 text-end p-2 me-5 z-">
-                <a
-                    class="btn btn-settings p-0"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                    <img src="@/assets/svg/settings.svg" alt="settings" />
-                </a>
-                <form @submit.prevent="handlePlaylistDeletion">
-                    <ul class="dropdown-menu">
-                        <li>
-                            <button
-                                type="button"
-                                class="dropdown-item"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editModal"
-                            >
-                                Edit
-                            </button>
-                        </li>
-                        <li v-if="libraryStore.libraryItem?.slug !== 'liked-tracks'">
-                            <button type="submit" class="dropdown-item">Delete</button>
-                        </li>
-                    </ul>
-                </form>
-            </div>
+            <template v-if="libraryStore.libraryItem?.slug !== 'liked-tracks'">
+                <div class="w-50 text-end p-2 me-5 z-">
+                    <a
+                        class="btn btn-settings p-0"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        <img src="@/assets/svg/settings.svg" alt="settings" />
+                    </a>
+                    <form @submit.prevent="handlePlaylistDeletion">
+                        <ul class="dropdown-menu">
+                            <li>
+                                <button
+                                    type="button"
+                                    class="dropdown-item"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editModal"
+                                >
+                                    Edit
+                                </button>
+                            </li>
+                            <li>
+                                <button type="submit" class="dropdown-item">Delete</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </template>
         </div>
         <table class="table table-borderless align-middle">
             <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">

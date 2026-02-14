@@ -1,47 +1,51 @@
 <script setup>
-    import { useLibraryStore } from "@/stores/library.js";
-    import { useImageUpload } from "@/composables/useImageUpload.js";
-    import { useToast } from "vue-toastification";
-    import {ref, watch} from "vue";
-    import api from "@/lib/api.js";
+import { useLibraryStore } from '@/stores/library.js'
+import { useImageUpload } from '@/composables/useImageUpload.js'
+import { useToast } from 'vue-toastification'
+import { ref, watch } from 'vue'
+import api from '@/lib/api.js'
 
-    const libraryStore = useLibraryStore();
-    const toast = useToast();
+const libraryStore = useLibraryStore()
+const toast = useToast()
 
-    const { previewUrl, fileToUpload, handleImageUpload} = useImageUpload();
+const { previewUrl, fileToUpload, handleImageUpload } = useImageUpload()
 
-    const title = ref('');
-    const description = ref('');
+const title = ref('')
+const description = ref('')
 
-    watch(() => libraryStore.libraryItem.item, (item) => {
+watch(
+    () => libraryStore.libraryItem.item,
+    (item) => {
         if (item) {
-            title.value = item.title;
-            description.value = item.description;
+            title.value = item.title
+            description.value = item.description
         }
-    }, { immediate: true })
+    },
+    { immediate: true },
+)
 
-    const handlePlaylistUpdate = async () => {
-        const formData = new FormData();
+const handlePlaylistUpdate = async () => {
+    const formData = new FormData()
 
-        formData.append("title", title.value);
-        formData.append("description", description.value ?? '');
+    formData.append('title', title.value)
+    formData.append('description', description.value ?? '')
 
-        if (fileToUpload.value) {
-            formData.append("cover_url", fileToUpload.value);
-        }
-
-        try {
-            await api.put(`/api/playlist/${libraryStore.libraryItem.id}`, formData);
-
-            await libraryStore.fetchItems()
-
-            toast.success('playlist updated successfully!');
-        } catch (error) {
-            console.log(error);
-
-            toast.error('Something went wrong.');
-        }
+    if (fileToUpload.value) {
+        formData.append('cover_url', fileToUpload.value)
     }
+
+    try {
+        await api.put(`/api/playlist/${libraryStore.libraryItem.id}`, formData)
+
+        await libraryStore.fetchItems()
+
+        toast.success('playlist updated successfully!')
+    } catch (error) {
+        console.log(error)
+
+        toast.error('Something went wrong.')
+    }
+}
 </script>
 
 <template>
@@ -69,30 +73,28 @@
                             <div class="d-flex flex-column align-items-center">
                                 <img
                                     id="cover_url"
-                                    style="width: 150px; height: 150px;"
+                                    style="width: 150px; height: 150px"
                                     :src="previewUrl ?? libraryStore.libraryItem.cover_url"
                                     alt="cover"
-                                >
-                                <div v-if="libraryStore.libraryItem.slug !== 'liked-tracks'">
-                                    <label class="btn btn-add mt-2" for="uploadCover">
-                                        Upload cover
-                                    </label>
-                                    <input
-                                        id="uploadCover"
-                                        type="file"
-                                        name="cover_url"
-                                        class="d-none"
-                                        accept="image/*"
-                                        @change="handleImageUpload"
-                                    >
-                                </div>
+                                />
+                                <label class="btn btn-add mt-2" for="uploadCover">
+                                    Upload cover
+                                </label>
+                                <input
+                                    id="uploadCover"
+                                    type="file"
+                                    name="cover_url"
+                                    class="d-none"
+                                    accept="image/*"
+                                    @change="handleImageUpload"
+                                />
                             </div>
                             <div class="d-flex flex-column" style="margin-left: 15px">
                                 <div v-if="libraryStore.libraryItem.slug !== 'liked-tracks'">
                                     <label for="playlist-title">Title</label>
                                     <input
                                         class="form-control my-2 rounded-4 bg-minor"
-                                        style="box-shadow: none;"
+                                        style="box-shadow: none"
                                         v-model="title"
                                         name="title"
                                     />
@@ -100,7 +102,7 @@
                                 <label for="playlist-description">Description</label>
                                 <input
                                     class="form-control my-2 rounded-4 bg-minor"
-                                    style="box-shadow: none;"
+                                    style="box-shadow: none"
                                     v-model="description"
                                     name="description"
                                 />
@@ -118,19 +120,19 @@
 
 <style scoped>
 .modal-content {
-    background: rgb(40,40,41);
-    color: rgb(228,228,228);
+    background: rgb(40, 40, 41);
+    color: rgb(228, 228, 228);
 
     .modal-header {
-        border-color: rgb(75,75,75);
+        border-color: rgb(75, 75, 75);
     }
     .modal-footer {
-        border-color: rgb(75,75,75);
+        border-color: rgb(75, 75, 75);
     }
 }
 .form-control {
-    border-color: rgb(75,75,75) !important;
-    color: rgb(228,228,228) !important;
+    border-color: rgb(75, 75, 75) !important;
+    color: rgb(228, 228, 228) !important;
     max-width: 600px !important;
 
     &:focus {

@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router'
 import { useLibraryStore } from '@/stores/library.js'
 import { onMounted, watch } from 'vue'
 import { useAuthStore} from '@/stores/auth.js'
+import EditPlaylistModal from '@/pages/release/modals/editPlaylistModal.vue'
 
 const route = useRoute()
 const libraryStore = useLibraryStore()
@@ -35,6 +36,7 @@ onMounted(async () => {
     <Header></Header>
     <Library></Library>
     <Content></Content>
+    <edit-playlist-modal v-if="libraryStore.libraryItem" />
 </template>
 
 <style scoped></style>

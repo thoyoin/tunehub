@@ -6,8 +6,6 @@
     import Library from "@/pages/home/Library.vue";
     import SettingsModal from "@/pages/home/modals/settingsModal.vue";
     import Content from "@/pages/home/Content.vue";
-    import EditPlaylistModal from "@/pages/home/modals/editPlaylistModal.vue";
-    import AuthenticateModal from "@/pages/home/modals/authenticateModal.vue";
 
     const auth = useAuthStore()
     const libraryStore = useLibraryStore()
@@ -27,8 +25,6 @@
         <Library/>
         <Content/>
         <settings-modal v-if="auth.user"/>
-        <edit-playlist-modal v-if="libraryStore.libraryItem"/>
-        <authenticate-modal/>
     </div>
 </template>
 
