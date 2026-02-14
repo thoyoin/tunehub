@@ -84,7 +84,7 @@
                                             <span
                                                 style="font-size: 13px; opacity: 50%;max-width: 130px"
                                                 v-text="libraryItem.item.artist
-                                                    ?? libraryItem.user?.username"
+                                                    ?? libraryItem.user.username"
                                                 class="text-truncate"
                                             >
                                             </span>

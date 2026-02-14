@@ -36,7 +36,10 @@ class PlaylistService
 
             $libraryItem = $this->createLibraryItem->handle(auth()->id(), $playlist->id, 'playlist');
 
-            return $libraryItem->with('item')->where('item_id', $playlist->id)->first();
+            return $libraryItem->with('item')
+                ->where('item_id', $playlist->id)
+                ->with('user')
+                ->first();
         });
     }
 
