@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
 import {ref, watch} from "vue";
 import api from "@/lib/api.js";
-import { useRouter } from "vue-router";
 
 export const useLibraryStore = defineStore('library',() => {
     const items = ref([]);
@@ -15,7 +14,6 @@ export const useLibraryStore = defineStore('library',() => {
     const isReady = ref(false);
 
     const auth = useAuthStore();
-    const router = useRouter();
 
     async function fetchItems() {
         if (auth.user) {
@@ -81,21 +79,10 @@ export const useLibraryStore = defineStore('library',() => {
 
             libraryItem.value = response.data.libraryItem
             isRelease.value = response.data.isRelease;
+        } catch (e) {
+            console.error(e)
 
-            if (isRelease.value) {
-                await router.push({
-                    name: "release",
-                    params: { releaseId: libraryItem.value.item.id }
-                })
-
-            } else {
-                await router.push({
-                    name: "playlist",
-                    params: { playlistId: libraryItem.value.item.id }
-                })
-            }
-        } catch (error) {
-            console.error(error)
+            throw e
         }
     })
 

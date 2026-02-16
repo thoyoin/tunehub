@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
-import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore('auth', () => {
     const isReady = ref(false);
     const user = ref(null);
-    const router = useRouter();
     const loading = ref(false);
 
     const errors = ref({});
@@ -15,47 +13,64 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             const { data } = await api.get('/api/user');
             user.value = data.user;
-            isReady.value = true;
         } catch (error) {
             console.log(error);
+        } finally {
+            isReady.value = true;
         }
     }
 
     const logout = async () => {
         try {
+            loading.value = true;
+
             await api.delete('/api/logout');
 
             user.value = null;
+        } catch (e) {
+            console.error(e);
 
-            window.location.href = '/login';
-        } catch (error) {
-            console.error(error);
+            throw e
+        } finally {
+            loading.value = false;
         }
     }
 
     const login = async (credentials) => {
         try {
+            loading.value = true;
+
             await api.get('/sanctum/csrf-cookie')
             await api.post('/api/login', credentials)
-
-            await router.push('/')
         } catch (e) {
             console.error(e);
+
+            if (e.response?.status === 422) {
+                errors.value = e.response.data.errors
+            }
+
+            throw e
+        } finally {
+            loading.value = false;
         }
     }
 
     const register = async (credentials) => {
-        loading.value = true;
         try {
+            loading.value = true;
+
             await api.get('/sanctum/csrf-cookie')
             await api.post('/api/register', credentials)
 
             await fetchUser()
-            await router.push('/')
         } catch (e) {
+            console.log(e)
+
             if (e.response?.status === 422) {
                 errors.value = e.response.data.errors
             }
+
+            throw e;
         } finally {
             loading.value = false
         }

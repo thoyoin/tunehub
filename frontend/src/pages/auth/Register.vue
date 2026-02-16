@@ -1,12 +1,10 @@
 <script setup>
     import { ref } from 'vue'
     import { useAuthStore } from '@/stores/auth'
-    import {useRouter} from "vue-router";
-    import { useToast } from "vue-toastification";
+    import { useRouter } from "vue-router";
 
     const auth = useAuthStore()
     const router = useRouter()
-    const toast = useToast()
 
     const email = ref('')
     const username = ref('')
@@ -14,12 +12,18 @@
     const password_confirmation = ref('')
 
     async function handleRegister() {
-        await auth.register({
-            email: email.value,
-            username: username.value,
-            password: password.value,
-            password_confirmation: password_confirmation.value,
-        })
+        try {
+            await auth.register({
+                email: email.value,
+                username: username.value,
+                password: password.value,
+                password_confirmation: password_confirmation.value,
+            })
+
+            await router.push('/')
+        } catch (e) {
+            console.log(e)
+        }
     }
 
 </script>
@@ -104,11 +108,10 @@
                     </div>
                     <div class="mt-5 d-flex">
                         <button
-                            @click.prevent="handleRegister"
                             :disabled="auth.loading"
                             class="btn btn-primary"
                         >
-                            Sign Up
+                            {{ auth.loading ? 'Loading...' : 'Sign Up' }}
                         </button>
                     </div>
                     <div class="mt-3 w-100 text-start">

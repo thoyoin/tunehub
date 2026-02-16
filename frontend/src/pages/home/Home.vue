@@ -14,6 +14,7 @@
         if (!auth.isReady) {
             await auth.fetchUser()
         }
+
         await libraryStore.fetchItems()
     })
 

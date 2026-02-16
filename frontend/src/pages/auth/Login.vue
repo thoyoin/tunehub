@@ -9,10 +9,16 @@
     const router = useRouter()
 
     async function handleLogin() {
-        await auth.login({
-            email: email.value,
-            password: password.value
-        })
+        try {
+            await auth.login({
+                email: email.value,
+                password: password.value
+            })
+
+            await router.push('/')
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 </script>
@@ -69,7 +75,10 @@
                         </span>
                     </div>
                     <div class="mt-5 d-flex">
-                        <button @click.prevent="handleLogin" class="btn btn-primary">Sign In</button>
+                        <button
+                            :disabled="auth.loading"
+                            class="btn btn-primary"
+                        >{{ auth.loading ? 'Loading...' : 'Sign In' }}</button>
                     </div>
                     <div class="mt-3 w-100 text-start">
                         <a href="#" @click="router.push('register')" class="link-light">Register</a>

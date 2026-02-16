@@ -3,9 +3,11 @@
     import { useLibraryStore } from "@/stores/library.js";
     import {onMounted} from "vue";
     import Popover from "bootstrap/js/dist/popover";
+    import { useRouter } from "vue-router";
 
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
+    const router = useRouter();
 
     onMounted(() => {
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
@@ -13,6 +15,23 @@
             new Popover(el);
         });
     });
+
+    const handleItemSelection = async (item) => {
+        try {
+            libraryStore.selectLibraryItem(item.id)
+
+            const isRelease = item.item_type === 'release'
+            const routeName = isRelease ? 'release' : 'playlist'
+            const paramKey = routeName + 'Id'
+
+            await router.push({
+                name: routeName,
+                params: { [paramKey]: item.item.id }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
 </script>
 
@@ -40,21 +59,25 @@
                     </template>
                 </div>
             </div>
-            <div class="d-flex flex-row mt-3 p-2 overflow-auto">
-                <div
-                    v-if="libraryStore.isLibraryLoading"
-                    class="d-flex justify-content-center w-100 opacity-50"
-                >
-                    <div class="fw-bold">Loading...</div>
-                </div>
-                <template v-if="auth.user && !libraryStore.isLibraryLoading">
+            <div class="d-flex flex-row mt-3 p-2 overflow-auto position-relative">
+                <transition name="fade">
+                    <div
+                        v-if="libraryStore.isLibraryLoading"
+                        class="loading-overlay d-flex align-items-center justify-content-center"
+                    >
+                    <span class="fw-bold fs-5 opacity-50">
+                        Loading...
+                    </span>
+                    </div>
+                </transition>
+                <template v-if="auth.user">
                     <div
                         class="btn-group d-flex flex-column p-1 mb-2 w-100"
                         role="group"
                     >
                         <div v-for="libraryItem in libraryStore.items">
                             <div
-                                @click="libraryStore.selectLibraryItem(libraryItem.id)"
+                                @click="handleItemSelection(libraryItem)"
                                 style="height: 58px"
                                 class="d-flex align-items-center btn btn-playlist p-2 mb-2 text-start rounded-3"
                                 :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem }"
@@ -131,5 +154,16 @@
         border-top:1px solid rgba(228, 228, 228, 0.15) !important;
         border-left:1px solid rgba(228, 228, 228, 0.15) !important;
         border-right:1px solid rgba(228, 228, 228, 0.15) !important;
+    }
+    .loading-overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: rgba(32, 32, 32, 0.35);
+        backdrop-filter: blur(2px);
+        z-index: 1;
+        pointer-events: none;
     }
 </style>

@@ -1,15 +1,22 @@
 <script setup>
     import { useAuthStore } from '@/stores/auth'
     import { useLibraryStore} from "@/stores/library.js";
-    import { useReleaseStore } from "@/stores/release.js";
     import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification'
 
     const router = useRouter();
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
+    const toast = useToast();
 
-    const logout = () => {
-        auth.logout()
+    const logout = async () => {
+        try {
+            await auth.logout()
+
+            window.location.href = '/login';
+        } catch (e) {
+            toast.error("Something went wrong");
+        }
     };
 
     const routeHome = () => {

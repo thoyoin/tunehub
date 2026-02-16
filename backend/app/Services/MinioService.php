@@ -18,7 +18,7 @@ class MinioService
 
         $url = Storage::disk('s3')->url($path);
 
-        return str_replace('http://minio:9000', 'http://localhost:9000', $url);
+        return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
     }
 
     public function storeProfile($file): string
@@ -31,7 +31,7 @@ class MinioService
 
         $url = Storage::disk('s3')->url($path);
 
-        return str_replace('http://minio:9000', 'http://localhost:9000', $url);
+        return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
     }
 
     public function storeTrack($file): string
@@ -44,7 +44,7 @@ class MinioService
 
         $url = Storage::disk('s3')->url($fileName);
 
-        return str_replace('http://minio:9000', 'http://localhost:9000', $url);
+        return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
     }
 
     public function destroyTrack($file): void
