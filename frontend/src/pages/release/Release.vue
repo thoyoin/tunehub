@@ -8,6 +8,7 @@ import { onMounted, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.js'
 import { useLibraryStore } from '@/stores/library.js'
 import AuthenticateModal from '@/pages/release/modals/authenticateModal.vue'
+import SettingsModal from '@/pages/home/modals/settingsModal.vue'
 
 const route = useRoute()
 const releaseStore = useReleaseStore()
@@ -39,6 +40,7 @@ onMounted(async () => {
         <Library></Library>
         <Content/>
         <authenticate-modal />
+        <settings-modal v-if="auth.user" />
     </div>
 </template>
 

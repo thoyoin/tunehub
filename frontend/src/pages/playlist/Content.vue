@@ -81,6 +81,7 @@ watch(
                         width: '210px',
                         height: '210px',
                     }"
+                    style="box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4)"
                     class="rounded-1"
                 />
             </div>
@@ -406,4 +407,5 @@ watch(
 .fade-leave-to {
     opacity: 0;
 }
+
 </style>

@@ -47,18 +47,17 @@
         class="modal fade"
         id="settingsModal"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="settingsModalLabel"
         aria-hidden="true"
     >
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <form @submit.prevent="handleUserUpdate" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Change your data</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5" id="settingsModalLabel">Change your data</h1>
                     </div>
                     <div class="modal-body">
-                        <div class="d-flex flex-row align-items-center">
+                        <div class="d-flex flex-column align-items-center">
                             <div class="d-flex flex-column justify-content-start align-items-center w-50">
                                 <img
                                     :src="previewUrl ?? auth.user.profile_picture"
@@ -66,7 +65,7 @@
                                     class="rounded-2"
                                     alt="profile"
                                 >
-                                <label class="btn btn-new mt-2" for="profilePicture">New photo</label>
+                                <label class="btn btn-add mt-2" for="profilePicture">New photo</label>
                                 <input
                                     id="profilePicture"
                                     type="file"
@@ -75,26 +74,34 @@
                                     accept="image/*"
                                 >
                             </div>
-                            <div class="d-flex flex-column">
-                                <label class="my-1" for="username" >Username</label>
+                            <div class="d-flex flex-column align-items-center">
                                 <input
                                     id="username"
                                     type="text"
-                                    class="form-control rounded-4 bg-minor"
+                                    class="form-control my-2 rounded-4 bg-minor"
                                     v-model="username"
+                                    placeholder="Username"
                                 />
-                                <label class="my-1" for="email">Email</label>
                                 <input
                                     id="email"
                                     type="text"
-                                    class="form-control rounded-4 bg-minor"
+                                    class="form-control my-2 rounded-4 bg-minor"
                                     v-model="email"
+                                    placeholder="Email"
                                 />
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button
+                            type="button"
+                            aria-label="Close"
+                            data-bs-dismiss="modal"
+                            class="btn btn-cancel"
+                        >
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

@@ -38,6 +38,7 @@ const handlePlaylistUpdate = async () => {
         await api.put(`/api/playlist/${libraryStore.libraryItem.id}`, formData)
 
         await libraryStore.fetchItems()
+        await libraryStore.getPlaylist(libraryStore.libraryItem.id)
 
         toast.success('playlist updated successfully!')
     } catch (error) {
@@ -53,27 +54,26 @@ const handlePlaylistUpdate = async () => {
         class="modal fade"
         id="editModal"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="editModalLabel"
         aria-hidden="true"
     >
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <form @submit.prevent="handlePlaylistUpdate" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Change information</h1>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
+                        <h1 class="modal-title" id="editModalLabel">Change playlist</h1>
                     </div>
-                    <div class="modal-body">
-                        <div class="d-flex flex-row">
+                    <div class="modal-body ">
+                        <div class="d-flex flex-column align-items-center">
                             <div class="d-flex flex-column align-items-center">
                                 <img
                                     id="cover_url"
-                                    style="width: 150px; height: 150px"
+                                    class="rounded-3"
+                                    style="
+                                        width: 150px;
+                                        height: 150px;
+                                        border: 1px solid rgba(228, 228, 228, 0.15);
+                                    "
                                     :src="previewUrl ?? libraryStore.libraryItem.cover_url"
                                     alt="cover"
                                 />
@@ -89,28 +89,34 @@ const handlePlaylistUpdate = async () => {
                                     @change="handleImageUpload"
                                 />
                             </div>
-                            <div class="d-flex flex-column" style="margin-left: 15px">
-                                <div v-if="libraryStore.libraryItem.slug !== 'liked-tracks'">
-                                    <label for="playlist-title">Title</label>
-                                    <input
-                                        class="form-control my-2 rounded-4 bg-minor"
-                                        style="box-shadow: none"
-                                        v-model="title"
-                                        name="title"
-                                    />
-                                </div>
-                                <label for="playlist-description">Description</label>
+                            <div class="d-flex flex-column align-items-center">
+                                <input
+                                    class="form-control my-2 rounded-4 bg-minor"
+                                    style="box-shadow: none"
+                                    v-model="title"
+                                    name="title"
+                                    placeholder="Title"
+                                />
                                 <input
                                     class="form-control my-2 rounded-4 bg-minor"
                                     style="box-shadow: none"
                                     v-model="description"
                                     name="description"
+                                    placeholder="Description"
                                 />
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button
+                            type="button"
+                            aria-label="Close"
+                            data-bs-dismiss="modal"
+                            class="btn btn-cancel"
+                        >
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -119,17 +125,6 @@ const handlePlaylistUpdate = async () => {
 </template>
 
 <style scoped>
-.modal-content {
-    background: rgb(40, 40, 41);
-    color: rgb(228, 228, 228);
-
-    .modal-header {
-        border-color: rgb(75, 75, 75);
-    }
-    .modal-footer {
-        border-color: rgb(75, 75, 75);
-    }
-}
 .form-control {
     border-color: rgb(75, 75, 75) !important;
     color: rgb(228, 228, 228) !important;

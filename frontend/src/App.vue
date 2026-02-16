@@ -11,7 +11,6 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
 </template>
 
 <style lang="scss">
-
     .bg-minor {
         background-color: rgba(50,50,51, 15%) !important;
         backdrop-filter: blur(8px) !important;
@@ -23,19 +22,41 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         background-color: rgb(32,32,32) !important;
     }
     .btn-primary {
-        background-color: #ff2667 !important;
-        border: 1px solid #ff2667 !important;
+        background: #bd1045 !important;
+        border: 1px solid rgba(4, 4, 214, 0) !important;
+        border-radius: 15px !important;
         color: rgb(228,228,228) !important;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px !important;
 
         &:hover {
             background-color: #b31b47 !important;
             border-color: #4a0b1e !important;
-            color: rgb(228,228,228) !important;
         }
 
         &:active {
             background-color: #c11c4c !important;
             border-color: #c11c4c !important;
+        }
+    }
+    .btn-cancel {
+        background: rgb(32,32,32) !important;
+        border: 1px solid rgba(4, 4, 214, 0) !important;
+        border-radius: 15px !important;
+        color: rgb(228,228,228) !important;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px !important;
+
+        &:hover {
+            border-color: rgb(46, 46, 46) !important;
+        }
+
+        &:active {
+            border-color: rgb(32,32,32) !important;
         }
     }
     .btn-artists {
@@ -124,13 +145,22 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     .dropdown-menu {
         background-color: rgba(40,40,41, 0.8) !important;
         z-index: 10000 !important;
+        border-radius: 12px !important;
+        padding: 4px !important;
         .dropdown-item {
             color: rgb(228,228,228) !important;
+            display: flex !important;
+            border-radius: 10px !important;
+            height: 27px !important;
+            font-size: 15px !important;
+            align-items: center !important;
             &:hover {
-                background-color: rgba(30, 30, 31, 0.8) !important;
+                background: rgba(158, 23, 63, 1) !important;
+                transition: .1s !important;
             }
         }
     }
+
     .activeLibraryItem {
         border-color: rgb(75,75,75) !important;
         box-shadow: 0 0 5px 3px rgb(32,32,32) !important;
@@ -180,11 +210,26 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     .modal-content {
         background: rgb(40,40,41) !important;
         color: rgb(228,228,228) !important;
+        border: 1px solid rgba(228, 228, 228, 0.15) !important;
+        border-radius: 35px !important;
+
         .modal-header {
-            border-color: rgb(75,75,75) !important;
+            border: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            .modal-title {
+                font-weight: bold !important;
+                font-size: 18px !important;
+            }
         }
         .modal-footer {
-            border-color: rgb(75,75,75) !important;
+            margin: auto !important;
+            border: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 90px !important;
         }
     }
     .release-content {

@@ -53,7 +53,11 @@ watch(
                             <img
                                 :src="releaseStore.pickedRelease?.cover_url"
                                 alt="cover"
-                                :style="{width: '210px',height: '210px'}"
+                                :style="{
+                                    width: '210px',
+                                    height: '210px',
+                                }"
+                                style="box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5)"
                                 class="rounded-2"
                             />
                         </div>
