@@ -65,7 +65,7 @@
                         v-if="libraryStore.isLibraryLoading"
                         class="loading-overlay d-flex align-items-center justify-content-center"
                     >
-                    <span class="fw-bold fs-5 opacity-50">
+                    <span class="fw-bold opacity-50">
                         Loading...
                     </span>
                     </div>

@@ -6,19 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Auth/SignIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Auth/SignIn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/MinioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/MinioService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/cors.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/cors.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/sanctum.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/sanctum.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/Release.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Release.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -474,7 +464,7 @@
       <workItem from="1770995138792" duration="5367000" />
       <workItem from="1771041660412" duration="7838000" />
       <workItem from="1771160349555" duration="9200000" />
-      <workItem from="1771233082507" duration="1320000" />
+      <workItem from="1771233082507" duration="2829000" />
     </task>
     <servers />
   </component>

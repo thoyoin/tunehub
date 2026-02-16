@@ -17,6 +17,7 @@ class Release extends Model
         'cover_url',
         'release_date',
         'status',
+        'user_id'
     ];
 
     protected $appends = ['released_in'];
