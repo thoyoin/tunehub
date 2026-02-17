@@ -12,7 +12,6 @@ const uploadStore = useUploadReleaseStore();
                 <div class="modal-content rounded-4">
                     <div class="modal-header">
                         <h5 class="modal-title fw-bold">Upload your audio files</h5>
-                        <button type="button" class="btn-close" ></button>
                     </div>
                     <div class="modal-body d-flex justify-content-center">
                         <template v-if="uploadStore.editor === false">

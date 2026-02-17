@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -472,7 +469,7 @@
       <workItem from="1771300900254" duration="5745000" />
       <workItem from="1771316824618" duration="4150000" />
       <workItem from="1771329404831" duration="11000" />
-      <workItem from="1771329618406" duration="10539000" />
+      <workItem from="1771329618406" duration="10905000" />
     </task>
     <servers />
   </component>
