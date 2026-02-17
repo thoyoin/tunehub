@@ -91,14 +91,20 @@ class ReleaseService
         });
     }
 
-    public function get($release)
+    public function get($release): array
     {
         if (auth()->check()) {
-            $playlist = $this->getUserLikedPlaylist->handle();
+            $likesPlaylist = $this->getUserLikedPlaylist->handle();
 
-            $tracks = $release->tracks->map(function ($track) use ($playlist) {
-                return $track->is_added = (bool) $playlist->tracks->contains($track->id);
-            });
+            $tracks = $release
+                ->tracks()
+                ->withExists([
+                    'playlists as is_liked' => fn ($q) =>
+                    $q->whereKey($likesPlaylist->id),
+                ])
+                ->get();
+
+            $tracks->load('playlists:id');
 
             $isReleaseLiked = $this->checkIfReleaseLiked->handle($release);
 

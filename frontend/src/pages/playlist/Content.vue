@@ -38,6 +38,10 @@ const handlePlaylistDeletion = async () => {
     }
 }
 
+function isTrackAdded(track, playlistId) {
+    return track.playlist_ids.includes(playlistId)
+}
+
 watch(
     () => libraryStore.libraryItem?.cover_url,
     async (url) => {
@@ -58,9 +62,7 @@ watch(
                 v-if="libraryStore.isPlaylistLoading"
                 class="loading-overlay d-flex align-items-center justify-content-center"
             >
-                <span class="fw-bold fs-5 opacity-50">
-                    Loading...
-                </span>
+                <span class="fw-bold fs-5 opacity-50"> Loading... </span>
             </div>
         </transition>
         <div
@@ -269,7 +271,11 @@ watch(
                             ></span>
                         </td>
                         <td class="text-center">
-                            <template v-if="auth.user && libraryStore.libraryItem?.slug === 'liked-tracks'">
+                            <template
+                                v-if="
+                                    auth.user && libraryStore.libraryItem?.slug === 'liked-tracks'
+                                "
+                            >
                                 <button
                                     class="btn btn-add-like"
                                     @click="releaseStore.addTrackToLikes(track.id)"
@@ -277,7 +283,7 @@ watch(
                                     <img
                                         style="width: 25px"
                                         class="add-like"
-                                        :src="track.is_added ? addedIcon : addIcon"
+                                        :src="track.is_liked ? addedIcon : addIcon"
                                         alt="add"
                                     />
                                 </button>
@@ -289,70 +295,89 @@ watch(
                                 v-text="track.formatted_duration"
                             ></span>
                         </td>
-                            <td>
-                                <div data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img
-                                        class="add-like"
-                                        style="cursor: pointer !important"
-                                        src="@/assets/svg/horizontalSettings.svg"
-                                        alt="options"
-                                    />
-                                </div>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-submenu">
-                                        <button
-                                            class="dropdown-item d-flex px-2 align-items-center justify-content-between"
-                                        >
-                                            Add to playlist
-                                            <img src="@/assets/svg/dropdownArrow.svg" alt="arrow">
-                                        </button>
-                                        <ul class="dropdown-menu submenu">
-                                            <template v-for="playlist in libraryStore.userPlaylists">
-                                                <template v-if="playlist.slug === 'liked-tracks'">
-                                                    <li class="d-flex align-items-center">
-                                                        <button
-                                                            @click="releaseStore.addTrackToLikes(track.id)"
-                                                            class="dropdown-item"
-                                                        >
-                                                            {{ playlist.title }}
-                                                            <img
-                                                                class="ms-3"
-                                                                :class="track.is_added ? '' : 'add-like'"
-                                                                :src="track.is_added ? likedIcon : likeIcon"
-                                                                alt=""
-                                                            >
-                                                        </button>
-                                                    </li>
-                                                    <li class="d-flex align-items-center justify-content-center">
-                                                        <div class="dropdown-border"></div>
-                                                    </li>
-                                                </template>
-                                                <template v-else>
-                                                    <li>
-                                                        <button
-                                                            @click="releaseStore.addTrackToPlaylist(track.id, playlist.id)"
-                                                            class="dropdown-item"
-                                                        >
-                                                            {{ playlist.title }}
-                                                            <!--                                                        <img-->
-                                                            <!--                                                            class="ms-3"-->
-                                                            <!--                                                            :class="track.is_added ? '' : 'add-like'"-->
-                                                            <!--                                                            :src="track.is_added ? likedIcon : ''"-->
-                                                            <!--                                                            alt=""-->
-                                                            <!--                                                        >-->
-                                                        </button>
-                                                    </li>
-                                                </template>
+                        <td>
+                            <div data-bs-toggle="dropdown" aria-expanded="false">
+                                <img
+                                    class="add-like"
+                                    style="cursor: pointer !important"
+                                    src="@/assets/svg/horizontalSettings.svg"
+                                    alt="options"
+                                />
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu">
+                                    <button
+                                        class="dropdown-item d-flex px-2 align-items-center justify-content-between"
+                                    >
+                                        Add to playlist
+                                        <img src="@/assets/svg/dropdownArrow.svg" alt="arrow" />
+                                    </button>
+                                    <ul class="dropdown-menu submenu">
+                                        <template v-for="playlist in libraryStore.userPlaylists">
+                                            <template v-if="playlist.slug === 'liked-tracks'">
+                                                <li class="d-flex align-items-center">
+                                                    <button
+                                                        @click="
+                                                            releaseStore.addTrackToLikes(track.id)
+                                                        "
+                                                        class="dropdown-item d-flex justify-content-between"
+                                                    >
+                                                        {{ playlist.title }}
+                                                        <img
+                                                            class="ms-3"
+                                                            :class="
+                                                                track.is_liked ? '' : 'add-like'
+                                                            "
+                                                            :src="
+                                                                track.is_liked
+                                                                    ? likedIcon
+                                                                    : likeIcon
+                                                            "
+                                                            alt=""
+                                                        />
+                                                    </button>
+                                                </li>
+                                                <li
+                                                    class="d-flex align-items-center justify-content-center"
+                                                >
+                                                    <div class="dropdown-border"></div>
+                                                </li>
                                             </template>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item d-flex px-2 align-items-center justify-content-between">
-                                            Delete
-                                        </button>
-                                    </li>
-                                </ul>
-                            </td>
+                                            <template v-else>
+                                                <li>
+                                                    <button
+                                                        @click="
+                                                            releaseStore.addTrackToPlaylist(
+                                                                track.id,
+                                                                playlist.id,
+                                                            )
+                                                        "
+                                                        class="dropdown-item d-flex justify-content-between"
+                                                    >
+                                                        {{ playlist.title }}
+                                                        <img
+                                                            class="ms-3"
+                                                            :class="{
+                                                                'add-like': !isTrackAdded(
+                                                                    track,
+                                                                    playlist.id,
+                                                                ),
+                                                            }"
+                                                            :src="
+                                                                isTrackAdded(track, playlist.id)
+                                                                    ? likedIcon
+                                                                    : likeIcon
+                                                            "
+                                                            alt=""
+                                                        />
+                                                    </button>
+                                                </li>
+                                            </template>
+                                        </template>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </td>
                     </tr>
                 </template>
             </tbody>
@@ -468,7 +493,7 @@ watch(
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity .2s ease;
+    transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,
@@ -484,7 +509,6 @@ watch(
 
 .dropdown-menu {
     border: 1px solid rgba(228, 228, 228, 0.2) !important;
-
 }
 
 .dropdown-border {

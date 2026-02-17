@@ -49,13 +49,7 @@ class PlaylistService
     {
         $playlist = $this->getPlaylistById->handle($playlist);
 
-        $likesPlaylist = $this->getUserLikedPlaylist->handle();
-
         $orderedTracks = $this->getOrderedPlaylistTracks->handle($playlist);
-
-        $orderedTracks->map(function ($track) use ($likesPlaylist) {
-            return $track->is_added = (bool) $likesPlaylist->tracks->contains($track->id);
-        });
 
         return [$playlist, $orderedTracks];
     }

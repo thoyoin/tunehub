@@ -23,7 +23,23 @@ class Track extends Model
         'position',
     ];
 
-    protected $appends = ['formatted_duration', 'added_ago', 'released_in'];
+    protected $appends = [
+        'formatted_duration',
+        'added_ago',
+        'released_in',
+        'playlist_ids'
+    ];
+
+    public function getPlaylistIdsAttribute(): array
+    {
+        if (! $this->relationLoaded('playlists')) {
+            return [];
+        }
+
+        return $this->playlists()
+            ->pluck('playlists.id')
+            ->toArray();
+    }
 
     public function getFormattedDurationAttribute(): string
     {

@@ -5,23 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/svg/dropdownArrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/svg/horizontalSettings.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Track/IsTrackLiked.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Track/IsTrackLiked.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/TrackController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/TrackController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Playlist/GetOrderedPlaylistTracks.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Playlist/GetOrderedPlaylistTracks.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/Track.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Track.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/TrackService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/TrackService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/heart.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/heart.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/heartFilled.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/heartFilled.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/stores/release.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/release.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -485,7 +477,7 @@
       <workItem from="1771300900254" duration="5745000" />
       <workItem from="1771316824618" duration="4150000" />
       <workItem from="1771329404831" duration="11000" />
-      <workItem from="1771329618406" duration="1275000" />
+      <workItem from="1771329618406" duration="9284000" />
     </task>
     <servers />
   </component>

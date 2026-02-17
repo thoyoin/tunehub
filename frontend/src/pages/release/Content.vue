@@ -16,6 +16,10 @@ const libraryStore = useLibraryStore()
 const { palette, getCoverPalette } = useVibrantPalette()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
+function isTrackAdded(track, playlistId) {
+    return track.playlist_ids.includes(playlistId)
+}
+
 watch(
     () => releaseStore.pickedRelease?.cover_url,
     async (url) => {
@@ -121,7 +125,7 @@ watch(
                 </tr>
             </thead>
             <tbody>
-                <template v-for="track in releaseStore.pickedRelease?.tracks" :key="track.id">
+                <template v-for="track in releaseStore.releaseTracks" :key="track.id">
                     <tr class="track-row rounded-5">
                         <td
                             class="position-relative"
@@ -196,8 +200,8 @@ watch(
                                 >
                                     <img
                                         style="width: 25px"
-                                        :class="track.is_added ? '' : 'add-like'"
-                                        :src="track.is_added ? addedIcon : addIcon"
+                                        :class="track.is_liked ? '' : 'add-like'"
+                                        :src="track.is_liked ? addedIcon : addIcon"
                                         alt="add"
                                     />
                                 </button>
@@ -228,13 +232,13 @@ watch(
                                                 <li class="d-flex align-items-center">
                                                     <button
                                                         @click="releaseStore.addTrackToLikes(track.id)"
-                                                        class="dropdown-item"
+                                                        class="dropdown-item d-flex justify-content-between"
                                                     >
                                                         {{ playlist.title }}
                                                         <img
                                                             class="ms-3"
-                                                            :class="track.is_added ? '' : 'add-like'"
-                                                            :src="track.is_added ? likedIcon : likeIcon"
+                                                            :class="track.is_liked ? '' : 'add-like'"
+                                                            :src="track.is_liked ? likedIcon : likeIcon"
                                                             alt=""
                                                         >
                                                     </button>
@@ -247,15 +251,15 @@ watch(
                                                 <li>
                                                     <button
                                                         @click="releaseStore.addTrackToPlaylist(track.id, playlist.id)"
-                                                        class="dropdown-item"
+                                                        class="dropdown-item d-flex justify-content-between"
                                                     >
                                                         {{ playlist.title }}
-<!--                                                        <img-->
-<!--                                                            class="ms-3"-->
-<!--                                                            :class="track.is_added ? '' : 'add-like'"-->
-<!--                                                            :src="track.is_added ? likedIcon : ''"-->
-<!--                                                            alt=""-->
-<!--                                                        >-->
+                                                        <img
+                                                            class="ms-3"
+                                                            :class="{ 'add-like': !isTrackAdded(track, playlist.id) }"
+                                                            :src="isTrackAdded(track, playlist.id) ? likedIcon : likeIcon"
+                                                            alt=""
+                                                        >
                                                     </button>
                                                 </li>
                                             </template>
