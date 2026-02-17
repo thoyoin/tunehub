@@ -7,10 +7,10 @@ namespace App\Actions\Track;
 use App\Models\Playlist;
 use App\Models\Track;
 
-class IsTrackLiked
+class IsTrackAdded
 {
     public function handle(Track $track, Playlist $playlist): bool
     {
-        return $playlist->tracks->contains($track);
+        return $playlist->tracks->contains($track->id);
     }
 }

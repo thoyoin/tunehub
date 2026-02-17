@@ -50,7 +50,7 @@
                     placeholder="Search..."
                 />
             </div>
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row align-items-center">
                 <template v-if="auth.user">
                     <template v-if="auth.user?.role === '1'">
                         <button class="btn btn-upgrade rounded-5 px-2 py-2 me-5">Upgrade now
@@ -67,7 +67,7 @@
                 </template>
                 <template v-if="!auth.user">
                     <a
-                        @click="router.push('login')"
+                        @click="router.push('/login')"
                         class="btn d-flex flex-row btn-primary fw-light me-4 ps-1 pe-2 py-0 my-0 align-items-center"
                     >
                         <img class="me-1" src="@/assets/svg/person.svg" alt="person">

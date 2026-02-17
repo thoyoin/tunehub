@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Actions\LibraryItem\CreateLibraryItem;
+use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Release\CheckIfReleaseLiked;
 use App\Actions\Track\StoreTrack;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +18,7 @@ class ReleaseService
         public StoreTrack $storeTrack,
         public CheckIfReleaseLiked $checkIfReleaseLiked,
         public CreateLibraryItem $createLibraryItem,
+        public GetUserLikedPlaylist $getUserLikedPlaylist,
     ) {}
 
     public function store($request): void
@@ -92,11 +94,7 @@ class ReleaseService
     public function get($release)
     {
         if (auth()->check()) {
-            $playlist = auth()
-                ->user()
-                ->playlists()
-                ->where('slug', 'liked-tracks')
-                ->first();
+            $playlist = $this->getUserLikedPlaylist->handle();
 
             $tracks = $release->tracks->map(function ($track) use ($playlist) {
                 return $track->is_added = (bool) $playlist->tracks->contains($track->id);

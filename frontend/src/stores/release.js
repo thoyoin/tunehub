@@ -58,6 +58,21 @@ export const useReleaseStore = defineStore('release', () => {
         await libraryStore.fetchItems()
     }
 
+    const addTrackToPlaylist = async (track, playlist) => {
+        try {
+            await api.post(`/api/tracks/${track}/playlist/${playlist}`)
+
+            if (pickedRelease.value) {
+                await getRelease(pickedRelease.value.id)
+            } else {
+                await libraryStore.getPlaylist(libraryStore.libraryItem.id)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
     const clearPickedRelease = () => {
         pickedRelease.value = null
     }
@@ -73,5 +88,6 @@ export const useReleaseStore = defineStore('release', () => {
         clearPickedRelease,
         getRelease,
         isLoading,
+        addTrackToPlaylist
     }
 })

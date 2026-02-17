@@ -8,6 +8,7 @@ use App\Actions\LibraryItem\CreateLibraryItem;
 use App\Actions\Playlist\CountUserPlaylists;
 use App\Actions\Playlist\GetOrderedPlaylistTracks;
 use App\Actions\Playlist\GetPlaylistById;
+use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Models\LibraryItem;
 use App\Models\Playlist;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class PlaylistService
         public CreateLibraryItem $createLibraryItem,
         public GetPlaylistById $getPlaylistById,
         public GetOrderedPlaylistTracks $getOrderedPlaylistTracks,
+        public GetUserLikedPlaylist $getUserLikedPlaylist,
         public MinioService $minioService,
     ) {}
 
@@ -47,15 +49,15 @@ class PlaylistService
     {
         $playlist = $this->getPlaylistById->handle($playlist);
 
-        $tracks = $this->getOrderedPlaylistTracks->handle($playlist);
+        $likesPlaylist = $this->getUserLikedPlaylist->handle();
 
-        $tracks = $tracks->map(function ($track) {
-            $track->is_added = true;
+        $orderedTracks = $this->getOrderedPlaylistTracks->handle($playlist);
 
-            return $track;
+        $orderedTracks->map(function ($track) use ($likesPlaylist) {
+            return $track->is_added = (bool) $likesPlaylist->tracks->contains($track->id);
         });
 
-        return [$playlist, $tracks];
+        return [$playlist, $orderedTracks];
     }
 
     public function delete($playlist): void
@@ -83,5 +85,10 @@ class PlaylistService
         $playlist->update($data);
 
         return $playlist;
+    }
+
+    public function getAll()
+    {
+        return auth()->user()->playlists()->get();
     }
 }

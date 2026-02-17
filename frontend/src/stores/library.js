@@ -12,6 +12,7 @@ export const useLibraryStore = defineStore('library',() => {
     const itemTracks = ref([]);
     const isRelease = ref(false);
     const isReady = ref(false);
+    const userPlaylists = ref([]);
 
     const auth = useAuthStore();
 
@@ -28,6 +29,18 @@ export const useLibraryStore = defineStore('library',() => {
             } finally {
                 isLibraryLoading.value = false;
                 isReady.value = true;
+            }
+        }
+    }
+
+    async function fetchUserPlaylists() {
+        if (auth.user) {
+            try {
+                const { data } = await api.get(`/api/playlists`)
+
+                userPlaylists.value = data.playlists
+            } catch (e) {
+                console.error(e);
             }
         }
     }
@@ -101,5 +114,7 @@ export const useLibraryStore = defineStore('library',() => {
         itemTracks,
         isRelease,
         isReady,
+        userPlaylists,
+        fetchUserPlaylists
     };
 })

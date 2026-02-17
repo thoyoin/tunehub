@@ -1,14 +1,18 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth.js'
 import { useReleaseStore } from '@/stores/release.js'
+import { useLibraryStore } from '@/stores/library.js'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
 import { watch } from 'vue'
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
+import likedIcon from '@/assets/svg/heartFilled.svg'
+import likeIcon from '@/assets/svg/heart.svg'
 import { useVibrantPalette } from '@/composables/useVibrantPalette.js'
 
 const auth = useAuthStore()
 const releaseStore = useReleaseStore()
+const libraryStore = useLibraryStore()
 const { palette, getCoverPalette } = useVibrantPalette()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
@@ -17,6 +21,8 @@ watch(
     async (url) => {
         if (url) {
             await getCoverPalette(url)
+
+            await libraryStore.fetchUserPlaylists()
         }
     },
     { immediate: true },
@@ -24,100 +30,97 @@ watch(
 </script>
 
 <template>
-        <div style="color: rgb(228, 228, 228)" class="flex-grow-1 release-content position-relative">
-            <transition name="fade">
-                <div
-                    v-if="releaseStore.isLoading"
-                    class="loading-overlay d-flex align-items-center justify-content-center"
-                >
-                    <span class="fw-bold fs-5 opacity-50">
-                        Loading...
-                    </span>
-                </div>
-            </transition>
+    <div style="color: rgb(228, 228, 228)" class="flex-grow-1 release-content position-relative">
+        <transition name="fade">
             <div
-                :style="{
-                       background: `
+                v-if="releaseStore.isLoading"
+                class="loading-overlay d-flex align-items-center justify-content-center"
+            >
+                <span class="fw-bold fs-5 opacity-50"> Loading... </span>
+            </div>
+        </transition>
+        <div
+            :style="{
+                background: `
                        linear-gradient(
                          180deg,
                          rgba(${palette?.LightMuted?.rgb}, 0.2),
                          rgb(32,32,32)
                        )
                      `,
-                       backdropFilter: 'blur(40px)',
-                   }"
-            >
-                <div style="padding: 95px 0 0 320px" class="d-flex flex-column">
-                    <div class="d-flex flex-row mb-5">
-                        <div>
-                            <img
-                                :src="releaseStore.pickedRelease?.cover_url"
-                                alt="cover"
-                                :style="{
-                                    width: '210px',
-                                    height: '210px',
-                                }"
-                                style="box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5)"
-                                class="rounded-2"
-                            />
-                        </div>
-                        <div
-                            style="max-width: 600px"
-                            class="d-flex flex-column w-100 justify-content-end"
-                        >
-                            <h1
-                                style="font-size: 55px"
-                                class="ms-4 fw-bold"
-                                v-text="releaseStore.pickedRelease?.title"
-                            ></h1>
-                            <h3
-                                style="opacity: 10"
-                                class="ms-4 mt-1 fs-5 fw-bold"
-                                v-text="releaseStore.pickedRelease?.artist"
-                            ></h3>
-                        </div>
+                backdropFilter: 'blur(40px)',
+            }"
+        >
+            <div style="padding: 95px 0 0 320px" class="d-flex flex-column">
+                <div class="d-flex flex-row mb-5">
+                    <div>
+                        <img
+                            :src="releaseStore.pickedRelease?.cover_url"
+                            alt="cover"
+                            :style="{
+                                width: '210px',
+                                height: '210px',
+                            }"
+                            style="box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5)"
+                            class="rounded-2"
+                        />
                     </div>
-                    <template v-if="auth.user">
-                        <div class="pb-3">
-                            <button
-                                class="btn btn-add-like mb-4"
-                                @click="
-                                       releaseStore.addReleaseToLikes(releaseStore.pickedRelease.id)
-                                   "
-                            >
-                                <img
-                                    style="width: 35px"
-                                    :src="releaseStore.isReleaseLiked ? addedIcon : addIcon"
-                                    alt="add"
-                                />
-                            </button>
-                        </div>
-                    </template>
+                    <div
+                        style="max-width: 600px"
+                        class="d-flex flex-column w-100 justify-content-end"
+                    >
+                        <h1
+                            style="font-size: 55px"
+                            class="ms-4 fw-bold"
+                            v-text="releaseStore.pickedRelease?.title"
+                        ></h1>
+                        <h3
+                            style="opacity: 10"
+                            class="ms-4 mt-1 fs-5 fw-bold"
+                            v-text="releaseStore.pickedRelease?.artist"
+                        ></h3>
+                    </div>
                 </div>
+                <template v-if="auth.user">
+                    <div class="pb-3">
+                        <button
+                            class="btn btn-add-like mb-4"
+                            @click="releaseStore.addReleaseToLikes(releaseStore.pickedRelease.id)"
+                        >
+                            <img
+                                style="width: 35px"
+                                :src="releaseStore.isReleaseLiked ? addedIcon : addIcon"
+                                alt="add"
+                            />
+                        </button>
+                    </div>
+                </template>
             </div>
-            <table class="table table-borderless align-middle" style="padding: 25px 0 0 295px">
-                <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
+        </div>
+        <table class="table table-borderless align-middle" style="padding: 25px 0 0 295px">
+            <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                 <tr>
                     <th
                         scope="col"
                         style="
-                                   font-weight: lighter;
-                                   opacity: 60%;
-                                   padding-left: 320px;
-                                   padding-right: 20px;
-                               "
+                            font-weight: lighter;
+                            opacity: 60%;
+                            padding-left: 320px;
+                            padding-right: 20px;
+                        "
                     >
                         #
                     </th>
                     <th scope="col"></th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Name</th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">
+                    <th scope="col" class="text-center" style="font-weight: lighter; opacity: 60%">
                         <img src="@/assets/svg/clock.svg" alt="clock" />
                     </th>
+                    <th scope="col"></th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 <template v-for="track in releaseStore.pickedRelease?.tracks" :key="track.id">
                     <tr class="track-row rounded-5">
                         <td
@@ -135,16 +138,12 @@ watch(
                                     type="button"
                                     style="left: 308px; top: 13px"
                                     class="btn z-3 btn-play-table position-absolute"
-                                    @click="
-                                               toggleTrack(track, releaseStore.pickedRelease?.tracks)
-                                           "
+                                    @click="toggleTrack(track, releaseStore.pickedRelease?.tracks)"
                                 >
                                     <template v-if="currentTrack?.id !== track.id">
                                         <img src="@/assets/svg/play.svg" alt="play" />
                                     </template>
-                                    <template
-                                        v-if="currentTrack?.id === track.id && !isPlaying"
-                                    >
+                                    <template v-if="currentTrack?.id === track.id && !isPlaying">
                                         <img src="@/assets/svg/play.svg" alt="play" />
                                     </template>
                                     <template v-if="currentTrack?.id === track.id && isPlaying">
@@ -189,7 +188,7 @@ watch(
                                 </span>
                             </div>
                         </td>
-                        <td>
+                        <td class="text-end pe-5">
                             <template v-if="auth.user">
                                 <button
                                     class="btn btn-add-like"
@@ -204,24 +203,83 @@ watch(
                                 </button>
                             </template>
                         </td>
-                        <td>
-                            <span
-                                class="fw-lighter opacity-50"
-                                v-text="track.formatted_duration"
-                            >
+                        <td class="text-center">
+                            <span class="fw-lighter opacity-50" v-text="track.formatted_duration">
                             </span>
+                        </td>
+                        <td>
+                            <div data-bs-toggle="dropdown" aria-expanded="false">
+                                <img
+                                    class="add-like"
+                                    style="cursor: pointer !important"
+                                    src="@/assets/svg/horizontalSettings.svg"
+                                    alt="options"
+                                />
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu">
+                                    <button class="dropdown-item d-flex px-2 align-items-center justify-content-between">
+                                        Add to playlist
+                                        <img src="@/assets/svg/dropdownArrow.svg" alt="arrow">
+                                    </button>
+                                    <ul class="dropdown-menu submenu">
+                                        <template v-for="playlist in libraryStore.userPlaylists">
+                                            <template v-if="playlist.slug === 'liked-tracks'">
+                                                <li class="d-flex align-items-center">
+                                                    <button
+                                                        @click="releaseStore.addTrackToLikes(track.id)"
+                                                        class="dropdown-item"
+                                                    >
+                                                        {{ playlist.title }}
+                                                        <img
+                                                            class="ms-3"
+                                                            :class="track.is_added ? '' : 'add-like'"
+                                                            :src="track.is_added ? likedIcon : likeIcon"
+                                                            alt=""
+                                                        >
+                                                    </button>
+                                                </li>
+                                                <li class="d-flex align-items-center justify-content-center">
+                                                    <div class="dropdown-border"></div>
+                                                </li>
+                                            </template>
+                                            <template v-else>
+                                                <li>
+                                                    <button
+                                                        @click="releaseStore.addTrackToPlaylist(track.id, playlist.id)"
+                                                        class="dropdown-item"
+                                                    >
+                                                        {{ playlist.title }}
+<!--                                                        <img-->
+<!--                                                            class="ms-3"-->
+<!--                                                            :class="track.is_added ? '' : 'add-like'"-->
+<!--                                                            :src="track.is_added ? likedIcon : ''"-->
+<!--                                                            alt=""-->
+<!--                                                        >-->
+                                                    </button>
+                                                </li>
+                                            </template>
+                                        </template>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item d-flex px-2 align-items-center justify-content-between">
+                                        Delete
+                                    </button>
+                                </li>
+                            </ul>
                         </td>
                     </tr>
                 </template>
-                </tbody>
-            </table>
-            <div class="mt-4" style="padding: 25px 0 0 320px">
-                <span
-                    style="opacity: 60%; font-size: 15px; font-weight: lighter"
-                    v-text="releaseStore.pickedRelease?.released_in"
-                ></span>
-            </div>
+            </tbody>
+        </table>
+        <div class="mt-4" style="padding: 25px 0 0 320px">
+            <span
+                style="opacity: 60%; font-size: 15px; font-weight: lighter"
+                v-text="releaseStore.pickedRelease?.released_in"
+            ></span>
         </div>
+    </div>
 </template>
 
 <style scoped lang="scss">
@@ -327,7 +385,7 @@ watch(
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity .2s ease;
+    transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,
@@ -335,4 +393,36 @@ watch(
     opacity: 0;
 }
 
+.submenu {
+    opacity: 0 !important;
+    transition: 1s !important;
+    border: 1px solid rgba(228, 228, 228, 0.2) !important;
+}
+
+.dropdown-menu {
+    border: 1px solid rgba(228, 228, 228, 0.2) !important;
+
+}
+
+.dropdown-border {
+    margin: 5px 0;
+    border-bottom: 1px solid rgba(228, 228, 228, 0.2) !important;
+    width: 80%;
+}
+
+.dropdown-submenu {
+    position: relative !important;
+}
+
+.dropdown-submenu .submenu {
+    position: absolute !important;
+    right: 100% !important;
+    top: 0 !important;
+    backdrop-filter: blur(1px);
+}
+
+.dropdown-submenu:hover .submenu {
+    display: block !important;
+    opacity: 1 !important;
+}
 </style>

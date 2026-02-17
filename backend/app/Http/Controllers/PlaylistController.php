@@ -56,4 +56,13 @@ class PlaylistController extends Controller
             'playlist' => $playlist,
         ]);
     }
+
+    public function getAll(PlaylistService $playlistService): JsonResponse
+    {
+        $playlists = $playlistService->getAll();
+
+        return response()->json([
+            'playlists' => $playlists,
+        ]);
+    }
 }

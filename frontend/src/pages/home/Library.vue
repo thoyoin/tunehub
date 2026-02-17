@@ -134,7 +134,12 @@
                             data-bs-content="
                                       <div class='d-flex flex-column'>
                                           <div class='mb-2'>To create a playlist, log in to your account</div>
-                                          <a href='/login' class='btn btn-primary px-2 py-0'>Login</a>
+                                          <a
+                                            href='/login'
+                                            class='btn btn-primary d-flex px-2 py-0'
+                                          >
+                                            Login
+                                          </a>
                                       </div>
                                   "
                             class="btn btn-add"

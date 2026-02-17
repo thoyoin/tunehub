@@ -26,9 +26,10 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         border: 1px solid rgba(4, 4, 214, 0) !important;
         border-radius: 15px !important;
         color: rgb(228,228,228) !important;
-        height: 34px;
-        display: flex;
-        align-items: center;
+        height: 30px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         padding: 0 10px !important;
 
         &:hover {
@@ -46,7 +47,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         border: 1px solid rgba(4, 4, 214, 0) !important;
         border-radius: 15px !important;
         color: rgb(228,228,228) !important;
-        height: 34px;
+        height: 30px;
         display: flex;
         align-items: center;
         padding: 0 10px !important;
@@ -62,6 +63,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     .btn-artists {
         background-color: rgba(32,32,32, 30%) !important;
         backdrop-filter: blur(10px) !important;
+        height: 30px !important;
 
         &::placeholder {
             color: rgba(228,228,228, .5) !important;
