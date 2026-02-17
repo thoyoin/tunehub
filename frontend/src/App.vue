@@ -148,7 +148,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         background-color: rgba(40,40,41, 0.8) !important;
         z-index: 10000 !important;
         border-radius: 12px !important;
-        padding: 4px !important;
+        padding: 4px 3px !important;
         .dropdown-item {
             color: rgb(228,228,228) !important;
             display: flex !important;
@@ -210,7 +210,8 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         --bs-table-color: rgb(228,228,228) !important;
     }
     .modal-content {
-        background: rgb(40,40,41) !important;
+        background: rgba(40,40,41, .5) !important;
+        backdrop-filter: blur(5px) !important;
         color: rgb(228,228,228) !important;
         border: 1px solid rgba(228, 228, 228, 0.15) !important;
         border-radius: 35px !important;
@@ -226,7 +227,6 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
             }
         }
         .modal-footer {
-            margin: auto !important;
             border: none !important;
             display: flex !important;
             align-items: center !important;

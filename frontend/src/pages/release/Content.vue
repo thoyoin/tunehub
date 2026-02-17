@@ -266,11 +266,6 @@ watch(
                                         </template>
                                     </ul>
                                 </li>
-                                <li>
-                                    <button class="dropdown-item d-flex px-2 align-items-center justify-content-between">
-                                        Delete
-                                    </button>
-                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -399,13 +394,13 @@ watch(
 
 .submenu {
     opacity: 0 !important;
-    transition: 1s !important;
+    display: block !important;
+    transition: .2s !important;
     border: 1px solid rgba(228, 228, 228, 0.2) !important;
 }
 
 .dropdown-menu {
     border: 1px solid rgba(228, 228, 228, 0.2) !important;
-
 }
 
 .dropdown-border {
@@ -426,7 +421,6 @@ watch(
 }
 
 .dropdown-submenu:hover .submenu {
-    display: block !important;
     opacity: 1 !important;
 }
 </style>

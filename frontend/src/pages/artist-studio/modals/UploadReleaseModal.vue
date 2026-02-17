@@ -12,7 +12,7 @@ const uploadStore = useUploadReleaseStore();
                 <div class="modal-content rounded-4">
                     <div class="modal-header">
                         <h5 class="modal-title fw-bold">Upload your audio files</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" ></button>
                     </div>
                     <div class="modal-body d-flex justify-content-center">
                         <template v-if="uploadStore.editor === false">
@@ -188,6 +188,14 @@ const uploadStore = useUploadReleaseStore();
                         </template>
                     </div>
                     <div class="modal-footer">
+                        <button
+                            @click="uploadStore.$reset()"
+                            class="btn-cancel"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            Cancel
+                        </button>
                         <button
                             @click="uploadStore.handleReleaseUpload"
                             class="btn btn-primary"

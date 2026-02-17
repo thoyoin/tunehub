@@ -21,6 +21,19 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
     const artist = ref(auth.user.username)
     const processing = ref(false)
 
+    function $reset() {
+        editor.value = false
+        isCoverUploaded.value = false
+        coverPreview.value = null
+        uploadedTracks.value = []
+        releaseType.value = null
+        cover_url.value = null
+        releaseTitle.value = null
+        release_date.value = null
+        artist.value = auth.user.username
+        processing.value = false
+    }
+
     const onFilesUploaded = (e) => {
         editor.value = true
 
@@ -88,5 +101,6 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
         artist,
         release_date,
         processing,
+        $reset
     }
 })
