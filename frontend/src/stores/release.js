@@ -37,15 +37,14 @@ export const useReleaseStore = defineStore('release', () => {
     }
 
     const addReleaseToLikes = async (id) => {
-        const response = await api.post(`/api/releases/${id}/add`)
-
-        isReleaseLiked.value = response.data.liked
+        await api.post(`/api/releases/${id}/add`)
 
         await libraryStore.fetchItems()
+        await getRelease(id)
     }
 
     const addTrackToLikes = async (id) => {
-        await api.post(`/api/tracks/${id}/add`)
+        await api.post(`/api/liked/track/${id}`)
 
         if (pickedRelease.value) {
             await getRelease(pickedRelease.value.id)
@@ -58,7 +57,7 @@ export const useReleaseStore = defineStore('release', () => {
 
     const addTrackToPlaylist = async (track, playlist) => {
         try {
-            await api.post(`/api/tracks/${track}/playlist/${playlist}`)
+            await api.post(`/api/playlist/${playlist}/track/${track}`)
 
             if (pickedRelease.value) {
                 await getRelease(pickedRelease.value.id)

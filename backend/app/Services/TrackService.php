@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Actions\Playlist\AddTrackToPlaylist;
 use App\Actions\Playlist\GetUserLikedPlaylist;
-use App\Actions\Track\AddTrackToPlaylist;
 use App\Actions\Track\DeleteTrack;
 use App\Actions\Track\IsTrackAdded;
 use App\Actions\Track\IsTrackLiked;
@@ -35,22 +35,6 @@ class TrackService
 
             $track->delete();
         });
-    }
-
-    public function addToLikes($track): JsonResponse
-    {
-        $playlist = $this->getUserLikedPlaylist->handle();
-
-        $isTrackAdded = $this->isTrackLiked->handle($track, $playlist);
-
-        return $this->addTrackToPlaylist->handle($track, $playlist, $isTrackAdded);
-    }
-
-    public function addToPlaylist($track, $playlist): JsonResponse
-    {
-        $isTrackAdded = $this->isTrackAdded->handle($track, $playlist);
-
-        return $this->addTrackToPlaylist->handle($track, $playlist, $isTrackAdded);
     }
 
     public function update($track, $request): void

@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PlaylistUpdateRequest;
 use App\Models\Playlist;
+use App\Models\Track;
 use App\Services\PlaylistService;
+use App\Services\TrackService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 
@@ -64,5 +66,19 @@ class PlaylistController extends Controller
         return response()->json([
             'playlists' => $playlists,
         ]);
+    }
+
+    public function addTrack(Playlist $playlist, Track $track, PlaylistService $playlistService): JsonResponse
+    {
+        $response = $playlistService->addTrack($playlist, $track);
+
+        return response()->json($response);
+    }
+
+    public function addTrackToLikes(Track $track, PlaylistService $playlistService): JsonResponse
+    {
+        $response = $playlistService->addTrackToLikes($track);
+
+        return response()->json($response);
     }
 }

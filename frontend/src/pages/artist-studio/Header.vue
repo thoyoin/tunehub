@@ -7,9 +7,15 @@ const router = useRouter()
 const auth = useAuthStore()
 const libraryStore = useLibraryStore()
 
-const logout = () => {
-    auth.logout()
-}
+const logout = async () => {
+    try {
+        await auth.logout()
+
+        window.location.href = '/login';
+    } catch (e) {
+        toast.error("Something went wrong");
+    }
+};
 
 const routeHome = () => {
     libraryStore.clearAllSelectedItems()

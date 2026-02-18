@@ -8,10 +8,10 @@ import api from '@/lib/api.js'
 import { watch } from 'vue'
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
-import { useVibrantPalette } from '@/composables/useVibrantPalette.js'
-import router from '@/router/index.js'
 import likedIcon from '@/assets/svg/heartFilled.svg'
 import likeIcon from '@/assets/svg/heart.svg'
+import { useVibrantPalette } from '@/composables/useVibrantPalette.js'
+import router from '@/router/index.js'
 
 const libraryStore = useLibraryStore()
 const toast = useToast()
@@ -40,6 +40,15 @@ const handlePlaylistDeletion = async () => {
 
 function isTrackAdded(track, playlistId) {
     return track.playlist_ids.includes(playlistId)
+}
+
+const handleGetRelease = async (id) => {
+    await releaseStore.getRelease(id)
+
+    await router.push({
+        name: 'release',
+        params: { ['releaseId']: id }
+    })
 }
 
 watch(
@@ -258,7 +267,7 @@ watch(
                         </td>
                         <td>
                             <button
-                                @click=""
+                                @click="handleGetRelease(track.release.id)"
                                 style="opacity: 60%; font-size: 15px; font-weight: lighter"
                                 class="btn btn-get-release p-0"
                                 v-text="track.release.title"

@@ -13,11 +13,13 @@ const trackTitle = ref('');
 const artist = ref('');
 
 watch(() => artistStore.editingItem, (newItem) => {
-    if (newItem) {
-        trackTitle.value = newItem.title;
-        artist.value = newItem.artist;
-    }
-}, { immediate: true });
+    if (!newItem) return;
+
+    trackTitle.value = newItem.title;
+    artist.value = newItem.artist;
+    },
+    { immediate: true, deep: true }
+);
 
 const handleTrackUpdate = async () => {
     const formData = new FormData();
@@ -41,16 +43,19 @@ const handleTrackUpdate = async () => {
     }``
 }
 
+function $reset() {
+    trackTitle.value = '';
+    artist.value = '';
+}
+
 </script>
 
 <template>
-    <form @submit.prevent="handleTrackUpdate" enctype="multipart/form-data">
         <div class="modal fade" id="editTrackModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-scrollable modal-fullscreen p-5">
                 <div class="modal-content rounded-4">
                     <div class="modal-header">
                         <h5 class="modal-title fw-bold">Change track data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex justify-content-center">
                         <div
@@ -126,14 +131,26 @@ const handleTrackUpdate = async () => {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">
+                        <button
+                            @click="$reset()"
+                            class="btn-cancel"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            @submit.prevent="handleTrackUpdate"
+                            type="submit"
+                            data-bs-dismiss="modal"
+                            class="btn btn-primary"
+                        >
                             Save changes
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
 </template>
 
 <style scoped lang="scss">

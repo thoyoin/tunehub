@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Actions\LibraryItem\CreateLibraryItem;
+use App\Actions\Playlist\AddTrackToPlaylist;
 use App\Actions\Playlist\CountUserPlaylists;
 use App\Actions\Playlist\GetOrderedPlaylistTracks;
 use App\Actions\Playlist\GetPlaylistById;
 use App\Actions\Playlist\GetUserLikedPlaylist;
+use App\Actions\Track\IsTrackAdded;
 use App\Models\LibraryItem;
 use App\Models\Playlist;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class PlaylistService
@@ -22,6 +25,8 @@ class PlaylistService
         public GetOrderedPlaylistTracks $getOrderedPlaylistTracks,
         public GetUserLikedPlaylist $getUserLikedPlaylist,
         public MinioService $minioService,
+        public AddTrackToPlaylist $addTrackToPlaylist,
+        public IsTrackAdded $isTrackAdded,
     ) {}
 
     public function store(): LibraryItem
@@ -79,6 +84,22 @@ class PlaylistService
         $playlist->update($data);
 
         return $playlist;
+    }
+
+    public function addTrack($playlist, $track): JsonResponse
+    {
+        $isTrackAdded = $this->isTrackAdded->handle($track, $playlist);
+
+        return $this->addTrackToPlaylist->handle($track, $playlist, $isTrackAdded);
+    }
+
+    public function addTrackToLikes($track): JsonResponse
+    {
+        $likesPlaylist = $this->getUserLikedPlaylist->handle();
+
+        $isTrackAdded = $this->isTrackAdded->handle($track, $likesPlaylist);
+
+        return $this->addTrackToPlaylist->handle($track, $likesPlaylist, $isTrackAdded);
     }
 
     public function getAll()

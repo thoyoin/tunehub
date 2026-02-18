@@ -18,8 +18,6 @@
 
     const handleItemSelection = async (item) => {
         try {
-            libraryStore.selectLibraryItem(item.id)
-
             const isRelease = item.item_type === 'release'
             const routeName = isRelease ? 'release' : 'playlist'
             const paramKey = routeName + 'Id'

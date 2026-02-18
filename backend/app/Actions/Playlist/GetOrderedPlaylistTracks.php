@@ -24,6 +24,10 @@ class GetOrderedPlaylistTracks
             ])
             ->get();
 
-        return $tracks->load('playlists:id');
+        $tracks->load([
+            'playlists:id',
+        ]);
+
+        return $tracks;
     }
 }

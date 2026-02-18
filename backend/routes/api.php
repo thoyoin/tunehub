@@ -39,6 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/playlist/{playlist}', 'destroy');
         Route::get('/playlist/{playlist}', 'show');
         Route::get('/playlists', 'getAll');
+        Route::post('/playlist/{playlist}/track/{track}', 'addTrack');
+        Route::post('/liked/track/{track}', 'addTrackToLikes');
     });
 
     Route::controller(LibraryItemController::class)->group(function () {
@@ -52,10 +54,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(TrackController::class)->group(function () {
         Route::post('/track', 'store');
-        Route::post('/tracks/{track}/add', 'addToLikes');
         Route::put('/track/{track}', 'update');
         Route::delete('/track/{track}', 'destroy');
-        Route::post('/tracks/{track}/playlist/{playlist}', 'addToPlaylist');
     });
 
     Route::controller(ReleaseController::class)->group(function () {

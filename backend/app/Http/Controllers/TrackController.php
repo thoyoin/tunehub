@@ -45,26 +45,6 @@ class TrackController extends Controller
         ]);
     }
 
-    public function addToLikes(
-        Track $track,
-        TrackService $trackService,
-    ): JsonResponse {
-        $response = $trackService->addToLikes($track);
-
-        return response()->json($response);
-    }
-
-    public function addToPlaylist(
-        Track $track,
-        Playlist $playlist,
-        TrackService $trackService,
-    ): JsonResponse
-    {
-        $response = $trackService->addToPlaylist($track, $playlist);
-
-        return response()->json($response);
-    }
-
     public function update(
         Track $track,
         TrackUpdateRequest $request,

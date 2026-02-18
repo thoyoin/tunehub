@@ -93,7 +93,7 @@ watch(
                         >
                             <img
                                 style="width: 35px"
-                                :src="releaseStore.isReleaseLiked ? addedIcon : addIcon"
+                                :src="releaseStore.pickedRelease?.isReleaseLiked ? addedIcon : addIcon"
                                 alt="add"
                             />
                         </button>

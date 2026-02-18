@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Track;
+namespace App\Actions\Playlist;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
