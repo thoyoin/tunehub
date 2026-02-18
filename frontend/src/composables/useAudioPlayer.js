@@ -15,6 +15,7 @@ export const useAudioPlayer = (audioRef) => {
     const volume = ref(0.2)
     const isMuted = ref(false)
     const hasTrack = computed(() => !!currentTrack.value)
+    const currentContext = ref(null)
 
     const onTimeUpdate = () => {
         if (!audioRef.value?.duration) return
@@ -54,11 +55,13 @@ export const useAudioPlayer = (audioRef) => {
         }
     }, { immediate: true })
 
-    function playTrack(track, newQueue = []) {
+    function playTrack(track, newQueue = [], libraryItem) {
         if (!audioRef.value) return
 
         if (newQueue.length) queue.value = newQueue
         currentIndex.value = queue.value.findIndex(t => t.id === track.id)
+
+        currentContext.value = libraryItem
 
         audioRef.value.src = track.audio_url
         audioRef.value.play()
@@ -87,11 +90,12 @@ export const useAudioPlayer = (audioRef) => {
         audioRef.value.volume = isMuted.value ? 0 : volume.value
     }
 
-    function toggleTrack(track, newQueue = []) {
+    function toggleTrack(track, newQueue = [], libraryItem) {
         if (currentTrack.value?.id === track.id) {
             toggle()
         } else {
-            playTrack(track, newQueue)
+            playTrack(track, newQueue, libraryItem)
+            console.log(track)
         }
     }
 
@@ -142,7 +146,7 @@ export const useAudioPlayer = (audioRef) => {
     singleton = {
         currentTrack, queue, currentIndex, isPlaying, progress,
         currentTime, duration, volume, isMuted, hasNext, hasPrev,
-        playTrack, toggle, toggleVolume, toggleTrack,
+        playTrack, toggle, toggleVolume, toggleTrack, currentContext,
         next, prev, seek, formatTime, setVolume, hasTrack
     }
 

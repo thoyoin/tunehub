@@ -1,6 +1,7 @@
 <script setup>
     import { useAuthStore } from "@/stores/auth.js";
     import { useLibraryStore } from "@/stores/library.js";
+    import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
     import {onMounted} from "vue";
     import Popover from "bootstrap/js/dist/popover";
     import { useRouter } from "vue-router";
@@ -8,6 +9,7 @@
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
     const router = useRouter();
+    const { currentTrack, isPlaying, toggleTrack, currentContext } = useAudioPlayer()
 
     onMounted(() => {
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
@@ -82,13 +84,42 @@
                                 class="d-flex align-items-center btn btn-playlist p-2 mb-2 text-start rounded-3"
                                 :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem }"
                             >
-                                <img
-                                    :src="libraryItem.item?.cover_url"
-                                    class="me-3 playlist-cover rounded-1"
-                                    alt="libraryItem"
-                                >
+                                <div class="position-relative">
+                                    <img
+                                        :src="libraryItem.item?.cover_url"
+                                        class="me-3 playlist-cover rounded-1"
+                                        alt="libraryItem"
+                                    >
+                                    <button
+                                        @click="toggleTrack(
+                                            libraryItem.item.tracks[0],
+                                            libraryItem.item.tracks,
+                                            libraryItem.item.id
+                                            )"
+                                        class="btn cover-play-btn"
+                                    >
+                                        <template
+                                            v-if="currentContext !== libraryItem.item.id"
+                                        >
+                                            <img src="@/assets/svg/playWhite.svg" alt="play" />
+                                        </template>
+                                        <template
+                                            v-if="currentContext === libraryItem.item.id && !isPlaying"
+                                        >
+                                            <img src="@/assets/svg/playWhite.svg" alt="play" />
+                                        </template>
+                                        <template v-if="currentContext === libraryItem.item.id && isPlaying"
+                                        >
+                                            <img src="@/assets/svg/pauseWhite.svg" alt="pause" />
+                                        </template>
+                                    </button>
+                                </div>
                                 <div class="d-flex flex-column">
-                                    <span v-text="libraryItem.item?.title"></span>
+                                    <span
+                                        style="max-width: 180px;"
+                                        class="text-truncate"
+                                        v-text="libraryItem.item?.title"
+                                    ></span>
                                     <div class="d-flex flex-row">
                                         <span
                                             style="font-size: 13px; opacity: 50%"
@@ -170,5 +201,23 @@
         backdrop-filter: blur(2px);
         z-index: 1;
         pointer-events: none;
+    }
+    .cover-play-btn {
+        z-index: 100;
+        position: absolute;
+        transition: .2s;
+        opacity: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        left: 3px;
+        border-radius: 50%;
+        max-width: 40px;
+        border: none !important;
+        padding: 0;
+
+        &:hover {
+            opacity: 1 !important;
+        }
     }
 </style>

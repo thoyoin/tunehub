@@ -24,6 +24,7 @@ export const useLibraryStore = defineStore('library',() => {
                 const { data } = await api.get(`/api/libraryItems`)
 
                 items.value = data.libraryItems;
+                console.log(items.value);
             } catch (e) {
                 console.error(e);
             } finally {
@@ -53,6 +54,7 @@ export const useLibraryStore = defineStore('library',() => {
 
             libraryItem.value = response.data.playlist;
             itemTracks.value = response.data.tracks;
+            console.log(itemTracks.value);
         } catch (e) {
             console.error(e);
         } finally {

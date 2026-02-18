@@ -106,6 +106,12 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
 
         &:hover {
             box-shadow: 0 0 5px 3px rgb(41, 41, 41) !important;
+            .cover-play-btn {
+                opacity: .9 !important;
+            }
+            .playlist-cover {
+                opacity: .5 !important;
+            }
         }
         &:active {
             background-color: rgb(40,40,41) !important;

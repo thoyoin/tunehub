@@ -2,9 +2,12 @@
 import { useReleaseStore } from '@/stores/release.js'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
 
 const releaseStore = useReleaseStore()
 const router = useRouter()
+const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
+
 
 onMounted(() => {
     releaseStore.fetchLatestReleases()
@@ -32,19 +35,31 @@ onMounted(() => {
             <div class="d-flex flex-wrap">
                 <template v-for="release in releaseStore.releases">
                     <div class="card me-4" style="width: 12rem">
-                        <button
-                            @click="router.push({
+                        <button class="btn btn-get-release p-0 position-relative">
+                            <img
+                                @click="router.push({
                                  name: 'release',
                                  params: { releaseId: release.id }
                             })"
-                            class="btn btn-get-release p-0"
-                        >
-                            <img
                                 :src="release.cover_url"
                                 class="card-cover rounded-3"
                                 style="width: 190px; height: 190px"
                                 alt="cover"
                             />
+                            <button
+                                @click="toggleTrack(release.tracks[0], release.tracks)"
+                                class="btn cover-play-btn"
+                            >
+                                <template v-if="currentTrack?.id !== release.tracks[0].id">
+                                    <img src="@/assets/svg/play.svg" alt="play" />
+                                </template>
+                                <template v-if="currentTrack?.id === release.tracks[0].id && !isPlaying">
+                                    <img src="@/assets/svg/play.svg" alt="play" />
+                                </template>
+                                <template v-if="currentTrack?.id === release.tracks[0].id && isPlaying">
+                                    <img src="@/assets/svg/pause.svg" alt="pause" />
+                                </template>
+                            </button>
                         </button>
                         <div class="card-body p-0 pt-2">
                             <h5 class="card-title fw-bold">{{ release.title }}</h5>
@@ -72,6 +87,7 @@ onMounted(() => {
 .btn-get-release {
     color: rgb(228, 228, 228) !important;
     border: none !important;
+    transition: .2s;
 
     &:hover {
         color: rgba(228, 228, 228, 0.4) !important;
@@ -88,15 +104,23 @@ onMounted(() => {
     background: none !important;
     border: none !important;
 
-    .card-cover:hover {
-        opacity: 0.7 !important;
-        transition: 0.4s !important;
+    .btn-get-release:hover {
+        .card-cover {
+            opacity: 0.8;
+        }
+        .cover-play-btn {
+            opacity: 0.7;
+        }
     }
 
     .card-title {
         color: rgb(228, 228, 228);
         font-size: 15px;
         margin: 0 0 5px 0;
+    }
+
+    .card-cover {
+        transition: .2s;
     }
 
     .card-text {
@@ -145,6 +169,23 @@ onMounted(() => {
     }
     100% {
         height: 4px;
+    }
+}
+
+.cover-play-btn {
+    z-index: 100;
+    position: absolute;
+    transition: .2s;
+    opacity: 0;
+    bottom: 2px;
+    right: 3px;
+    border-radius: 50%;
+    max-width: 40px;
+    border: none !important;
+    padding: 0;
+
+    &:hover {
+        opacity: 1 !important;
     }
 }
 </style>

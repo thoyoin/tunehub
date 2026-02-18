@@ -47,6 +47,7 @@ class Playlist extends Model
     {
         return $this->belongsToMany(Track::class)
             ->withPivot('position')
+            ->orderBy('pivot_position')
             ->withTimestamps();
     }
 }

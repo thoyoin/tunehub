@@ -37,11 +37,10 @@ const router = useRouter();
                             <span class="opacity-50 me-2">Already have an account?</span>
                             <a
                                 data-bs-dismiss="modal"
-                                class="link-light"
+                                class="link-light opacity-75"
                                 @click="router.push('/login')"
                                 href="#"
-                            >
-                                Login
+                            >Login
                             </a>
                         </div>
                     </div>
