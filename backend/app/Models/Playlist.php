@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
 
@@ -49,5 +50,10 @@ class Playlist extends Model
             ->withPivot('position')
             ->orderBy('pivot_position')
             ->withTimestamps();
+    }
+
+    public function recentlyPlayed(): MorphMany
+    {
+        return $this->morphMany(RecentlyPlayed::class, 'item');
     }
 }

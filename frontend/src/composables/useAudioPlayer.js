@@ -1,4 +1,5 @@
 import { computed, ref, watch } from 'vue';
+import api from '@/lib/api.js'
 
 let singleton = null;
 
@@ -12,10 +13,20 @@ export const useAudioPlayer = (audioRef) => {
     const progress = ref(0)
     const currentTime = ref(0)
     const duration = ref(0)
-    const volume = ref(0.2)
+    const volume = ref(0.1)
     const isMuted = ref(false)
     const hasTrack = computed(() => !!currentTrack.value)
     const currentContext = ref(null)
+
+    watch(currentContext, async (newContext, oldContext) => {
+        if (!newContext) return
+
+        if (!oldContext ||
+            newContext.id !== oldContext.id ||
+            newContext.type !== oldContext.type) {
+            await api.post('/api/recentlyPlayed', newContext)
+        }
+    })
 
     const onTimeUpdate = () => {
         if (!audioRef.value?.duration) return
@@ -55,13 +66,13 @@ export const useAudioPlayer = (audioRef) => {
         }
     }, { immediate: true })
 
-    function playTrack(track, newQueue = [], libraryItem) {
+    function playTrack(track, newQueue = [], item) {
         if (!audioRef.value) return
 
         if (newQueue.length) queue.value = newQueue
         currentIndex.value = queue.value.findIndex(t => t.id === track.id)
 
-        currentContext.value = libraryItem
+        currentContext.value = item
 
         audioRef.value.src = track.audio_url
         audioRef.value.play()
@@ -90,12 +101,11 @@ export const useAudioPlayer = (audioRef) => {
         audioRef.value.volume = isMuted.value ? 0 : volume.value
     }
 
-    function toggleTrack(track, newQueue = [], libraryItem) {
+    function toggleTrack(track, newQueue = [], item) {
         if (currentTrack.value?.id === track.id) {
             toggle()
         } else {
-            playTrack(track, newQueue, libraryItem)
-            console.log(track)
+            playTrack(track, newQueue, item)
         }
     }
 

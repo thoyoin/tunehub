@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Release extends Model
@@ -49,5 +50,10 @@ class Release extends Model
     public function libraryItem(): MorphOne
     {
         return $this->morphOne(LibraryItem::class, 'item');
+    }
+
+    public function recentlyPlayed(): MorphMany
+    {
+        return $this->morphMany(RecentlyPlayed::class, 'item');
     }
 }

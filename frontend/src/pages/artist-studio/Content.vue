@@ -157,7 +157,7 @@ onMounted(async () => {
                                                     </span>
                                                     <div class="d-flex flex-row">
                                                         <span style="opacity: 60%; font-size: 15px">
-                                                            {{ track.release?.type }}
+                                                            {{ track.release?.release_type }}
                                                         </span>
                                                         <span
                                                             class="mx-2"
@@ -237,7 +237,7 @@ onMounted(async () => {
                     <template v-if="artistStore.tracks.tracks?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
-                            style="color: rgb(228, 228, 228)"
+                            style="color: rgb(228, 228, 228); opacity: .8"
                         >
                             You have no tracks yet.
                         </div>
@@ -288,7 +288,7 @@ onMounted(async () => {
                                                     </span>
                                                     <div class="d-flex flex-row">
                                                         <span style="opacity: 60%; font-size: 15px">
-                                                            {{ release.type }}
+                                                            {{ release.release_type }}
                                                         </span>
                                                         <span
                                                             class="mx-2"
@@ -365,7 +365,7 @@ onMounted(async () => {
                     <template v-if="artistStore.releases.releases?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
-                            style="color: rgb(228, 228, 228)"
+                            style="color: rgb(228, 228, 228); opacity: .8"
                         >
                             You have no releases yet.
                         </div>

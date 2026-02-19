@@ -121,7 +121,7 @@ const {prev, toggleTrack, hasTrack, volume, next, toggle,
 
 <style scoped>
 .bg-player {
-    background-color: rgba(50,50,51, 15%) !important;
+    background-color: rgba(50,50,51, 40%) !important;
     backdrop-filter: blur(8px) !important;
 }
 .progress-container {

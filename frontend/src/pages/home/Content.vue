@@ -1,35 +1,43 @@
 <script setup>
 import { useReleaseStore } from '@/stores/release.js'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
+import { useAuthStore } from '@/stores/auth.js'
+import { useRecentlyPlayedStore } from '@/stores/recentlyPlayed.js'
 
 const releaseStore = useReleaseStore()
+const recentlyPlayedStore = useRecentlyPlayedStore()
 const router = useRouter()
-const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
+const auth = useAuthStore()
+const { currentTrack, isPlaying, toggleTrack, currentContext } = useAudioPlayer()
 
-
-onMounted(() => {
-    releaseStore.fetchLatestReleases()
+onMounted(async () => {
+    await releaseStore.fetchLatestReleases()
+    await recentlyPlayedStore.fetchRecentlyPlayed()
 })
+
+watch(() => currentContext, async (context) => {
+    if (context) {
+        await recentlyPlayedStore.fetchRecentlyPlayed()
+    }
+})
+
 </script>
 
 <template>
     <div
         style="
-               padding: 85px 30px 0 320px;
-               color: rgb(228, 228, 228);
-               flex: 1 1 auto;
-               overflow-y: auto;
-               min-height: 0;
-           "
+            padding: 85px 30px 0 320px;
+            color: rgb(228, 228, 228);
+            flex: 1 1 auto;
+            overflow-y: auto;
+            min-height: 0;
+        "
         class="w-100"
     >
         <div>
-            <div
-                class="fw-bold w-100"
-                style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)"
-            >
+            <div class="w-100" style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                 <h1>New releases</h1>
             </div>
             <div class="d-flex flex-wrap">
@@ -37,34 +45,110 @@ onMounted(() => {
                     <div class="card me-4" style="width: 12rem">
                         <button class="btn btn-get-release p-0 position-relative">
                             <img
-                                @click="router.push({
-                                 name: 'release',
-                                 params: { releaseId: release.id }
-                            })"
+                                @click="
+                                    router.push({
+                                        name: 'release',
+                                        params: { releaseId: release.id },
+                                    })
+                                "
                                 :src="release.cover_url"
                                 class="card-cover rounded-3"
                                 style="width: 190px; height: 190px"
                                 alt="cover"
                             />
-                            <button
-                                @click="toggleTrack(release.tracks[0], release.tracks)"
-                                class="btn cover-play-btn"
-                            >
-                                <template v-if="currentTrack?.id !== release.tracks[0].id">
-                                    <img src="@/assets/svg/play.svg" alt="play" />
-                                </template>
-                                <template v-if="currentTrack?.id === release.tracks[0].id && !isPlaying">
-                                    <img src="@/assets/svg/play.svg" alt="play" />
-                                </template>
-                                <template v-if="currentTrack?.id === release.tracks[0].id && isPlaying">
-                                    <img src="@/assets/svg/pause.svg" alt="pause" />
-                                </template>
-                            </button>
+                            <template v-if="auth.user">
+                                <button
+                                    @click="
+                                        toggleTrack(
+                                            release.tracks[0],
+                                            release.tracks,
+                                            release,
+                                        )
+                                    "
+                                    class="btn cover-play-btn"
+                                >
+                                    <template v-if="currentTrack?.id !== release.tracks[0].id">
+                                        <img src="@/assets/svg/play.svg" alt="play" />
+                                    </template>
+                                    <template
+                                        v-if="
+                                            currentTrack?.id === release.tracks[0].id && !isPlaying
+                                        "
+                                    >
+                                        <img src="@/assets/svg/play.svg" alt="play" />
+                                    </template>
+                                    <template
+                                        v-if="
+                                            currentTrack?.id === release.tracks[0].id && isPlaying
+                                        "
+                                    >
+                                        <img src="@/assets/svg/pause.svg" alt="pause" />
+                                    </template>
+                                </button>
+                            </template>
                         </button>
                         <div class="card-body p-0 pt-2">
                             <h5 class="card-title fw-bold">{{ release.title }}</h5>
                             <div class="d-flex flex-row">
                                 <p class="card-text">{{ release.artist }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div class="w-100 mt-4" style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
+                <h1>Recently played</h1>
+            </div>
+            <div class="d-flex flex-wrap">
+                <template v-if="recentlyPlayedStore.items?.length === 0">
+                    <div
+                        class="p-5 fw-bold fs-5 d-flex w-100 justify-content-center align-items-center"
+                        style="color: rgb(228, 228, 228); opacity: 0.8"
+                    >
+                        You haven't listened to anything yet...
+                    </div>
+                </template>
+                <template v-for="item in recentlyPlayedStore.items">
+                    <div class="card me-4" style="width: 12rem">
+                        <button class="btn btn-get-release p-0 position-relative">
+                            <img
+                                :src="item.item.cover_url"
+                                class="card-cover rounded-3"
+                                style="width: 190px; height: 190px"
+                                alt="cover"
+                            />
+                            <template v-if="auth.user">
+                                <button
+                                    @click="
+                                        toggleTrack(item.item.tracks[0], item.item.tracks, item.item)
+                                    "
+                                    class="btn cover-play-btn"
+                                >
+                                    <template v-if="currentTrack?.id !== item.item.tracks[0].id">
+                                        <img src="@/assets/svg/play.svg" alt="play" />
+                                    </template>
+                                    <template
+                                        v-if="
+                                            currentTrack?.id === item.item.tracks[0].id &&
+                                            !isPlaying
+                                        "
+                                    >
+                                        <img src="@/assets/svg/play.svg" alt="play" />
+                                    </template>
+                                    <template
+                                        v-if="
+                                            currentTrack?.id === item.item.tracks[0].id && isPlaying
+                                        "
+                                    >
+                                        <img src="@/assets/svg/pause.svg" alt="pause" />
+                                    </template>
+                                </button>
+                            </template>
+                        </button>
+                        <div class="card-body p-0 pt-2">
+                            <h5 class="card-title fw-bold">{{ item.item.title }}</h5>
+                            <div class="d-flex flex-row">
+                                <p class="card-text">{{ item.item.artist }}</p>
                             </div>
                         </div>
                     </div>
@@ -87,7 +171,7 @@ onMounted(() => {
 .btn-get-release {
     color: rgb(228, 228, 228) !important;
     border: none !important;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
         color: rgba(228, 228, 228, 0.4) !important;
@@ -120,7 +204,7 @@ onMounted(() => {
     }
 
     .card-cover {
-        transition: .2s;
+        transition: 0.2s;
     }
 
     .card-text {
@@ -175,7 +259,7 @@ onMounted(() => {
 .cover-play-btn {
     z-index: 100;
     position: absolute;
-    transition: .2s;
+    transition: 0.2s;
     opacity: 0;
     bottom: 2px;
     right: 3px;

@@ -9,7 +9,7 @@
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
     const router = useRouter();
-    const { currentTrack, isPlaying, toggleTrack, currentContext } = useAudioPlayer()
+    const { isPlaying, toggleTrack, currentContext } = useAudioPlayer()
 
     onMounted(() => {
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
@@ -45,7 +45,7 @@
             class="d-flex h-100 z-2 border position-fixed w-100 rounded-5 ms-3 flex-column bg-minor"
         >
             <div class="d-flex justify-content-between">
-                <div class="fw-bold p-4" >
+                <div class="fw-bold p-4 fs-5">
                     My library
                 </div>
                 <div class="p-4">
@@ -79,7 +79,6 @@
                     >
                         <div v-for="libraryItem in libraryStore.items">
                             <div
-                                @click="handleItemSelection(libraryItem)"
                                 style="height: 58px"
                                 class="d-flex align-items-center btn btn-playlist p-2 mb-2 text-start rounded-3"
                                 :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem }"
@@ -94,27 +93,31 @@
                                         @click="toggleTrack(
                                             libraryItem.item.tracks[0],
                                             libraryItem.item.tracks,
-                                            libraryItem.item.id
+                                            libraryItem.item
                                             )"
                                         class="btn cover-play-btn"
                                     >
                                         <template
-                                            v-if="currentContext !== libraryItem.item.id"
+                                            v-if="currentContext?.item?.id !== libraryItem.item.id"
                                         >
                                             <img src="@/assets/svg/playWhite.svg" alt="play" />
                                         </template>
                                         <template
-                                            v-if="currentContext === libraryItem.item.id && !isPlaying"
+                                            v-if="currentContext?.item?.id === libraryItem.item.id && !isPlaying"
                                         >
                                             <img src="@/assets/svg/playWhite.svg" alt="play" />
                                         </template>
-                                        <template v-if="currentContext === libraryItem.item.id && isPlaying"
+                                        <template
+                                            v-if="currentContext?.item?.id === libraryItem.item.id && isPlaying"
                                         >
                                             <img src="@/assets/svg/pauseWhite.svg" alt="pause" />
                                         </template>
                                     </button>
                                 </div>
-                                <div class="d-flex flex-column">
+                                <div
+                                    @click="handleItemSelection(libraryItem)"
+                                    class="d-flex flex-column"
+                                >
                                     <span
                                         style="max-width: 180px;"
                                         class="text-truncate"

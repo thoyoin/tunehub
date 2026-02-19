@@ -42,7 +42,7 @@ class ReleaseService
                 ->releases()
                 ->create([
                     'title' => $releaseData['releaseTitle'],
-                    'type' => $releaseData['type'],
+                    'release_type' => $releaseData['type'],
                     'artist' => $releaseData['artist'],
                     'cover_url' => $coverUrl,
                     'release_date' => $releaseData['release_date'],

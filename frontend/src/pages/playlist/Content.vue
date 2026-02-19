@@ -204,7 +204,7 @@ watch(
                                     type="button"
                                     style="left: 308px; top: 13px"
                                     class="btn z-3 btn-play-table position-absolute"
-                                    @click="toggleTrack(track, libraryStore.itemTracks, libraryStore.libraryItem.id)"
+                                    @click="toggleTrack(track, libraryStore.itemTracks, libraryStore.libraryItem.item)"
                                 >
                                     <template v-if="currentTrack?.id !== track.id">
                                         <img src="@/assets/svg/play.svg" alt="play" />
@@ -392,8 +392,8 @@ watch(
             </tbody>
         </table>
         <template v-if="libraryStore.itemTracks.length === 0">
-            <div class="d-flex w-100 align-items-center justify-content-center">
-                <span class="fw-light">You haven't added any tracks yet.</span>
+            <div class="d-flex align-items-center justify-content-center">
+                <span class="fw-bold opacity-75">You haven't added any tracks yet.</span>
             </div>
         </template>
     </div>

@@ -11,7 +11,7 @@ class GetPlaylistById
     public function handle($playlist): PLaylist
     {
         return $playlist
-            ->with(['user', 'tracks.release'])
+            ->with(['user', 'tracks.release', 'libraryItem'])
             ->where('id', $playlist->id)
             ->first();
     }

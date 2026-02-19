@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Actions\Auth\SignUp;
 use App\Actions\LibraryItem\CreateLibraryItem;
 use App\Actions\Playlist\CreateStarterPlaylist;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SignUpService
@@ -25,6 +26,8 @@ class SignUpService
             $playlist = $this->createStarterPlaylist->handle($user);
 
             $this->createLibraryItem->handle($user->id, $playlist->id, 'playlist');
+
+            Auth::login($user);
         });
     }
 }

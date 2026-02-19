@@ -20,7 +20,8 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->string('title');
             $table->string('artist');
-            $table->enum('type', ['album', 'single']);
+            $table->enum('release_type', ['album', 'single']);
+            $table->string('item_type')->default('release');
             $table->string('cover_url')->nullable();
             $table->date('release_date');
             $table->enum('status', ['pending', 'approved', 'rejected', 'published'])

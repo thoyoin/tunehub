@@ -4,6 +4,7 @@ use App\Http\Controllers\ArtistStudioController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LibraryItemController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\RecentlyPlayedController;
 use App\Http\Controllers\ReleaseController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\UserController;
@@ -41,6 +42,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/playlists', 'getAll');
         Route::post('/playlist/{playlist}/track/{track}', 'addTrack');
         Route::post('/liked/track/{track}', 'addTrackToLikes');
+    });
+
+    Route::controller(RecentlyPlayedController::class)->group(function () {
+        Route::post('/recentlyPlayed', 'store');
+        Route::get('/recentlyPlayed', 'get');
     });
 
     Route::controller(LibraryItemController::class)->group(function () {

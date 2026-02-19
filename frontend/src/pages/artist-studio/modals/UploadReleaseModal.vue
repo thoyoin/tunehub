@@ -201,7 +201,7 @@ const uploadStore = useUploadReleaseStore();
                             :disabled="uploadStore.processing"
                         >
                             <template v-if="uploadStore.processing">Loading...</template>
-                            <template v-else>Save changes</template>
+                            <template v-else>Upload</template>
                         </button>
                     </div>
                 </div>
