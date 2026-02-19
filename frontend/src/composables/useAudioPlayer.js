@@ -21,10 +21,13 @@ export const useAudioPlayer = (audioRef) => {
     watch(currentContext, async (newContext, oldContext) => {
         if (!newContext) return
 
-        if (!oldContext ||
-            newContext.id !== oldContext.id ||
-            newContext.type !== oldContext.type) {
+        if (
+            !oldContext
+            || newContext.id !== oldContext.id
+            || newContext.type !== oldContext.type
+        ) {
             await api.post('/api/recentlyPlayed', newContext)
+            console.log('New context: ', newContext)
         }
     })
 

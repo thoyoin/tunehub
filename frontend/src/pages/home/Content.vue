@@ -112,6 +112,12 @@ watch(() => currentContext, async (context) => {
                     <div class="card me-4" style="width: 12rem">
                         <button class="btn btn-get-release p-0 position-relative">
                             <img
+                                @click="
+                                    router.push({
+                                        name: item.item_type,
+                                        params: { [item.item_type + 'Id']: item.item_id },
+                                    })
+                                "
                                 :src="item.item.cover_url"
                                 class="card-cover rounded-3"
                                 style="width: 190px; height: 190px"

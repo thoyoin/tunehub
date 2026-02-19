@@ -6,28 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Playlist/GetPlaylistById.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Playlist/GetPlaylistById.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Release/GetLatestReleases.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Release/GetLatestReleases.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/Playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Playlist.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/Release.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Release.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/SignUpService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/SignUpService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_01_23_083650_create_releases_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_01_23_083650_create_releases_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_092431_create_playlists_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_092431_create_playlists_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -495,7 +477,7 @@
       <workItem from="1771388109553" duration="10722000" />
       <workItem from="1771426785733" duration="7629000" />
       <workItem from="1771437168042" duration="551000" />
-      <workItem from="1771502755230" duration="16313000" />
+      <workItem from="1771502755230" duration="18944000" />
     </task>
     <servers />
   </component>

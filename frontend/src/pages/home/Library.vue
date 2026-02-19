@@ -98,17 +98,25 @@
                                         class="btn cover-play-btn"
                                     >
                                         <template
-                                            v-if="currentContext?.item?.id !== libraryItem.item.id"
+                                            v-if="currentContext?.id !== libraryItem.item?.id
+                                                || currentContext?.item_type !== libraryItem.item.item_type
+                                            "
                                         >
                                             <img src="@/assets/svg/playWhite.svg" alt="play" />
                                         </template>
                                         <template
-                                            v-if="currentContext?.item?.id === libraryItem.item.id && !isPlaying"
+                                            v-if="currentContext?.id === libraryItem.item?.id
+                                                && currentContext?.item_type === libraryItem.item.item_type
+                                                && !isPlaying
+                                            "
                                         >
                                             <img src="@/assets/svg/playWhite.svg" alt="play" />
                                         </template>
                                         <template
-                                            v-if="currentContext?.item?.id === libraryItem.item.id && isPlaying"
+                                            v-if="currentContext?.id === libraryItem.item?.id
+                                                && currentContext?.item_type === libraryItem.item.item_type
+                                                && isPlaying
+                                            "
                                         >
                                             <img src="@/assets/svg/pauseWhite.svg" alt="pause" />
                                         </template>

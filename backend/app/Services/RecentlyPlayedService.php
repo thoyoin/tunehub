@@ -24,7 +24,6 @@ class RecentlyPlayedService
 //        RecentlyPlayed::where('user_id', auth()->id())
 //            ->orderByDesc('played_at')
 //            ->skip(20)
-//            ->take(PHP_INT_MAX)
 //            ->delete();
     }
 
