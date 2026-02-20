@@ -99,7 +99,10 @@ watch(() => currentContext, async (context) => {
             <div class="w-100 mt-4" style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                 <h1>Recently played</h1>
             </div>
-            <div class="d-flex flex-wrap">
+            <div
+                style="padding-bottom: 200px;"
+                class="d-flex flex-wrap"
+            >
                 <template v-if="recentlyPlayedStore.items?.length === 0">
                     <div
                         class="p-5 fw-bold fs-5 d-flex w-100 justify-content-center align-items-center"
@@ -125,9 +128,11 @@ watch(() => currentContext, async (context) => {
                             />
                             <template v-if="auth.user">
                                 <button
-                                    @click="
-                                        toggleTrack(item.item.tracks[0], item.item.tracks, item.item)
-                                    "
+                                    @click="toggleTrack(
+                                        item.item.tracks[0],
+                                        item.item.tracks,
+                                        item.item
+                                    )"
                                     class="btn cover-play-btn"
                                 >
                                     <template v-if="currentTrack?.id !== item.item.tracks[0].id">
@@ -135,15 +140,16 @@ watch(() => currentContext, async (context) => {
                                     </template>
                                     <template
                                         v-if="
-                                            currentTrack?.id === item.item.tracks[0].id &&
-                                            !isPlaying
+                                            currentTrack?.id === item.item.tracks[0].id
+                                            && !isPlaying
                                         "
                                     >
                                         <img src="@/assets/svg/play.svg" alt="play" />
                                     </template>
                                     <template
                                         v-if="
-                                            currentTrack?.id === item.item.tracks[0].id && isPlaying
+                                            currentTrack?.id === item.item.tracks[0].id
+                                            && isPlaying
                                         "
                                     >
                                         <img src="@/assets/svg/pause.svg" alt="pause" />
@@ -152,10 +158,24 @@ watch(() => currentContext, async (context) => {
                             </template>
                         </button>
                         <div class="card-body p-0 pt-2">
-                            <h5 class="card-title fw-bold">{{ item.item.title }}</h5>
-                            <div class="d-flex flex-row">
-                                <p class="card-text">{{ item.item.artist }}</p>
-                            </div>
+                            <h5 class="card-title fw-bold">
+                                {{ item.item.title }}
+                            </h5>
+                            <template v-if="item.item.title === 'Liked tracks'">
+                                <span
+                                    style="font-size: 13px; color: rgba(228,228,228,.5);"
+                                    v-text="item.item.tracks.length + ' tracks'"
+                                >
+                                </span>
+                            </template>
+                            <template v-else>
+                                <span
+                                    style="font-size: 13px;max-width: 130px;color: rgba(228,228,228,.5);"
+                                    v-text="item.item.artist"
+                                    class="text-truncate"
+                                >
+                                </span>
+                            </template>
                         </div>
                     </div>
                 </template>

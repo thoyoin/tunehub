@@ -4,27 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Events\TrackListened;
 use App\Models\RecentlyPlayed;
+use Illuminate\Http\JsonResponse;
 
 class RecentlyPlayedService
 {
-    public function store($request): void
+    public function store($data): JsonResponse
     {
-        RecentlyPlayed::updateOrCreate(
-            [
-                'user_id' => auth()->id(),
-                'item_type' => $request->item_type,
-                'item_id' => $request->id,
-            ],
-            [
-                'played_at' => now(),
-            ]
-        );
+        TrackListened::dispatch($data['user_id'], $data['id'], $data['item_type']);
 
-//        RecentlyPlayed::where('user_id', auth()->id())
-//            ->orderByDesc('played_at')
-//            ->skip(20)
-//            ->delete();
+        return response()->json([
+            'sentData' => $data,
+        ]);
     }
 
     public function get()

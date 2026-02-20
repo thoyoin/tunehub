@@ -26,8 +26,8 @@ export const useAudioPlayer = (audioRef) => {
             || newContext.id !== oldContext.id
             || newContext.type !== oldContext.type
         ) {
-            await api.post('/api/recentlyPlayed', newContext)
             console.log('New context: ', newContext)
+            await api.post('/api/recentlyPlayed', newContext)
         }
     })
 

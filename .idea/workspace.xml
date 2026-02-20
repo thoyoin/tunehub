@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/RecentlyPlayedController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/RecentlyPlayedController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" afterDir="false" />
@@ -477,7 +478,8 @@
       <workItem from="1771388109553" duration="10722000" />
       <workItem from="1771426785733" duration="7629000" />
       <workItem from="1771437168042" duration="551000" />
-      <workItem from="1771502755230" duration="18944000" />
+      <workItem from="1771502755230" duration="18988000" />
+      <workItem from="1771589263394" duration="7170000" />
     </task>
     <servers />
   </component>

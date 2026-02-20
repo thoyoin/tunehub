@@ -124,7 +124,7 @@
                                 </div>
                                 <div
                                     @click="handleItemSelection(libraryItem)"
-                                    class="d-flex flex-column"
+                                    class="d-flex flex-column w-100"
                                 >
                                     <span
                                         style="max-width: 180px;"
@@ -134,7 +134,7 @@
                                     <div class="d-flex flex-row">
                                         <span
                                             style="font-size: 13px; opacity: 50%"
-                                            v-text="libraryItem.item?.type ?? libraryItem.item_type"
+                                            v-text="libraryItem.item?.release_type ?? libraryItem.item_type"
                                         >
                                         </span>
                                         <span style="font-size: 13px; opacity: 50%; padding: 0 5px">•</span>
