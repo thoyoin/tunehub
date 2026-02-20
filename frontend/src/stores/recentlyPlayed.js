@@ -12,7 +12,7 @@ export const useRecentlyPlayedStore = defineStore('recentlyPlayedStore', () => {
 
             const response = await api.get('/api/recentlyPlayed')
 
-            items.value = response.data
+            items.value = response.data.playedHistory
         } catch (e) {
             console.error(e)
         } finally {

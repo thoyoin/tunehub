@@ -67,19 +67,19 @@ watch(() => currentContext, async (context) => {
                                     "
                                     class="btn cover-play-btn"
                                 >
-                                    <template v-if="currentTrack?.id !== release.tracks[0].id">
+                                    <template v-if="currentTrack?.id !== release.tracks[0]?.id">
                                         <img src="@/assets/svg/play.svg" alt="play" />
                                     </template>
                                     <template
                                         v-if="
-                                            currentTrack?.id === release.tracks[0].id && !isPlaying
+                                            currentTrack?.id === release.tracks[0]?.id && !isPlaying
                                         "
                                     >
                                         <img src="@/assets/svg/play.svg" alt="play" />
                                     </template>
                                     <template
                                         v-if="
-                                            currentTrack?.id === release.tracks[0].id && isPlaying
+                                            currentTrack?.id === release.tracks[0]?.id && isPlaying
                                         "
                                     >
                                         <img src="@/assets/svg/pause.svg" alt="pause" />
@@ -118,10 +118,10 @@ watch(() => currentContext, async (context) => {
                                 @click="
                                     router.push({
                                         name: item.item_type,
-                                        params: { [item.item_type + 'Id']: item.item_id },
+                                        params: { [item.item_type + 'Id']: item.id },
                                     })
                                 "
-                                :src="item.item.cover_url"
+                                :src="item.cover_url"
                                 class="card-cover rounded-3"
                                 style="width: 190px; height: 190px"
                                 alt="cover"
@@ -129,18 +129,18 @@ watch(() => currentContext, async (context) => {
                             <template v-if="auth.user">
                                 <button
                                     @click="toggleTrack(
-                                        item.item.tracks[0],
-                                        item.item.tracks,
-                                        item.item
+                                        item.tracks[0],
+                                        item.tracks,
+                                        item
                                     )"
                                     class="btn cover-play-btn"
                                 >
-                                    <template v-if="currentTrack?.id !== item.item.tracks[0].id">
+                                    <template v-if="currentTrack?.id !== item.tracks[0]?.id">
                                         <img src="@/assets/svg/play.svg" alt="play" />
                                     </template>
                                     <template
                                         v-if="
-                                            currentTrack?.id === item.item.tracks[0].id
+                                            currentTrack?.id === item.tracks[0]?.id
                                             && !isPlaying
                                         "
                                     >
@@ -148,7 +148,7 @@ watch(() => currentContext, async (context) => {
                                     </template>
                                     <template
                                         v-if="
-                                            currentTrack?.id === item.item.tracks[0].id
+                                            currentTrack?.id === item.tracks[0]?.id
                                             && isPlaying
                                         "
                                     >
@@ -159,19 +159,19 @@ watch(() => currentContext, async (context) => {
                         </button>
                         <div class="card-body p-0 pt-2">
                             <h5 class="card-title fw-bold">
-                                {{ item.item.title }}
+                                {{ item.title }}
                             </h5>
-                            <template v-if="item.item.title === 'Liked tracks'">
+                            <template v-if="item.item_type === 'playlist'">
                                 <span
                                     style="font-size: 13px; color: rgba(228,228,228,.5);"
-                                    v-text="item.item.tracks.length + ' tracks'"
+                                    v-text="item.tracks.length + ' tracks'"
                                 >
                                 </span>
                             </template>
                             <template v-else>
                                 <span
                                     style="font-size: 13px;max-width: 130px;color: rgba(228,228,228,.5);"
-                                    v-text="item.item.artist"
+                                    v-text="item.artist"
                                     class="text-truncate"
                                 >
                                 </span>

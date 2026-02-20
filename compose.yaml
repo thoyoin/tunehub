@@ -63,6 +63,19 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    redis:
+        image: 'redis:7-alpine'
+        container_name: tunehub-redis
+        ports:
+          - '6379:6379'
+        volumes:
+          - 'redis-data:/data'
+        networks:
+          - sail
+        healthcheck:
+          test: ['CMD', 'redis-cli', 'ping']
+          retries: 3
+          timeout: 5s
     minio:
         image: 'minio/minio:RELEASE.2025-04-22T22-12-26Z'
         ports:
@@ -93,4 +106,6 @@ volumes:
     sail-minio:
         driver: local
     frontend-node-modules:
+        driver: local
+    redis-data:
         driver: local
