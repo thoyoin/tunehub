@@ -96,90 +96,98 @@ watch(() => currentContext, async (context) => {
                     </div>
                 </template>
             </div>
-            <div class="w-100 mt-4" style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
-                <h1>Recently played</h1>
-            </div>
-            <div
-                style="padding-bottom: 200px;"
-                class="d-flex flex-wrap"
-            >
-                <template v-if="recentlyPlayedStore.items?.length === 0">
-                    <div
-                        class="p-5 fw-bold fs-5 d-flex w-100 justify-content-center align-items-center"
-                        style="color: rgb(228, 228, 228); opacity: 0.8"
-                    >
-                        You haven't listened to anything yet...
-                    </div>
-                </template>
-                <template v-for="item in recentlyPlayedStore.items">
-                    <div class="card me-4" style="width: 12rem">
-                        <button class="btn btn-get-release p-0 position-relative">
-                            <img
-                                @click="
-                                    router.push({
-                                        name: item.item_type,
-                                        params: { [item.item_type + 'Id']: item.id },
-                                    })
-                                "
-                                :src="item.cover_url"
-                                class="card-cover rounded-3"
-                                style="width: 190px; height: 190px"
-                                alt="cover"
-                            />
-                            <template v-if="auth.user">
-                                <button
-                                    @click="toggleTrack(
-                                        item.tracks[0],
-                                        item.tracks,
-                                        item
-                                    )"
-                                    class="btn cover-play-btn"
-                                >
-                                    <template v-if="currentTrack?.id !== item.tracks[0]?.id">
-                                        <img src="@/assets/svg/play.svg" alt="play" />
-                                    </template>
-                                    <template
-                                        v-if="
-                                            currentTrack?.id === item.tracks[0]?.id
-                                            && !isPlaying
-                                        "
-                                    >
-                                        <img src="@/assets/svg/play.svg" alt="play" />
-                                    </template>
-                                    <template
-                                        v-if="
-                                            currentTrack?.id === item.tracks[0]?.id
-                                            && isPlaying
-                                        "
-                                    >
-                                        <img src="@/assets/svg/pause.svg" alt="pause" />
-                                    </template>
-                                </button>
-                            </template>
-                        </button>
-                        <div class="card-body p-0 pt-2">
-                            <h5 class="card-title fw-bold">
-                                {{ item.title }}
-                            </h5>
-                            <template v-if="item.item_type === 'playlist'">
-                                <span
-                                    style="font-size: 13px; color: rgba(228,228,228,.5);"
-                                    v-text="item.tracks.length + ' tracks'"
-                                >
-                                </span>
-                            </template>
-                            <template v-else>
-                                <span
-                                    style="font-size: 13px;max-width: 130px;color: rgba(228,228,228,.5);"
-                                    v-text="item.artist"
-                                    class="text-truncate"
-                                >
-                                </span>
-                            </template>
+            <template v-if="auth.user">
+                <div class="w-100 mt-4" style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
+                    <h1>Recently played</h1>
+                </div>
+                <div
+                    style="padding-bottom: 200px;"
+                    class="d-flex flex-wrap"
+                >
+                    <template v-if="recentlyPlayedStore.items?.length === 0">
+                        <div
+                            class="p-5 fw-bold fs-5 d-flex w-100 justify-content-center align-items-center"
+                            style="color: rgb(228, 228, 228); opacity: 0.8"
+                        >
+                            You haven't listened to anything yet...
                         </div>
-                    </div>
-                </template>
-            </div>
+                    </template>
+                    <template v-for="item in recentlyPlayedStore.items">
+                        <div class="card me-4" style="width: 12rem">
+                            <button class="btn btn-get-release p-0 position-relative">
+                                <img
+                                    @click="
+                                        router.push({
+                                            name: item.item_type,
+                                            params: { [item.item_type + 'Id']: item.id },
+                                        })
+                                    "
+                                    :src="item.cover_url"
+                                    class="card-cover rounded-3"
+                                    style="width: 190px; height: 190px"
+                                    alt="cover"
+                                />
+                                <template v-if="auth.user">
+                                    <button
+                                        @click="toggleTrack(
+                                            item.tracks[0],
+                                            item.tracks,
+                                            item
+                                        )"
+                                        class="btn cover-play-btn"
+                                    >
+                                        <template v-if="currentTrack?.id !== item.tracks[0]?.id">
+                                            <img src="@/assets/svg/play.svg" alt="play" />
+                                        </template>
+                                        <template
+                                            v-if="
+                                                currentTrack?.id === item.tracks[0]?.id
+                                                && !isPlaying
+                                            "
+                                        >
+                                            <img src="@/assets/svg/play.svg" alt="play" />
+                                        </template>
+                                        <template
+                                            v-if="
+                                                currentTrack?.id === item.tracks[0]?.id
+                                                && isPlaying
+                                            "
+                                        >
+                                            <img src="@/assets/svg/pause.svg" alt="pause" />
+                                        </template>
+                                    </button>
+                                </template>
+                            </button>
+                            <div class="card-body p-0 pt-2">
+                                <h5 class="card-title fw-bold">
+                                    {{ item.title }}
+                                </h5>
+                                <template v-if="item.item_type === 'playlist'">
+                                    <span
+                                        style="font-size: 13px;color: rgba(228,228,228,.5)"
+                                        v-text="item.item_type"
+                                    >
+                                        </span>
+                                    <span style="color: rgba(228,228,228,.5);font-size: 13px; padding: 0 5px">•</span>
+                                    <span
+                                        style="font-size: 13px; color: rgba(228,228,228,.5);"
+                                        v-text="item.tracks.length + ' tracks'"
+                                    >
+                                    </span>
+                                </template>
+                                <template v-else>
+                                    <span
+                                        style="font-size: 13px;max-width: 130px;color: rgba(228,228,228,.5);"
+                                        v-text="item.artist"
+                                        class="text-truncate"
+                                    >
+                                    </span>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
         </div>
     </div>
 </template>

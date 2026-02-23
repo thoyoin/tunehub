@@ -3,23 +3,20 @@
     import { onMounted } from 'vue'
     import { useAuthStore } from '@/stores/auth'
     import { useLibraryStore } from "@/stores/library.js";
-    import { useRecentlyPlayedStore } from '@/stores/recentlyPlayed.js'
     import Library from "@/pages/home/Library.vue";
     import SettingsModal from "@/pages/home/modals/settingsModal.vue";
     import Content from "@/pages/home/Content.vue";
 
     const auth = useAuthStore()
     const libraryStore = useLibraryStore()
-    const recentlyPlayedStore = useRecentlyPlayedStore()
 
     onMounted(async () => {
-        if (!auth.isReady) {
+        if (!auth.user) {
             await auth.fetchUser()
         }
 
         await libraryStore.fetchItems()
     })
-
 </script>
 
 <template>

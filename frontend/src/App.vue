@@ -151,10 +151,13 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         cursor: pointer;
     }
     .dropdown-menu {
-        background-color: rgba(40,40,41, 0.8) !important;
+        background-color: rgba(40,40,41, .95) !important;
+        backdrop-filter: blur(10px) !important;
         z-index: 10000 !important;
         border-radius: 12px !important;
         padding: 4px 3px !important;
+        max-height: 400px !important;
+        overflow: auto !important;
         .dropdown-item {
             color: rgb(228,228,228) !important;
             display: flex !important;

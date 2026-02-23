@@ -14,7 +14,12 @@ export const useAuthStore = defineStore('auth', () => {
             const { data } = await api.get('/api/user');
             user.value = data.user;
         } catch (error) {
-            console.log(error);
+            if (error.response?.status === 401) {
+                user.value = null
+                return
+            }
+
+            throw error;
         } finally {
             isReady.value = true;
         }
@@ -61,8 +66,6 @@ export const useAuthStore = defineStore('auth', () => {
 
             await api.get('/sanctum/csrf-cookie')
             await api.post('/api/register', credentials)
-
-            await fetchUser()
         } catch (e) {
             console.log(e)
 

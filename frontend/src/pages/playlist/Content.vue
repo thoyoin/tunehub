@@ -204,7 +204,11 @@ watch(
                                     type="button"
                                     style="left: 308px; top: 13px"
                                     class="btn z-3 btn-play-table position-absolute"
-                                    @click="toggleTrack(track, libraryStore.itemTracks, libraryStore.libraryItem.item)"
+                                    @click="toggleTrack(
+                                        track,
+                                        libraryStore.itemTracks,
+                                        libraryStore.libraryItem
+                                        )"
                                 >
                                     <template v-if="currentTrack?.id !== track.id">
                                         <img src="@/assets/svg/play.svg" alt="play" />

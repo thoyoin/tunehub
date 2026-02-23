@@ -91,6 +91,7 @@ onMounted(async () => {
                                                         toggleTrack(
                                                             track,
                                                             artistStore.tracks.tracks,
+                                                            track.release,
                                                         )
                                                     "
                                                 >

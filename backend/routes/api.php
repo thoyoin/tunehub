@@ -6,6 +6,7 @@ use App\Http\Controllers\LibraryItemController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\RecentlyPlayedController;
 use App\Http\Controllers\ReleaseController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,10 @@ Route::group(['middleware' => ['web']], function () {
 Route::controller(ReleaseController::class)->group(function () {
     Route::get('/release/{release}', 'show');
     Route::get('/releases/latest', 'getLatest');
+});
+
+Route::controller(SearchController::class)->group(function () {
+    Route::get('/search', 'index');
 });
 
 Route::controller(LibraryItemController::class)->group(function () {

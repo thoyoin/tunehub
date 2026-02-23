@@ -124,7 +124,7 @@
                                 </div>
                                 <div
                                     @click="handleItemSelection(libraryItem)"
-                                    class="d-flex flex-column w-100"
+                                    class="d-flex flex-column w-100 position-relative"
                                 >
                                     <span
                                         style="max-width: 180px;"
