@@ -45,7 +45,7 @@ const router = createRouter({
               if (auth.user?.role !== '2' || auth.user?.role !== '2') next('/');
               else next();
           }
-      }
+      },
   ],
 })
 

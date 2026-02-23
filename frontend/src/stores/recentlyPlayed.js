@@ -13,9 +13,7 @@ export const useRecentlyPlayedStore = defineStore('recentlyPlayedStore', () => {
         if (auth.user) {
             try {
                 isLoading.value = true;
-
                 const response = await api.get('/api/recentlyPlayed')
-
                 items.value = response.data.playedHistory
             } catch (e) {
                 console.error(e)

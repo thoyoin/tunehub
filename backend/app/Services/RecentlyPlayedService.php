@@ -21,7 +21,7 @@ class RecentlyPlayedService
         ]);
     }
 
-    public function get()
+    public function get(): ?array
     {
         $auth = auth()->id();
 

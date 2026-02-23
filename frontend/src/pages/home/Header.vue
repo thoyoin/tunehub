@@ -68,108 +68,142 @@ const routeHome = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                     />
-                    <template v-if="searchStore.search">
-                        <ul
-                            style="color: rgb(228, 228, 228)" class="dropdown-menu w-100 p-2 show"
+                    <ul style="color: rgb(228, 228, 228)" class="dropdown-menu w-100 p-2">
+                        <template v-if="!searchStore.hasResult && !searchStore.isLoading">
+                            <div class="opacity-50 text-center">Nothing Found</div>
+                        </template>
+                        <template v-if="searchStore.isLoading">
+                            <div class="d-flex flex-column align-items-center py-2 opacity-75">
+                                <div class="search-spinner mb-1"></div>
+                                <span style="font-size: 14px">Searching...</span>
+                            </div>
+                        </template>
+                        <template
+                            v-if="searchStore.result.playlists?.length && !searchStore.isLoading"
                         >
-                            <template v-if="!searchStore.hasResult && !searchStore.isLoading">
-                                <div class="opacity-50 text-center">Nothing Found</div>
-                            </template>
-                            <template v-if="searchStore.isLoading">
-                                <div class="d-flex flex-column align-items-center py-2 opacity-75">
-                                    <div class="search-spinner mb-1"></div>
-                                    <span style="font-size: 14px">Searching...</span>
+                            <li
+                                style="border-bottom: 1px solid rgba(228, 228, 228, 0.15);"
+                                class="mb-1 fw-bold opacity-50"
+                            >
+                                Playlists
+                            </li>
+                            <li class="searchItem" v-for="playlist in searchStore.result.playlists">
+                                <div
+                                    @click="
+                                        router.push({
+                                            name: 'playlist',
+                                            params: { playlistId: playlist.id },
+                                        })
+                                    "
+                                    class="d-flex flex-row align-items-center w-100"
+                                >
+                                    <img
+                                        class="me-2 rounded-2"
+                                        style="width: 40px; height: 40px"
+                                        :src="playlist.cover_url"
+                                        alt="cover"
+                                    />
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <span style="font-size: 15px" class="p-0 m-0 text-truncate">
+                                            {{ playlist.title }}
+                                        </span>
+                                        <span
+                                            style="font-size: 14px"
+                                            class="opacity-50 text-truncate"
+                                        >
+                                            {{ playlist.user.username }}
+                                        </span>
+                                    </div>
                                 </div>
-                            </template>
-                            <template v-if="searchStore.result.playlists?.length && !searchStore.isLoading">
-                                <li class="mb-1 fw-bold opacity-50">Playlists</li>
-                                <li class="searchItem" v-for="playlist in searchStore.result.playlists">
-                                    <div
-                                        @click="
-                                            router.push({
-                                                name: 'playlist',
-                                                params: { playlistId: playlist.id }
-                                            })
-                                        "
-                                        class="d-flex flex-row align-items-center w-100"
-                                    >
-                                        <img
-                                            class="me-2 rounded-2"
-                                            style="width: 40px; height: 40px"
-                                            :src="playlist.cover_url"
-                                            alt="cover"
-                                        />
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <span style="font-size: 15px" class="p-0 m-0 text-truncate">
-                                                {{ playlist.title }}
-                                            </span>
-                                            <span style="font-size: 14px" class="opacity-50 text-truncate">
-                                                {{ playlist.user.username }}
-                                            </span>
-                                        </div>
+                            </li>
+                        </template>
+                        <template
+                            v-if="searchStore.result.releases?.length && !searchStore.isLoading"
+                        >
+                            <li
+                                style="border-bottom: 1px solid rgba(228, 228, 228, 0.15);"
+                                class="mb-1 fw-bold opacity-50"
+                            >
+                                Releases
+                            </li>
+                            <li class="searchItem" v-for="release in searchStore.result.releases">
+                                <div
+                                    @click="
+                                        router.push({
+                                            name: 'release',
+                                            params: { releaseId: release.id },
+                                        })
+                                    "
+                                    class="d-flex flex-row align-items-center w-100"
+                                >
+                                    <img
+                                        class="me-2 rounded-2"
+                                        style="width: 40px; height: 40px"
+                                        :src="release.cover_url"
+                                        alt="cover"
+                                    />
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <span style="font-size: 15px" class="p-0 m-0 text-truncate">
+                                            {{ release.title }}
+                                        </span>
+                                        <span
+                                            style="font-size: 14px"
+                                            class="opacity-50 text-truncate"
+                                        >
+                                            {{ release.artist }}
+                                        </span>
                                     </div>
-                                </li>
-                            </template>
-                            <template v-if="searchStore.result.releases?.length && !searchStore.isLoading">
-                                <li class="mb-1 fw-bold opacity-50">Releases</li>
-                                <li class="searchItem" v-for="release in searchStore.result.releases">
-                                    <div
-                                        @click="
-                                            router.push({
-                                                name: 'release',
-                                                params: { releaseId: release.id }
-                                            })
-                                        "
-                                        class="d-flex flex-row align-items-center w-100"
-                                    >
-                                        <img
-                                            class="me-2 rounded-2"
-                                            style="width: 40px; height: 40px"
-                                            :src="release.cover_url"
-                                            alt="cover"
-                                        />
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <span style="font-size: 15px" class="p-0 m-0 text-truncate">
-                                                {{ release.title }}
-                                            </span>
-                                            <span style="font-size: 14px" class="opacity-50 text-truncate">
-                                                {{ release.artist }}
-                                            </span>
-                                        </div>
+                                </div>
+                            </li>
+                        </template>
+                        <template
+                            v-if="searchStore.result.tracks?.length && !searchStore.isLoading"
+                        >
+                            <li
+                                style="border-bottom: 1px solid rgba(228, 228, 228, 0.15);"
+                                class="mb-1 fw-bold opacity-50"
+                            >
+                                Tracks
+                            </li>
+                            <li class="searchItem" v-for="track in searchStore.result.tracks">
+                                <div
+                                    @click="
+                                        router.push({
+                                            name: 'release',
+                                            params: { releaseId: track.release_id },
+                                        })
+                                    "
+                                    class="d-flex flex-row align-items-center w-100"
+                                >
+                                    <img
+                                        class="me-2 rounded-2"
+                                        style="width: 40px; height: 40px"
+                                        :src="track.cover_url"
+                                        alt="cover"
+                                    />
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <span
+                                            style="font-size: 15px; max-width: 170px"
+                                            class="p-0 m-0 text-truncate"
+                                        >
+                                            {{ track.title }}
+                                        </span>
+                                        <span
+                                            style="font-size: 14px"
+                                            class="opacity-50 text-truncate"
+                                        >
+                                            {{ track.artist }}
+                                        </span>
                                     </div>
-                                </li>
-                            </template>
-                            <template v-if="searchStore.result.tracks?.length && !searchStore.isLoading">
-                                <li class="mb-1 fw-bold opacity-50">Tracks</li>
-                                <li class="searchItem" v-for="track in searchStore.result.tracks">
-                                    <div
-                                        @click="
-                                            router.push({
-                                                name: 'release',
-                                                params: { releaseId: track.release_id }
-                                            })
-                                        "
-                                        class="d-flex flex-row align-items-center w-100"
-                                    >
-                                        <img
-                                            class="me-2 rounded-2"
-                                            style="width: 40px; height: 40px"
-                                            :src="track.cover_url"
-                                            alt="cover"
-                                        />
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <span style="font-size: 15px;max-width: 170px" class="p-0 m-0 text-truncate">
-                                                {{ track.title }}
-                                            </span>
-                                            <span style="font-size: 14px" class="opacity-50 text-truncate">
-                                                {{ track.artist }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </template>
-                        </ul>
-                    </template>
+                                </div>
+                            </li>
+                        </template>
+                        <template v-if="!searchStore.search && !searchStore.isLoading">
+                            <div class="text-center opacity-75">
+                                <img src="@/assets/svg/logo.svg" alt="logo">
+                            </div>
+                        </template>
+                    </ul>
                 </div>
             </div>
             <div class="d-flex flex-row align-items-center">
@@ -279,7 +313,7 @@ const routeHome = () => {
     border: 2px solid rgba(228, 228, 228, 0.2);
     border-top: 2px solid rgb(158, 23, 63);
     border-radius: 50%;
-    animation: spin .4s linear infinite;
+    animation: spin 0.4s linear infinite;
 }
 
 @keyframes spin {

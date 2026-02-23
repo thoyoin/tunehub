@@ -14,7 +14,6 @@ const { currentTrack, isPlaying, toggleTrack, currentContext } = useAudioPlayer(
 
 onMounted(async () => {
     await releaseStore.fetchLatestReleases()
-    await recentlyPlayedStore.fetchRecentlyPlayed()
 })
 
 watch(() => currentContext, async (context) => {
@@ -159,10 +158,10 @@ watch(() => currentContext, async (context) => {
                                 </template>
                             </button>
                             <div class="card-body p-0 pt-2">
-                                <h5 class="card-title fw-bold">
+                                <h5 class="card-title fw-bold m-0">
                                     {{ item.title }}
                                 </h5>
-                                <template v-if="item.item_type === 'playlist'">
+                                <div v-if="item.item_type === 'playlist'">
                                     <span
                                         style="font-size: 13px;color: rgba(228,228,228,.5)"
                                         v-text="item.item_type"
@@ -174,7 +173,7 @@ watch(() => currentContext, async (context) => {
                                         v-text="item.tracks.length + ' tracks'"
                                     >
                                     </span>
-                                </template>
+                                </div>
                                 <template v-else>
                                     <span
                                         style="font-size: 13px;max-width: 130px;color: rgba(228,228,228,.5);"
