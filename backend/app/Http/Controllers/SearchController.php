@@ -10,10 +10,17 @@ use Illuminate\Http\Request;
 
 class SearchController
 {
-    public function index(Request $request, SearchService $searchService): JsonResponse
+    public function getContent(Request $request, SearchService $searchService): JsonResponse
     {
-        $content = $searchService->index($request);
+        $content = $searchService->getContent($request);
 
         return response()->json($content);
+    }
+
+    public function getUsers(Request $request, SearchService $searchService): JsonResponse
+    {
+        $users = $searchService->getUsers($request);
+
+        return response()->json($users);
     }
 }

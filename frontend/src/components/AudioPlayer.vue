@@ -16,8 +16,8 @@ const {prev, toggleTrack, hasTrack, volume, next, toggle,
 <template>
     <audio ref="audioRef"></audio>
 <div
-    style="max-height: 85px; bottom: 10px;"
-    class="d-flex z-3 position-fixed flex-row py-2 h-100 w-100 justify-content-center align-items-center"
+    style="max-height: 85px; bottom: 10px; z-index: 2"
+    class="d-flex position-fixed flex-row py-2 h-100 w-100 justify-content-center align-items-center"
 >
     <div
         style="border-bottom:1px solid rgba(228, 228, 228, 0.15);border-top:1px solid rgba(228, 228, 228, 0.15)"

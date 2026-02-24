@@ -545,4 +545,14 @@ watch(
     display: block !important;
     opacity: 1 !important;
 }
+
+.playlist-content::-webkit-scrollbar {
+    width: 5px !important;
+}
+
+.playlist-content::-webkit-scrollbar-thumb {
+    background: rgba(228, 228, 228, 0.15) !important;
+    border-radius: 10px !important;
+    transition: 0.2s !important;
+}
 </style>

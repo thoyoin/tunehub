@@ -411,4 +411,15 @@ onMounted(async () => {
     padding: 100px 0 90px 0 !important;
     min-height: 0 !important;
 }
+
+.release-content::-webkit-scrollbar {
+    height: 5px !important;
+    width: 5px !important;
+}
+
+.release-content::-webkit-scrollbar-thumb {
+    background: rgba(228, 228, 228, 0.15) !important;
+    border-radius: 10px !important;
+    transition: 0.2s !important;
+}
 </style>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -40,6 +41,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = ['joined_at'];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -50,6 +53,11 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function getJoinedAtAttribute(): ?string
+    {
+        return Carbon::create($this->created_at)->toFormattedDateString();
     }
 
     protected static function boot(): void

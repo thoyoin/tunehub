@@ -18,13 +18,23 @@ Route::group(['middleware' => ['web']], function () {
     });
 });
 
+Route::prefix('admin')
+    ->middleware(['auth:sanctum', 'admin'])
+    ->group(function () {
+        Route::controller(\App\Http\Controllers\AdminPanel\UserController::class)->group(function () {
+            Route::get('/users', 'getAll');
+            Route::delete('/users/{user}/delete', 'delete');
+        });
+    });
+
 Route::controller(ReleaseController::class)->group(function () {
     Route::get('/release/{release}', 'show');
     Route::get('/releases/latest', 'getLatest');
 });
 
 Route::controller(SearchController::class)->group(function () {
-    Route::get('/search', 'index');
+    Route::get('/search', 'getContent');
+    Route::get('/search/users', 'getUsers');
 });
 
 Route::controller(LibraryItemController::class)->group(function () {

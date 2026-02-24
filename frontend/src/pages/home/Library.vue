@@ -80,7 +80,7 @@
                         <div v-for="libraryItem in libraryStore.items">
                             <div
                                 style="height: 58px"
-                                class="d-flex align-items-center btn btn-playlist p-2 mb-2 text-start rounded-3"
+                                class="d-flex align-items-center btn btn-playlist p-2 mb-2 text-start"
                                 :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem }"
                             >
                                 <div class="position-relative">

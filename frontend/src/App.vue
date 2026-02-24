@@ -4,7 +4,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
 </script>
 
 <template>
-    <div id="app">
+    <div id="app" >
         <router-view/>
         <AudioPlayer/>
     </div>
@@ -103,6 +103,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     .btn-playlist {
         color: rgb(228,228,228) !important;
         background-color: rgba(30,30,31, 15%) !important;
+        border-radius: 15px !important;
 
         &:hover {
             box-shadow: 0 0 5px 3px rgb(41, 41, 41) !important;
@@ -115,6 +116,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         }
         &:active {
             background-color: rgb(40,40,41) !important;
+            border-color:  rgb(75,75,75) !important;
         }
     }
     .add-like {
@@ -155,16 +157,18 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         backdrop-filter: blur(10px) !important;
         z-index: 10000 !important;
         border-radius: 12px !important;
-        padding: 4px 3px !important;
+        padding: 4px 4px !important;
         max-height: 400px !important;
-        overflow: auto !important;
         .dropdown-item {
             color: rgb(228,228,228) !important;
+            cursor: pointer !important;
             display: flex !important;
+            z-index: 10000 !important;
             border-radius: 10px !important;
             height: 27px !important;
             font-size: 15px !important;
             align-items: center !important;
+            transition: .2s !important;
             &:hover {
                 background: rgba(158, 23, 63, 1) !important;
                 transition: .1s !important;
@@ -176,6 +180,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         border-color: rgb(75,75,75) !important;
         box-shadow: 0 0 5px 3px rgb(32,32,32) !important;
     }
+
     .track-row {
         &:hover td {
             background-color: rgba(50,50,51, 50%) !important;
@@ -191,6 +196,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
             }
             .btn-play-table {
                 opacity: 1 !important;
+                z-index: 1 !important;
             }
             .position-number {
                 opacity: 0 !important;
@@ -269,6 +275,8 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         padding: 0 !important;
         transition: .3s !important;
         border: none !important;
+        z-index: 0 !important;
+
         &:hover {
             opacity: .4 !important;
         }

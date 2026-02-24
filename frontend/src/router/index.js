@@ -6,6 +6,8 @@ import ArtistStudio from "@/pages/artist-studio/ArtistStudio.vue";
 import { useAuthStore } from '@/stores/auth.js'
 import Release from '@/pages/release/Release.vue'
 import Playlist from '@/pages/playlist/Playlist.vue'
+import Admin from '@/pages/admin/Admin.vue'
+import Users from "@/pages/admin/users/Users.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +48,28 @@ const router = createRouter({
               else next();
           }
       },
+      {
+          path: '/admin',
+          name: 'admin',
+          component: Admin,
+          beforeEnter: (to, from, next) => {
+              const auth = useAuthStore()
+
+              if (auth.user?.role !== '3') next('/');
+              else next();
+          }
+      },
+      {
+          path: '/admin/users',
+          name: 'admin/users',
+          component: Users,
+          beforeEnter: (to, from, next) => {
+              const auth = useAuthStore()
+
+              if (auth.user?.role !== '3') next('/');
+              else next();
+          }
+      }
   ],
 })
 

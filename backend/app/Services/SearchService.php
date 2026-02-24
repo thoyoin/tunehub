@@ -7,11 +7,12 @@ namespace App\Services;
 use App\Models\Playlist;
 use App\Models\Release;
 use App\Models\Track;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
 class SearchService
 {
-    public function index($request): JsonResponse|array
+    public function getContent($request): JsonResponse|array
     {
         $query = $request->query('query');
 
@@ -32,6 +33,21 @@ class SearchService
                 ->orwhere('artist', 'LIKE', "%{$query}%")
                 ->limit(10)
                 ->get(),
+        ];
+    }
+
+    public function getUsers($request): JsonResponse|array
+    {
+        $query = $request->query('query');
+
+        if (empty($query)) {
+            return response()->json();
+        }
+
+        return $response = [
+            'users' => User::where('username', 'LIKE', "%{$query}%")
+            ->orwhere('email', 'LIKE', "%{$query}%")
+            ->paginate(10)
         ];
     }
 }

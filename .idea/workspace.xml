@@ -6,12 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/SearchService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/SearchService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bootstrap/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/search.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,11 +349,11 @@
       <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/pages/admin/users" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
       <recent name="$PROJECT_DIR$/backend" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Home" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/frontend/src/pages/auth" />
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.Main">
@@ -484,7 +494,10 @@
       <workItem from="1771589263394" duration="17358000" />
       <workItem from="1771610704772" duration="19000" />
       <workItem from="1771648160976" duration="5043000" />
-      <workItem from="1771824229530" duration="12719000" />
+      <workItem from="1771824229530" duration="24905000" />
+      <workItem from="1771865172331" duration="4132000" />
+      <workItem from="1771908042336" duration="1000" />
+      <workItem from="1771932667123" duration="19735000" />
     </task>
     <servers />
   </component>

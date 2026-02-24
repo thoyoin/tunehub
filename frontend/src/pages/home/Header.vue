@@ -10,7 +10,6 @@ const router = useRouter()
 const auth = useAuthStore()
 const libraryStore = useLibraryStore()
 const searchStore = useSearchStore()
-const releaseStore = useReleaseStore()
 const toast = useToast()
 
 const logout = async () => {
@@ -68,7 +67,7 @@ const routeHome = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                     />
-                    <ul style="color: rgb(228, 228, 228)" class="dropdown-menu w-100 p-2">
+                    <ul style="color: rgb(228, 228, 228);overflow: auto" class="dropdown-menu w-100 p-2">
                         <template v-if="!searchStore.hasResult && !searchStore.isLoading">
                             <div class="opacity-50 text-center">Nothing Found</div>
                         </template>
@@ -209,16 +208,24 @@ const routeHome = () => {
             <div class="d-flex flex-row align-items-center">
                 <template v-if="auth.user">
                     <template v-if="auth.user?.role === '1'">
-                        <button class="btn btn-upgrade rounded-5 px-2 py-2 me-5">
+                        <button class="btn btn-upgrade">
                             Upgrade now
                         </button>
                     </template>
-                    <template v-else>
+                    <template v-else-if="auth.user?.role === '2'">
                         <button
                             @click="router.push('/artists')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"
                         >
                             Artist Studio
+                        </button>
+                    </template>
+                    <template v-else>
+                        <button
+                            @click="router.push('/admin')"
+                            class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"
+                        >
+                            Admin panel
                         </button>
                     </template>
                 </template>
@@ -282,14 +289,20 @@ const routeHome = () => {
 }
 .btn-upgrade {
     background-color: rgb(32, 32, 32) !important;
-    padding: 0 5px 3px;
+    padding: 0 10px;
     color: rgb(228, 228, 228);
+    height: 30px !important;
+    border-radius: 50px;
+    display: flex;
+    margin-right: 30px;
+    align-items: center;
+
     &:hover {
         background-color: rgb(40, 40, 41) !important;
-        color: #ff2667 !important;
+        color: rgb(158, 23, 63) !important;
     }
     &:active {
-        border-color: #ff2667 !important;
+        border-color: rgb(158, 23, 63) !important;
     }
 }
 .searchItem {

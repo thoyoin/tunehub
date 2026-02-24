@@ -16,24 +16,26 @@ onMounted(async () => {
     await releaseStore.fetchLatestReleases()
 })
 
-watch(() => currentContext, async (context) => {
-    if (context) {
-        await recentlyPlayedStore.fetchRecentlyPlayed()
-    }
-})
-
+watch(
+    () => currentContext,
+    async (context) => {
+        if (context) {
+            await recentlyPlayedStore.fetchRecentlyPlayed()
+        }
+    },
+)
 </script>
 
 <template>
     <div
         style="
-            padding: 85px 30px 0 320px;
+            padding: 85px 30px 200px 320px;
             color: rgb(228, 228, 228);
             flex: 1 1 auto;
             overflow-y: auto;
             min-height: 0;
         "
-        class="w-100"
+        class="w-100 home-content"
     >
         <div>
             <div class="w-100" style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
@@ -41,7 +43,7 @@ watch(() => currentContext, async (context) => {
             </div>
             <div class="d-flex flex-wrap">
                 <template v-for="release in releaseStore.releases">
-                    <div class="card me-4" style="width: 12rem">
+                    <div class="card me-1">
                         <button class="btn btn-get-release p-0 position-relative">
                             <img
                                 @click="
@@ -57,13 +59,7 @@ watch(() => currentContext, async (context) => {
                             />
                             <template v-if="auth.user">
                                 <button
-                                    @click="
-                                        toggleTrack(
-                                            release.tracks[0],
-                                            release.tracks,
-                                            release,
-                                        )
-                                    "
+                                    @click="toggleTrack(release.tracks[0], release.tracks, release)"
                                     class="btn cover-play-btn"
                                 >
                                     <template v-if="currentTrack?.id !== release.tracks[0]?.id">
@@ -96,12 +92,15 @@ watch(() => currentContext, async (context) => {
                 </template>
             </div>
             <template v-if="auth.user">
-                <div class="w-100 mt-4" style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
+                <div
+                    class="w-100"
+                    style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)"
+                >
                     <h1>Recently played</h1>
                 </div>
                 <div
-                    style="padding-bottom: 200px;"
-                    class="d-flex flex-wrap"
+                    style="overflow-x: auto; overflow-y: hidden"
+                    class="d-flex flex-nowrap recently-row"
                 >
                     <template v-if="recentlyPlayedStore.items?.length === 0">
                         <div
@@ -112,7 +111,7 @@ watch(() => currentContext, async (context) => {
                         </div>
                     </template>
                     <template v-for="item in recentlyPlayedStore.items">
-                        <div class="card me-4" style="width: 12rem">
+                        <div class="card me-1">
                             <button class="btn btn-get-release p-0 position-relative">
                                 <img
                                     @click="
@@ -128,11 +127,7 @@ watch(() => currentContext, async (context) => {
                                 />
                                 <template v-if="auth.user">
                                     <button
-                                        @click="toggleTrack(
-                                            item.tracks[0],
-                                            item.tracks,
-                                            item
-                                        )"
+                                        @click="toggleTrack(item.tracks[0], item.tracks, item)"
                                         class="btn cover-play-btn"
                                     >
                                         <template v-if="currentTrack?.id !== item.tracks[0]?.id">
@@ -140,16 +135,15 @@ watch(() => currentContext, async (context) => {
                                         </template>
                                         <template
                                             v-if="
-                                                currentTrack?.id === item.tracks[0]?.id
-                                                && !isPlaying
+                                                currentTrack?.id === item.tracks[0]?.id &&
+                                                !isPlaying
                                             "
                                         >
                                             <img src="@/assets/svg/play.svg" alt="play" />
                                         </template>
                                         <template
                                             v-if="
-                                                currentTrack?.id === item.tracks[0]?.id
-                                                && isPlaying
+                                                currentTrack?.id === item.tracks[0]?.id && isPlaying
                                             "
                                         >
                                             <img src="@/assets/svg/pause.svg" alt="pause" />
@@ -163,20 +157,31 @@ watch(() => currentContext, async (context) => {
                                 </h5>
                                 <div v-if="item.item_type === 'playlist'">
                                     <span
-                                        style="font-size: 13px;color: rgba(228,228,228,.5)"
+                                        style="font-size: 13px; color: rgba(228, 228, 228, 0.5)"
                                         v-text="item.item_type"
                                     >
-                                        </span>
-                                    <span style="color: rgba(228,228,228,.5);font-size: 13px; padding: 0 5px">•</span>
+                                    </span>
                                     <span
-                                        style="font-size: 13px; color: rgba(228,228,228,.5);"
+                                        style="
+                                            color: rgba(228, 228, 228, 0.5);
+                                            font-size: 13px;
+                                            padding: 0 5px;
+                                        "
+                                        >•</span
+                                    >
+                                    <span
+                                        style="font-size: 13px; color: rgba(228, 228, 228, 0.5)"
                                         v-text="item.tracks.length + ' tracks'"
                                     >
                                     </span>
                                 </div>
                                 <template v-else>
                                     <span
-                                        style="font-size: 13px;max-width: 130px;color: rgba(228,228,228,.5);"
+                                        style="
+                                            font-size: 13px;
+                                            max-width: 130px;
+                                            color: rgba(228, 228, 228, 0.5);
+                                        "
                                         v-text="item.artist"
                                         class="text-truncate"
                                     >
@@ -217,9 +222,16 @@ watch(() => currentContext, async (context) => {
 
 .card {
     margin-top: 15px !important;
-    backdrop-filter: blur(5px) !important;
+    padding: 10px !important;
     background: none !important;
     border: none !important;
+    border-radius: 15px !important;
+    transition: .3s;
+    min-width: 210px;
+
+    &:hover {
+        background-color: rgba(255,255,255, .02) !important;
+    }
 
     .btn-get-release:hover {
         .card-cover {
@@ -257,7 +269,7 @@ watch(() => currentContext, async (context) => {
 .playing-wave span {
     width: 2px;
     height: 4px;
-    background: #ff2667;
+    background: rgb(158, 23, 63);
     animation: wave 1s infinite ease-in-out;
 }
 
@@ -304,5 +316,43 @@ watch(() => currentContext, async (context) => {
     &:hover {
         opacity: 1 !important;
     }
+}
+
+.recently-row {
+    scroll-behavior: smooth !important;
+}
+
+.recently-row::-webkit-scrollbar {
+    height: 4px !important;
+}
+
+.recently-row::-webkit-scrollbar-track {
+    background: rgba(228, 228, 228, 0) !important;
+    border-radius: 10px !important;
+}
+
+.recently-row::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0)
+    ) !important;
+    border-radius: 10px !important;
+    transition: 0.2s !important;
+}
+
+.recently-row::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 38, 103, 1) !important;
+}
+
+.home-content::-webkit-scrollbar {
+    height: 5px !important;
+    width: 5px !important;
+}
+
+.home-content::-webkit-scrollbar-thumb {
+    background: rgba(228, 228, 228, 0.15) !important;
+    border-radius: 10px !important;
+    transition: 0.2s !important;
 }
 </style>
