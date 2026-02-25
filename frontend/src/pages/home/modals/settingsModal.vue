@@ -1,5 +1,5 @@
 <script setup>
-    import { useAuthStore } from "@/stores/auth.js";
+    import { useAuthStore } from "@/stores/auth.ts";
     import { useImageUpload } from "@/composables/useImageUpload.js";
     import api from "@/lib/api.js";
     import {ref, watch} from "vue";

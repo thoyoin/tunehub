@@ -1,8 +1,8 @@
 <script setup>
-import { useAuthStore } from '@/stores/auth'
-import { useLibraryStore } from '@/stores/library.js'
-import { useSearchStore } from '@/stores/search.js'
-import { useReleaseStore } from '@/stores/release.js'
+import { useAuthStore } from '@/stores/auth.ts'
+import { useLibraryStore } from '@/stores/library.ts'
+import { useSearchStore } from '@/stores/search.ts'
+import { useReleaseStore } from '@/stores/release.ts'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 

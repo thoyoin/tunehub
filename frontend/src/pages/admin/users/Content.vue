@@ -1,6 +1,6 @@
 <script setup>
-import { useAdminPanelStore } from '@/stores/adminPanel.js'
-import { useUserSearch } from '@/stores/userSearch.js'
+import { useAdminPanelStore } from '@/stores/adminPanel.ts'
+import { useUserSearch } from '@/stores/userSearch.ts'
 import { onMounted, computed, ref, watch } from 'vue'
 
 const adminPanelStore = useAdminPanelStore()
@@ -141,16 +141,7 @@ onMounted(async () => {
                                                 />
                                                 View Profile
                                             </li>
-                                            <li class="dropdown-item d-flex align-items-center">
-                                                <img
-                                                    class="me-2"
-                                                    src="@/assets/svg/block.svg"
-                                                    alt="block"
-                                                />
-                                                Block
-                                            </li>
                                             <li
-                                                style="outline: 1px solid rgba(255, 0, 0, 0.2)"
                                                 class="dropdown-item d-flex align-items-center"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#userDeletionModal"

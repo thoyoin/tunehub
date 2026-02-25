@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useAudioPlayer } from "@/composables/useAudioPlayer.js";
 import { useAuthStore } from "@/stores/auth.js";
 import { ref } from "vue";
@@ -6,7 +6,7 @@ import { ref } from "vue";
 const audioRef = ref(null);
 const auth = useAuthStore();
 
-const {prev, toggleTrack, hasTrack, volume, next, toggle,
+const {prev, hasTrack, volume, next, toggle,
     isPlaying, currentTrack, formatTime, currentTime,
     seek, progress, toggleVolume, isMuted, setVolume,
 } = useAudioPlayer(audioRef);

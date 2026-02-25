@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth.ts'
 
 const route = useRoute()
 const auth = useAuthStore()
@@ -26,7 +26,7 @@ const auth = useAuthStore()
                     class="ps-3 py-2 fw-bold d-flex flex-row align-items-center"
                 >
                     <img
-                        style="width: 35px;margin-right: 10px"
+                        style="width: 35px;margin-right: 10px; opacity: 50%"
                         src="@/assets/svg/logo.svg"
                         alt="logo"
                     >

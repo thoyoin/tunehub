@@ -1,7 +1,7 @@
 <script setup>
-import { useArtistStore } from '@/stores/artistStudio.js'
+import { useArtistStore } from '@/stores/artistStudio.ts'
 import { onMounted } from 'vue'
-import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
+import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
 
 const artistStore = useArtistStore()
 

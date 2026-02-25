@@ -1,5 +1,5 @@
 <script setup>
-import { useAdminPanelStore } from '@/stores/adminPanel.js'
+import { useAdminPanelStore } from '@/stores/adminPanel.ts'
 import { useToast } from 'vue-toastification'
 
 const adminPanelStore = useAdminPanelStore()
@@ -9,7 +9,7 @@ const handleUserDeletion = async (id) => {
     try {
         await adminPanelStore.deleteUser(id)
 
-        toast.success('User deletion successfully.')
+        toast.success('User deleted successfully.')
     } catch (e) {
         console.error(e)
 

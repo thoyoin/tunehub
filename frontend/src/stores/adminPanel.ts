@@ -2,15 +2,17 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
 import { useDebounceFn } from '@vueuse/core'
+import type { PaginatedResponse } from '../types/PaginatedResponse.js'
+import type { User } from '../types/User.js'
 
 export const useAdminPanelStore = defineStore('adminPanel', () => {
-    const users = ref([]);
-    const viewUser = ref(null);
-    const isLoading = ref(false);
+    const users = ref<User[]>([]);
+    const viewUser = ref<User | null>(null);
+    const isLoading = ref<boolean>(false);
 
-    const fetchUsers = useDebounceFn(async (page, search = null) => {
+    const fetchUsers = useDebounceFn(async (page: number = 1, search: string | null): Promise<void> => {
         try {
-            const response = await api.get(`/api/admin/users`, {
+            const response = await api.get<PaginatedResponse<User>>(`/api/admin/users`, {
                 params: { page: page, search: search },
             });
 
@@ -22,15 +24,15 @@ export const useAdminPanelStore = defineStore('adminPanel', () => {
         }
     }, 300)
 
-    const setLoading = async () => {
+    const setLoading = (): void => {
         isLoading.value = true;
     }
 
-    const setViewUser = (newView) => {
+    const setViewUser = (newView: User | null): void => {
         viewUser.value = newView;
     }
 
-    const deleteUser = async (id) => {
+    const deleteUser = async (id: number): Promise<void> => {
         try {
             isLoading.value = true;
 

@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { useAuthStore } from '@/stores/auth.js'
+import { useAuthStore } from '@/stores/auth.ts'
 import { useToast } from 'vue-toastification'
 
 const auth = useAuthStore()

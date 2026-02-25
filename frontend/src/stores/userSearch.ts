@@ -2,14 +2,16 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import api from '@/lib/api.js'
 import { useDebounceFn } from '@vueuse/core'
+import type { User } from '../types/User.js'
+import type { PaginatedResponse } from '../types/PaginatedResponse.js'
 
 export const useUserSearch = defineStore('userSearchStore', () => {
-    const search = ref(null)
-    const result = ref([])
-    const hasResult = ref(true)
-    const isLoading = ref(false)
+    const search = ref<string | null>(null)
+    const result = ref<User[]>([])
+    const hasResult = ref<boolean>(true)
+    const isLoading = ref<boolean>(false)
 
-    const fetchSearch = async () => {
+    const fetchSearch = async (): Promise<void> => {
         if (!search.value) {
             hasResult.value = true
             isLoading.value = false
@@ -18,7 +20,7 @@ export const useUserSearch = defineStore('userSearchStore', () => {
         }
 
         try {
-            const response = await api.get('/api/search/users', {
+            const response = await api.get<PaginatedResponse<User[]>>('/api/search/users', {
                 params: { query: search.value}
             })
 

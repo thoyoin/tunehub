@@ -1,7 +1,7 @@
 <script setup>
-    import { useAuthStore } from "@/stores/auth.js";
-    import { useLibraryStore } from "@/stores/library.js";
-    import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
+    import { useAuthStore } from "@/stores/auth.ts";
+    import { useLibraryStore } from "@/stores/library.ts";
+    import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
     import {onMounted} from "vue";
     import Popover from "bootstrap/js/dist/popover";
     import { useRouter } from "vue-router";

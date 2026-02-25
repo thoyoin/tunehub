@@ -1,10 +1,10 @@
 <script setup>
-import { useReleaseStore } from '@/stores/release.js'
+import { useReleaseStore } from '@/stores/release.ts'
 import { onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
-import { useAuthStore } from '@/stores/auth.js'
-import { useRecentlyPlayedStore } from '@/stores/recentlyPlayed.js'
+import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+import { useAuthStore } from '@/stores/auth.ts'
+import { useRecentlyPlayedStore } from '@/stores/recentlyPlayed.ts'
 
 const releaseStore = useReleaseStore()
 const recentlyPlayedStore = useRecentlyPlayedStore()

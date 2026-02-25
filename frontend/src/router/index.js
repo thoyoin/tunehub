@@ -3,7 +3,7 @@ import Login from "@/pages/auth/Login.vue";
 import Home from "@/pages/home/Home.vue";
 import Register from "@/pages/auth/Register.vue";
 import ArtistStudio from "@/pages/artist-studio/ArtistStudio.vue";
-import { useAuthStore } from '@/stores/auth.js'
+import { useAuthStore } from '@/stores/auth.ts'
 import Release from '@/pages/release/Release.vue'
 import Playlist from '@/pages/playlist/Playlist.vue'
 import Admin from '@/pages/admin/Admin.vue'

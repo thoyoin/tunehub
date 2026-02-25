@@ -2,18 +2,20 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
 import { useToast } from "vue-toastification";
+import type { Release } from '../types/Release.js'
+import type { Track } from '../types/Track.js'
 
 export const useArtistStore = defineStore('artistStudio', () => {
-    const tracks = ref([])
-    const releases = ref([])
-    const selectedView = ref('tracks')
-    const editingItem = ref(null)
+    const tracks = ref<Track[]>([])
+    const releases = ref<Release[]>([])
+    const selectedView = ref<string>('tracks')
+    const editingItem = ref<Release | Track | null>(null)
 
     const toast = useToast()
 
-    const fetchTracks = async () => {
+    const fetchTracks = async (): Promise<void> => {
         try {
-            const response = await api.get('/api/artists/tracks')
+            const response = await api.get<Track[]>('/api/artists/tracks')
 
             tracks.value = response.data
         } catch (e) {
@@ -21,9 +23,9 @@ export const useArtistStore = defineStore('artistStudio', () => {
         }
     }
 
-    const fetchReleases = async () => {
+    const fetchReleases = async (): Promise<void> => {
         try {
-            const response = await api.get('/api/artists/releases')
+            const response = await api.get<Release[]>('/api/artists/releases')
 
             releases.value = response.data
         } catch (e) {
@@ -31,7 +33,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
         }
     }
 
-    const deleteTrack = async (id) => {
+    const deleteTrack = async (id: number): Promise<void> => {
         try {
             await api.delete(`/api/track/${id}`)
 
@@ -46,7 +48,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
         }
     }
 
-    const deleteRelease = async (id) => {
+    const deleteRelease = async (id: number): Promise<void> => {
         try {
             await api.delete(`/api/release/${id}`)
 
@@ -61,15 +63,15 @@ export const useArtistStore = defineStore('artistStudio', () => {
         }
     }
 
-    const viewTracks = () => {
+    const viewTracks = (): void => {
         selectedView.value = 'tracks'
     }
 
-    const viewReleases = () => {
+    const viewReleases = (): void => {
         selectedView.value = 'releases'
     }
 
-    const pullEditingItem = (item) => {
+    const pullEditingItem = (item: Track | Release): void => {
         editingItem.value = item
     }
 

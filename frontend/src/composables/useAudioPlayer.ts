@@ -1,22 +1,24 @@
 import { computed, ref, watch } from 'vue';
 import api from '@/lib/api.js'
+import type { Track } from '../types/Track.js'
+import type { Item } from '../types/Item.js'
 
 let singleton = null;
 
 export const useAudioPlayer = (audioRef) => {
     if (singleton) return singleton;
 
-    const currentTrack = ref(null)
-    const queue = ref([])
-    const currentIndex = ref(null)
-    const isPlaying = ref(false)
-    const progress = ref(0)
-    const currentTime = ref(0)
-    const duration = ref(0)
-    const volume = ref(0.1)
-    const isMuted = ref(false)
+    const currentTrack = ref<Track | null>(null)
+    const queue = ref<Track[]>([])
+    const currentIndex = ref<number | null>(null)
+    const isPlaying = ref<boolean>(false)
+    const progress = ref<number>(0)
+    const currentTime = ref<number>(0)
+    const duration = ref<number>(0)
+    const volume = ref<number>(0.1)
+    const isMuted = ref<boolean>(false)
     const hasTrack = computed(() => !!currentTrack.value)
-    const currentContext = ref(null)
+    const currentContext = ref<Item>(null)
 
     watch(currentContext, async (newContext, oldContext) => {
         if (!newContext) return

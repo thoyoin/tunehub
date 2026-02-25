@@ -1,6 +1,6 @@
 <script setup>
 import { useImageUpload } from '@/composables/useImageUpload.js'
-import { useArtistStore } from '@/stores/artistStudio.js'
+import { useArtistStore } from '@/stores/artistStudio.ts'
 import { ref, watch } from 'vue'
 import api from '@/lib/api.js'
 import { useToast } from 'vue-toastification'

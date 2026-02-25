@@ -1,8 +1,8 @@
 <script setup>
-import { useLibraryStore } from '@/stores/library.js'
-import { useAuthStore } from '@/stores/auth.js'
-import { useReleaseStore } from '@/stores/release.js'
-import { useAudioPlayer } from '@/composables/useAudioPlayer.js'
+import { useLibraryStore } from '@/stores/library.ts'
+import { useAuthStore } from '@/stores/auth.ts'
+import { useReleaseStore } from '@/stores/release.ts'
+import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
 import { useToast } from 'vue-toastification'
 import api from '@/lib/api.js'
 import { watch } from 'vue'

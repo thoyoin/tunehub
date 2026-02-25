@@ -5,23 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/types/Item.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/types/LibraryItem.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/SearchService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/SearchService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bootstrap/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/User/GetAllUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/User/GetAllUsers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/src/components/Scripts.astro" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/src/components/Scripts.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/src/plugins/algolia-plugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/src/plugins/algolia-plugin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserDeletionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserDeletionModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/modals/authenticateModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/modals/authenticateModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/adminPanel.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/adminPanel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistStudio.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/release.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/release.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/search.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/userSearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/userSearch.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +69,7 @@
         <option value="package.json" />
         <option value="Vue Composition API Component" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -306,40 +335,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/src/assets/svg&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/PhpStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "I do mind",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/thoyoin/Desktop/TuneHub/frontend/src/assets/svg",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "prettierjs.PrettierConfiguration.Package": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
+    "ts.external.directory.path": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;redis&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "redis",
+      "mysql"
     ],
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Composition API Component&quot;
+    "vue.recent.templates": [
+      "Vue Composition API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/assets/svg" />
@@ -497,7 +526,8 @@
       <workItem from="1771824229530" duration="24905000" />
       <workItem from="1771865172331" duration="4132000" />
       <workItem from="1771908042336" duration="1000" />
-      <workItem from="1771932667123" duration="19735000" />
+      <workItem from="1771932667123" duration="19808000" />
+      <workItem from="1772032453655" duration="8734000" />
     </task>
     <servers />
   </component>

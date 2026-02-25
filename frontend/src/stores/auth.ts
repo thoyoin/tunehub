@@ -1,17 +1,19 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
+import type { User } from '../types/User.js'
 
 export const useAuthStore = defineStore('auth', () => {
-    const isReady = ref(false);
-    const user = ref(null);
-    const loading = ref(false);
+    const isReady = ref<boolean>(false);
+    const user = ref<User | null>(null);
+    const loading = ref<boolean>(false);
 
     const errors = ref({});
 
-    const fetchUser = async () => {
+    const fetchUser = async (): Promise<void> => {
         try {
-            const { data } = await api.get('/api/user');
+            const { data } = await api.get<User>('/api/user');
+
             user.value = data.user;
         } catch (error) {
             if (error.response?.status === 401) {
@@ -25,7 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    const logout = async () => {
+    const logout = async (): Promise<void> => {
         try {
             loading.value = true;
 
@@ -41,7 +43,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    const login = async (credentials) => {
+    const login = async (credentials: object): Promise<void> => {
         try {
             loading.value = true;
 
@@ -60,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    const register = async (credentials) => {
+    const register = async (credentials: object): Promise<void> => {
         try {
             loading.value = true;
 

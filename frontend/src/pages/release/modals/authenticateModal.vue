@@ -1,5 +1,5 @@
 <script setup>
-import { useReleaseStore} from "@/stores/release.js";
+import { useReleaseStore} from "@/stores/release.ts";
 import { useRouter } from "vue-router";
 
 const releaseStore = useReleaseStore();

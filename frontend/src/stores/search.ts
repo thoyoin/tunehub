@@ -2,12 +2,21 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import api from '@/lib/api.js'
 import { useDebounceFn } from '@vueuse/core'
+import type { Release } from '../types/Release.js'
+import type { Playlist } from '../types/Playlist.js'
+import type { Track } from '../types/Track.js'
+
+type SearchResult = {
+    releases?: Release[],
+    playlists?: Playlist[],
+    tracks?: Track[],
+};
 
 export const useSearchStore = defineStore('searchStore', () => {
-    const search = ref(null)
-    const result = ref([])
-    const hasResult = ref(true)
-    const isLoading = ref(false)
+    const search = ref<string | null>(null)
+    const result = ref<SearchResult | null>([])
+    const hasResult = ref<boolean>(true)
+    const isLoading = ref<boolean>(false)
 
     const fetchSearch = async () => {
         if (!search.value) {
@@ -17,8 +26,7 @@ export const useSearchStore = defineStore('searchStore', () => {
         }
 
         try {
-
-            const response = await api.get('/api/search', {
+            const response = await api.get<SearchResult | null>('/api/search', {
                 params: { query: search.value}
             })
 
@@ -34,10 +42,10 @@ export const useSearchStore = defineStore('searchStore', () => {
         }
 
     }
-    
+
     const debouncedSearch = useDebounceFn(fetchSearch, 400)
 
-    watch(search, async () => {
+    watch(search, async (): Promise<void> => {
         isLoading.value = true
         await debouncedSearch()
     })

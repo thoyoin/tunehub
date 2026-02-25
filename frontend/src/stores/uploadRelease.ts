@@ -1,27 +1,27 @@
 import { defineStore } from 'pinia';
 import { ref} from 'vue';
 import api from "@/lib/api.js";
-import { useAuthStore } from "@/stores/auth.js";
+import { useAuthStore } from "@/stores/auth.ts";
 import { useToast } from "vue-toastification";
-import { useArtistStore } from "@/stores/artistStudio.js";
+import { useArtistStore } from "@/stores/artistStudio.ts";
 
 export const useUploadReleaseStore = defineStore('uploadRelease', () => {
     const auth = useAuthStore();
     const toast = useToast();
     const artistStore = useArtistStore();
 
-    const editor = ref(false)
-    const isCoverUploaded = ref(false)
-    const coverPreview = ref(null)
-    const uploadedTracks = ref([])
-    const releaseType = ref(null)
-    const cover_url = ref(null)
-    const releaseTitle = ref(null)
-    const release_date = ref(null)
-    const artist = ref(auth.user.username)
-    const processing = ref(false)
+    const editor = ref<boolean>(false)
+    const isCoverUploaded = ref<boolean>(false)
+    const coverPreview = ref<File | null>(null)
+    const uploadedTracks = ref<File[]>([])
+    const releaseType = ref<string | null>(null)
+    const cover_url = ref<File | null>(null)
+    const releaseTitle = ref<string | null>(null)
+    const release_date = ref<string | null>(null)
+    const artist = ref<string>(auth.user.username)
+    const processing = ref<boolean>(false)
 
-    function $reset() {
+    function $reset(): void {
         editor.value = false
         isCoverUploaded.value = false
         coverPreview.value = null
@@ -34,19 +34,19 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
         processing.value = false
     }
 
-    const onFilesUploaded = (e) => {
+    const onFilesUploaded = (e: Element): void => {
         editor.value = true
 
         const selectedFiles = Array.from(e.target.files)
 
-        uploadedTracks.value = selectedFiles.map((file, index) => ({
+        uploadedTracks.value = selectedFiles.map((file: File, index: number) => ({
             originalIndex: index,
             file: file,
             title: file.name
         }));
     }
 
-    const handleReleaseUpload = async () => {
+    const handleReleaseUpload = async (): Promise<void> => {
         try {
             processing.value = true;
 
@@ -81,7 +81,7 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
         }
     }
 
-    const setPreview = (e) => {
+    const setPreview = (e): void => {
         const file = e.target.files[0];
 
         coverPreview.value = URL.createObjectURL(file);

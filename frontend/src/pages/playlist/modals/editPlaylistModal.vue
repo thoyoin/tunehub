@@ -1,5 +1,5 @@
 <script setup>
-import { useLibraryStore } from '@/stores/library.js'
+import { useLibraryStore } from '@/stores/library.ts'
 import { useImageUpload } from '@/composables/useImageUpload.js'
 import { useToast } from 'vue-toastification'
 import { ref, watch } from 'vue'
