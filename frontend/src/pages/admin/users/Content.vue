@@ -98,7 +98,10 @@ onMounted(async () => {
                     </thead>
                     <tbody>
                             <template v-for="user in users" :key="user.id">
-                                <tr style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)">
+                                <tr
+                                    class="track-row"
+                                    style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
+                                >
                                     <td style="font-size: 15px">
                                         <img
                                             class="rounded-circle me-2"
@@ -112,8 +115,8 @@ onMounted(async () => {
                                         />
                                         {{ user.username }}
                                     </td>
-                                    <td style="font-size: 15px; opacity: 50%">
-                                        {{ user.email }}
+                                    <td style="font-size: 15px">
+                                        <span class="opacity-50">{{ user.email }}</span>
                                     </td>
                                     <td style="font-size: 15px">
                                         {{ user.joined_at }}
