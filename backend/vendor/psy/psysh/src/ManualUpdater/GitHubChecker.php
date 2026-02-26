@@ -88,12 +88,12 @@ class GitHubChecker implements Checker
         \restore_error_handler();
 
         if (!$result) {
-            throw new \RuntimeException('Unable to fetch manual releases from GitHub');
+            throw new \RuntimeException('Unable to fetch manual moderation from GitHub');
         }
 
         $releases = \json_decode($result, true);
         if (!$releases || !\is_array($releases)) {
-            throw new \RuntimeException('Invalid response from GitHub releases API');
+            throw new \RuntimeException('Invalid response from GitHub moderation API');
         }
 
         // Find the first release with a manifest

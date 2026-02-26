@@ -583,7 +583,7 @@ class PdoSessionHandler extends AbstractSessionHandler
     {
         if ($this->inTransaction) {
             try {
-                // commit read-write transaction which also releases the lock
+                // commit read-write transaction which also moderation the lock
                 if ('sqlite' === $this->driver) {
                     $this->pdo->exec('COMMIT');
                 } else {

@@ -59,4 +59,15 @@ class ReleaseController extends Controller
             'message' => 'release updated successfully',
         ]);
     }
+
+    public function publish(Release $release, ReleaseService $releaseService): JsonResponse
+    {
+        Gate::authorize('publish', $release);
+
+        $releaseService->publish($release);
+
+        return response()->json([
+            'message' => 'release published successfully',
+        ]);
+    }
 }

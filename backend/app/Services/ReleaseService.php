@@ -158,4 +158,11 @@ class ReleaseService
             ]);
         }
     }
+
+    public function publish($release): void
+    {
+        $release->status = 'published';
+
+        $release->save();
+    }
 }

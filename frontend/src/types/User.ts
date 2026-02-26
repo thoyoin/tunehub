@@ -6,7 +6,7 @@ export interface User {
     email: string
     username: string
     slug: string
-    roles: string
+    role: string
     profile_picture: string
     updated_at: string
     joined_at: string

@@ -4,10 +4,11 @@ import Home from "@/pages/home/Home.vue";
 import Register from "@/pages/auth/Register.vue";
 import ArtistStudio from "@/pages/artist-studio/ArtistStudio.vue";
 import { useAuthStore } from '@/stores/auth.ts'
-import Release from '@/pages/release/Release.vue'
+import Moderation from '@/pages/admin/moderation/Moderation.vue'
 import Playlist from '@/pages/playlist/Playlist.vue'
 import Admin from '@/pages/admin/Admin.vue'
 import Users from "@/pages/admin/users/Users.vue";
+import Release from "@/pages/release/Release.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +64,17 @@ const router = createRouter({
           path: '/admin/users',
           name: 'admin/users',
           component: Users,
+          beforeEnter: (to, from, next) => {
+              const auth = useAuthStore()
+
+              if (auth.user?.role !== '3') next('/');
+              else next();
+          }
+      },
+      {
+          path: '/admin/moderation',
+          name: 'admin/moderation',
+          component: Moderation,
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 

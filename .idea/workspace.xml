@@ -6,40 +6,43 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/dist/util/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/dist/util/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/src/util/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/src/util/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/tests/karma.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/tests/karma.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.oxlintrc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.prettierrc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/eslint.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useVibrantPalette.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useVibrantPalette.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/lib/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Release/GetLatestReleases.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Release/GetLatestReleases.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/ReleaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/ReleaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Policies/ReleasePolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Policies/ReleasePolicy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/SearchService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/SearchService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_01_23_083650_create_releases_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_01_23_083650_create_releases_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_083657_create_tracks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_083657_create_tracks_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/Exception/ObservabilityAdminException.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/Exception/ObservabilityAdminException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/ObservabilityAdminClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/ObservabilityAdminClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/Exception/SSOAdminException.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/Exception/SSOAdminException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/SSOAdminClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/SSOAdminClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/Exception/WickrException.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/Exception/WickrException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/WickrClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/WickrClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/chime-sdk-identity/2021-04-20/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/chime-sdk-identity/2021-04-20/api-2.json.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/observabilityadmin/2018-05-10/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/observabilityadmin/2018-05-10/api-2.json.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/sso-admin/2020-07-20/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/sso-admin/2020-07-20/api-2.json.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/wickr/2024-02-01/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/wickr/2024-02-01/api-2.json.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/fakerphp/faker/src/Faker/Provider/en_US/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/fakerphp/faker/src/Faker/Provider/en_US/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/psy/psysh/bin/fetch-manual" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/psy/psysh/bin/fetch-manual" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/psy/psysh/src/ManualUpdater/GitHubChecker.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/psy/psysh/src/ManualUpdater/GitHubChecker.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/symfony/http-foundation/Session/Storage/Handler/PdoSessionHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/symfony/http-foundation/Session/Storage/Handler/PdoSessionHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/symfony/mime/MimeTypes.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/symfony/mime/MimeTypes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/.github/workflows/release-notes.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/.github/workflows/release-notes.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/data/docs-versions.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/data/docs-versions.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserDeletionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserDeletionModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/adminPanel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/adminPanel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/search.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/search.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/userSearch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/userSearch.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/PaginatedResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/PaginatedResponse.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/Playlist.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Playlist.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/adminPanel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/users.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/release.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/types/Release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Release.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/types/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/User.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +60,9 @@
       <list>
         <option value="PHP File" />
         <option value="package.json" />
-        <option value="Vue Composition API Component" />
         <option value="JavaScript File" />
         <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -325,40 +328,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHELLCHECK.PATH": "I do mind",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/thoyoin/Desktop/TuneHub/frontend/src/assets/svg",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "php.override.implement.member.chooser.php.doc": "NONE",
-    "prettierjs.PrettierConfiguration.Package": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/src/assets/svg&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "redis",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;redis&quot;,
+      &quot;mysql&quot;
     ],
-    "vue.recent.templates": [
-      "Vue Composition API Component"
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Composition API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/assets/svg" />
@@ -368,11 +371,11 @@
       <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/stores/Admin" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/admin/users" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
       <recent name="$PROJECT_DIR$/backend" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Home" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.Main">
@@ -524,7 +527,9 @@
       <workItem from="1772106031967" duration="1248000" />
       <workItem from="1772107393126" duration="113000" />
       <workItem from="1772107517529" duration="332000" />
-      <workItem from="1772107861908" duration="1929000" />
+      <workItem from="1772107861908" duration="8332000" />
+      <workItem from="1772116544709" duration="6865000" />
+      <workItem from="1772124419316" duration="4941000" />
     </task>
     <servers />
   </component>

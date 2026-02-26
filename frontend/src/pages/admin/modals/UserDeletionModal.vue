@@ -1,8 +1,8 @@
 <script setup>
-import { useAdminPanelStore } from '@/stores/adminPanel.ts'
+import { useUsersStore } from '@/stores/AdminPanel/users.ts'
 import { useToast } from 'vue-toastification'
 
-const adminPanelStore = useAdminPanelStore()
+const adminPanelStore = useUsersStore()
 const toast = useToast()
 
 const handleUserDeletion = async (id) => {

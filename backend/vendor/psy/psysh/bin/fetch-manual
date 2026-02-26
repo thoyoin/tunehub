@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-// Fetch the latest manual from GitHub releases for bundling in PHAR builds
+// Fetch the latest manual from GitHub moderation for bundling in PHAR builds
 
 const RELEASES_URL = 'https://api.github.com/repos/bobthecow/psysh-manual/releases';
 
@@ -26,13 +26,13 @@ function fetchLatestManual(): bool {
 
     $result = @file_get_contents(RELEASES_URL, false, $context);
     if (!$result) {
-        echo "Failed to fetch releases from GitHub\n";
+        echo "Failed to fetch moderation from GitHub\n";
         return false;
     }
 
     $releases = json_decode($result, true);
     if (!$releases || !is_array($releases)) {
-        echo "Invalid response from GitHub releases API\n";
+        echo "Invalid response from GitHub moderation API\n";
         return false;
     }
 
@@ -70,7 +70,7 @@ function fetchLatestManual(): bool {
         }
     }
 
-    echo "No English PHP manual found in releases\n";
+    echo "No English PHP manual found in moderation\n";
     return false;
 }
 

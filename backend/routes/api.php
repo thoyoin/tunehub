@@ -25,6 +25,10 @@ Route::prefix('admin')
             Route::get('/users', 'getAll');
             Route::delete('/users/{user}/delete', 'delete');
         });
+        Route::controller(\App\Http\Controllers\AdminPanel\ReleaseController::class)->group(function () {
+            Route::get('/releases', 'getReleases');
+            Route::patch('/releases/{release}/status', 'updateStatus');
+        });
     });
 
 Route::controller(ReleaseController::class)->group(function () {
@@ -81,6 +85,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(ReleaseController::class)->group(function () {
         Route::delete('/release/{release}', 'destroy');
+        Route::patch('/release/{release}/publish', 'publish');
         Route::post('/releases/{release}/add', 'addToLikes');
         Route::put('/releases/{release}', 'update');
     });

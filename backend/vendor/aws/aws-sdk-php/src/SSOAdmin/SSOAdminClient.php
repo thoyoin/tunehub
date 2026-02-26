@@ -4,7 +4,7 @@ namespace Aws\SSOAdmin;
 use Aws\AwsClient;
 
 /**
- * This client is used to interact with the **AWS Single Sign-On Admin** service.
+ * This client is used to interact with the **AWS Single Sign-On AdminPanel** service.
  * @method \Aws\Result attachCustomerManagedPolicyReferenceToPermissionSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise attachCustomerManagedPolicyReferenceToPermissionSetAsync(array $args = [])
  * @method \Aws\Result attachManagedPolicyToPermissionSet(array $args = [])

@@ -1,3 +1,6 @@
+import type { User } from "@/types/User";
+import type { Track } from "@/types/Track";
+
 export interface Release {
     id: number;
     artist: string;
@@ -12,4 +15,6 @@ export interface Release {
     title: string;
     updated_at: string;
     user_id: number;
+    user: User;
+    tracks: Track[];
 }

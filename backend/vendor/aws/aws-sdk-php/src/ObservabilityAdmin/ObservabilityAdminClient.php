@@ -4,7 +4,7 @@ namespace Aws\ObservabilityAdmin;
 use Aws\AwsClient;
 
 /**
- * This client is used to interact with the **CloudWatch Observability Admin Service** service.
+ * This client is used to interact with the **CloudWatch Observability AdminPanel Service** service.
  * @method \Aws\Result createCentralizationRuleForOrganization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createCentralizationRuleForOrganizationAsync(array $args = [])
  * @method \Aws\Result createS3TableIntegration(array $args = [])

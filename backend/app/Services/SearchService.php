@@ -21,7 +21,8 @@ class SearchService
         }
 
         return $response = [
-            'releases' => Release::where('title', 'LIKE', "%{$query}%")
+            'releases' => Release::where('status', 'published')
+                ->where('title', 'LIKE', "%{$query}%")
                 ->orwhere('artist', 'LIKE', "%{$query}%")
                 ->limit(10)
                 ->get(),

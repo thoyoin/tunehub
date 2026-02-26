@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         Role::insert([
             ['name' => 'User', 'slug' => 'user'],
             ['name' => 'Premium', 'slug' => 'premium'],
-            ['name' => 'Admin', 'slug' => 'admin'],
+            ['name' => 'AdminPanel', 'slug' => 'admin'],
         ]);
     }
 }

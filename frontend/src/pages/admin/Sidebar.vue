@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.ts'
+import Moderation from "@/pages/admin/moderation/Moderation.vue";
 
 const route = useRoute()
 const auth = useAuthStore()
@@ -37,7 +38,7 @@ const auth = useAuthStore()
                 </div>
                 <div class="d-flex flex-row mt-1 p-2 overflow-auto position-relative">
                     <div
-                        class="d-flex flex-column p-1 mb-2 w-100"
+                        class="d-flex flex-column p-1 w-100 gap-2"
                         role="group"
                     >
                         <RouterLink
@@ -52,6 +53,21 @@ const auth = useAuthStore()
                                 alt="users"
                             >
                             <span>Users</span>
+                        </RouterLink>
+                        <RouterLink
+                            to="/admin/moderation"
+                            style="height: 45px"
+                            class="btn btn-playlist d-flex flex-row justify-content-start align-items-center"
+                            :class="{ 'active-item': route.path.startsWith('/admin/moderation') }"
+                        >
+                            <img
+                                style="margin-right: 12px"
+                                src="@/assets/svg/moderation.svg"
+                                alt="users"
+                            >
+                            <span :class="{ 'active-item': route.path.startsWith('/admin/moderation')}">
+                                Moderation
+                            </span>
                         </RouterLink>
                     </div>
                 </div>
@@ -113,5 +129,6 @@ const auth = useAuthStore()
         border-color: rgba(75,75,75,.3) !important;
         box-shadow: 0 0 10px 3px rgb(32,32,32) !important;
         background-color: rgb(32,32,32) !important;
+        color: rgb(158, 23, 63) !important;
     }
 </style>

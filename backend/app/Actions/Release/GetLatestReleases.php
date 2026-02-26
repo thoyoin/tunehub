@@ -12,6 +12,7 @@ class GetLatestReleases
     public function handle(): Collection
     {
          return Release::with(['user', 'tracks', 'libraryItem'])
+             ->where('status', 'published')
              ->orderBy('release_date', 'desc')
              ->limit(5)
              ->get();

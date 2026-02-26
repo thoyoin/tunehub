@@ -2,14 +2,15 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
 import { useToast } from "vue-toastification";
-import type { Release } from '../types/Release.js'
-import type { Track } from '../types/Track.js'
+import type { Release } from "@/types/Release"
+import type { Track } from "@/types/Track"
 
 export const useArtistStore = defineStore('artistStudio', () => {
     const tracks = ref<Track[]>([])
     const releases = ref<Release[]>([])
     const selectedView = ref<string>('tracks')
     const editingItem = ref<Release | Track | null>(null)
+    const isLoading = ref<boolean>(false)
 
     const toast = useToast()
 
@@ -63,6 +64,20 @@ export const useArtistStore = defineStore('artistStudio', () => {
         }
     }
 
+    const publishRelease = async (releaseId: number): Promise<void> => {
+        try {
+            isLoading.value = true
+
+            await api.patch(`/api/release/${releaseId}/publish`)
+
+            await fetchReleases()
+        } catch (e) {
+            console.error(e)
+        } finally {
+            isLoading.value = false
+        }
+    }
+
     const viewTracks = (): void => {
         selectedView.value = 'tracks'
     }
@@ -87,5 +102,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
         deleteRelease,
         pullEditingItem,
         editingItem,
+         publishRelease,
+         isLoading,
      };
 })

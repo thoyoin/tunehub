@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { useLibraryStore } from "@/stores/library.ts";
+import { useLibraryStore } from "@/stores/library.js";
 import { ref } from 'vue';
 import api from '@/lib/api'
-import type { Release } from '../types/Release.js'
-import type { Track } from '../types/Track.js'
+import type { Release } from "@/types/Release"
+import type { Track } from "@/types/Track"
 
 export const useReleaseStore = defineStore('release', () => {
     const releases = ref<Release[] | null>(null);
@@ -38,14 +38,14 @@ export const useReleaseStore = defineStore('release', () => {
         }
     }
 
-    const addReleaseToLikes = async (id): Promise<void> => {
+    const addReleaseToLikes = async (id: number): Promise<void> => {
         await api.post(`/api/releases/${id}/add`)
 
         await libraryStore.fetchItems()
         await getRelease(id)
     }
 
-    const addTrackToLikes = async (id): Promise<void> => {
+    const addTrackToLikes = async (id: number): Promise<void> => {
         await api.post(`/api/liked/track/${id}`)
 
         if (pickedRelease.value) {

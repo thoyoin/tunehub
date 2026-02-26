@@ -1,9 +1,9 @@
 <script setup>
-import { useAdminPanelStore } from '@/stores/adminPanel.ts'
+import { useUsersStore } from '@/stores/AdminPanel/users.ts'
 import { useUserSearch } from '@/stores/userSearch.ts'
 import { onMounted, computed, ref, watch } from 'vue'
 
-const adminPanelStore = useAdminPanelStore()
+const adminPanelStore = useUsersStore()
 const userSearchStore = useUserSearch()
 
 const currentPage = ref(1)

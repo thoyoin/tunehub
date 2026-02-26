@@ -17,6 +17,16 @@ class ReleasePolicy
         return null;
     }
 
+    public function updateStatus(User $user, Release $release): bool
+    {
+        return $user->role === '3';
+    }
+
+    public function publish(User $user, Release $release): bool
+    {
+        return $user->role === '2' && $user->id = $release->user_id;
+    }
+
     /**
      * Determine whether the user can view any models.
      */
@@ -54,7 +64,7 @@ class ReleasePolicy
      */
     public function delete(User $user, Release $release): bool
     {
-        return $user->id === $release->user_id && $user->role === '2';
+        return $user->id === $release->user_id || $user->role === '3';
     }
 
     /**

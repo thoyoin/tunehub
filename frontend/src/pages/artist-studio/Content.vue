@@ -2,8 +2,10 @@
 import { useArtistStore } from '@/stores/artistStudio.ts'
 import { onMounted } from 'vue'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+import { useToast } from "vue-toastification";
 
 const artistStore = useArtistStore()
+const toast = useToast()
 
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
@@ -11,6 +13,18 @@ onMounted(async () => {
     await artistStore.fetchTracks()
     await artistStore.fetchReleases()
 })
+
+const handleReleasePublication = async (id) => {
+    try {
+        await artistStore.publishRelease(id)
+
+        toast.success('Release has been published successfully.')
+    } catch (error) {
+        console.log(error)
+
+        toast.error('Something went wrong.')
+    }
+}
 
 </script>
 
@@ -342,6 +356,20 @@ onMounted(async () => {
                                                             "
                                                         >
                                                             Edit
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            type="button"
+                                                            class="dropdown-item"
+                                                            :disabled="release.status !== 'approved'
+                                                                || artistStore.isLoading"
+                                                            :class="{ 'opacity-50': release.status !== 'approved' }"
+                                                            @click="
+                                                                handleReleasePublication(release.id)
+                                                            "
+                                                        >
+                                                            Publish
                                                         </button>
                                                     </li>
                                                     <li>

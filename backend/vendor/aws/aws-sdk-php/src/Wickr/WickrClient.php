@@ -4,7 +4,7 @@ namespace Aws\Wickr;
 use Aws\AwsClient;
 
 /**
- * This client is used to interact with the **AWS Wickr Admin API** service.
+ * This client is used to interact with the **AWS Wickr AdminPanel API** service.
  * @method \Aws\Result batchCreateUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchCreateUserAsync(array $args = [])
  * @method \Aws\Result batchDeleteUser(array $args = [])
