@@ -6,7 +6,40 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/dist/util/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/dist/util/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/src/util/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/src/util/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/tests/karma.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/js/tests/karma.conf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.oxlintrc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.prettierrc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/eslint.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useVibrantPalette.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useVibrantPalette.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/lib/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/adminPanel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/adminPanel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/search.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/search.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/userSearch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/userSearch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/PaginatedResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/PaginatedResponse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/Playlist.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Playlist.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/Release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Release.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -484,7 +517,14 @@
       <workItem from="1771865172331" duration="4132000" />
       <workItem from="1771908042336" duration="1000" />
       <workItem from="1771932667123" duration="19808000" />
-      <workItem from="1772032453655" duration="9334000" />
+      <workItem from="1772032453655" duration="9369000" />
+      <workItem from="1772104865079" duration="955000" />
+      <workItem from="1772105838335" duration="60000" />
+      <workItem from="1772105912643" duration="106000" />
+      <workItem from="1772106031967" duration="1248000" />
+      <workItem from="1772107393126" duration="113000" />
+      <workItem from="1772107517529" duration="332000" />
+      <workItem from="1772107861908" duration="1929000" />
     </task>
     <servers />
   </component>

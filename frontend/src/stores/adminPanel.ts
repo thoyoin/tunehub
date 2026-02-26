@@ -2,15 +2,15 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
 import { useDebounceFn } from '@vueuse/core'
-import type { PaginatedResponse } from '../types/PaginatedResponse.js'
-import type { User } from '../types/User.js'
+import type { PaginatedResponse } from '@/types/PaginatedResponse'
+import type { User } from '@/types/User'
 
 export const useAdminPanelStore = defineStore('adminPanel', () => {
-    const users = ref<User[]>([]);
+    const users = ref<PaginatedResponse<User> | null>(null);
     const viewUser = ref<User | null>(null);
     const isLoading = ref<boolean>(false);
 
-    const fetchUsers = useDebounceFn(async (page: number = 1, search: string | null): Promise<void> => {
+    const fetchUsers = useDebounceFn(async (page: number = 1, search: string | null = null): Promise<void> => {
         try {
             const response = await api.get<PaginatedResponse<User>>(`/api/admin/users`, {
                 params: { page: page, search: search },

@@ -1,7 +1,7 @@
-<script setup>
-    import { useAuthStore } from "@/stores/auth.ts";
-    import { useImageUpload } from "@/composables/useImageUpload.js";
-    import api from "@/lib/api.js";
+<script setup lang="ts">
+    import { useAuthStore } from "@/stores/auth.js";
+    import { useImageUpload } from "@/composables/useImageUpload";
+    import api from "@/lib/api";
     import {ref, watch} from "vue";
     import { useToast } from "vue-toastification";
 
@@ -9,8 +9,8 @@
     const auth = useAuthStore();
     const {previewUrl, fileToUpload, handleImageUpload} = useImageUpload();
 
-    const username = ref('');
-    const email = ref('');
+    const username = ref<string>("");
+    const email = ref<string>("");
 
     watch(() => auth.user, (user) => {
         if (user) {
@@ -19,7 +19,7 @@
         }
     }, { immediate: true })
 
-    const handleUserUpdate = async () => {
+    const handleUserUpdate = async (): Promise<void> => {
         const formData = new FormData();
 
         formData.append("username", username.value);
@@ -37,6 +37,7 @@
             toast.success('Profile updated successfully!');
         } catch (error) {
             console.log(error);
+
             toast.error('Something went wrong.');
         }
     }
@@ -60,7 +61,7 @@
                         <div class="d-flex flex-column align-items-center">
                             <div class="d-flex flex-column justify-content-start align-items-center w-50">
                                 <img
-                                    :src="previewUrl ?? auth.user.profile_picture"
+                                    :src="previewUrl ?? auth.user?.profile_picture"
                                     style="width: 150px; height: 150px;"
                                     class="rounded-2"
                                     alt="profile"

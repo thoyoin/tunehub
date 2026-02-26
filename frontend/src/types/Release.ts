@@ -8,7 +8,7 @@ export interface Release {
     release_date: string;
     release_type: string;
     released_in: string;
-    status: string;
+    status: 'pending' | 'rejected' | 'approved' | 'published';
     title: string;
     updated_at: string;
     user_id: number;

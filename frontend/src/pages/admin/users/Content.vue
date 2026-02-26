@@ -9,18 +9,20 @@ const userSearchStore = useUserSearch()
 const currentPage = ref(1)
 
 const users = computed(() => {
-    return adminPanelStore.users.data ?? []
+    return adminPanelStore.users?.data ?? []
 })
 
 const fetchPage = async (page) => {
     currentPage.value = page
-    await adminPanelStore.setLoading()
+
+    adminPanelStore.setLoading()
     await adminPanelStore.fetchUsers(page)
 }
 
 watch(() => userSearchStore.search, async () => {
     currentPage.value = 1
-    await adminPanelStore.setLoading();
+
+    adminPanelStore.setLoading();
     await adminPanelStore.fetchUsers(1, userSearchStore.search)
 })
 
@@ -170,8 +172,8 @@ onMounted(async () => {
                 </template>
                 <div class="opacity-50 w-100">
                     <span>
-                        Showing {{adminPanelStore.users.from}}-{{adminPanelStore.users.to}}
-                        of {{adminPanelStore.users.total}}
+                        Showing {{adminPanelStore.users?.from}}-{{adminPanelStore.users?.to}}
+                        of {{adminPanelStore.users?.total}}
                     </span>
                 </div>
                 <div
@@ -188,7 +190,7 @@ onMounted(async () => {
                     <button
                         class="btn btn-pagination"
                         @click="fetchPage(currentPage + 1)"
-                        :disabled="currentPage === adminPanelStore.users.last_page"
+                        :disabled="currentPage === adminPanelStore.users?.last_page"
                     >
                         <img src="@/assets/svg/arrowRight.svg" alt="next">
                     </button>

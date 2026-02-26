@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.ts'
-import api from '@/lib/api.js'
+import api from '@/lib/api.ts'
 import type { Item } from '../types/Item.js'
 import type { Track } from '../types/Track.js'
 

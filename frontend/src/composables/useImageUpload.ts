@@ -1,11 +1,15 @@
 import {onUnmounted, ref} from "vue";
 
 export function useImageUpload() {
-    const previewUrl = ref(null);
-    const fileToUpload = ref(null);
+    const previewUrl = ref<string | null>(null);
+    const fileToUpload = ref<File | null>(null);
 
-    const handleImageUpload = (elem) => {
-        const file = elem.target.files[0];
+    const handleImageUpload = (event: Event): void => {
+        const input = event.target as HTMLInputElement;
+        if (!input.files) return
+
+        const file = input.files[0];
+
         if (!file) return
 
         if (previewUrl.value) {
@@ -17,7 +21,7 @@ export function useImageUpload() {
         previewUrl.value = URL.createObjectURL(file);
     }
 
-    onUnmounted(() => {
+    onUnmounted((): void => {
         if (previewUrl.value) {
             URL.revokeObjectURL(previewUrl.value);
             previewUrl.value = null

@@ -8,7 +8,7 @@ import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
 import likedIcon from '@/assets/svg/heartFilled.svg'
 import likeIcon from '@/assets/svg/heart.svg'
-import { useVibrantPalette } from '@/composables/useVibrantPalette.js'
+import { useVibrantPalette } from '@/composables/useVibrantPalette.ts'
 
 const auth = useAuthStore()
 const releaseStore = useReleaseStore()

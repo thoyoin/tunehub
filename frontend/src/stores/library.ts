@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import { useAuthStore } from "@/stores/auth.ts";
 import {ref, watch} from "vue";
-import api from "@/lib/api.js";
+import api from "@/lib/api.ts";
 import type { Item } from '../types/Item.js'
 import type { LibraryItem } from '../types/LibraryItem.js'
 import type { Playlist } from '../types/Playlist.js'

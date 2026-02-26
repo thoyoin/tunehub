@@ -3,7 +3,7 @@ export interface Playlist {
     item_type: string;
     title: string;
     slug: string;
-    description: ?string;
+    description: string | undefined;
     cover_url: string;
     created_at: string;
     updated_at: string;

@@ -1,9 +1,9 @@
 <script setup>
 import { useLibraryStore } from '@/stores/library.ts'
-import { useImageUpload } from '@/composables/useImageUpload.js'
+import { useImageUpload } from '@/composables/useImageUpload.ts'
 import { useToast } from 'vue-toastification'
 import { ref, watch } from 'vue'
-import api from '@/lib/api.js'
+import api from '@/lib/api.ts'
 
 const libraryStore = useLibraryStore()
 const toast = useToast()

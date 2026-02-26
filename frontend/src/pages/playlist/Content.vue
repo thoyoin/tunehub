@@ -4,14 +4,14 @@ import { useAuthStore } from '@/stores/auth.ts'
 import { useReleaseStore } from '@/stores/release.ts'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
 import { useToast } from 'vue-toastification'
-import api from '@/lib/api.js'
+import api from '@/lib/api.ts'
 import { watch } from 'vue'
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
 import likedIcon from '@/assets/svg/heartFilled.svg'
 import likeIcon from '@/assets/svg/heart.svg'
-import { useVibrantPalette } from '@/composables/useVibrantPalette.js'
-import router from '@/router/index.js'
+import { useVibrantPalette } from '@/composables/useVibrantPalette.ts'
+import router from '@/router/index.ts'
 
 const libraryStore = useLibraryStore()
 const toast = useToast()

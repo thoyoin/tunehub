@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref} from 'vue';
-import api from "@/lib/api.js";
+import api from "@/lib/api.ts";
 import { useAuthStore } from "@/stores/auth.ts";
 import { useToast } from "vue-toastification";
 import { useArtistStore } from "@/stores/artistStudio.ts";

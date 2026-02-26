@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
-import api from '@/lib/api.js'
+import api from '@/lib/api.ts'
 import { useDebounceFn } from '@vueuse/core'
 import type { Release } from '../types/Release.js'
 import type { Playlist } from '../types/Playlist.js'
