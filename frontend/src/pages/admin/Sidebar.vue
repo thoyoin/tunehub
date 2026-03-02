@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.ts'
-import Moderation from "@/pages/admin/moderation/Moderation.vue";
 
 const route = useRoute()
+const router = useRouter()
 const auth = useAuthStore()
 
 </script>
@@ -27,7 +27,8 @@ const auth = useAuthStore()
                     class="ps-3 py-2 fw-bold d-flex flex-row align-items-center"
                 >
                     <img
-                        style="width: 35px;margin-right: 10px; opacity: 50%"
+                        @click="router.push('/')"
+                        style="width:35px;margin-right:10px;opacity:50%;cursor:pointer"
                         src="@/assets/svg/logo.svg"
                         alt="logo"
                     >
@@ -67,6 +68,21 @@ const auth = useAuthStore()
                             >
                             <span :class="{ 'active-item': route.path.startsWith('/admin/moderation')}">
                                 Moderation
+                            </span>
+                        </RouterLink>
+                        <RouterLink
+                            to="/admin/playlists"
+                            style="height: 45px"
+                            class="btn btn-playlist d-flex flex-row justify-content-start align-items-center"
+                            :class="{ 'active-item': route.path.startsWith('/admin/playlists') }"
+                        >
+                            <img
+                                style="margin-right: 12px"
+                                src="@/assets/svg/playlistsMenu.svg"
+                                alt="users"
+                            >
+                            <span :class="{ 'active-item': route.path.startsWith('/admin/playlists')}">
+                                Playlists
                             </span>
                         </RouterLink>
                     </div>

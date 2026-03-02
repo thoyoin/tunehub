@@ -9,6 +9,7 @@ import Playlist from '@/pages/playlist/Playlist.vue'
 import Admin from '@/pages/admin/Admin.vue'
 import Users from "@/pages/admin/users/Users.vue";
 import Release from "@/pages/release/Release.vue";
+import Playlists from "@/pages/admin/playlists/Playlists.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,7 @@ const router = createRouter({
           path: '/artists',
           name: 'artists',
           component: ArtistStudio,
+          meta: { requiresAuth: true },
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 
@@ -75,6 +77,17 @@ const router = createRouter({
           path: '/admin/moderation',
           name: 'admin/moderation',
           component: Moderation,
+          beforeEnter: (to, from, next) => {
+              const auth = useAuthStore()
+
+              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
+              else next();
+          }
+      },
+      {
+          path: '/admin/playlists',
+          name: 'admin/playlists',
+          component: Playlists,
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 

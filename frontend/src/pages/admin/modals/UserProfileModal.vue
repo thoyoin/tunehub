@@ -50,6 +50,11 @@ const handleUserDeletion = async (id: number) => {
                                 alt="profile"
                             />
                             <span class="mt-3">{{ adminPanelStore.viewUser?.username }}</span>
+                            <span
+                                class="badge mt-2 text-bg-light opacity-75"
+                            >
+                                {{ adminPanelStore.viewUser?.roles[0].name }}
+                            </span>
                         </div>
                         <div
                             style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)"
@@ -143,4 +148,5 @@ const handleUserDeletion = async (id: number) => {
         padding: 10px;
     }
 }
+
 </style>

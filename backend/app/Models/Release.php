@@ -13,10 +13,11 @@ class Release extends Model
 {
     protected $fillable = [
         'title',
-        'type',
         'artist',
         'cover_url',
         'release_date',
+        'release_type',
+        'item_type',
         'status',
         'user_id'
     ];

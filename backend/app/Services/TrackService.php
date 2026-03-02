@@ -31,7 +31,9 @@ class TrackService
         DB::transaction(function () use ($track) {
             $this->releaseService->destroyByTrack($track);
 
-            $this->minioService->destroyTrack($track);
+            DB::afterCommit(function () use ($track) {
+                $this->minioService->destroyTrack($track);
+            });
 
             $track->delete();
         });

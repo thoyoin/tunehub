@@ -29,6 +29,9 @@ Route::prefix('admin')
             Route::get('/releases', 'getReleases');
             Route::patch('/releases/{release}/status', 'updateStatus');
         });
+        Route::controller(\App\Http\Controllers\AdminPanel\PlaylistController::class)->group(function () {
+            Route::get('/playlists', 'getAll');
+        });
     });
 
 Route::controller(ReleaseController::class)->group(function () {

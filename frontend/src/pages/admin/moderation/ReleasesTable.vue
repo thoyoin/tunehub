@@ -51,7 +51,6 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Artist</th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Type</th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
-<!--                    <th scope="col" style="font-weight: lighter; opacity: 60%">Actions</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -64,7 +63,8 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                         style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
                     >
                         <td style="font-size: 15px">
-                            <img
+                            <div class="d-flex align-items-center">
+                                <img
                                 class="rounded-1 me-2"
                                 style="
                                     width: 35px;
@@ -74,10 +74,12 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                                 :src="release.cover_url"
                                 alt="cover"
                             />
-                            <span>{{ release.title }}</span>
+                                <span>{{ release.title }}</span>
+                            </div>
                         </td>
                         <td style="font-size: 15px">
-                            <img
+                            <div class="d-flex flex-row align-items-center">
+                                <img
                                 class="rounded-circle me-2"
                                 style="
                                     width: 35px;
@@ -87,7 +89,8 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                                 :src="release.user.profile_picture"
                                 alt="artist"
                             />
-                            <span class="opacity-50">{{ release.artist }}</span>
+                                <span class="opacity-50">{{ release.artist }}</span>
+                            </div>
                         </td>
                         <td style="font-size: 15px">
                             {{ release.release_type }}
@@ -95,46 +98,6 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                         <td>
                             {{ release.tracks.length }}
                         </td>
-<!--                        <td style="width: 100px; padding-left: 20px">-->
-<!--                            <img-->
-<!--                                data-bs-toggle="dropdown"-->
-<!--                                aria-expanded="false"-->
-<!--                                style="cursor: pointer"-->
-<!--                                src="@/assets/svg/horizontalSettingsWhite.svg"-->
-<!--                                alt="settings"-->
-<!--                                class="options"-->
-<!--                            />-->
-<!--                            <ul class="dropdown-menu">-->
-<!--                                <li-->
-<!--                                    style="border-bottom: 1px solid rgba(228, 228, 228, 0.2)"-->
-<!--                                    class="dropdown-item d-flex align-items-center mb-1"-->
-<!--                                    data-bs-toggle="modal"-->
-<!--                                    data-bs-target="#releaseViewModal"-->
-<!--                                    @click="moderationStore.setViewRelease(release)"-->
-<!--                                >-->
-<!--                                    <img class="me-2" src="@/assets/svg/view.svg" alt="view" />-->
-<!--                                    View Details-->
-<!--                                </li>-->
-<!--                                <template v-if="moderationStore.selectedView !== 'published'">-->
-<!--                                    <li-->
-<!--                                        class="dropdown-item d-flex align-items-center  mb-1"-->
-<!--                                        @click="handleReleaseStatusUpdate('approved', release.id)"-->
-<!--                                    >-->
-<!--                                        <img class="me-2" src="@/assets/svg/approve.svg" alt="delete" />-->
-<!--                                        Approve-->
-<!--                                    </li>-->
-<!--                                </template>-->
-<!--                                <template v-if="moderationStore.selectedView !== 'rejected'">-->
-<!--                                    <li-->
-<!--                                        class="dropdown-item d-flex align-items-center mb-1"-->
-<!--                                        @click="handleReleaseStatusUpdate('rejected', release.id)"-->
-<!--                                    >-->
-<!--                                        <img class="me-2" src="@/assets/svg/reject.svg" alt="delete" />-->
-<!--                                        Reject-->
-<!--                                    </li>-->
-<!--                                </template>-->
-<!--                            </ul>-->
-<!--                        </td>-->
                     </tr>
                 </template>
             </tbody>

@@ -56,24 +56,20 @@ class ReleaseService
     {
         $release = $track->release()->withCount('tracks')->first();
 
-        DB::transaction(function () use ($release, $track) {
-            if ($release && $release->tracks_count === 1) {
-                $coverUrl = $track->cover_url;
+        if ($release && $release->tracks_count === 1) {
+            $coverUrl = $track->cover_url;
 
-                $release->delete();
+            $release->delete();
 
-                DB::afterCommit(function () use ($coverUrl) {
-                    $this->minioService->destroyCover($coverUrl);
-                });
-            } else {
-                $currentPosition = $track->position;
+            $this->minioService->destroyCover($coverUrl);
+        } else {
+            $currentPosition = $track->position;
 
-                DB::table('tracks')
-                    ->where('release_id', $release->id)
-                    ->where('position', '>', $currentPosition)
-                    ->decrement('position');
-            }
-        });
+            DB::table('tracks')
+                ->where('release_id', $release->id)
+                ->where('position', '>', $currentPosition)
+                ->decrement('position');
+        }
     }
 
     public function destroy($release): void

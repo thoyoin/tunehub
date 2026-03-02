@@ -46,7 +46,10 @@ onMounted(async () => {
         <div class="fs-3 fw-bold">Users</div>
         <div class="mt-4" style="max-width: 250px">
             <div class="stat-card bg-minor d-flex flex-column">
-                <span class="opacity-50">Total users</span>
+                <div class="d-flex align-items-center">
+                    <img class="me-2" src="@/assets/svg/users.svg" alt="">
+                    <span class="opacity-50">Total users</span>
+                </div>
                 <template v-if="adminPanelStore.isLoading">
                     <div class="search-spinner mt-2 ms-1"></div>
                 </template>
@@ -94,8 +97,8 @@ onMounted(async () => {
                         <tr>
                             <th scope="col" style="font-weight: lighter; opacity: 60%">User</th>
                             <th scope="col" style="font-weight: lighter; opacity: 60%">Email</th>
+                            <th scope="col" style="font-weight: lighter; opacity: 60%">Role</th>
                             <th scope="col" style="font-weight: lighter; opacity: 60%">Joined</th>
-<!--                            <th scope="col" style="font-weight: lighter; opacity: 60%">Actions</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -108,62 +111,29 @@ onMounted(async () => {
                                     style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
                                 >
                                     <td style="font-size: 15px">
-                                        <img
-                                            class="rounded-circle me-2"
-                                            style="
-                                                width: 35px;
-                                                height: 35px;
-                                                border: 1px solid rgba(228, 228, 228, 0.1);
-                                            "
-                                            :src="user.profile_picture"
-                                            alt="cover"
-                                        />
-                                        {{ user.username }}
+                                        <div class="d-flex align-items-center">
+                                            <img
+                                                class="rounded-circle me-2"
+                                                style="
+                                                    width: 35px;
+                                                    height: 35px;
+                                                    border: 1px solid rgba(228, 228, 228, 0.1);
+                                                "
+                                                :src="user.profile_picture"
+                                                alt="cover"
+                                            />
+                                            {{ user.username }}
+                                        </div>
                                     </td>
                                     <td style="font-size: 15px">
                                         <span class="opacity-50">{{ user.email }}</span>
                                     </td>
                                     <td style="font-size: 15px">
+                                        <span>{{ user.roles[0].name }}</span>
+                                    </td>
+                                    <td style="font-size: 15px">
                                         {{ user.joined_at }}
                                     </td>
-<!--                                    <td style="width: 100px; padding-left: 20px">-->
-<!--                                        <img-->
-<!--                                            data-bs-toggle="dropdown"-->
-<!--                                            aria-expanded="false"-->
-<!--                                            style="cursor: pointer"-->
-<!--                                            src="@/assets/svg/horizontalSettingsWhite.svg"-->
-<!--                                            alt="settings"-->
-<!--                                            class="options"-->
-<!--                                        />-->
-<!--                                        <ul class="dropdown-menu">-->
-<!--                                            <li-->
-<!--                                                class="dropdown-item d-flex align-items-center"-->
-<!--                                                data-bs-toggle="modal"-->
-<!--                                                data-bs-target="#userProfileModal"-->
-<!--                                                @click="adminPanelStore.setViewUser(user)"-->
-<!--                                            >-->
-<!--                                                <img-->
-<!--                                                    class="me-2"-->
-<!--                                                    src="@/assets/svg/view.svg"-->
-<!--                                                    alt="view"-->
-<!--                                                />-->
-<!--                                                View Profile-->
-<!--                                            </li>-->
-<!--                                            <li-->
-<!--                                                class="dropdown-item d-flex align-items-center"-->
-<!--                                                data-bs-toggle="modal"-->
-<!--                                                data-bs-target="#userDeletionModal"-->
-<!--                                                @click="adminPanelStore.setViewUser(user)"-->
-<!--                                            >-->
-<!--                                                <img-->
-<!--                                                    class="me-2"-->
-<!--                                                    src="@/assets/svg/delete.svg"-->
-<!--                                                    alt="delete"-->
-<!--                                                />-->
-<!--                                                Delete-->
-<!--                                            </li>-->
-<!--                                        </ul>-->
-<!--                                    </td>-->
                                 </tr>
                             </template>
                     </tbody>
@@ -208,13 +178,6 @@ onMounted(async () => {
     padding: 15px;
     border: 1px solid rgba(228, 228, 228, 0.15) !important;
     border-radius: 15px;
-}
-.options {
-    transition: 0.2s;
-
-    &:hover {
-        opacity: 0.5;
-    }
 }
 .form-control {
     &:focus {
