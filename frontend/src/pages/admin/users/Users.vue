@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Sidebar from '@/pages/admin/Sidebar.vue'
 import Content from '@/pages/admin/users/Content.vue'
 import UserProfileModal from '@/pages/admin/modals/UserProfileModal.vue'

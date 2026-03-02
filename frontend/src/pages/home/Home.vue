@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
     import Header from "@/pages/home/Header.vue";
     import { onMounted } from 'vue'
     import { useAuthStore } from '@/stores/auth.ts'

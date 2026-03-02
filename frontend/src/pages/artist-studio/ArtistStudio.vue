@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Header from "@/pages/artist-studio/Header.vue";
 import Content from "@/pages/artist-studio/Content.vue";
 import UploadReleaseModal from "@/pages/artist-studio/modals/UploadReleaseModal.vue";

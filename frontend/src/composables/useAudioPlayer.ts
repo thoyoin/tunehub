@@ -1,11 +1,12 @@
-import { computed, ref, watch } from 'vue';
-import api from '@/lib/api.ts'
+import { computed, type Ref, ref, watch } from "vue";
+import api from '@/lib/api.js'
 import type { Track } from "@/types/Track"
 import type { Item } from "@/types/Item"
+import type { AudioPlayerSingleton } from "@/types/AudioPlayerSingleton";
 
-let singleton = null;
+let singleton: AudioPlayerSingleton | null = null;
 
-export const useAudioPlayer = (audioRef) => {
+export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
     if (singleton) return singleton;
 
     const currentTrack = ref<Track | null>(null)
@@ -18,17 +19,19 @@ export const useAudioPlayer = (audioRef) => {
     const volume = ref<number>(0.1)
     const isMuted = ref<boolean>(false)
     const hasTrack = computed(() => !!currentTrack.value)
-    const currentContext = ref<Item>(null)
+    const currentContext = ref<Item | null>(null)
 
-    watch(currentContext, async (newContext, oldContext) => {
+    watch(currentContext, async (
+        newContext,
+        oldContext
+    ) => {
         if (!newContext) return
 
         if (
             !oldContext
             || newContext.id !== oldContext.id
-            || newContext.type !== oldContext.type
+            || newContext.item_type !== oldContext.item_type
         ) {
-            console.log('New context: ', newContext)
             await api.post('/api/recentlyPlayed', newContext)
         }
     })
@@ -61,8 +64,12 @@ export const useAudioPlayer = (audioRef) => {
 
             const lastPlayed = localStorage.getItem('lastPlayed')
             if (lastPlayed) {
-                currentTrack.value = JSON.parse(lastPlayed)
-                newEl.src = currentTrack.value.audio_url
+                const parsed: Track = JSON.parse(lastPlayed)
+                currentTrack.value = parsed
+
+                if (parsed.audio_url) {
+                    newEl.src = parsed.audio_url
+                }
             }
 
             newEl.addEventListener('timeupdate', onTimeUpdate)
@@ -71,7 +78,7 @@ export const useAudioPlayer = (audioRef) => {
         }
     }, { immediate: true })
 
-    function playTrack(track, newQueue = [], item) {
+    function playTrack(track: Track, newQueue: Track[], item: Item) {
         if (!audioRef.value) return
 
         if (newQueue.length) queue.value = newQueue
@@ -85,6 +92,7 @@ export const useAudioPlayer = (audioRef) => {
             .catch(e => console.error("Ошибка воспроизведения:", e))
 
         currentTrack.value = track
+
         localStorage.setItem('lastPlayed', JSON.stringify(track))
     }
 
@@ -106,7 +114,7 @@ export const useAudioPlayer = (audioRef) => {
         audioRef.value.volume = isMuted.value ? 0 : volume.value
     }
 
-    function toggleTrack(track, newQueue = [], item) {
+    function toggleTrack(track: Track, newQueue: Track[], item: Item) {
         if (currentTrack.value?.id === track.id) {
             toggle()
         } else {
@@ -115,28 +123,45 @@ export const useAudioPlayer = (audioRef) => {
     }
 
     function next() {
-        if (!hasNext.value) return
+        if (currentIndex.value === null) return
+        const nextIndex = currentIndex.value + 1
+        if (nextIndex >= queue.value.length) return
 
-        currentIndex.value++
-        playTrack(queue.value[currentIndex.value])
+        const nextTrack = queue.value[nextIndex]
+        if (!nextTrack) return
+
+        currentIndex.value = nextIndex
+        if (currentContext.value) {
+            playTrack(nextTrack, queue.value, currentContext.value)
+        }
     }
 
     function prev() {
-        if (!hasPrev.value) return
+        if (currentIndex.value === null) return
+        const prevIndex = currentIndex.value - 1
+        if (prevIndex < 0) return
 
-        currentIndex.value--
-        playTrack(queue.value[currentIndex.value])
+        const prevTrack = queue.value[prevIndex]
+        if (!prevTrack) return
+
+        currentIndex.value = prevIndex
+        if (currentContext.value) {
+            playTrack(prevTrack, queue.value, currentContext.value)
+        }
     }
 
-    function seek(e) {
+    function seek(e: MouseEvent) {
         if (!audioRef.value || !duration.value) return
 
-        const width = e.currentTarget.clientWidth
+        const target = e.currentTarget as HTMLElement | null
+        if (!target) return
+        const width = target.clientWidth
+
         const clickX = e.offsetX
         audioRef.value.currentTime = (clickX / width) * duration.value
     }
 
-    function setVolume(value) {
+    function setVolume(value: number) {
         volume.value = value
 
         if (audioRef.value) {
@@ -151,7 +176,7 @@ export const useAudioPlayer = (audioRef) => {
     const hasPrev = computed(() =>
         currentIndex.value !== null && currentIndex.value > 0)
 
-    const formatTime = (seconds) => {
+    const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60)
         const secs = Math.floor(seconds % 60)
 

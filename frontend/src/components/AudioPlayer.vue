@@ -6,7 +6,7 @@ import { ref } from "vue";
 const audioRef = ref(null);
 const auth = useAuthStore();
 
-const {prev, hasTrack, volume, next, toggle,
+const { prev, hasTrack, volume, next, toggle,
     isPlaying, currentTrack, formatTime, currentTime,
     seek, progress, toggleVolume, isMuted, setVolume,
 } = useAudioPlayer(audioRef);

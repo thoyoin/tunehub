@@ -13,6 +13,7 @@ export interface Track {
     released_in: string;
     title: string;
     updated_at: string;
+    audio_url: string;
     user_id: number;
     playlist_ids: number[];
     playlists: {

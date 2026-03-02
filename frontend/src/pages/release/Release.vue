@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Header from '@/pages/home/Header.vue'
 import Library from '@/pages/home/Library.vue'
 import Content from '@/pages/release/Content.vue'

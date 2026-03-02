@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import SettingsModal from '@/pages/home/modals/settingsModal.vue'
 import Sidebar from '@/pages/admin/Sidebar.vue'
 

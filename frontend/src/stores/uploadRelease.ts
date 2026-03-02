@@ -68,11 +68,19 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
                 formData.append('title[]', track.title)
             })
 
+            if (!releaseTitle.value || !release_date.value || !artist.value || !releaseType.value) {
+                toast.error('Missing required release fields')
+                return
+            }
+
             formData.append('releaseTitle', releaseTitle.value)
-            formData.append('cover_url', cover_url.value)
             formData.append('type', releaseType.value)
             formData.append('release_date', release_date.value)
             formData.append('artist', artist.value)
+
+            if (cover_url.value) {
+                formData.append('cover_url', cover_url.value, cover_url.value.name)
+            }
 
             await api.post('/api/track', formData)
 
@@ -90,11 +98,16 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
         }
     }
 
-    const setPreview = (e): void => {
-        const file = e.target.files[0];
+    const setPreview = (e: Event): void => {
+        const input = e.target as HTMLInputElement
+        if (!input.files) return
 
-        coverPreview.value = URL.createObjectURL(file);
-        cover_url.value = file
+        const file = input.files[0];
+
+        if (file) {
+            coverPreview.value = URL.createObjectURL(file);
+            cover_url.value = file
+        }
     }
 
     return {

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
 import type { User } from "@/types/User"
+import type { AxiosError } from "axios"
 
 export const useAuthStore = defineStore('auth', () => {
     const isReady = ref<boolean>(false);
@@ -12,11 +13,13 @@ export const useAuthStore = defineStore('auth', () => {
 
     const fetchUser = async (): Promise<void> => {
         try {
-            const { data } = await api.get<User>('/api/user');
+            const response = await api.get<{ user: User }>("/api/user");
 
-            user.value = data.user;
+            user.value = response.data.user;
         } catch (e) {
-            if (e.response?.status === 401) {
+            const error = e as AxiosError;
+
+            if (error.response?.status === 401) {
                 user.value = null
                 return
             }
@@ -50,13 +53,15 @@ export const useAuthStore = defineStore('auth', () => {
             await api.get('/sanctum/csrf-cookie')
             await api.post('/api/login', credentials)
         } catch (e) {
-            console.error(e);
+            const error = e as AxiosError<{ errors: Record<string, string[]> }>;
 
-            if (e.response?.status === 422) {
-                errors.value = e.response.data.errors
+            console.error(error);
+
+            if (error.response?.status === 422) {
+                errors.value = error.response.data.errors
             }
 
-            throw e
+            throw error
         } finally {
             loading.value = false;
         }
@@ -69,10 +74,12 @@ export const useAuthStore = defineStore('auth', () => {
             await api.get('/sanctum/csrf-cookie')
             await api.post('/api/register', credentials)
         } catch (e) {
+            const error = e as AxiosError<{ errors: Record<string, string[]> }>;
+
             console.log(e)
 
-            if (e.response?.status === 422) {
-                errors.value = e.response.data.errors
+            if (error.response?.status === 422) {
+                errors.value = error.response.data.errors
             }
 
             throw e;

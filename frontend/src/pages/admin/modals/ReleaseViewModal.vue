@@ -117,7 +117,7 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex flex-column pt-2 w-100 gap-3">
+                        <div class="d-flex flex-column pt-2 w-100 gap-1">
                             <template v-for="track in moderationStore.viewRelease?.tracks">
                                 <div
                                     class="d-flex cursor-pointer track-row w-100 rounded-4 p-2 position-relative"
@@ -130,7 +130,7 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                         ></span>
                                     </template>
                                     <button
-                                        style="top: 2px; left: 5px"
+                                        style="top: 5px; left: 7px"
                                         type="button"
                                         class="btn z-3 btn-play-table position-absolute"
                                         @click="toggleTrack(
@@ -140,13 +140,25 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                         )"
                                     >
                                         <template v-if="currentTrack?.id !== track.id">
-                                            <img src="@/assets/svg/play.svg" alt="play" />
+                                            <img
+                                                style="width: 30px"
+                                                src="@/assets/svg/play.svg"
+                                                alt="play"
+                                            />
                                         </template>
                                         <template v-if="currentTrack?.id === track.id && !isPlaying">
-                                            <img src="@/assets/svg/play.svg" alt="play" />
+                                            <img
+                                                style="width: 30px"
+                                                src="@/assets/svg/play.svg"
+                                                alt="play"
+                                            />
                                         </template>
                                         <template v-if="currentTrack?.id === track.id && isPlaying">
-                                            <img src="@/assets/svg/pause.svg" alt="pause" />
+                                            <img
+                                                style="width: 30px"
+                                                src="@/assets/svg/pause.svg"
+                                                alt="pause"
+                                            />
                                         </template>
                                     </button>
                                     <div
