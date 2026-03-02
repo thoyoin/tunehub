@@ -10,7 +10,7 @@ class ReleasePolicy
 {
     public function before(User $user): bool|null
     {
-        if ($user->role === '3') {
+        if ($user->roles->contains('slug', 'admin')) {
             return true;
         }
 
@@ -19,12 +19,12 @@ class ReleasePolicy
 
     public function updateStatus(User $user, Release $release): bool
     {
-        return $user->role === '3';
+        return $user->roles->contains('slug', 'admin');
     }
 
     public function publish(User $user, Release $release): bool
     {
-        return $user->role === '2' && $user->id = $release->user_id;
+        return $user->roles->contains('slug', 'premium') && $user->id = $release->user_id;
     }
 
     /**
@@ -48,7 +48,7 @@ class ReleasePolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === '2';
+        return $user->roles->contains('slug', 'premium');
     }
 
     /**
@@ -56,7 +56,7 @@ class ReleasePolicy
      */
     public function update(User $user, Release $release): bool
     {
-        return $user->id === $release->user_id && $user->role === '2';
+        return $user->id === $release->user_id && $user->roles->contains('slug', 'premium');
     }
 
     /**
@@ -64,7 +64,7 @@ class ReleasePolicy
      */
     public function delete(User $user, Release $release): bool
     {
-        return $user->id === $release->user_id || $user->role === '3';
+        return $user->id === $release->user_id || $user->roles->contains('slug', 'admin');
     }
 
     /**

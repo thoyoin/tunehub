@@ -14,7 +14,7 @@ class PlaylistPolicy
      */
     public function before(User $user): bool|null
     {
-        if ($user->role === '3') {
+        if ($user->roles->contains('slug', 'admin')) {
             return true;
         }
 

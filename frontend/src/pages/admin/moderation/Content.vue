@@ -18,16 +18,16 @@ const moderationStore = useModerationStore();
         class="w-100 home-content"
     >
         <div class="fs-3 fw-bold">Release Moderation</div>
-        <div class="mt-4" style="max-width: 250px">
-            <div class="stat-card bg-minor d-flex flex-column">
+        <div class="mt-4 d-flex flex-row gap-4">
+            <div class="stat-card bg-minor w-100 d-flex flex-column">
                 <span class="d-flex flex-row align-items-center">
                     <img class="me-2" src="@/assets/svg/clockYellow.svg" alt="clock" />
                     <span class="opacity-50">Pending Review</span>
                 </span>
                 <span class="fs-4 mt-2 fw-bold">
-                    {{ moderationStore.releases?.data?.length }}
+                    {{ moderationStore.pendingReleasesNumber }}
                 </span>
-                <template v-if="moderationStore.releases?.data?.length !== 0">
+                <template v-if="moderationStore.pendingReleasesNumber !== 0">
                     <span style="font-size: 13px; color: rgb(211, 181, 0)" class="mt-2 fw-light">
                         Requires attention
                     </span>
@@ -41,28 +41,49 @@ const moderationStore = useModerationStore();
             <button
                 @click="moderationStore.selectView('pending')"
                 style="border-bottom-left-radius: 15px;border-top-left-radius: 15px;"
-                class="btn btn-view d-flex align-items-center justify-content-center"
+                class="btn btn-view d-flex align-items-center justify-content-between"
                 :class="{ 'activeView': moderationStore.selectedView === 'pending' }"
             >
                 <img class="me-2" src="@/assets/svg/clockWhite.svg" alt="clock">
-                Pending
+                <span>Pending</span>
+                <span
+                    style="font-size: 13px"
+                    class="badge-custom ms-2 opacity-0"
+                    :class="{ 'opacity-100': moderationStore.selectedView === 'pending' }"
+                >
+                    {{moderationStore.pendingReleasesNumber}}
+                </span>
             </button>
             <button
                 @click="moderationStore.selectView('published')"
-                class="btn btn-view d-flex align-items-center justify-content-center"
+                class="btn btn-view d-flex align-items-center justify-content-between"
                 :class="{ 'activeView': moderationStore.selectedView === 'published' }"
             >
                 <img class="me-2" src="@/assets/svg/approve.svg" alt="clock">
                 Published
+                <span
+                    style="font-size: 13px"
+                    class="badge-custom ms-2 opacity-0"
+                    :class="{ 'opacity-100': moderationStore.selectedView === 'published' }"
+                >
+                    {{moderationStore.releasesNumber}}
+                </span>
             </button>
             <button
                 @click="moderationStore.selectView('rejected')"
                 style="border-bottom-right-radius: 15px;border-top-right-radius: 15px;"
-                class="btn btn-view d-flex align-items-center justify-content-center"
+                class="btn btn-view d-flex align-items-center justify-content-between"
                 :class="{ 'activeView': moderationStore.selectedView === 'rejected' }"
             >
                 <img class="me-2" src="@/assets/svg/reject.svg" alt="clock">
                 Rejected
+                <span
+                    style="font-size: 13px"
+                    class="badge-custom ms-2 opacity-0"
+                    :class="{ 'opacity-100': moderationStore.selectedView === 'rejected' }"
+                >
+                    {{moderationStore.releasesNumber}}
+                </span>
             </button>
         </div>
         <div class="mt-4">
@@ -76,6 +97,7 @@ const moderationStore = useModerationStore();
     padding: 15px;
     border: 1px solid rgba(228, 228, 228, 0.15) !important;
     border-radius: 15px;
+    max-width: 250px;
 }
 .loading-overlay {
     position: absolute;
@@ -111,20 +133,28 @@ const moderationStore = useModerationStore();
     border: 1px solid rgba(50,50,51, 1) !important;
     color: rgb(228,228,228) !important;
     height: 35px !important;
+    max-width: 150px !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: space-between !important;
 
     &:hover {
         background-color: rgba(189, 16, 69, .8) !important;
     }
 
     &:active {
-        background-color: rgba(189, 16, 69, 1) !important;
-        border-color: #c11c4c !important;
+        background-color: rgba(189, 16, 69, .8) !important;
+        border-color: rgba(189, 16, 69, .01) !important;
     }
 }
 .activeView {
-    background-color: rgba(189, 16, 69, .8) !important;
+    background-color: rgba(189, 16, 69, 0.58) !important;
+}
+.badge-custom {
+    background-color: rgb(32, 32, 32) !important;
+    border-radius: 10px !important;
+    padding: 1px 8px !important;
+    transition: .2s !important;
+    font-weight: bold !important;
 }
 </style>

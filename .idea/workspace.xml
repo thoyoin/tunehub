@@ -6,42 +6,35 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Release/GetLatestReleases.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Release/GetLatestReleases.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/ReleaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/ReleaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Auth/SignUp.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Auth/SignUp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Release/UpdateStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Release/UpdateStatus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Middleware/AdminMiddleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Middleware/AdminMiddleware.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Policies/PlaylistPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Policies/PlaylistPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Policies/ReleasePolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Policies/ReleasePolicy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Policies/TrackPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Policies/TrackPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Services/SearchService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/SearchService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_01_23_083650_create_releases_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_01_23_083650_create_releases_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/0001_01_01_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/0001_01_01_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_01_23_083650_create_releases_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_11_20_083640_create_releases_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_083657_create_tracks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_083657_create_tracks_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeders/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/Exception/ObservabilityAdminException.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/Exception/ObservabilityAdminException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/ObservabilityAdminClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/ObservabilityAdmin/ObservabilityAdminClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/Exception/SSOAdminException.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/Exception/SSOAdminException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/SSOAdminClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/SSOAdmin/SSOAdminClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/Exception/WickrException.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/Exception/WickrException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/WickrClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/Wickr/WickrClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/chime-sdk-identity/2021-04-20/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/chime-sdk-identity/2021-04-20/api-2.json.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/observabilityadmin/2018-05-10/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/observabilityadmin/2018-05-10/api-2.json.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/sso-admin/2020-07-20/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/sso-admin/2020-07-20/api-2.json.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/wickr/2024-02-01/api-2.json.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/src/data/wickr/2024-02-01/api-2.json.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/fakerphp/faker/src/Faker/Provider/en_US/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/fakerphp/faker/src/Faker/Provider/en_US/Company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/psy/psysh/bin/fetch-manual" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/psy/psysh/bin/fetch-manual" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/psy/psysh/src/ManualUpdater/GitHubChecker.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/psy/psysh/src/ManualUpdater/GitHubChecker.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/symfony/http-foundation/Session/Storage/Handler/PdoSessionHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/symfony/http-foundation/Session/Storage/Handler/PdoSessionHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/symfony/mime/MimeTypes.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/symfony/mime/MimeTypes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/.github/workflows/release-notes.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/.github/workflows/release-notes.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/data/docs-versions.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/twbs/bootstrap/site/data/docs-versions.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserDeletionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserDeletionModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2026_01_06_160457_create_role_user_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/pause.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/pause.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/pauseWhite.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/pauseWhite.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/play.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/play.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/playWhite.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/playWhite.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/ReleaseViewModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/ReleaseViewModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/adminPanel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/users.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/release.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/Release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Release.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/moderation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/moderation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/types/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/User.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,11 +51,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="PHP File" />
         <option value="package.json" />
         <option value="JavaScript File" />
-        <option value="TypeScript File" />
         <option value="Vue Composition API Component" />
+        <option value="PHP File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -529,7 +522,11 @@
       <workItem from="1772107517529" duration="332000" />
       <workItem from="1772107861908" duration="8332000" />
       <workItem from="1772116544709" duration="6865000" />
-      <workItem from="1772124419316" duration="4941000" />
+      <workItem from="1772124419316" duration="5013000" />
+      <workItem from="1772186041284" duration="5369000" />
+      <workItem from="1772197688187" duration="3000" />
+      <workItem from="1772204844774" duration="1880000" />
+      <workItem from="1772434878623" duration="8329000" />
     </task>
     <servers />
   </component>

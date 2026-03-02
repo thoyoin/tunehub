@@ -11,9 +11,9 @@ class UpdateStatus
 {
     public function handle(Request $request, Release $release): void
     {
-//        $request->validate([
-//            'status' => 'required|in:pending, approved, rejected, published',
-//        ]);
+        $request->validate([
+            'status' => 'required|in:pending,approved,rejected,published',
+        ]);
 
         $status = $request->input('status');
 

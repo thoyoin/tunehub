@@ -21,17 +21,24 @@ class SearchService
         }
 
         return $response = [
-            'releases' => Release::where('status', 'published')
-                ->where('title', 'LIKE', "%{$query}%")
-                ->orwhere('artist', 'LIKE', "%{$query}%")
+            'releases' => Release::where(function ($q) use ($query) {
+                $q->where('title', 'LIKE', "%{$query}%")
+                    ->orWhere('artist', 'LIKE', "%{$query}%");
+            })
+                ->where('status', 'published')
                 ->limit(10)
                 ->get(),
             'playlists' => Playlist::where('title', 'LIKE', "%{$query}%")
                 ->with('user')
                 ->limit(10)
                 ->get(),
-            'tracks' => Track::where('title', 'LIKE', "%{$query}%")
-                ->orwhere('artist', 'LIKE', "%{$query}%")
+            'tracks' => Track::where(function ($q) use ($query) {
+                $q->where('title', 'LIKE', "%{$query}%")
+                    ->orWhere('artist', 'LIKE', "%{$query}%");
+            })
+                ->whereHas('release', function ($q) {
+                    $q->where('status', 'published');
+                })
                 ->limit(10)
                 ->get(),
         ];

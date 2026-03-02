@@ -9,6 +9,8 @@ export const useModerationStore = defineStore("moderation", () => {
     const isLoading = ref<boolean>(false);
     const viewRelease = ref<Release | null>(null)
     const selectedView = ref<string>('pending')
+    const pendingReleasesNumber = ref<number | null>(null)
+    const releasesNumber = ref<number | null>(null)
 
     const fetchByStatus = async (status: string = 'pending', page = 1) => {
         try {
@@ -21,6 +23,13 @@ export const useModerationStore = defineStore("moderation", () => {
             )
 
             releases.value = response.data
+
+            if (status === 'pending') {
+                pendingReleasesNumber.value = response.data.data.length
+            } else {
+                releasesNumber.value = response.data.data.length
+            }
+
         } catch (e) {
             console.error(e)
         } finally {
@@ -54,6 +63,6 @@ export const useModerationStore = defineStore("moderation", () => {
 
     return {
         releases, isLoading, setViewRelease, viewRelease, selectView,
-        selectedView, fetchByStatus, updateReleaseStatus
+        selectedView, fetchByStatus, updateReleaseStatus, pendingReleasesNumber, releasesNumber
     }
 })

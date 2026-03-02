@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import api from '@/lib/api'
-import type { User } from '../types/User.js'
+import type { User } from "@/types/User"
 
 export const useAuthStore = defineStore('auth', () => {
     const isReady = ref<boolean>(false);
@@ -15,8 +15,8 @@ export const useAuthStore = defineStore('auth', () => {
             const { data } = await api.get<User>('/api/user');
 
             user.value = data.user;
-        } catch (error) {
-            if (error.response?.status === 401) {
+        } catch (e) {
+            if (e.response?.status === 401) {
                 user.value = null
                 return
             }

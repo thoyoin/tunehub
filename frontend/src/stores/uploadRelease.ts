@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref} from 'vue';
-import api from "@/lib/api.ts";
-import { useAuthStore } from "@/stores/auth.ts";
+import api from "@/lib/api.js";
+import { useAuthStore } from "@/stores/auth.js";
 import { useToast } from "vue-toastification";
-import { useArtistStore } from "@/stores/artistStudio.ts";
+import { useArtistStore } from "@/stores/artistStudio.js";
 
 export const useUploadReleaseStore = defineStore('uploadRelease', () => {
     const auth = useAuthStore();
@@ -12,13 +12,15 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
 
     const editor = ref<boolean>(false)
     const isCoverUploaded = ref<boolean>(false)
-    const coverPreview = ref<File | null>(null)
-    const uploadedTracks = ref<File[]>([])
+    const coverPreview = ref<string | null>(null)
+    const uploadedTracks = ref<
+        { originalIndex: number; file: File; title: string }[]
+    >([])
     const releaseType = ref<string | null>(null)
     const cover_url = ref<File | null>(null)
     const releaseTitle = ref<string | null>(null)
     const release_date = ref<string | null>(null)
-    const artist = ref<string>(auth.user.username)
+    const artist = ref<string | undefined>(auth.user?.username)
     const processing = ref<boolean>(false)
 
     function $reset(): void {
@@ -30,20 +32,27 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
         cover_url.value = null
         releaseTitle.value = null
         release_date.value = null
-        artist.value = auth.user.username
+        artist.value = auth.user?.username
         processing.value = false
     }
 
-    const onFilesUploaded = (e: Element): void => {
+    const onFilesUploaded = (e: Event): void => {
         editor.value = true
 
-        const selectedFiles = Array.from(e.target.files)
+        const input = e.target as HTMLInputElement
+        if (!input.files) return
+
+        uploadedTracks.value = []
+
+        const selectedFiles = Array.from(input.files)
 
         uploadedTracks.value = selectedFiles.map((file: File, index: number) => ({
             originalIndex: index,
             file: file,
             title: file.name
         }));
+
+        console.log(uploadedTracks.value.length)
     }
 
     const handleReleaseUpload = async (): Promise<void> => {
@@ -70,7 +79,7 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
             await artistStore.fetchReleases()
             await artistStore.fetchTracks()
 
-            toast.success('release upload successfully!')
+            toast.success('Release uploaded successfully!')
         } catch (e) {
             console.error(e)
 

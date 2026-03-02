@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_picture')->default('http://localhost:9000/tunehub/defaults/profile_cover.png');
-            $table->string('role');
             $table->timestamps();
             $table->rememberToken();
         });

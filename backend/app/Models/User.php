@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,7 +29,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_picture',
-        'role'
+        'role_id'
     ];
 
     /**
@@ -89,9 +90,10 @@ class User extends Authenticatable
         return $this->hasMany(LibraryItem::class);
     }
 
-    public function roles(): belongsToMany
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
+            ->withPivot(['started_at', 'ends_at'])
             ->withTimestamps();
     }
 }

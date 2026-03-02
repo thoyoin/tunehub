@@ -45,7 +45,7 @@ const router = createRouter({
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 
-              if (auth.user?.role !== '2' || auth.user?.role !== '2') next('/');
+              if (auth.user?.roles[0]?.slug !== 'premium') next('/');
               else next();
           }
       },
@@ -56,7 +56,7 @@ const router = createRouter({
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 
-              if (auth.user?.role !== '3') next('/');
+              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
               else next();
           }
       },
@@ -67,7 +67,7 @@ const router = createRouter({
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 
-              if (auth.user?.role !== '3') next('/');
+              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
               else next();
           }
       },
@@ -78,7 +78,7 @@ const router = createRouter({
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 
-              if (auth.user?.role !== '3') next('/');
+              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
               else next();
           }
       }

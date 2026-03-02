@@ -9,7 +9,7 @@ class TrackPolicy
 {
     public function before(User $user)
     {
-        if ($user->role === '3') {
+        if ($user->roles->contains('slug', 'admin')) {
             return true;
         }
     }
@@ -35,7 +35,7 @@ class TrackPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === '2';
+        return $user->roles->contains('slug', 'premium');
     }
 
     /**

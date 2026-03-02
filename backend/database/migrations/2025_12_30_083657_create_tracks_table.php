@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('release_id');
             $table->foreign('release_id')
                 ->references('id')
-                ->on('moderation')
+                ->on('releases')
                 ->onDelete('cascade');
             $table->string('title');
             $table->string('artist');

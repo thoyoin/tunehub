@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Auth\GetAuthUser;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -21,10 +21,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function get(): JsonResponse
+    public function get(GetAuthUser $getAuthUser): JsonResponse
     {
         return response()->json([
-            'user' => Auth::user(),
+            'user' => $getAuthUser->handle(),
         ]);
     }
 }

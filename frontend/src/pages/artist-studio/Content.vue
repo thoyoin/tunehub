@@ -326,7 +326,7 @@ const handleReleasePublication = async (id) => {
                                                 </span>
                                             </td>
                                             <td class="fw-lighter">
-                                                <span style="opacity: 60%; font-size: 15px">
+                                                <span style="font-size: 15px">
                                                     {{ release.status }}
                                                 </span>
                                             </td>

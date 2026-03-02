@@ -2,10 +2,12 @@
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useLibraryStore } from '@/stores/library.ts'
+import { useToast } from "vue-toastification";
 
 const router = useRouter()
 const auth = useAuthStore()
 const libraryStore = useLibraryStore()
+const toast = useToast()
 
 const logout = async () => {
     try {

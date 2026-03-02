@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useModerationStore } from "@/stores/AdminPanel/moderation";
 import { useToast } from "vue-toastification";
+import { useAudioPlayer } from "@/composables/useAudioPlayer";
 
 const moderationStore = useModerationStore();
+const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 const toast = useToast();
 
 const handleReleaseStatusUpdate = async (status: string) => {
@@ -69,7 +71,14 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                     <span class="badge text-bg-light opacity-75 me-2">
                                         {{ moderationStore.viewRelease?.release_type }}
                                     </span>
-                                    <span class="badge text-bg-warning opacity-75">
+                                    <span
+                                        class="badge opacity-75"
+                                        :class="{
+                                            'text-bg-warning': moderationStore.viewRelease?.status === 'pending',
+                                            'text-bg-success': moderationStore.viewRelease?.status === 'published',
+                                            'text-bg-danger': moderationStore.viewRelease?.status === 'rejected',
+                                        }"
+                                    >
                                         {{ moderationStore.viewRelease?.status }}
                                     </span>
                                 </div>
@@ -108,19 +117,65 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                 </div>
                             </div>
                         </div>
+                        <div class="d-flex flex-column pt-2 w-100 gap-3">
+                            <template v-for="track in moderationStore.viewRelease?.tracks">
+                                <div
+                                    class="d-flex cursor-pointer track-row w-100 rounded-4 p-2 position-relative"
+                                >
+                                    <template v-if="currentTrack?.id !== track.id || !isPlaying">
+                                        <span
+                                            style="padding: 0 0 0 7px;"
+                                            class="fw-lighter opacity-50 position-number"
+                                            v-text="track.position"
+                                        ></span>
+                                    </template>
+                                    <button
+                                        style="top: 2px; left: 5px"
+                                        type="button"
+                                        class="btn z-3 btn-play-table position-absolute"
+                                        @click="toggleTrack(
+                                            track,
+                                            moderationStore.viewRelease?.tracks,
+                                            moderationStore.viewRelease
+                                        )"
+                                    >
+                                        <template v-if="currentTrack?.id !== track.id">
+                                            <img src="@/assets/svg/play.svg" alt="play" />
+                                        </template>
+                                        <template v-if="currentTrack?.id === track.id && !isPlaying">
+                                            <img src="@/assets/svg/play.svg" alt="play" />
+                                        </template>
+                                        <template v-if="currentTrack?.id === track.id && isPlaying">
+                                            <img src="@/assets/svg/pause.svg" alt="pause" />
+                                        </template>
+                                    </button>
+                                    <div
+                                        style="padding: 17px 0 0 7px"
+                                        class="playing-wave "
+                                        v-if="currentTrack?.id === track.id && isPlaying"
+                                    >
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <span style="margin-left: 20px">{{ track.title }}</span>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
                 <div class="footer">
                     <button
                         class="btn btn-reject w-25"
-                        :disabled="moderationStore.isLoading"
+                        :disabled="moderationStore.isLoading || moderationStore.viewRelease?.status === 'rejected'"
                         @click="handleReleaseStatusUpdate('rejected')"
                     >
                         Reject
                     </button>
                     <button
                         class="btn btn-primary w-25"
-                        :disabled="moderationStore.isLoading"
+                        :disabled="moderationStore.isLoading || moderationStore.viewRelease?.status === 'published'"
                         @click="handleReleaseStatusUpdate('approved')"
                     >
                         Approve
@@ -166,6 +221,47 @@ const handleReleaseStatusUpdate = async (status: string) => {
     &:active {
         background-color: #c11c4c !important;
         border-color: #c11c4c !important;
+    }
+}
+.playing-wave {
+    display: flex;
+    align-items: flex-end;
+    height: 12px;
+    gap: 2px;
+}
+
+.playing-wave span {
+    width: 2px;
+    height: 4px;
+    background: #ff2667;
+    animation: wave 1s infinite ease-in-out;
+}
+
+.playing-wave span:nth-child(2) {
+    animation-delay: 0.2s !important;
+}
+
+.playing-wave span:nth-child(3) {
+    animation-delay: 0.5s !important;
+}
+
+.playing-wave span:nth-child(4) {
+    animation-delay: 0.7s !important;
+}
+
+.playing-wave span:nth-child(5) {
+    animation-delay: 0.1s !important;
+}
+
+@keyframes wave {
+    0% {
+        height: 4px;
+    }
+    50% {
+        height: 12px;
+    }
+    100% {
+        height: 4px;
     }
 }
 </style>

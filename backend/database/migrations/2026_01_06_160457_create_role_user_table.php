@@ -21,8 +21,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->timestamps();
+            $table->timestamp('started_at');
+            $table->timestamp('ends_at');
 
+            $table->timestamps();
             $table->unique(['role_id', 'user_id']);
         });
     }

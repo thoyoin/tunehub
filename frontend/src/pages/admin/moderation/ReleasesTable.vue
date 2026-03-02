@@ -104,7 +104,7 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                             <ul class="dropdown-menu">
                                 <li
                                     style="border-bottom: 1px solid rgba(228, 228, 228, 0.2)"
-                                    class="dropdown-item d-flex align-items-center"
+                                    class="dropdown-item d-flex align-items-center mb-1"
                                     data-bs-toggle="modal"
                                     data-bs-target="#releaseViewModal"
                                     @click="moderationStore.setViewRelease(release)"
@@ -112,20 +112,24 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                                     <img class="me-2" src="@/assets/svg/view.svg" alt="view" />
                                     View Details
                                 </li>
-                                <li
-                                    class="dropdown-item d-flex align-items-center"
-                                    @click="handleReleaseStatusUpdate('approved', release.id)"
-                                >
-                                    <img class="me-2" src="@/assets/svg/approve.svg" alt="delete" />
-                                    Approve
-                                </li>
-                                <li
-                                    class="dropdown-item d-flex align-items-center"
-                                    @click="handleReleaseStatusUpdate('rejected', release.id)"
-                                >
-                                    <img class="me-2" src="@/assets/svg/reject.svg" alt="delete" />
-                                    Reject
-                                </li>
+                                <template v-if="moderationStore.selectedView !== 'published'">
+                                    <li
+                                        class="dropdown-item d-flex align-items-center  mb-1"
+                                        @click="handleReleaseStatusUpdate('approved', release.id)"
+                                    >
+                                        <img class="me-2" src="@/assets/svg/approve.svg" alt="delete" />
+                                        Approve
+                                    </li>
+                                </template>
+                                <template v-if="moderationStore.selectedView !== 'rejected'">
+                                    <li
+                                        class="dropdown-item d-flex align-items-center mb-1"
+                                        @click="handleReleaseStatusUpdate('rejected', release.id)"
+                                    >
+                                        <img class="me-2" src="@/assets/svg/reject.svg" alt="delete" />
+                                        Reject
+                                    </li>
+                                </template>
                             </ul>
                         </td>
                     </tr>

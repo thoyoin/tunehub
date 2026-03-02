@@ -1,5 +1,6 @@
 import type { Playlist } from './Playlist.js'
 import type { Track } from './Track.js'
+import type { Role } from './Role.js'
 
 export interface User {
     id: number
@@ -13,4 +14,5 @@ export interface User {
     created_at: string
     playlists: Playlist[]
     tracks: Track[]
+    roles: Role[]
 }

@@ -1,7 +1,7 @@
 import { computed, ref, watch } from 'vue';
 import api from '@/lib/api.ts'
-import type { Track } from '../types/Track.js'
-import type { Item } from '../types/Item.js'
+import type { Track } from "@/types/Track"
+import type { Item } from "@/types/Item"
 
 let singleton = null;
 

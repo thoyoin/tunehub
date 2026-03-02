@@ -110,7 +110,7 @@ const {prev, hasTrack, volume, next, toggle,
                         step="0.01"
                         :style="`--volume-percent: ${volume * 100}%`"
                         :value="volume"
-                        @input="setVolume($event.target.value)"
+                        @input="setVolume($event.target?.value)"
                     >
                 </div>
             </div>
@@ -170,6 +170,7 @@ const {prev, hasTrack, volume, next, toggle,
 
 .volume::-webkit-slider-thumb {
     -webkit-appearance: none;
+    transition: .3s !important;
     width: 0;
     height: 0;
     cursor: pointer;
@@ -178,6 +179,7 @@ const {prev, hasTrack, volume, next, toggle,
 .volume::-moz-range-thumb {
     width: 12px;
     height: 12px;
+    transition: .3s !important;
     background: rgb(228,228,228);
     border-radius: 50%;
     border: none;
@@ -185,6 +187,7 @@ const {prev, hasTrack, volume, next, toggle,
 }
 
 .volume::-moz-range-track {
+    transition: .3s !important;
     height: 5px;
     background-color: rgb(32,32,32);
     border-radius: 5px;
