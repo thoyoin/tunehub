@@ -95,13 +95,16 @@ onMounted(async () => {
                             <th scope="col" style="font-weight: lighter; opacity: 60%">User</th>
                             <th scope="col" style="font-weight: lighter; opacity: 60%">Email</th>
                             <th scope="col" style="font-weight: lighter; opacity: 60%">Joined</th>
-                            <th scope="col" style="font-weight: lighter; opacity: 60%">Actions</th>
+<!--                            <th scope="col" style="font-weight: lighter; opacity: 60%">Actions</th>-->
                         </tr>
                     </thead>
                     <tbody>
                             <template v-for="user in users" :key="user.id">
                                 <tr
-                                    class="track-row"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#userProfileModal"
+                                    @click="adminPanelStore.setViewUser(user)"
+                                    class="table-row"
                                     style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
                                 >
                                     <td style="font-size: 15px">
@@ -123,44 +126,44 @@ onMounted(async () => {
                                     <td style="font-size: 15px">
                                         {{ user.joined_at }}
                                     </td>
-                                    <td style="width: 100px; padding-left: 20px">
-                                        <img
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                            style="cursor: pointer"
-                                            src="@/assets/svg/horizontalSettingsWhite.svg"
-                                            alt="settings"
-                                            class="options"
-                                        />
-                                        <ul class="dropdown-menu">
-                                            <li
-                                                class="dropdown-item d-flex align-items-center"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#userProfileModal"
-                                                @click="adminPanelStore.setViewUser(user)"
-                                            >
-                                                <img
-                                                    class="me-2"
-                                                    src="@/assets/svg/view.svg"
-                                                    alt="view"
-                                                />
-                                                View Profile
-                                            </li>
-                                            <li
-                                                class="dropdown-item d-flex align-items-center"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#userDeletionModal"
-                                                @click="adminPanelStore.setViewUser(user)"
-                                            >
-                                                <img
-                                                    class="me-2"
-                                                    src="@/assets/svg/delete.svg"
-                                                    alt="delete"
-                                                />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </td>
+<!--                                    <td style="width: 100px; padding-left: 20px">-->
+<!--                                        <img-->
+<!--                                            data-bs-toggle="dropdown"-->
+<!--                                            aria-expanded="false"-->
+<!--                                            style="cursor: pointer"-->
+<!--                                            src="@/assets/svg/horizontalSettingsWhite.svg"-->
+<!--                                            alt="settings"-->
+<!--                                            class="options"-->
+<!--                                        />-->
+<!--                                        <ul class="dropdown-menu">-->
+<!--                                            <li-->
+<!--                                                class="dropdown-item d-flex align-items-center"-->
+<!--                                                data-bs-toggle="modal"-->
+<!--                                                data-bs-target="#userProfileModal"-->
+<!--                                                @click="adminPanelStore.setViewUser(user)"-->
+<!--                                            >-->
+<!--                                                <img-->
+<!--                                                    class="me-2"-->
+<!--                                                    src="@/assets/svg/view.svg"-->
+<!--                                                    alt="view"-->
+<!--                                                />-->
+<!--                                                View Profile-->
+<!--                                            </li>-->
+<!--                                            <li-->
+<!--                                                class="dropdown-item d-flex align-items-center"-->
+<!--                                                data-bs-toggle="modal"-->
+<!--                                                data-bs-target="#userDeletionModal"-->
+<!--                                                @click="adminPanelStore.setViewUser(user)"-->
+<!--                                            >-->
+<!--                                                <img-->
+<!--                                                    class="me-2"-->
+<!--                                                    src="@/assets/svg/delete.svg"-->
+<!--                                                    alt="delete"-->
+<!--                                                />-->
+<!--                                                Delete-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </td>-->
                                 </tr>
                             </template>
                     </tbody>
@@ -264,6 +267,32 @@ onMounted(async () => {
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+.table-row {
+    &:hover td {
+        background-color: rgba(50,50,51, 50%) !important;
+        cursor: pointer;
+        transition: background-color .2s ease, box-shadow .15s ease !important;
+    }
+
+    &:hover {
+        box-shadow: inset 0 0 0 1px rgb(60,60,61) !important;
+
+        .add-like {
+            opacity: .7 !important;
+        }
+        .btn-play-table {
+            opacity: 1 !important;
+            z-index: 1 !important;
+        }
+        .position-number {
+            opacity: 0 !important;
+        }
+        .playing-wave {
+            opacity: 0 !important;
+        }
     }
 }
 </style>

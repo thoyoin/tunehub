@@ -6,23 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AudioPlayer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Admin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Admin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/ReleaseViewModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/ReleaseViewModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Users.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Users.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/Track.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Track.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -513,7 +499,7 @@
       <workItem from="1772186041284" duration="5369000" />
       <workItem from="1772197688187" duration="3000" />
       <workItem from="1772204844774" duration="1880000" />
-      <workItem from="1772434878623" duration="12499000" />
+      <workItem from="1772434878623" duration="13692000" />
     </task>
     <servers />
   </component>

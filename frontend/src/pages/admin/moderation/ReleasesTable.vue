@@ -51,13 +51,16 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Artist</th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Type</th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Actions</th>
+<!--                    <th scope="col" style="font-weight: lighter; opacity: 60%">Actions</th>-->
                 </tr>
             </thead>
             <tbody>
                 <template v-for="release in moderationStore.releases?.data" :key="release.id">
                     <tr
-                        class="track-row"
+                        data-bs-toggle="modal"
+                        data-bs-target="#releaseViewModal"
+                        @click="moderationStore.setViewRelease(release)"
+                        class="table-row"
                         style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
                     >
                         <td style="font-size: 15px">
@@ -92,46 +95,46 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                         <td>
                             {{ release.tracks.length }}
                         </td>
-                        <td style="width: 100px; padding-left: 20px">
-                            <img
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                style="cursor: pointer"
-                                src="@/assets/svg/horizontalSettingsWhite.svg"
-                                alt="settings"
-                                class="options"
-                            />
-                            <ul class="dropdown-menu">
-                                <li
-                                    style="border-bottom: 1px solid rgba(228, 228, 228, 0.2)"
-                                    class="dropdown-item d-flex align-items-center mb-1"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#releaseViewModal"
-                                    @click="moderationStore.setViewRelease(release)"
-                                >
-                                    <img class="me-2" src="@/assets/svg/view.svg" alt="view" />
-                                    View Details
-                                </li>
-                                <template v-if="moderationStore.selectedView !== 'published'">
-                                    <li
-                                        class="dropdown-item d-flex align-items-center  mb-1"
-                                        @click="handleReleaseStatusUpdate('approved', release.id)"
-                                    >
-                                        <img class="me-2" src="@/assets/svg/approve.svg" alt="delete" />
-                                        Approve
-                                    </li>
-                                </template>
-                                <template v-if="moderationStore.selectedView !== 'rejected'">
-                                    <li
-                                        class="dropdown-item d-flex align-items-center mb-1"
-                                        @click="handleReleaseStatusUpdate('rejected', release.id)"
-                                    >
-                                        <img class="me-2" src="@/assets/svg/reject.svg" alt="delete" />
-                                        Reject
-                                    </li>
-                                </template>
-                            </ul>
-                        </td>
+<!--                        <td style="width: 100px; padding-left: 20px">-->
+<!--                            <img-->
+<!--                                data-bs-toggle="dropdown"-->
+<!--                                aria-expanded="false"-->
+<!--                                style="cursor: pointer"-->
+<!--                                src="@/assets/svg/horizontalSettingsWhite.svg"-->
+<!--                                alt="settings"-->
+<!--                                class="options"-->
+<!--                            />-->
+<!--                            <ul class="dropdown-menu">-->
+<!--                                <li-->
+<!--                                    style="border-bottom: 1px solid rgba(228, 228, 228, 0.2)"-->
+<!--                                    class="dropdown-item d-flex align-items-center mb-1"-->
+<!--                                    data-bs-toggle="modal"-->
+<!--                                    data-bs-target="#releaseViewModal"-->
+<!--                                    @click="moderationStore.setViewRelease(release)"-->
+<!--                                >-->
+<!--                                    <img class="me-2" src="@/assets/svg/view.svg" alt="view" />-->
+<!--                                    View Details-->
+<!--                                </li>-->
+<!--                                <template v-if="moderationStore.selectedView !== 'published'">-->
+<!--                                    <li-->
+<!--                                        class="dropdown-item d-flex align-items-center  mb-1"-->
+<!--                                        @click="handleReleaseStatusUpdate('approved', release.id)"-->
+<!--                                    >-->
+<!--                                        <img class="me-2" src="@/assets/svg/approve.svg" alt="delete" />-->
+<!--                                        Approve-->
+<!--                                    </li>-->
+<!--                                </template>-->
+<!--                                <template v-if="moderationStore.selectedView !== 'rejected'">-->
+<!--                                    <li-->
+<!--                                        class="dropdown-item d-flex align-items-center mb-1"-->
+<!--                                        @click="handleReleaseStatusUpdate('rejected', release.id)"-->
+<!--                                    >-->
+<!--                                        <img class="me-2" src="@/assets/svg/reject.svg" alt="delete" />-->
+<!--                                        Reject-->
+<!--                                    </li>-->
+<!--                                </template>-->
+<!--                            </ul>-->
+<!--                        </td>-->
                     </tr>
                 </template>
             </tbody>
@@ -204,6 +207,31 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
     &:active {
         background-color: #c11c4c !important;
         border-color: #c11c4c !important;
+    }
+}
+.table-row {
+    &:hover td {
+        background-color: rgba(50,50,51, 50%) !important;
+        cursor: pointer;
+        transition: background-color .2s ease, box-shadow .15s ease !important;
+    }
+
+    &:hover {
+        box-shadow: inset 0 0 0 1px rgb(60,60,61) !important;
+
+        .add-like {
+            opacity: .7 !important;
+        }
+        .btn-play-table {
+            opacity: 1 !important;
+            z-index: 1 !important;
+        }
+        .position-number {
+            opacity: 0 !important;
+        }
+        .playing-wave {
+            opacity: 0 !important;
+        }
     }
 }
 

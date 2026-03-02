@@ -120,7 +120,8 @@ const handleReleaseStatusUpdate = async (status: string) => {
                         <div class="d-flex flex-column pt-2 w-100 gap-1">
                             <template v-for="track in moderationStore.viewRelease?.tracks">
                                 <div
-                                    class="d-flex cursor-pointer track-row w-100 rounded-4 p-2 position-relative"
+                                    style="cursor: pointer !important;"
+                                    class="d-flex track-row w-100 rounded-4 p-2 position-relative"
                                 >
                                     <template v-if="currentTrack?.id !== track.id || !isPlaying">
                                         <span
@@ -163,7 +164,7 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                     </button>
                                     <div
                                         style="padding: 17px 0 0 7px"
-                                        class="playing-wave "
+                                        class="playing-wave"
                                         v-if="currentTrack?.id === track.id && isPlaying"
                                     >
                                         <span></span>
@@ -236,17 +237,17 @@ const handleReleaseStatusUpdate = async (status: string) => {
     }
 }
 .playing-wave {
-    display: flex;
-    align-items: flex-end;
-    height: 12px;
-    gap: 2px;
+    display: flex !important;
+    align-items: flex-end !important;
+    height: 12px !important;
+    gap: 2px !important;
 }
 
 .playing-wave span {
-    width: 2px;
-    height: 4px;
-    background: #ff2667;
-    animation: wave 1s infinite ease-in-out;
+    width: 2px !important;
+    height: 4px !important;
+    background: #ff2667 !important;
+    animation: wave 1s infinite ease-in-out !important;
 }
 
 .playing-wave span:nth-child(2) {
@@ -267,13 +268,13 @@ const handleReleaseStatusUpdate = async (status: string) => {
 
 @keyframes wave {
     0% {
-        height: 4px;
+        height: 4px !important;
     }
     50% {
-        height: 12px;
+        height: 12px !important;
     }
     100% {
-        height: 4px;
+        height: 4px !important;
     }
 }
 </style>
