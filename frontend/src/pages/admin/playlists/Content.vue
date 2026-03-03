@@ -7,10 +7,16 @@ const playlistsStore = usePlaylistsStore();
 
 const currentPage: number = 1;
 
-const playlists = ref<Playlist[] | null>(null)
+const playlists = ref<Playlist[][] | null>(null)
 
-watch(() => playlistsStore.selectedView, (view) => {
-    if (view === 'all') {
+watch(
+    () => [
+        playlistsStore.selectedView,
+        playlistsStore.playlists,
+        playlistsStore.hiddenPlaylists,
+    ],
+    () => {
+    if (playlistsStore.selectedView === 'all') {
         playlists.value = playlistsStore.playlists?.data ?? null;
     } else {
         playlists.value = playlistsStore.hiddenPlaylists?.data ?? null;
@@ -40,17 +46,29 @@ const fetchPage = async (page: number) => {
         class="w-100 home-content"
     >
         <div class="fs-3 fw-bold">Playlists</div>
-        <div class="mt-4" style="max-width: 250px">
+        <div class="mt-4 d-flex flex-row gap-3">
             <div class="stat-card bg-minor d-flex flex-column">
                 <div class="d-flex align-items-center">
                     <img class="me-2" src="@/assets/svg/playlistsMenu.svg" alt="playlists" />
-                    <span class="opacity-50">Total playlists</span>
+                    <span class="opacity-50">Total Playlists</span>
                 </div>
                 <template v-if="playlistsStore.isLoading">
                     <div class="search-spinner mt-2 ms-1"></div>
                 </template>
                 <template v-else>
                     <span class="fs-4 mt-2" v-text="playlistsStore.playlists?.total"></span>
+                </template>
+            </div>
+            <div class="stat-card bg-minor d-flex flex-column">
+                <div class="d-flex align-items-center">
+                    <img class="me-2" src="@/assets/svg/hiddenMenu.svg" alt="playlists" />
+                    <span class="opacity-50">Hidden Playlists</span>
+                </div>
+                <template v-if="playlistsStore.isLoading">
+                    <div class="search-spinner mt-2 ms-1"></div>
+                </template>
+                <template v-else>
+                    <span class="fs-4 mt-2" v-text="playlistsStore.hiddenPlaylists?.total"></span>
                 </template>
             </div>
         </div>
@@ -83,7 +101,7 @@ const fetchPage = async (page: number) => {
                     <div class="search-spinner mb-2"></div>
                 </div>
             </transition>
-            <table class="table table-borderless align-middle" style="padding: 25px 0 0 295px">
+            <table class="table align-middle" style="padding: 25px 0 0 295px">
                 <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                     <tr>
                         <th scope="col" style="font-weight: lighter; opacity: 60%">Playlist</th>
@@ -182,6 +200,7 @@ const fetchPage = async (page: number) => {
     padding: 15px;
     border: 1px solid rgba(228, 228, 228, 0.15) !important;
     border-radius: 15px;
+    min-width: 200px;
 }
 .loading-overlay {
     position: absolute;
