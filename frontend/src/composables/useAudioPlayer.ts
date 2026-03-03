@@ -78,7 +78,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
         }
     }, { immediate: true })
 
-    function playTrack(track: Track, newQueue: Track[], item: Item) {
+    function playTrack(track: Track, newQueue: Track[], item: Item | null) {
         if (!audioRef.value) return
 
         if (newQueue.length) queue.value = newQueue
@@ -114,7 +114,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
         audioRef.value.volume = isMuted.value ? 0 : volume.value
     }
 
-    function toggleTrack(track: Track, newQueue: Track[], item: Item) {
+    function toggleTrack(track: Track, newQueue: Track[], item: Item | null) {
         if (currentTrack.value?.id === track.id) {
             toggle()
         } else {

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { PaginatedResponse } from "@/types/PaginatedResponse";
 import type { Playlist } from "@/types/Playlist";
 import api from "@/lib/api";
@@ -33,6 +33,26 @@ export const usePlaylistsStore = defineStore('playlists', () => {
         }
     }
 
+    const updateVisibility = async (visibility: string) => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.patch<{ message: string; visibility: string}>(
+                `/api/playlist/${viewingPlaylist.value?.id}`, {
+                    visibility: visibility,
+                }
+            )
+
+            await fetchPlaylists()
+
+            viewingPlaylist.value.visibility = response.data.visibility;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
     const selectView = (view: string) => {
         selectedView.value = view
     }
@@ -43,6 +63,6 @@ export const usePlaylistsStore = defineStore('playlists', () => {
 
     return {
         playlists, fetchPlaylists, selectedView, selectView, viewingPlaylist, setViewingPlaylist,
-        isLoading, hiddenPlaylists
+        isLoading, hiddenPlaylists, updateVisibility,
     }
 })

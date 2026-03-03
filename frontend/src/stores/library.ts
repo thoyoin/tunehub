@@ -88,8 +88,6 @@ export const useLibraryStore = defineStore('library',() => {
                 }
             )
 
-            console.log(response.data.visibility)
-
             libraryItem.value.visibility = response.data.visibility;
         } catch (e) {
             console.error(e);
