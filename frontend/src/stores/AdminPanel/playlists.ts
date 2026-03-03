@@ -6,6 +6,7 @@ import api from "@/lib/api";
 
 export const usePlaylistsStore = defineStore('playlists', () => {
     const playlists = ref<PaginatedResponse<Playlist[]> | null>(null)
+    const hiddenPlaylists = ref<PaginatedResponse<Playlist[]> | null>(null)
     const isLoading = ref<boolean>(false)
     const selectedView = ref<string>('all')
     const viewingPlaylist = ref<Playlist | null>(null)
@@ -14,13 +15,17 @@ export const usePlaylistsStore = defineStore('playlists', () => {
         try {
             isLoading.value = true
 
-            const response = await api.get<PaginatedResponse<Playlist[]>>(
+            const response = await api.get<{
+                allPlaylists: PaginatedResponse<Playlist[]>;
+                hiddenPlaylists: PaginatedResponse<Playlist[]>;
+            }>(
                 '/api/admin/playlists', {
                     params: { page: page }
                 },
             );
 
-            playlists.value = response.data
+            playlists.value = response.data.allPlaylists
+            hiddenPlaylists.value = response.data.hiddenPlaylists
         } catch (e) {
             console.error(e)
         } finally {
@@ -38,6 +43,6 @@ export const usePlaylistsStore = defineStore('playlists', () => {
 
     return {
         playlists, fetchPlaylists, selectedView, selectView, viewingPlaylist, setViewingPlaylist,
-        isLoading,
+        isLoading, hiddenPlaylists
     }
 })

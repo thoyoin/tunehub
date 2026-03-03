@@ -11,8 +11,11 @@ class PlaylistController
 {
     public function getAll(GetAllPlaylists $getAllPlaylists): JsonResponse
     {
-        $playlists = $getAllPlaylists->handle();
+        [$allPlaylists, $hiddenPlaylists] = $getAllPlaylists->handle();
 
-        return response()->json($playlists);
+        return response()->json([
+            'allPlaylists' => $allPlaylists,
+            'hiddenPlaylists' => $hiddenPlaylists,
+        ]);
     }
 }

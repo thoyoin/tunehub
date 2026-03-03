@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace App\Actions\AdminPanel\playlist;
 
 use App\Models\Playlist;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetAllPlaylists
 {
-    public function handle(): LengthAwarePaginator
+    public function handle(): array
     {
-        return Playlist::query()
+        $allPlaylists = Playlist::query()
             ->with(['tracks', 'user'])
             ->whereNot('slug', 'liked-tracks')
             ->paginate(10);
+
+        $hiddenPlaylists = Playlist::query()
+            ->with(['tracks', 'user'])
+            ->where('visibility', 'private')
+            ->whereNot('slug', 'liked-tracks')
+            ->paginate(10);
+
+        return [$allPlaylists, $hiddenPlaylists];
     }
 }

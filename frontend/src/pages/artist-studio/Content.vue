@@ -265,15 +265,10 @@ const handleReleasePublication = async (id) => {
                             <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                                 <tr>
                                     <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
-                                        Releases
-                                    </th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
-                                        Release date
-                                    </th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
-                                        Status
-                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Releases</th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Release date</th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Status</th>
                                     <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
                                 </tr>
                             </thead>
@@ -323,6 +318,11 @@ const handleReleasePublication = async (id) => {
                                             <td class="fw-lighter">
                                                 <span style="opacity: 60%; font-size: 15px">
                                                     {{ release.released_in }}
+                                                </span>
+                                            </td>
+                                            <td class="fw-lighter">
+                                                <span style="opacity: 60%; font-size: 15px">
+                                                    {{ release.tracks.length }}
                                                 </span>
                                             </td>
                                             <td class="fw-lighter">

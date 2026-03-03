@@ -1,21 +1,31 @@
 <script setup lang="ts">
 import { usePlaylistsStore } from "@/stores/AdminPanel/playlists";
-import { onMounted } from "vue";
+import { onMounted, ref, watch } from "vue";
+import type { Playlist } from "@/types/Playlist";
 
 const playlistsStore = usePlaylistsStore();
 
 const currentPage: number = 1;
 
-onMounted( async () => {
+const playlists = ref<Playlist[] | null>(null)
+
+watch(() => playlistsStore.selectedView, (view) => {
+    if (view === 'all') {
+        playlists.value = playlistsStore.playlists?.data ?? null;
+    } else {
+        playlists.value = playlistsStore.hiddenPlaylists?.data ?? null;
+    }
+}, { immediate: true });
+
+onMounted(async () => {
     await playlistsStore.fetchPlaylists();
-})
+});
 
 const fetchPage = async (page: number) => {
     currentPage.value = page;
 
     await playlistsStore.fetchPlaylists(page);
 };
-
 </script>
 
 <template>
@@ -29,13 +39,11 @@ const fetchPage = async (page: number) => {
         "
         class="w-100 home-content"
     >
-        <div class="fs-3 fw-bold">
-            Playlists
-        </div>
+        <div class="fs-3 fw-bold">Playlists</div>
         <div class="mt-4" style="max-width: 250px">
             <div class="stat-card bg-minor d-flex flex-column">
                 <div class="d-flex align-items-center">
-                    <img class="me-2" src="@/assets/svg/playlistsMenu.svg" alt="playlists">
+                    <img class="me-2" src="@/assets/svg/playlistsMenu.svg" alt="playlists" />
                     <span class="opacity-50">Total playlists</span>
                 </div>
                 <template v-if="playlistsStore.isLoading">
@@ -46,26 +54,23 @@ const fetchPage = async (page: number) => {
                 </template>
             </div>
         </div>
-        <div
-            role="group"
-            class="btn-group d-flex flex-row mt-4 w-50"
-        >
+        <div role="group" class="btn-group d-flex flex-row mt-4 w-50">
             <button
                 @click="playlistsStore.selectView('all')"
-                style="border-bottom-left-radius: 15px;border-top-left-radius: 15px;"
+                style="border-bottom-left-radius: 15px; border-top-left-radius: 15px"
                 class="btn btn-view d-flex align-items-center"
-                :class="{ 'activeView': playlistsStore.selectedView === 'all' }"
+                :class="{ activeView: playlistsStore.selectedView === 'all' }"
             >
-                <img class="me-2" src="@/assets/svg/playlistsMenuWhite.svg" alt="clock">
+                <img class="me-2" src="@/assets/svg/playlistsMenuWhite.svg" alt="clock" />
                 <span>All</span>
             </button>
             <button
                 @click="playlistsStore.selectView('hidden')"
                 class="btn btn-view d-flex align-items-center"
-                style="border-bottom-right-radius: 15px;border-top-right-radius: 15px;"
-                :class="{ 'activeView': playlistsStore.selectedView === 'hidden' }"
+                style="border-bottom-right-radius: 15px; border-top-right-radius: 15px"
+                :class="{ activeView: playlistsStore.selectedView === 'hidden' }"
             >
-                <img class="me-2" src="@/assets/svg/hidden.svg" alt="clock">
+                <img class="me-2" src="@/assets/svg/hidden.svg" alt="clock" />
                 Hidden
             </button>
         </div>
@@ -80,68 +85,71 @@ const fetchPage = async (page: number) => {
             </transition>
             <table class="table table-borderless align-middle" style="padding: 25px 0 0 295px">
                 <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
-                <tr>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Playlist</th>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Author</th>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Visibility</th>
-                </tr>
+                    <tr>
+                        <th scope="col" style="font-weight: lighter; opacity: 60%">Playlist</th>
+                        <th scope="col" style="font-weight: lighter; opacity: 60%">Author</th>
+                        <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
+                        <th scope="col" style="font-weight: lighter; opacity: 60%">Visibility</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <template v-for="playlist in playlistsStore.playlists?.data" :key="playlist.id">
-                    <tr
-                        data-bs-toggle="modal"
-                        data-bs-target="#playlistViewModal"
-                        @click="playlistsStore.setViewingPlaylist(playlist)"
-                        class="table-row"
-                        style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
-                    >
-                        <td style="font-size: 15px">
-                            <div class="d-flex align-items-center">
-                                <img
-                                    class="rounded-1 me-2"
-                                    style="
-                                    width: 35px;
-                                    height: 35px;
-                                    border: 1px solid rgba(228, 228, 228, 0.1);
-                                "
-                                    :src="playlist.cover_url"
-                                    alt="cover"
-                                />
-                                <span>{{ playlist.title }}</span>
-                            </div>
-                        </td>
-                        <td style="font-size: 15px">
-                            <div class="d-flex flex-row align-items-center">
-                                <img
-                                    class="rounded-circle me-2"
-                                    style="
-                                    width: 35px;
-                                    height: 35px;
-                                    border: 1px solid rgba(228, 228, 228, 0.1);
-                                "
-                                    :src="playlist.user.profile_picture"
-                                    alt="artist"
-                                />
-                                <span class="opacity-50">{{ playlist.user.username }}</span>
-                            </div>
-                        </td>
-                        <td style="font-size: 15px">
-                            {{ playlist.tracks.length }}
-                        </td>
-                        <td>
-                            public
-                        </td>
-                    </tr>
-                </template>
+                    <template v-for="playlist in playlists" :key="playlist.id">
+                        <tr
+                            data-bs-toggle="modal"
+                            data-bs-target="#playlistViewModal"
+                            @click="playlistsStore.setViewingPlaylist(playlist)"
+                            class="table-row"
+                            style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
+                        >
+                            <td style="font-size: 15px">
+                                <div class="d-flex align-items-center">
+                                    <img
+                                        class="rounded-1 me-2"
+                                        style="
+                                            width: 35px;
+                                            height: 35px;
+                                            border: 1px solid rgba(228, 228, 228, 0.1);
+                                        "
+                                        :src="playlist.cover_url"
+                                        alt="cover"
+                                    />
+                                    <span>{{ playlist.title }}</span>
+                                </div>
+                            </td>
+                            <td style="font-size: 15px">
+                                <div class="d-flex flex-row align-items-center">
+                                    <img
+                                        class="rounded-circle me-2"
+                                        style="
+                                            width: 35px;
+                                            height: 35px;
+                                            border: 1px solid rgba(228, 228, 228, 0.1);
+                                        "
+                                        :src="playlist.user.profile_picture"
+                                        alt="artist"
+                                    />
+                                    <span class="opacity-50">{{ playlist.user.username }}</span>
+                                </div>
+                            </td>
+                            <td style="font-size: 15px">
+                                {{ playlist.tracks.length }}
+                            </td>
+                            <td>
+                                {{ playlist.visibility }}
+                            </td>
+                        </tr>
+                    </template>
                 </tbody>
             </table>
             <template v-if="playlistsStore.playlists?.data?.length !== 0">
                 <div class="opacity-50 w-100">
-            <span>
-                Showing {{ playlistsStore.playlists?.from }}-{{ playlistsStore.playlists?.to }} of
-                {{ playlistsStore.playlists?.total }}
-            </span>
+                    <span>
+                        Showing {{ playlistsStore.playlists?.from }}-{{
+                            playlistsStore.playlists?.to
+                        }}
+                        of
+                        {{ playlistsStore.playlists?.total }}
+                    </span>
                 </div>
             </template>
             <template v-else>
@@ -181,15 +189,15 @@ const fetchPage = async (page: number) => {
     right: 0;
     left: 0;
     bottom: 0;
-    transition: .4s;
+    transition: 0.4s;
     backdrop-filter: blur(1px);
     z-index: 1;
     pointer-events: none;
 }
 .btn-pagination {
-    border: 1px solid rgba(179, 27, 71,.5) !important;
+    border: 1px solid rgba(179, 27, 71, 0.5) !important;
     border-radius: 15px !important;
-    color: rgb(228,228,228) !important;
+    color: rgb(228, 228, 228) !important;
     height: 30px !important;
     display: flex !important;
     align-items: center !important;
@@ -225,16 +233,18 @@ const fetchPage = async (page: number) => {
 
 .table-row {
     &:hover td {
-        background-color: rgba(50,50,51, 50%) !important;
+        background-color: rgba(50, 50, 51, 50%) !important;
         cursor: pointer;
-        transition: background-color .2s ease, box-shadow .15s ease !important;
+        transition:
+            background-color 0.2s ease,
+            box-shadow 0.15s ease !important;
     }
 
     &:hover {
-        box-shadow: inset 0 0 0 1px rgb(60,60,61) !important;
+        box-shadow: inset 0 0 0 1px rgb(60, 60, 61) !important;
 
         .add-like {
-            opacity: .7 !important;
+            opacity: 0.7 !important;
         }
         .btn-play-table {
             opacity: 1 !important;
@@ -249,9 +259,9 @@ const fetchPage = async (page: number) => {
     }
 }
 .btn-view {
-    background-color: rgba(50,50,51, 15%) !important;
-    border: 1px solid rgba(50,50,51, 1) !important;
-    color: rgb(228,228,228) !important;
+    background-color: rgba(50, 50, 51, 15%) !important;
+    border: 1px solid rgba(50, 50, 51, 1) !important;
+    color: rgb(228, 228, 228) !important;
     height: 35px !important;
     max-width: 100px !important;
     display: flex !important;
@@ -259,12 +269,12 @@ const fetchPage = async (page: number) => {
     justify-content: center !important;
 
     &:hover {
-        background-color: rgba(189, 16, 69, .8) !important;
+        background-color: rgba(189, 16, 69, 0.8) !important;
     }
 
     &:active {
-        background-color: rgba(189, 16, 69, .8) !important;
-        border-color: rgba(189, 16, 69, .01) !important;
+        background-color: rgba(189, 16, 69, 0.8) !important;
+        border-color: rgba(189, 16, 69, 0.01) !important;
     }
 }
 .activeView {
@@ -274,7 +284,7 @@ const fetchPage = async (page: number) => {
     background-color: rgb(32, 32, 32) !important;
     border-radius: 10px !important;
     padding: 1px 8px !important;
-    transition: .2s !important;
+    transition: 0.2s !important;
     font-weight: bold !important;
 }
 </style>
