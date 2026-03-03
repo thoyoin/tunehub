@@ -64,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/playlists', 'getAll');
         Route::post('/playlist/{playlist}/track/{track}', 'addTrack');
         Route::post('/liked/track/{track}', 'addTrackToLikes');
+        Route::patch('/playlist/{playlist}', 'updateVisibility');
     });
 
     Route::controller(RecentlyPlayedController::class)->group(function () {

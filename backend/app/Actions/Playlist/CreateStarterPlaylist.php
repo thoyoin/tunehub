@@ -11,10 +11,11 @@ class CreateStarterPlaylist
     public function handle($user)
     {
          return Playlist::create([
-            'title' => 'Liked tracks',
-            'description' => null,
-            'user_id' => $user->id,
-            'cover_url' => 'http://localhost:9000/tunehub/defaults/likedtracks.png',
+             'title' => 'Liked tracks',
+             'description' => null,
+             'user_id' => $user->id,
+             'cover_url' => 'http://localhost:9000/tunehub/defaults/likedtracks.png',
+             'visibility' => 'private',
         ]);
     }
 }

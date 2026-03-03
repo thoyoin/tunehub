@@ -17,15 +17,20 @@ return new class extends Migration
             $table->id();
             $table->string('title')
                 ->default('playlist name');
-            $table->string('description')->nullable();
+            $table->string('description')
+                ->nullable();
             $table->string('slug');
             $table->unsignedBigInteger('user_id');
-            $table->string('item_type')->default('playlist');
+            $table->string('item_type')
+                ->default('playlist');
+            $table->enum('visibility', ['public', 'private'])
+                ->default('public');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->string('cover_url')->nullable();
+            $table->string('cover_url')
+                ->nullable();
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useLibraryStore } from '@/stores/library.ts'
 import { useImageUpload } from '@/composables/useImageUpload.ts'
 import { useToast } from 'vue-toastification'
@@ -23,6 +23,16 @@ watch(
     },
     { immediate: true },
 )
+
+const handleVisibilityUpdate = async (visibility: string) => {
+    try {
+        await libraryStore.setVisibility(visibility)
+
+        await libraryStore.updateVisibility()
+    } catch (error) {
+        toast.error('Something went wrong')
+    }
+}
 
 const handlePlaylistUpdate = async () => {
     const formData = new FormData()
@@ -104,6 +114,28 @@ const handlePlaylistUpdate = async () => {
                                     name="description"
                                     placeholder="Description"
                                 />
+                            </div>
+                            <div class="mt-3">
+                                <template v-if="libraryStore.playlistVisibility === 'public'">
+                                    <button
+                                        @click="handleVisibilityUpdate('private')"
+                                        type="button"
+                                        class="btn btn-cancel d-flex align-items-center"
+                                    >
+                                        <img class="me-2" src="@/assets/svg/hidden.svg" alt="hidden">
+                                        Make Private
+                                    </button>
+                                </template>
+                                <template v-else>
+                                    <button
+                                        @click="handleVisibilityUpdate('public')"
+                                        type="button"
+                                        class="btn btn-cancel d-flex align-items-center"
+                                    >
+                                        <img class="me-2" src="@/assets/svg/globe.svg" alt="globe">
+                                        Make Public
+                                    </button>
+                                </template>
                             </div>
                         </div>
                     </div>

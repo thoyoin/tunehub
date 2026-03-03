@@ -10,6 +10,7 @@ use App\Models\Track;
 use App\Services\PlaylistService;
 use App\Services\TrackService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class PlaylistController extends Controller
@@ -56,6 +57,19 @@ class PlaylistController extends Controller
         return response()->json([
             'message' => 'Successfully updated playlist.',
             'playlist' => $playlist,
+        ]);
+    }
+
+    public function updateVisibility(
+        Playlist $playlist,
+        Request $request,
+        PlaylistService $playlistService
+    ): JsonResponse {
+        $visibility = $playlistService->updateVisibility($playlist, $request);
+
+        return response()->json([
+            'message' => 'Successfully updated playlist.',
+            'visibility' => $visibility,
         ]);
     }
 

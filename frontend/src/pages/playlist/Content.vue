@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useLibraryStore } from '@/stores/library.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useReleaseStore } from '@/stores/release.ts'
@@ -101,6 +101,20 @@ watch(
                 />
             </div>
             <div style="max-width: 600px" class="d-flex flex-column w-100 justify-content-end">
+                <template v-if="libraryStore.libraryItem?.visibility === 'public'">
+                    <span
+                        class="ms-4 fw-normal opacity-50"
+                    >
+                        Public Playlist
+                    </span>
+                </template>
+                <template v-else>
+                    <span
+                        class="ms-4 fw-normal opacity-50"
+                    >
+                        Private Playlist
+                    </span>
+                </template>
                 <h1
                     style="font-size: 55px"
                     class="ms-4 fw-bold"

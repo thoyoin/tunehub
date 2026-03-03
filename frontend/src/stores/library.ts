@@ -2,10 +2,10 @@ import {defineStore} from "pinia";
 import { useAuthStore } from "@/stores/auth.ts";
 import {ref, watch} from "vue";
 import api from "@/lib/api.ts";
-import type { Item } from '../types/Item.js'
-import type { LibraryItem } from '../types/LibraryItem.js'
-import type { Playlist } from '../types/Playlist.js'
-import type { Track } from '../types/Track.js'
+import type { Item } from "@/types/Item"
+import type { LibraryItem } from "@/types/LibraryItem"
+import type { Playlist } from "@/types/Playlist"
+import type { Track } from "@/types/Track"
 
 export const useLibraryStore = defineStore('library',() => {
     const items = ref<Item[]>([]);
@@ -17,6 +17,10 @@ export const useLibraryStore = defineStore('library',() => {
     const isRelease = ref<boolean>(false);
     const isReady = ref<boolean>(false);
     const userPlaylists = ref<Playlist[]>([]);
+    const isLoading = ref<boolean>(false);
+    const playlistVisibility = ref<string>(
+        libraryItem.value?.visibility === 'public' ? 'public' : 'private'
+    );
 
     const auth = useAuthStore();
 
@@ -74,6 +78,30 @@ export const useLibraryStore = defineStore('library',() => {
         }
     }
 
+    async function updateVisibility(): Promise<void> {
+        try {
+            isLoading.value = true;
+
+            const response = await api.patch<{ message: string; visibility: string}>(
+                `/api/playlist/${libraryItem.value.id}`, {
+                    visibility: playlistVisibility.value,
+                }
+            )
+
+            console.log(response.data.visibility)
+
+            libraryItem.value.visibility = response.data.visibility;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    function setVisibility(visibility: string) {
+        playlistVisibility.value = visibility;
+    }
+
     function clearAllSelectedItems(): void {
         libraryItem.value = null;
         selectedLibraryItem.value = null;
@@ -119,6 +147,10 @@ export const useLibraryStore = defineStore('library',() => {
         isRelease,
         isReady,
         userPlaylists,
-        fetchUserPlaylists
+        fetchUserPlaylists,
+        isLoading,
+        updateVisibility,
+        playlistVisibility,
+        setVisibility
     };
 })

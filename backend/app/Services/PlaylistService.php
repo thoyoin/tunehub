@@ -14,6 +14,7 @@ use App\Actions\Track\IsTrackAdded;
 use App\Models\LibraryItem;
 use App\Models\Playlist;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PlaylistService
@@ -74,7 +75,7 @@ class PlaylistService
 
     public function update($request, $playlist): Playlist
     {
-        $data = $request->only(['title', 'description', 'cover_url']);
+        $data = $request->only(['title', 'description', 'cover_url', ]);
 
         if ($request->hasFile('cover_url')) {
             $url = $this->minioService->storeCover($request->file('cover_url'));
@@ -84,6 +85,19 @@ class PlaylistService
         $playlist->update($data);
 
         return $playlist;
+    }
+
+    public function updateVisibility(Playlist $playlist, Request $request)
+    {
+        $request->validate([
+            'visibility' => 'required|in:public,private',
+        ]);
+
+        $playlist->visibility = $request->visibility;
+
+        $playlist->save();
+
+        return $playlist->visibility;
     }
 
     public function addTrack($playlist, $track): JsonResponse

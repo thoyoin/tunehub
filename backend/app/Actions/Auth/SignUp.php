@@ -19,7 +19,7 @@ class SignUp
             'password' => Hash::make($request->get('password')),
         ]);
 
-        $user->roles()->attach(1, ['started_at' => now(), 'ends_at' => now()->addMonth()]);
+        $user->roles()->attach(1);
 
         Auth::login($user);
 

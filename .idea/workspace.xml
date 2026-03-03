@@ -6,16 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/User/GetAllUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/User/GetAllUsers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/Release.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Release.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/TrackService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/TrackService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Auth/SignUp.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Auth/SignUp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Playlist/CreateStarterPlaylist.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Playlist/CreateStarterPlaylist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_092431_create_playlists_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_092431_create_playlists_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2026_01_06_160457_create_role_user_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2026_01_06_160457_create_role_user_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/playlists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/playlists.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -506,7 +507,8 @@
       <workItem from="1772186041284" duration="5369000" />
       <workItem from="1772197688187" duration="3000" />
       <workItem from="1772204844774" duration="1880000" />
-      <workItem from="1772434878623" duration="21477000" />
+      <workItem from="1772434878623" duration="21545000" />
+      <workItem from="1772509204754" duration="3898000" />
     </task>
     <servers />
   </component>
