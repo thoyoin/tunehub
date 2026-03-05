@@ -1,10 +1,8 @@
 <script setup>
 import { useUsersStore } from '@/stores/AdminPanel/users.ts'
-import { useUserSearch } from '@/stores/userSearch.ts'
 import { onMounted, computed, ref, watch } from 'vue'
 
 const adminPanelStore = useUsersStore()
-const userSearchStore = useUserSearch()
 
 const currentPage = ref(1)
 
@@ -19,11 +17,11 @@ const fetchPage = async (page) => {
     await adminPanelStore.fetchUsers(page)
 }
 
-watch(() => userSearchStore.search, async () => {
+watch(() => adminPanelStore.search, async () => {
     currentPage.value = 1
 
     adminPanelStore.setLoading();
-    await adminPanelStore.fetchUsers(1, userSearchStore.search)
+    await adminPanelStore.fetchUsers(1, adminPanelStore.search)
 })
 
 onMounted(async () => {
@@ -76,7 +74,7 @@ onMounted(async () => {
                 "
                 class="w-100 form-control rounded-4 bg-minor"
                 type="text"
-                v-model="userSearchStore.search"
+                v-model="adminPanelStore.search"
                 placeholder="Search by username or email..."
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -178,12 +176,6 @@ onMounted(async () => {
     padding: 15px;
     border: 1px solid rgba(228, 228, 228, 0.15) !important;
     border-radius: 15px;
-}
-.form-control {
-    &:focus {
-        box-shadow: none;
-        border-color: rgb(158, 23, 63) !important;
-    }
 }
 .loading-overlay {
     position: absolute;

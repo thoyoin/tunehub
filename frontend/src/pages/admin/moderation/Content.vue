@@ -18,7 +18,7 @@ const moderationStore = useModerationStore();
         class="w-100 home-content"
     >
         <div class="fs-3 fw-bold">Release Moderation</div>
-        <div class="mt-4 d-flex flex-row gap-4">
+        <div class="mt-4 d-flex flex-row gap-3">
             <div class="stat-card bg-minor w-100 d-flex flex-column">
                 <span class="d-flex flex-row align-items-center">
                     <img class="me-2" src="@/assets/svg/clockYellow.svg" alt="clock" />
@@ -93,12 +93,6 @@ const moderationStore = useModerationStore();
 </template>
 
 <style scoped lang="scss">
-.stat-card {
-    padding: 15px;
-    border: 1px solid rgba(228, 228, 228, 0.15) !important;
-    border-radius: 15px;
-    max-width: 250px;
-}
 .loading-overlay {
     position: absolute;
     top: 0;

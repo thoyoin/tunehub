@@ -39,7 +39,7 @@ const handlePlaylistVisionUpdate = () => {
                             <img
                                 :src="playlistsStore.viewingPlaylist?.cover_url"
                                 style="width: 150px; height: 150px"
-                                class="rounded-1 me-3"
+                                class="rounded-3 me-3"
                                 alt="profile"
                             />
                             <div class="d-flex flex-column align-items-start">

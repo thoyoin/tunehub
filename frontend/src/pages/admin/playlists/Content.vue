@@ -5,7 +5,7 @@ import type { Playlist } from "@/types/Playlist";
 
 const playlistsStore = usePlaylistsStore();
 
-const currentPage: number = 1;
+const currentPage = ref<number>(1);
 
 const playlists = ref<Playlist[][] | null>(null)
 
@@ -25,14 +25,18 @@ watch(
     }
 }, { immediate: true });
 
+watch( () => playlistsStore.searchInput, (query) => {
+    fetchPage(1, query!);
+})
+
 onMounted(async () => {
     await playlistsStore.fetchPlaylists();
 });
 
-const fetchPage = async (page: number) => {
+const fetchPage = async (page: number, query?: string) => {
     currentPage.value = page;
 
-    await playlistsStore.fetchPlaylists(page);
+    await playlistsStore.fetchPlaylists(page, query);
 };
 </script>
 
@@ -113,6 +117,30 @@ const fetchPage = async (page: number) => {
                 <img class="me-2" src="@/assets/svg/hidden.svg" alt="clock" />
                 Hidden
             </button>
+        </div>
+        <div
+            class="d-flex flex-row mt-5 position-relative"
+            style="max-width: 300px; max-height: 46px"
+        >
+            <img
+                style="top: 12px; left: 15px"
+                class="position-absolute z-2"
+                src="@/assets/svg/search.svg"
+                alt="search"
+            />
+            <input
+                style="
+                    border: 1px solid rgba(228, 228, 228, 0.15);
+                    padding-left: 40px;
+                    color: rgb(228, 228, 228);
+                "
+                class="w-100 form-control rounded-4 bg-minor"
+                type="text"
+                v-model="playlistsStore.searchInput"
+                placeholder="Search by title or author..."
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            />
         </div>
         <div class="position-relative">
             <transition name="fade">
@@ -266,12 +294,6 @@ const fetchPage = async (page: number) => {
 </template>
 
 <style scoped lang="scss">
-.stat-card {
-    padding: 15px;
-    border: 1px solid rgba(228, 228, 228, 0.15) !important;
-    border-radius: 15px;
-    min-width: 200px;
-}
 .loading-overlay {
     position: absolute;
     top: 0;

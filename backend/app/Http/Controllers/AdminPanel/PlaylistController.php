@@ -8,12 +8,13 @@ use App\Actions\AdminPanel\playlist\GetAllPlaylists;
 use App\Actions\AdminPanel\playlist\UpdateIsHiddenStatus;
 use App\Models\Playlist;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PlaylistController
 {
-    public function getAll(GetAllPlaylists $getAllPlaylists): JsonResponse
+    public function getAll(GetAllPlaylists $getAllPlaylists, Request $request): JsonResponse
     {
-        [$allPlaylists, $privatePlaylists, $hiddenPlaylists] = $getAllPlaylists->handle();
+        [$allPlaylists, $privatePlaylists, $hiddenPlaylists] = $getAllPlaylists->handle($request);
 
         return response()->json([
             'allPlaylists' => $allPlaylists,

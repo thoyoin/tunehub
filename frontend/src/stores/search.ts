@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
-import api from '@/lib/api.ts'
+import api from '@/lib/api'
 import { useDebounceFn } from '@vueuse/core'
-import type { Release } from '../types/Release.js'
-import type { Playlist } from '../types/Playlist.js'
-import type { Track } from '../types/Track.js'
+import type { Release } from '@/types/Release'
+import type { Playlist } from '@/types/Playlist'
+import type { Track } from '@/types/Track'
 
 type SearchResult = {
     releases?: Release[],
@@ -14,7 +14,7 @@ type SearchResult = {
 
 export const useSearchStore = defineStore('searchStore', () => {
     const search = ref<string | null>(null)
-    const result = ref<SearchResult | null>([])
+    const result = ref<SearchResult | null>(null)
     const hasResult = ref<boolean>(true)
     const isLoading = ref<boolean>(false)
 
@@ -22,7 +22,7 @@ export const useSearchStore = defineStore('searchStore', () => {
         if (!search.value) {
             hasResult.value = true
             isLoading.value = false
-            return result.value = []
+            return result.value = null
         }
 
         try {
@@ -32,7 +32,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
             result.value = response.data
 
-            hasResult.value = result.value.releases?.length !== 0
+            hasResult.value = result.value?.releases?.length !== 0
                 || result.value.playlists?.length !== 0
                 || result.value.tracks?.length !== 0;
         } catch (e) {

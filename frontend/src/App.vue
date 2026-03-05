@@ -21,6 +21,12 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     .bg-major {
         background-color: rgb(32,32,32) !important;
     }
+    .form-control {
+        &:focus {
+            box-shadow: none !important;
+            border-color: rgb(158, 23, 63) !important;
+        }
+    }
     .btn-primary {
         background: #bd1045 !important;
         border: 1px solid rgba(4, 4, 214, 0) !important;

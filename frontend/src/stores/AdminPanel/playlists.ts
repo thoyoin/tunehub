@@ -3,6 +3,7 @@ import { ref } from "vue";
 import type { PaginatedResponse } from "@/types/PaginatedResponse";
 import type { Playlist } from "@/types/Playlist";
 import api from "@/lib/api";
+import { useDebounceFn } from "@vueuse/core";
 
 export const usePlaylistsStore = defineStore('playlists', () => {
     const playlists = ref<PaginatedResponse<Playlist[]> | null>(null)
@@ -11,8 +12,9 @@ export const usePlaylistsStore = defineStore('playlists', () => {
     const isLoading = ref<boolean>(false)
     const selectedView = ref<string>('all')
     const viewingPlaylist = ref<Playlist | null>(null)
+    const searchInput = ref<string | null>(null)
 
-    const fetchPlaylists = async (page: number = 1) => {
+    const fetchPlaylists = useDebounceFn(async (page: number = 1, query?: string) => {
         try {
             isLoading.value = true
 
@@ -22,7 +24,7 @@ export const usePlaylistsStore = defineStore('playlists', () => {
                 hiddenPlaylists: PaginatedResponse<Playlist[]>;
             }>(
                 '/api/admin/playlists', {
-                    params: { page: page }
+                    params: { page: page, query: query },
                 },
             );
 
@@ -34,7 +36,7 @@ export const usePlaylistsStore = defineStore('playlists', () => {
         } finally {
             isLoading.value = false
         }
-    }
+    }, 300)
 
     const updateVisibility = async () => {
         try {
@@ -66,6 +68,6 @@ export const usePlaylistsStore = defineStore('playlists', () => {
 
     return {
         playlists, fetchPlaylists, selectedView, selectView, viewingPlaylist, setViewingPlaylist,
-        isLoading, privatePlaylists, updateVisibility, hiddenPlaylists
+        isLoading, privatePlaylists, updateVisibility, hiddenPlaylists, searchInput,
     }
 })

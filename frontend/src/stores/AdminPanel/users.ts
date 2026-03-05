@@ -7,6 +7,7 @@ import type { User } from '@/types/User'
 
 export const useUsersStore = defineStore('users', () => {
     const users = ref<PaginatedResponse<User> | null>(null);
+    const search = ref<string | null>(null)
     const viewUser = ref<User | null>(null);
     const isLoading = ref<boolean>(false);
 
@@ -48,5 +49,5 @@ export const useUsersStore = defineStore('users', () => {
         }
     }
 
-    return { users, fetchUsers, setViewUser, viewUser, deleteUser, isLoading, setLoading };
+    return { users, fetchUsers, setViewUser, viewUser, deleteUser, isLoading, setLoading, search };
 });
