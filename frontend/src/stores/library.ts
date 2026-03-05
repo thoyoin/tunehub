@@ -47,7 +47,9 @@ export const useLibraryStore = defineStore('library',() => {
     async function fetchUserPlaylists(): Promise<void> {
         if (auth.user) {
             try {
-                const { data } = await api.get<{playlists: Playlist[]}>(`/api/playlists`)
+                const { data } = await api.get<{
+                    playlists: Playlist[]
+                }>(`/api/playlists`)
 
                 userPlaylists.value = data.playlists
             } catch (e) {
@@ -91,12 +93,12 @@ export const useLibraryStore = defineStore('library',() => {
             if (!libraryItem.value) return
 
             const response = await api.patch<{ message: string; visibility: string}>(
-                `/api/playlist/${libraryItem.value.id}`, {
+                `/api/playlist/${libraryItem.value.item.id}`, {
                     visibility: playlistVisibility.value,
                 }
             )
-            if (libraryItem.value.visibility) {
-                libraryItem.value.visibility = response.data.visibility;
+            if (libraryItem.value.item.visibility) {
+                libraryItem.value.item.visibility = response.data.visibility;
             }
         } catch (e) {
             console.error(e);

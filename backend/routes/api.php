@@ -31,6 +31,7 @@ Route::prefix('admin')
         });
         Route::controller(\App\Http\Controllers\AdminPanel\PlaylistController::class)->group(function () {
             Route::get('/playlists', 'getAll');
+            Route::patch('/playlists/{playlist}/status', 'updateStatus');
         });
     });
 

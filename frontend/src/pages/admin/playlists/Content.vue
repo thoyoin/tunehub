@@ -13,11 +13,13 @@ watch(
     () => [
         playlistsStore.selectedView,
         playlistsStore.playlists,
-        playlistsStore.hiddenPlaylists,
+        playlistsStore.privatePlaylists,
     ],
     () => {
     if (playlistsStore.selectedView === 'all') {
         playlists.value = playlistsStore.playlists?.data ?? null;
+    } else if (playlistsStore.selectedView === 'private') {
+        playlists.value = playlistsStore.privatePlaylists?.data ?? null;
     } else {
         playlists.value = playlistsStore.hiddenPlaylists?.data ?? null;
     }
@@ -62,6 +64,18 @@ const fetchPage = async (page: number) => {
             <div class="stat-card bg-minor d-flex flex-column">
                 <div class="d-flex align-items-center">
                     <img class="me-2" src="@/assets/svg/hiddenMenu.svg" alt="playlists" />
+                    <span class="opacity-50">Private Playlists</span>
+                </div>
+                <template v-if="playlistsStore.isLoading">
+                    <div class="search-spinner mt-2 ms-1"></div>
+                </template>
+                <template v-else>
+                    <span class="fs-4 mt-2" v-text="playlistsStore.privatePlaylists?.total"></span>
+                </template>
+            </div>
+            <div class="stat-card bg-minor d-flex flex-column">
+                <div class="d-flex align-items-center">
+                    <img class="me-2" src="@/assets/svg/hiddenMenu.svg" alt="playlists" />
                     <span class="opacity-50">Hidden Playlists</span>
                 </div>
                 <template v-if="playlistsStore.isLoading">
@@ -83,6 +97,14 @@ const fetchPage = async (page: number) => {
                 <span>All</span>
             </button>
             <button
+                @click="playlistsStore.selectView('private')"
+                class="btn btn-view d-flex align-items-center"
+                :class="{ activeView: playlistsStore.selectedView === 'private' }"
+            >
+                <img class="me-2" src="@/assets/svg/hidden.svg" alt="clock" />
+                Private
+            </button>
+            <button
                 @click="playlistsStore.selectView('hidden')"
                 class="btn btn-view d-flex align-items-center"
                 style="border-bottom-right-radius: 15px; border-top-right-radius: 15px"
@@ -101,13 +123,14 @@ const fetchPage = async (page: number) => {
                     <div class="search-spinner mb-2"></div>
                 </div>
             </transition>
-            <table class="table align-middle" style="padding: 25px 0 0 295px">
+            <table class="table align-middle mt-4">
                 <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                     <tr>
                         <th scope="col" style="font-weight: lighter; opacity: 60%">Playlist</th>
                         <th scope="col" style="font-weight: lighter; opacity: 60%">Author</th>
                         <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
                         <th scope="col" style="font-weight: lighter; opacity: 60%">Visibility</th>
+                        <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,11 +172,58 @@ const fetchPage = async (page: number) => {
                                     <span class="opacity-50">{{ playlist.user.username }}</span>
                                 </div>
                             </td>
-                            <td style="font-size: 15px">
-                                {{ playlist.tracks.length }}
+                            <td style="font-size: 15px;">
+                                <span style="opacity: 60%">{{ playlist.tracks.length }}</span>
                             </td>
-                            <td>
-                                {{ playlist.visibility }}
+                            <td style="font-size: 15px;max-width: 50px">
+                                <div
+                                    class="d-flex align-items-center justify-content-center"
+                                    style="
+                                        border: 1px solid rgba(228, 228, 228, 0.05);
+                                        border-radius: 15px !important;
+                                        width: 80px;
+                                        padding: 2px 0;
+                                    ">
+                                    <template v-if="playlist.visibility === 'public'">
+                                        <img
+                                            class="me-1"
+                                            style="width: 13px;opacity: 60%"
+                                            src="@/assets/svg/globe.svg"
+                                            alt=""
+                                        >
+                                    </template>
+                                    <template v-else>
+                                        <img
+                                            class="me-1"
+                                            style="width: 13px;opacity: 60%"
+                                            src="@/assets/svg/hidden.svg"
+                                            alt=""
+                                        >
+                                    </template>
+                                    <h5
+                                        style="opacity: 60%; font-size: 15px;margin-bottom: 3px"
+                                    >
+                                        {{ playlist.visibility }}
+                                    </h5>
+                                </div>
+                            </td>
+                            <td style="max-width: 40px">
+                                <template v-if="playlist.is_hidden">
+                                    <h5
+                                        style="
+                                               border: 1px solid rgba(228, 228, 228, 0.05);
+                                               border-radius: 15px !important;
+                                               width: 80px;
+                                               padding: 2px 0;
+                                               opacity: 60%;
+                                               font-size: 15px;
+                                               text-align: center;
+                                               margin: 0
+                                           "
+                                    >
+                                        hidden
+                                    </h5>
+                                </template>
                             </td>
                         </tr>
                     </template>

@@ -102,7 +102,7 @@ watch(
                 />
             </div>
             <div style="max-width: 600px" class="d-flex flex-column w-100 justify-content-end">
-                <template v-if="libraryStore.libraryItem?.visibility === 'public'">
+                <template v-if="libraryStore.libraryItem?.item.visibility === 'public'">
                     <span
                         class="ms-4 fw-normal opacity-50"
                     >

@@ -6,15 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Playlist/GetPlaylistById.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Playlist/GetPlaylistById.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/PlaylistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/playlist/GetAllPlaylists.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/playlist/GetAllPlaylists.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/PlaylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/PlaylistController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/Playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Playlist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_092431_create_playlists_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_092431_create_playlists_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/PlaylistViewModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/PlaylistViewModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/UserProfileModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/modals/editPlaylistModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/playlists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/playlists.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/LibraryItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/LibraryItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/Item.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Item.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/types/Playlist.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Playlist.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -512,7 +516,8 @@
       <workItem from="1772546960744" duration="323000" />
       <workItem from="1772551604862" duration="1158000" />
       <workItem from="1772555640096" duration="3928000" />
-      <workItem from="1772682292727" duration="3409000" />
+      <workItem from="1772682292727" duration="3444000" />
+      <workItem from="1772714457189" duration="9760000" />
     </task>
     <servers />
   </component>

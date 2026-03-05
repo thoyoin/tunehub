@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,6 +22,11 @@ class Playlist extends Model
         'cover_url',
     ];
 
+    protected $appends = [
+        'playlist_duration',
+        'creation_date',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -32,6 +38,21 @@ class Playlist extends Model
         static::deleting(function (Playlist $playlist) {
             $playlist->libraryItem()->delete();
         });
+    }
+
+    public function getPlaylistDurationAttribute(): string
+    {
+        $nonformatted = $this->tracks()->sum('duration');
+
+        $minutes = floor($nonformatted / 60);
+        $seconds = $nonformatted % 60;
+
+        return sprintf('%02d:%02d', $minutes, $seconds);
+    }
+
+    public function getCreationDateAttribute(): string
+    {
+        return Carbon::create($this->created_at)->toFormattedDateString();
     }
 
     public function user(): BelongsTo

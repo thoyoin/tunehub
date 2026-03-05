@@ -29,6 +29,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->boolean('is_hidden')->default(false);
             $table->string('cover_url')
                 ->nullable();
             $table->timestamps();

@@ -26,7 +26,7 @@ watch(
 
 const handleVisibilityUpdate = async (visibility: string) => {
     try {
-        await libraryStore.setVisibility(visibility)
+        libraryStore.setVisibility(visibility)
 
         await libraryStore.updateVisibility()
     } catch (error) {
@@ -47,10 +47,10 @@ const handlePlaylistUpdate = async () => {
     try {
         if (!libraryStore.libraryItem) return
 
-        await api.put(`/api/playlist/${libraryStore.libraryItem.id}`, formData)
+        await api.put(`/api/playlist/${libraryStore.libraryItem.item.id}`, formData)
 
         await libraryStore.fetchItems()
-        await libraryStore.getPlaylist(libraryStore.libraryItem.id)
+        await libraryStore.getPlaylist(libraryStore.libraryItem.item.id)
 
         toast.success('playlist updated successfully!')
     } catch (error) {
@@ -86,7 +86,7 @@ const handlePlaylistUpdate = async () => {
                                         height: 150px;
                                         border: 1px solid rgba(228, 228, 228, 0.15);
                                     "
-                                    :src="previewUrl ?? libraryStore.libraryItem?.cover_url"
+                                    :src="previewUrl ?? libraryStore.libraryItem?.item.cover_url"
                                     alt="cover"
                                 />
                                 <label class="btn btn-add mt-2" for="uploadCover">
@@ -118,7 +118,7 @@ const handlePlaylistUpdate = async () => {
                                 />
                             </div>
                             <div class="mt-3">
-                                <template v-if="libraryStore.libraryItem?.visibility === 'public'">
+                                <template v-if="libraryStore.libraryItem?.item.visibility === 'public'">
                                     <button
                                         @click="handleVisibilityUpdate('private')"
                                         type="button"

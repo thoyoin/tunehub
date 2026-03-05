@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import type { PaginatedResponse } from "@/types/PaginatedResponse";
 import type { Playlist } from "@/types/Playlist";
 import api from "@/lib/api";
 
 export const usePlaylistsStore = defineStore('playlists', () => {
     const playlists = ref<PaginatedResponse<Playlist[]> | null>(null)
+    const privatePlaylists = ref<PaginatedResponse<Playlist[]> | null>(null)
     const hiddenPlaylists = ref<PaginatedResponse<Playlist[]> | null>(null)
     const isLoading = ref<boolean>(false)
     const selectedView = ref<string>('all')
@@ -17,6 +18,7 @@ export const usePlaylistsStore = defineStore('playlists', () => {
 
             const response = await api.get<{
                 allPlaylists: PaginatedResponse<Playlist[]>;
+                privatePlaylists: PaginatedResponse<Playlist[]>;
                 hiddenPlaylists: PaginatedResponse<Playlist[]>;
             }>(
                 '/api/admin/playlists', {
@@ -25,6 +27,7 @@ export const usePlaylistsStore = defineStore('playlists', () => {
             );
 
             playlists.value = response.data.allPlaylists
+            privatePlaylists.value = response.data.privatePlaylists
             hiddenPlaylists.value = response.data.hiddenPlaylists
         } catch (e) {
             console.error(e)
@@ -33,21 +36,19 @@ export const usePlaylistsStore = defineStore('playlists', () => {
         }
     }
 
-    const updateVisibility = async (visibility: string) => {
+    const updateVisibility = async () => {
         try {
             isLoading.value = true;
 
-            const response = await api.patch<{ message: string; visibility: string}>(
-                `/api/playlist/${viewingPlaylist.value?.id}`, {
-                    visibility: visibility,
-                }
+            const response = await api.patch<{ message: string; is_hidden: boolean}>(
+                `/api/admin/playlists/${viewingPlaylist.value?.id}/status`
             )
 
             await fetchPlaylists()
 
             if (!viewingPlaylist.value) return
 
-            viewingPlaylist.value.visibility = response.data.visibility;
+            viewingPlaylist.value.is_hidden = response.data.is_hidden;
         } catch (e) {
             console.error(e);
         } finally {
@@ -65,6 +66,6 @@ export const usePlaylistsStore = defineStore('playlists', () => {
 
     return {
         playlists, fetchPlaylists, selectedView, selectView, viewingPlaylist, setViewingPlaylist,
-        isLoading, hiddenPlaylists, updateVisibility,
+        isLoading, privatePlaylists, updateVisibility, hiddenPlaylists
     }
 })

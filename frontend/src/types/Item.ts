@@ -11,4 +11,5 @@ export interface Item {
     cover_url: string;
     slug: string;
     tracks: Track[];
+    visibility: string;
 }
