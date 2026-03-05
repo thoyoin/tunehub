@@ -7,6 +7,7 @@ export interface LibraryItem {
     item_id: number;
     item_type: string;
     updated_at: string;
+    visibility: string;
     user_id: number;
     item: Item;
     user: User

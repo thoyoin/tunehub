@@ -45,6 +45,8 @@ export const usePlaylistsStore = defineStore('playlists', () => {
 
             await fetchPlaylists()
 
+            if (!viewingPlaylist.value) return
+
             viewingPlaylist.value.visibility = response.data.visibility;
         } catch (e) {
             console.error(e);

@@ -26,10 +26,10 @@ class PlaylistController extends Controller
 
     public function show(Playlist $playlist, PlaylistService $playlistService): JsonResponse
     {
-        [$playlist, $tracks] = $playlistService->get($playlist);
+        [$playlistItem, $tracks] = $playlistService->get($playlist);
 
         return response()->json([
-            'playlist' => $playlist,
+            'playlistItem' => $playlistItem,
             'tracks' => $tracks,
         ]);
     }

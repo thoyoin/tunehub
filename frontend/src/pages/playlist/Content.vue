@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { useLibraryStore } from '@/stores/library.ts'
-import { useAuthStore } from '@/stores/auth.ts'
-import { useReleaseStore } from '@/stores/release.ts'
-import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+import { useLibraryStore } from '@/stores/library'
+import { useAuthStore } from '@/stores/auth'
+import { useReleaseStore } from '@/stores/release'
+import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { useToast } from 'vue-toastification'
-import api from '@/lib/api.ts'
+import api from '@/lib/api'
 import { watch } from 'vue'
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
 import likedIcon from '@/assets/svg/heartFilled.svg'
 import likeIcon from '@/assets/svg/heart.svg'
-import { useVibrantPalette } from '@/composables/useVibrantPalette.ts'
-import router from '@/router/index.ts'
+import { useVibrantPalette } from '@/composables/useVibrantPalette'
+import router from '@/router/index'
+import type { Track } from "@/types/Track";
 
 const libraryStore = useLibraryStore()
 const toast = useToast()
@@ -22,7 +23,7 @@ const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
 const handlePlaylistDeletion = async () => {
     try {
-        await api.delete(`/api/playlist/${libraryStore.libraryItem.id}`)
+        await api.delete(`/api/playlist/${libraryStore.libraryItem?.item.id}`)
 
         await libraryStore.fetchItems()
 
@@ -38,11 +39,11 @@ const handlePlaylistDeletion = async () => {
     }
 }
 
-function isTrackAdded(track, playlistId) {
+function isTrackAdded(track: Track, playlistId: number) {
     return track.playlist_ids.includes(playlistId)
 }
 
-const handleGetRelease = async (id) => {
+const handleGetRelease = async (id: number) => {
     await releaseStore.getRelease(id)
 
     await router.push({
@@ -52,7 +53,7 @@ const handleGetRelease = async (id) => {
 }
 
 watch(
-    () => libraryStore.libraryItem?.cover_url,
+    () => libraryStore.libraryItem?.item.cover_url,
     async (url) => {
         if (url) {
             await getCoverPalette(url)
@@ -90,7 +91,7 @@ watch(
         >
             <div>
                 <img
-                    :src="libraryStore.libraryItem?.cover_url"
+                    :src="libraryStore.libraryItem?.item.cover_url"
                     alt="cover"
                     :style="{
                         width: '210px',
@@ -118,12 +119,12 @@ watch(
                 <h1
                     style="font-size: 55px"
                     class="ms-4 fw-bold"
-                    v-text="libraryStore.libraryItem?.title"
+                    v-text="libraryStore.libraryItem?.item.title"
                 ></h1>
                 <h5
                     style="opacity: 0.3; font-size: 20px"
                     class="ms-4 mt-1 fw-light"
-                    v-text="libraryStore.libraryItem?.description"
+                    v-text="libraryStore.libraryItem?.item.description"
                 ></h5>
                 <div class="d-flex flex-row mt-1 align-items-center">
                     <img
@@ -145,7 +146,7 @@ watch(
                     ></h3>
                 </div>
             </div>
-            <template v-if="libraryStore.libraryItem?.slug !== 'liked-tracks'">
+            <template v-if="libraryStore.libraryItem?.item.slug !== 'liked-tracks'">
                 <div class="w-50 text-end p-2 me-5 z-">
                     <a
                         class="btn btn-settings p-0"
@@ -300,7 +301,7 @@ watch(
                         <td class="text-center">
                             <template
                                 v-if="
-                                    auth.user && libraryStore.libraryItem?.slug === 'liked-tracks'
+                                    auth.user && libraryStore.libraryItem?.item.slug === 'liked-tracks'
                                 "
                             >
                                 <button

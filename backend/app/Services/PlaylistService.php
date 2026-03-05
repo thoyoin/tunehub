@@ -53,11 +53,11 @@ class PlaylistService
 
     public function get($playlist): array
     {
-        $playlist = $this->getPlaylistById->handle($playlist);
+        $playlistItem = $this->getPlaylistById->handle($playlist);
 
-        $orderedTracks = $this->getOrderedPlaylistTracks->handle($playlist);
+        $orderedTracks = $this->getOrderedPlaylistTracks->handle($playlistItem->item);
 
-        return [$playlist, $orderedTracks];
+        return [$playlistItem, $orderedTracks];
     }
 
     public function delete($playlist): void

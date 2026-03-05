@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useLibraryStore } from '@/stores/library.ts'
-import { useImageUpload } from '@/composables/useImageUpload.ts'
+import { useLibraryStore } from '@/stores/library'
+import { useImageUpload } from '@/composables/useImageUpload'
 import { useToast } from 'vue-toastification'
 import { ref, watch } from 'vue'
-import api from '@/lib/api.ts'
+import api from '@/lib/api'
 
 const libraryStore = useLibraryStore()
 const toast = useToast()
@@ -14,7 +14,7 @@ const title = ref('')
 const description = ref('')
 
 watch(
-    () => libraryStore.libraryItem.item,
+    () => libraryStore.libraryItem?.item,
     (item) => {
         if (item) {
             title.value = item.title
@@ -45,6 +45,8 @@ const handlePlaylistUpdate = async () => {
     }
 
     try {
+        if (!libraryStore.libraryItem) return
+
         await api.put(`/api/playlist/${libraryStore.libraryItem.id}`, formData)
 
         await libraryStore.fetchItems()
@@ -84,7 +86,7 @@ const handlePlaylistUpdate = async () => {
                                         height: 150px;
                                         border: 1px solid rgba(228, 228, 228, 0.15);
                                     "
-                                    :src="previewUrl ?? libraryStore.libraryItem.cover_url"
+                                    :src="previewUrl ?? libraryStore.libraryItem?.cover_url"
                                     alt="cover"
                                 />
                                 <label class="btn btn-add mt-2" for="uploadCover">
@@ -116,7 +118,7 @@ const handlePlaylistUpdate = async () => {
                                 />
                             </div>
                             <div class="mt-3">
-                                <template v-if="libraryStore.playlistVisibility === 'public'">
+                                <template v-if="libraryStore.libraryItem?.visibility === 'public'">
                                     <button
                                         @click="handleVisibilityUpdate('private')"
                                         type="button"

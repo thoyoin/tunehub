@@ -1,14 +1,15 @@
 import {defineStore} from "pinia";
-import { useAuthStore } from "@/stores/auth.ts";
+import { useAuthStore } from "@/stores/auth";
 import {ref, watch} from "vue";
-import api from "@/lib/api.ts";
+import api from "@/lib/api";
 import type { Item } from "@/types/Item"
 import type { LibraryItem } from "@/types/LibraryItem"
 import type { Playlist } from "@/types/Playlist"
 import type { Track } from "@/types/Track"
+import type { Release } from "@/types/Release";
 
 export const useLibraryStore = defineStore('library',() => {
-    const items = ref<Item[]>([]);
+    const items = ref<LibraryItem[]>([]);
     const isLibraryLoading = ref<boolean>(false);
     const isPlaylistLoading = ref<boolean>(false);
     const selectedLibraryItem = ref<LibraryItem | null>(null);
@@ -29,9 +30,11 @@ export const useLibraryStore = defineStore('library',() => {
             isLibraryLoading.value = true;
 
             try {
-                const { data } = await api.get<LibraryItem[]>(`/api/libraryItems`)
+                const response = await api.get<{
+                    libraryItems: LibraryItem[]
+                }>(`/api/libraryItems`)
 
-                items.value = data.libraryItems;
+                items.value = response.data.libraryItems;
             } catch (e) {
                 console.error(e);
             } finally {
@@ -44,7 +47,7 @@ export const useLibraryStore = defineStore('library',() => {
     async function fetchUserPlaylists(): Promise<void> {
         if (auth.user) {
             try {
-                const { data } = await api.get<Playlist[]>(`/api/playlists`)
+                const { data } = await api.get<{playlists: Playlist[]}>(`/api/playlists`)
 
                 userPlaylists.value = data.playlists
             } catch (e) {
@@ -53,13 +56,16 @@ export const useLibraryStore = defineStore('library',() => {
         }
     }
 
-    async function getPlaylist(playlistId: number): Promise<[Playlist, Track[]]> {
+    async function getPlaylist(playlistId: number) {
         try {
             isPlaylistLoading.value = true;
 
-            const response = await api.get<[Playlist, Track[]]>(`/api/playlist/${playlistId}`)
+            const response = await api.get<{
+                playlistItem: LibraryItem,
+                tracks: Track[]
+            }>(`/api/playlist/${playlistId}`)
 
-            libraryItem.value = response.data.playlist;
+            libraryItem.value = response.data.playlistItem;
             itemTracks.value = response.data.tracks;
         } catch (e) {
             console.error(e);
@@ -68,7 +74,7 @@ export const useLibraryStore = defineStore('library',() => {
         }
     }
 
-    async function createPlaylist(): Promise<Playlist> {
+    async function createPlaylist() {
         try {
             const { data } = await api.post<Playlist>('/api/playlist',)
 
@@ -78,17 +84,20 @@ export const useLibraryStore = defineStore('library',() => {
         }
     }
 
-    async function updateVisibility(): Promise<void> {
+    async function updateVisibility() {
         try {
             isLoading.value = true;
+
+            if (!libraryItem.value) return
 
             const response = await api.patch<{ message: string; visibility: string}>(
                 `/api/playlist/${libraryItem.value.id}`, {
                     visibility: playlistVisibility.value,
                 }
             )
-
-            libraryItem.value.visibility = response.data.visibility;
+            if (libraryItem.value.visibility) {
+                libraryItem.value.visibility = response.data.visibility;
+            }
         } catch (e) {
             console.error(e);
         } finally {
@@ -110,15 +119,18 @@ export const useLibraryStore = defineStore('library',() => {
         selectedLibraryItem.value = null;
     }
 
-    function selectLibraryItem(id: number): void {
-        selectedLibraryItem.value = id;
+    function selectLibraryItem(item: LibraryItem): void {
+        selectedLibraryItem.value = item;
     }
 
-    watch(selectedLibraryItem, async (id: number): Promise<void> => {
+    watch(selectedLibraryItem, async (id) => {
         if (!id) return
 
         try {
-            const response = await api.get<LibraryItem[]>(`/api/libraryItems/${id}`)
+            const response = await api.get<{
+                libraryItem: LibraryItem;
+                isRelease: boolean;
+            }>(`/api/libraryItems/${id}`)
 
             libraryItem.value = response.data.libraryItem
             isRelease.value = response.data.isRelease;
