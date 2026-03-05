@@ -78,7 +78,7 @@ const routeHome = () => {
                             </div>
                         </template>
                         <template
-                            v-if="searchStore.result.playlists?.length && !searchStore.isLoading"
+                            v-if="searchStore.result?.playlists?.length && !searchStore.isLoading"
                         >
                             <li
                                 style="border-bottom: 1px solid rgba(228, 228, 228, 0.15);"
@@ -86,7 +86,7 @@ const routeHome = () => {
                             >
                                 Playlists
                             </li>
-                            <li class="searchItem" v-for="playlist in searchStore.result.playlists">
+                            <li class="searchItem" v-for="playlist in searchStore.result?.playlists">
                                 <div
                                     @click="
                                         router.push({
@@ -117,7 +117,7 @@ const routeHome = () => {
                             </li>
                         </template>
                         <template
-                            v-if="searchStore.result.releases?.length && !searchStore.isLoading"
+                            v-if="searchStore.result?.releases?.length && !searchStore.isLoading"
                         >
                             <li
                                 style="border-bottom: 1px solid rgba(228, 228, 228, 0.15);"
@@ -125,7 +125,7 @@ const routeHome = () => {
                             >
                                 Releases
                             </li>
-                            <li class="searchItem" v-for="release in searchStore.result.releases">
+                            <li class="searchItem" v-for="release in searchStore.result?.releases">
                                 <div
                                     @click="
                                         router.push({
@@ -156,7 +156,7 @@ const routeHome = () => {
                             </li>
                         </template>
                         <template
-                            v-if="searchStore.result.tracks?.length && !searchStore.isLoading"
+                            v-if="searchStore.result?.tracks?.length && !searchStore.isLoading"
                         >
                             <li
                                 style="border-bottom: 1px solid rgba(228, 228, 228, 0.15);"
@@ -164,7 +164,7 @@ const routeHome = () => {
                             >
                                 Tracks
                             </li>
-                            <li class="searchItem" v-for="track in searchStore.result.tracks">
+                            <li class="searchItem" v-for="track in searchStore.result?.tracks">
                                 <div
                                     @click="
                                         router.push({

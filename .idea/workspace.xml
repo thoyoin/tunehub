@@ -6,18 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/playlist/GetAllPlaylists.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/AdminPanel/playlist/GetAllPlaylists.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/PlaylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/PlaylistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Admin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Admin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/PlaylistViewModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/PlaylistViewModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Release/GetReleases.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Release/GetReleases.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/playlists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/playlists.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/users.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/users.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/search.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/search.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/userSearch.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/moderation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/moderation.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -515,7 +508,7 @@
       <workItem from="1772551604862" duration="1158000" />
       <workItem from="1772555640096" duration="3928000" />
       <workItem from="1772682292727" duration="3444000" />
-      <workItem from="1772714457189" duration="12352000" />
+      <workItem from="1772714457189" duration="13285000" />
     </task>
     <servers />
   </component>

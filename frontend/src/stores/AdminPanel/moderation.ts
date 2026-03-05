@@ -11,14 +11,15 @@ export const useModerationStore = defineStore("moderation", () => {
     const selectedView = ref<string>('pending')
     const pendingReleasesNumber = ref<number | null>(null)
     const releasesNumber = ref<number | null>(null)
+    const searchInput = ref<string | null>(null)
 
-    const fetchByStatus = async (status: string = 'pending', page = 1) => {
+    const fetchByStatus = async (status: string = 'pending', page = 1, query?: string) => {
         try {
             isLoading.value = true;
 
             const response = await api.get<PaginatedResponse<Release[]>>(
                 `/api/admin/releases`, {
-                    params: { status: status, page: page }
+                    params: { status: status, page: page, query: query }
                 },
             )
 
@@ -62,7 +63,7 @@ export const useModerationStore = defineStore("moderation", () => {
     }
 
     return {
-        releases, isLoading, setViewRelease, viewRelease, selectView,
+        releases, isLoading, setViewRelease, viewRelease, selectView, searchInput,
         selectedView, fetchByStatus, updateReleaseStatus, pendingReleasesNumber, releasesNumber
     }
 })

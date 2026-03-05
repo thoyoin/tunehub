@@ -8,10 +8,10 @@ const toast = useToast();
 
 const currentPage = ref<number>(1);
 
-const fetchPage = async (page: number) => {
+const fetchPage = async (page: number, query: string) => {
     currentPage.value = page;
 
-    await moderationStore.fetchByStatus(moderationStore.selectedView, page);
+    await moderationStore.fetchByStatus(moderationStore.selectedView, page, query);
 };
 
 onMounted( async() => {
@@ -21,6 +21,12 @@ onMounted( async() => {
 watch(() => moderationStore.selectedView, (status) =>
     moderationStore.fetchByStatus(status)
 );
+
+watch(() => moderationStore.searchInput, (query) => {
+    if (!query) return
+
+    fetchPage(1, query);
+})
 
 const handleReleaseStatusUpdate = async (status: string, id: number) => {
     try {

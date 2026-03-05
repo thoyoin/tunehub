@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useModerationStore } from "@/stores/AdminPanel/moderation";
 import ReleasesTable from "@/pages/admin/moderation/ReleasesTable.vue";
+import { watch } from "vue";
 
 const moderationStore = useModerationStore();
 
@@ -85,6 +86,30 @@ const moderationStore = useModerationStore();
                     {{moderationStore.releasesNumber}}
                 </span>
             </button>
+        </div>
+        <div
+            class="d-flex flex-row mt-5 position-relative"
+            style="max-width: 300px; max-height: 46px"
+        >
+            <img
+                style="top: 12px; left: 15px"
+                class="position-absolute z-2"
+                src="@/assets/svg/search.svg"
+                alt="search"
+            />
+            <input
+                style="
+                    border: 1px solid rgba(228, 228, 228, 0.15);
+                    padding-left: 40px;
+                    color: rgb(228, 228, 228);
+                "
+                class="w-100 form-control rounded-4 bg-minor"
+                type="text"
+                v-model="moderationStore.searchInput"
+                placeholder="Search by title or artist..."
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            />
         </div>
         <div class="mt-4">
             <ReleasesTable/>

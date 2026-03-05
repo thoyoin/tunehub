@@ -12,10 +12,15 @@ class GetReleases
     public function handle($request): LengthAwarePaginator
     {
         $status = $request->query('status');
+        $query = $request->query('query');
 
         return Release::query()
             ->with(['user', 'tracks'])
-            ->when($status, fn ($query) => $query->where('status', $status))
+            ->when($query, fn ($q) => $q
+                ->where('title', 'like', "%$query%"))
+                ->orWhereHas('user', fn ($q) => $q
+                    ->where('username', 'like', "%$query%"))
+            ->when($status, fn ($q) => $q->where('status', $status))
             ->paginate(10);
     }
 }
