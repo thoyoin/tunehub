@@ -8,6 +8,8 @@ use App\Actions\LibraryItem\CreateLibraryItem;
 use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Release\CheckIfReleaseLiked;
 use App\Actions\Track\StoreTrack;
+use App\Jobs\DeleteTrackAudioFile;
+use App\Jobs\StoreReleaseCover;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -81,7 +83,8 @@ class ReleaseService
 
             DB::afterCommit(function () use ($releaseTracks) {
                 foreach ($releaseTracks as $track) {
-                    $this->minioService->destroyTrack($track);
+                    $audioUrl = $track->audio_ulr;
+                    DeleteTrackAudioFile::dispatch($audioUrl);
                 }
             });
         });

@@ -9,8 +9,8 @@ use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Track\DeleteTrack;
 use App\Actions\Track\IsTrackAdded;
 use App\Actions\Track\IsTrackLiked;
+use App\Jobs\DeleteTrackAudioFile;
 use getID3;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class TrackService
@@ -29,10 +29,12 @@ class TrackService
     public function destroy($track): void
     {
         DB::transaction(function () use ($track) {
+            $audioPath = $track->audio_url;
+
             $this->releaseService->destroyByTrack($track);
 
-            DB::afterCommit(function () use ($track) {
-                $this->minioService->destroyTrack($track);
+            DB::afterCommit(function () use ($audioPath) {
+                DeleteTrackAudioFile::dispatch($audioPath);
             });
 
             $track->delete();

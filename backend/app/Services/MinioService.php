@@ -10,11 +10,7 @@ class MinioService
 {
     public function storeCover($file): string
     {
-        $path = Storage::disk('s3')->putFile('covers', $file, [
-            'Metadata' => [
-                'filename' => $file->getClientOriginalName(),
-            ],
-        ]);
+        $path = Storage::disk('s3')->putFile('covers', $file);
 
         $url = Storage::disk('s3')->url($path);
 
@@ -47,10 +43,9 @@ class MinioService
         return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
     }
 
-    public function destroyTrack($file): void
+    public function destroyTrack($audioPath): void
     {
-
-        $parsedPath = parse_url($file['audio_url'], PHP_URL_PATH);
+        $parsedPath = parse_url($audioPath, PHP_URL_PATH);
 
         $cleanedPath = preg_replace('#^/tunehub#', '', $parsedPath);
 
