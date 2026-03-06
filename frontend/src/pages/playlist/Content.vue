@@ -126,7 +126,7 @@ watch(
                     class="ms-4 mt-1 fw-light"
                     v-text="libraryStore.libraryItem?.item.description"
                 ></h5>
-                <div class="d-flex flex-row mt-1 align-items-center">
+                <div class="d-flex flex-row align-items-center">
                     <img
                         :src="libraryStore.libraryItem?.user.profile_picture"
                         style="width: 30px; height: 30px"
@@ -138,12 +138,25 @@ watch(
                         class="ms-2 mb-0 fs-5 fw-bold"
                         v-text="libraryStore.libraryItem?.user.username"
                     ></h3>
-                    <span style="font-size: 25px; opacity: 50%; padding: 0 5px 2px 5px">•</span>
+                    <img
+                        class="opacity-50"
+                        src="@/assets/svg/dot.svg"
+                        alt="dot"
+                    >
                     <h3
-                        style="font-size: 18px; opacity: 50%"
-                        class="fw-bold m-0"
-                        v-text="libraryStore.itemTracks?.length + ' tracks'"
-                    ></h3>
+                        style="font-size: 16px"
+                        class="m-0 opacity-50"
+                    >
+                        {{ libraryStore.itemTracks?.length }} songs
+                    </h3>
+                    <template v-if="libraryStore.itemTracks?.length > 0">
+                        <span
+                            style="font-size: 16px"
+                            class="m-0 opacity-50"
+                        >
+                            , {{ libraryStore.libraryItem?.item.playlist_duration }}
+                        </span>
+                    </template>
                 </div>
             </div>
             <template v-if="libraryStore.libraryItem?.item.slug !== 'liked-tracks'">

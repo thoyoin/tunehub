@@ -120,17 +120,17 @@ onMounted(async () => {
                                                 :src="user.profile_picture"
                                                 alt="cover"
                                             />
-                                            {{ user.username }}
+                                            <span class="opacity-75">{{ user.username }}</span>
                                         </div>
                                     </td>
                                     <td style="font-size: 15px">
-                                        <span class="opacity-50">{{ user.email }}</span>
+                                        <span class="opacity-75">{{ user.email }}</span>
                                     </td>
                                     <td style="font-size: 15px">
-                                        <span>{{ user.roles[0].name }}</span>
+                                        <span class="opacity-75">{{ user.roles[0].name }}</span>
                                     </td>
                                     <td style="font-size: 15px">
-                                        {{ user.joined_at }}
+                                        <span class="opacity-75">{{ user.joined_at }}</span>
                                     </td>
                                 </tr>
                             </template>

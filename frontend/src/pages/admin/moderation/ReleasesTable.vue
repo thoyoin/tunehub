@@ -80,7 +80,7 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                                 :src="release.cover_url"
                                 alt="cover"
                             />
-                                <span>{{ release.title }}</span>
+                                <span class="opacity-75">{{ release.title }}</span>
                             </div>
                         </td>
                         <td style="font-size: 15px">
@@ -88,21 +88,21 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
                                 <img
                                 class="rounded-circle me-2"
                                 style="
-                                    width: 35px;
-                                    height: 35px;
+                                    width: 30px;
+                                    height: 30px;
                                     border: 1px solid rgba(228, 228, 228, 0.1);
                                 "
                                 :src="release.user.profile_picture"
                                 alt="artist"
                             />
-                                <span class="opacity-50">{{ release.artist }}</span>
+                                <span class="opacity-75">{{ release.artist }}</span>
                             </div>
                         </td>
                         <td style="font-size: 15px">
-                            {{ release.release_type }}
+                            <span class="opacity-75">{{ release.release_type }}</span>
                         </td>
                         <td>
-                            {{ release.tracks.length }}
+                            <span class="opacity-75">{{ release.tracks.length }}</span>
                         </td>
                     </tr>
                 </template>

@@ -22,7 +22,10 @@ class Release extends Model
         'user_id'
     ];
 
-    protected $appends = ['released_in'];
+    protected $appends = [
+        'released_in',
+        'release_duration'
+    ];
 
     protected static function boot()
     {
@@ -31,6 +34,16 @@ class Release extends Model
         static::deleting(function (Release $release) {
             $release->libraryItem()?->delete();
         });
+    }
+
+    public function getReleaseDurationAttribute(): string
+    {
+        $nonformatted = $this->tracks()->sum('duration');
+
+        $minutes = floor($nonformatted / 60);
+        $seconds = $nonformatted % 60;
+
+        return sprintf('%2d min %02d sec', $minutes, $seconds);
     }
 
     public function getReleasedInAttribute(): ?string

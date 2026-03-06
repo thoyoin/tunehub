@@ -6,11 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Release/GetReleases.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Release/GetReleases.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/Playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Playlist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/Release.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Release.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/laravel/sail/runtimes/8.5/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/laravel/sail/runtimes/8.5/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/ReleasesTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/moderation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/moderation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/users/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/Release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Release.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -296,40 +301,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/src/assets/svg&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "I do mind",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/thoyoin/Desktop/TuneHub/frontend/src/assets/svg",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "prettierjs.PrettierConfiguration.Package": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
+    "ts.external.directory.path": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;redis&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "redis",
+      "mysql"
     ],
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Composition API Component&quot;
+    "vue.recent.templates": [
+      "Vue Composition API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/assets/svg" />
@@ -508,7 +513,10 @@
       <workItem from="1772551604862" duration="1158000" />
       <workItem from="1772555640096" duration="3928000" />
       <workItem from="1772682292727" duration="3444000" />
-      <workItem from="1772714457189" duration="13285000" />
+      <workItem from="1772714457189" duration="14576000" />
+      <workItem from="1772731464043" duration="40000" />
+      <workItem from="1772731513055" duration="4648000" />
+      <workItem from="1772800944404" duration="2081000" />
     </task>
     <servers />
   </component>
@@ -524,6 +532,7 @@
     <option featureType="dependencySupport" implementationName="javascript:npm:karma" />
     <option featureType="dependencySupport" implementationName="javascript:npm:astro" />
     <option featureType="dependencySupport" implementationName="javascript:npm:vue" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="default.conf" />
     <option featureType="dependencySupport" implementationName="javascript:npm:postcss" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

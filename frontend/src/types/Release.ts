@@ -9,6 +9,7 @@ export interface Release {
     isReleaseLiked: boolean;
     item_type: string;
     release_date: string;
+    release_duration: string;
     release_type: string;
     released_in: string;
     status: 'pending' | 'rejected' | 'approved' | 'published';

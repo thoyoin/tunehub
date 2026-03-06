@@ -78,11 +78,25 @@ watch(
                             class="ms-4 fw-bold"
                             v-text="releaseStore.pickedRelease?.title"
                         ></h1>
-                        <h3
-                            style="opacity: 10"
-                            class="ms-4 mt-1 fs-5 fw-bold"
-                            v-text="releaseStore.pickedRelease?.artist"
-                        ></h3>
+                        <div class="d-flex flex-row align-items-center mb-2">
+                            <h3
+                                style="opacity: 10"
+                                class="ms-4 m-0 fs-5 fw-bold"
+                                v-text="releaseStore.pickedRelease?.artist"
+                            ></h3>
+                            <img
+                                class="opacity-50"
+                                src="@/assets/svg/dot.svg"
+                                alt="dot"
+                            >
+                            <span
+                                style="font-size: 16px"
+                                class="m-0 opacity-50"
+                            >
+                                {{releaseStore.releaseTracks?.length}} songs,
+                                {{releaseStore.pickedRelease?.release_duration}}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <template v-if="auth.user">

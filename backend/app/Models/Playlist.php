@@ -47,7 +47,7 @@ class Playlist extends Model
         $minutes = floor($nonformatted / 60);
         $seconds = $nonformatted % 60;
 
-        return sprintf('%02d:%02d', $minutes, $seconds);
+        return sprintf('%2d min %02d sec', $minutes, $seconds);
     }
 
     public function getCreationDateAttribute(): string

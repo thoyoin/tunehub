@@ -182,7 +182,7 @@ const fetchPage = async (page: number, query?: string) => {
                                         :src="playlist.cover_url"
                                         alt="cover"
                                     />
-                                    <span>{{ playlist.title }}</span>
+                                    <span class="opacity-75">{{ playlist.title }}</span>
                                 </div>
                             </td>
                             <td style="font-size: 15px">
@@ -190,18 +190,18 @@ const fetchPage = async (page: number, query?: string) => {
                                     <img
                                         class="rounded-circle me-2"
                                         style="
-                                            width: 35px;
-                                            height: 35px;
+                                            width: 30px;
+                                            height: 30px;
                                             border: 1px solid rgba(228, 228, 228, 0.1);
                                         "
                                         :src="playlist.user.profile_picture"
                                         alt="artist"
                                     />
-                                    <span class="opacity-50">{{ playlist.user.username }}</span>
+                                    <span class="opacity-75">{{ playlist.user.username }}</span>
                                 </div>
                             </td>
                             <td style="font-size: 15px;">
-                                <span style="opacity: 60%">{{ playlist.tracks.length }}</span>
+                                <span class="opacity-75">{{ playlist.tracks.length }}</span>
                             </td>
                             <td style="font-size: 15px;max-width: 50px">
                                 <div
@@ -214,22 +214,23 @@ const fetchPage = async (page: number, query?: string) => {
                                     ">
                                     <template v-if="playlist.visibility === 'public'">
                                         <img
-                                            class="me-1"
-                                            style="width: 13px;opacity: 60%"
+                                            class="me-1 opacity-75"
+                                            style="width: 13px"
                                             src="@/assets/svg/globe.svg"
                                             alt=""
                                         >
                                     </template>
                                     <template v-else>
                                         <img
-                                            class="me-1"
-                                            style="width: 13px;opacity: 60%"
+                                            class="me-1 opacity-75"
+                                            style="width: 13px"
                                             src="@/assets/svg/hidden.svg"
                                             alt=""
                                         >
                                     </template>
                                     <h5
-                                        style="opacity: 60%; font-size: 15px;margin-bottom: 3px"
+                                        style="font-size: 15px;margin-bottom: 3px"
+                                        class="opacity-75"
                                     >
                                         {{ playlist.visibility }}
                                     </h5>
@@ -238,12 +239,12 @@ const fetchPage = async (page: number, query?: string) => {
                             <td style="max-width: 40px">
                                 <template v-if="playlist.is_hidden">
                                     <h5
+                                        class="opacity-75"
                                         style="
                                                border: 1px solid rgba(228, 228, 228, 0.05);
                                                border-radius: 15px !important;
                                                width: 80px;
                                                padding: 2px 0;
-                                               opacity: 60%;
                                                font-size: 15px;
                                                text-align: center;
                                                margin: 0
