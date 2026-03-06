@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/MinioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/MinioService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/Release.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Release.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/TrackService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/TrackService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/modals/ReleaseViewModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/modals/ReleaseViewModal.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -510,7 +509,7 @@
       <workItem from="1772714457189" duration="14576000" />
       <workItem from="1772731464043" duration="40000" />
       <workItem from="1772731513055" duration="4648000" />
-      <workItem from="1772800944404" duration="8285000" />
+      <workItem from="1772800944404" duration="9616000" />
     </task>
     <servers />
   </component>

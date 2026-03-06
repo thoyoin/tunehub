@@ -9,7 +9,7 @@ use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Release\CheckIfReleaseLiked;
 use App\Actions\Track\StoreTrack;
 use App\Jobs\DeleteTrackAudioFile;
-use App\Jobs\StoreReleaseCover;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -83,7 +83,7 @@ class ReleaseService
 
             DB::afterCommit(function () use ($releaseTracks) {
                 foreach ($releaseTracks as $track) {
-                    $audioUrl = $track->audio_ulr;
+                    $audioUrl = $track->audio_url;
                     DeleteTrackAudioFile::dispatch($audioUrl);
                 }
             });

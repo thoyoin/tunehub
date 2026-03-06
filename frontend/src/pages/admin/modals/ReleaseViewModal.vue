@@ -116,6 +116,22 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                     {{ moderationStore.viewRelease?.release_date }}
                                 </div>
                             </div>
+                            <div
+                                class="d-flex justify-content-between pb-2 w-100"
+                                style="font-size: 15px"
+                            >
+                                <div class="d-flex opacity-50">
+                                    <img
+                                        class="me-2"
+                                        src="@/assets/svg/clockWhite.svg"
+                                        alt="calendar"
+                                    />
+                                    Duration:
+                                </div>
+                                <div class="d-flex">
+                                    {{ moderationStore.viewRelease?.release_duration }}
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex flex-column pt-2 w-100 gap-1">
                             <template v-for="track in moderationStore.viewRelease?.tracks">

@@ -27,6 +27,10 @@ class Release extends Model
         'release_duration'
     ];
 
+    protected $casts = [
+        'release_date' => 'datetime:M d, Y',
+    ];
+
     protected static function boot()
     {
         parent::boot();
