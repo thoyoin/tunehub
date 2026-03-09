@@ -39,7 +39,7 @@ class PlaylistService
                 'title' => 'My playlist'.' #'.($numberOfPlaylists + 1),
                 'description' => null,
                 'user_id' => auth()->id(),
-                'cover_url' => 'http://localhost:9000/tunehub/defaults/default_cover.png',
+                'cover_url' => 'http://localhost:9000/tunehub/defaults/default_cover.jpg',
             ]);
 
             $libraryItem = $this->createLibraryItem->handle(auth()->id(), $playlist->id, 'playlist');

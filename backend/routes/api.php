@@ -36,6 +36,9 @@ Route::prefix('admin')
         Route::controller(\App\Http\Controllers\AdminPanel\AnalyticsController::class)->group(function () {
             Route::get('/totalPlays', 'getTotalPlays');
             Route::get('/newUsers', 'getNewUsers');
+            Route::get('/newTracks', 'getNewTracks');
+            Route::get('/newReleases', 'getNewReleases');
+            Route::get('/newPlaylists', 'getNewPlaylists');
         });
     });
 

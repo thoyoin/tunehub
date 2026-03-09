@@ -6,22 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/Track.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Track.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/AnalyticsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/AnalyticsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Listeners/TrackPlayed.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Listeners/TrackPlayed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/AnalyticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/AnalyticsService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/like.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/like.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/next.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/next.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/pause.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/pause.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/play.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/play.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/prev.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/prev.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/volume-muted.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/volume-muted.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/svg/volume.svg" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/svg/volume.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Admin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Admin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/Sidebar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/moderation/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/playlists/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -547,7 +538,8 @@
       <workItem from="1772800944404" duration="10350000" />
       <workItem from="1772813726991" duration="119000" />
       <workItem from="1773037251538" duration="5952000" />
-      <workItem from="1773043252650" duration="14065000" />
+      <workItem from="1773043252650" duration="14316000" />
+      <workItem from="1773066111225" duration="6253000" />
     </task>
     <servers />
   </component>
