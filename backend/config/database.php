@@ -113,6 +113,14 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'clickhouse' => [
+            'host' => env('CLICKHOUSE_HOST', 'tunehub-clickhouse'),
+            'port' => env('CLICKHOUSE_PORT', 8123),
+            'username' => env('CLICKHOUSE_USER', 'default'),
+            'password' => env('CLICKHOUSE_PASSWORD', 'default'),
+            'database' => env('CLICKHOUSE_DB', 'default'),
+        ]
+
     ],
 
     /*

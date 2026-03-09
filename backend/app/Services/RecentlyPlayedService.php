@@ -14,7 +14,7 @@ class RecentlyPlayedService
 {
     public function store($data): JsonResponse
     {
-        TrackListened::dispatch(auth()->id(), $data['id'], $data['item_type']);
+        TrackListened::dispatch(auth()->id(), $data['id'], $data['track_id'], $data['item_type']);
 
         return response()->json([
             'sentData' => $data,

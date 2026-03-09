@@ -12,4 +12,5 @@ export interface Item {
     slug: string;
     tracks: Track[];
     visibility: string;
+    track_id?: number | null;
 }

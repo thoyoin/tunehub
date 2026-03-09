@@ -14,6 +14,7 @@ class TrackListened
     public function __construct(
         public int $userId,
         public int $itemId,
+        public int $trackId,
         public string $itemType
     ) {}
 

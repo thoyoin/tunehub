@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.10.1",
         "league/flysystem-aws-s3-v3": "^3.30",
         "publitio/publitio": "dev-master",
+        "smi2/phpclickhouse": "^1.6",
         "spatie/eloquent-sortable": "^4.5",
         "twbs/bootstrap": "^5.3"
     },

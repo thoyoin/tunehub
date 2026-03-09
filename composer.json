@@ -1,0 +1,6 @@
+{
+    "require": {
+        "cybercog/laravel-clickhouse": "^0.2.1",
+      "ext-http": "*"
+    }
+}

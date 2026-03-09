@@ -12,7 +12,7 @@ class RecentlyPlayedController
 {
     public function store(Request $request, RecentlyPlayedService $recentlyPlayedService): JsonResponse
     {
-        $data = $request->only(['id', 'item_type']);
+        $data = $request->only('id', 'item_type', 'track_id');
 
         $response = $recentlyPlayedService->store($data);
 

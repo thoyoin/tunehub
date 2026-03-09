@@ -132,6 +132,7 @@ watch(
                     <th scope="col"></th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Name</th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
+                    <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
                     <th scope="col" class="text-center" style="font-weight: lighter; opacity: 60%">
                         <img src="@/assets/svg/clock.svg" alt="clock" />
                     </th>
@@ -223,6 +224,22 @@ watch(
                                         alt="add"
                                     />
                                 </button>
+                            </template>
+                        </td>
+                        <td class="text-center" style="max-width: 20px">
+                            <template v-if="track.plays > 0">
+                                <span
+                                    style="font-size: 15px"
+                                    class="opacity-50 fw-lighter d-flex align-items-center justify-content-start"
+                                >
+                                    <img
+                                        class="me-1"
+                                        style="width: 15px"
+                                        src="@/assets/svg/playWhite.svg"
+                                        alt="plays"
+                                    >
+                                    {{ track.plays }}
+                                </span>
                             </template>
                         </td>
                         <td class="text-center">

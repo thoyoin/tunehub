@@ -73,18 +73,11 @@ const handleReleasePublication = async (id) => {
                             <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                                 <tr>
                                     <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
-                                        Tracks
-                                    </th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
-                                        Release
-                                    </th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
-                                        Release date
-                                    </th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">
-                                        Duration
-                                    </th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Release</th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Release date</th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Duration</th>
+                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Plays</th>
                                     <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
                                 </tr>
                             </thead>
@@ -202,6 +195,19 @@ const handleReleasePublication = async (id) => {
                                             <td class="fw-lighter">
                                                 <span style="opacity: 60%; font-size: 15px">
                                                     {{ track.formatted_duration }}
+                                                </span>
+                                            </td>
+                                            <td class="fw-lighter">
+                                                <span
+                                                    class="d-flex align-items-center justify-content-start"
+                                                    style="opacity: 60%; font-size: 15px"
+                                                >
+                                                <img
+                                                    style="width: 15px"
+                                                    src="@/assets/svg/playWhite.svg"
+                                                    alt="plays"
+                                                >
+                                                    {{ track.plays }}
                                                 </span>
                                             </td>
                                             <td>

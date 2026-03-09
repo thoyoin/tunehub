@@ -63,7 +63,7 @@ services:
             MYSQL_EXTRA_OPTIONS: '${MYSQL_EXTRA_OPTIONS:-}'
         volumes:
             - 'sail-mysql:/var/lib/mysql'
-            - '.backend/vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+            - './backend/vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
             - sail
         healthcheck:
@@ -74,6 +74,22 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    clickhouse:
+        image: clickhouse/clickhouse-server:24
+        container_name: tunehub-clickhouse
+        cap_add:
+          - SYS_NICE
+        environment:
+          CLICKHOUSE_PASSWORD: '${CLICKHOUSE_PASSWORD}'
+          CLICKHOUSE_USER: '${CLICKHOUSE_USER}'
+          CLICKHOUSE_DB: '${CLICKHOUSE_DB}'
+        ports:
+            - "8123:8123"
+            - "9009:9009"
+        volumes:
+            - clickhouse-data:/var/lib/clickhouse
+        networks:
+            - sail
     redis:
         image: 'redis:7-alpine'
         container_name: tunehub-redis
@@ -119,4 +135,6 @@ volumes:
     frontend-node-modules:
         driver: local
     redis-data:
+        driver: local
+    clickhouse-data:
         driver: local

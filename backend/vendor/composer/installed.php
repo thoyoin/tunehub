@@ -1063,6 +1063,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'smi2/phpclickhouse' => array(
+            'pretty_version' => '1.6.0',
+            'version' => '1.6.0.0',
+            'reference' => 'f79dfb798df96185beff90891efda997b01eb51b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../smi2/phpclickhouse',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'spatie/eloquent-sortable' => array(
             'pretty_version' => '4.5.2',
             'version' => '4.5.2.0',

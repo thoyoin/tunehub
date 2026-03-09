@@ -20,21 +20,31 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
     const isMuted = ref<boolean>(false)
     const hasTrack = computed(() => !!currentTrack.value)
     const currentContext = ref<Item | null>(null)
+    const hasBeenListened = ref(false)
+    const listenedTimeout = ref<number | null>(null)
 
-    watch(currentContext, async (
-        newContext,
-        oldContext
-    ) => {
-        if (!newContext) return
+    watch(currentTrack, async (track) => {
+        hasBeenListened.value = false
 
-        if (
-            !oldContext
-            || newContext.id !== oldContext.id
-            || newContext.item_type !== oldContext.item_type
-        ) {
-            await api.post('/api/recentlyPlayed', newContext)
+        if (listenedTimeout.value) {
+            clearTimeout(listenedTimeout.value)
+            listenedTimeout.value = null
         }
-    })
+
+        if (!track) return
+        if (!currentContext.value) return
+
+        // listenedTimeout.value = window.setTimeout(async () => {
+            if (hasBeenListened.value) return
+            hasBeenListened.value = true
+
+            const payload = { ...currentContext.value, track_id: track.id }
+
+            console.log('sent track play: ', payload)
+
+            await api.post('/api/recentlyPlayed', payload)
+        // }, 20000)
+    }, {immediate: true})
 
     const onTimeUpdate = () => {
         if (!audioRef.value?.duration) return
