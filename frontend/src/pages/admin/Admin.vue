@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import SettingsModal from '@/pages/home/modals/settingsModal.vue'
 import Sidebar from '@/pages/admin/Sidebar.vue'
+import Overview from "@/pages/admin/overview/Overview.vue";
 
 </script>
 
 <template>
     <div class="app-wrapper">
         <Sidebar/>
+        <Overview/>
         <settings-modal/>
     </div>
 </template>
@@ -26,4 +28,5 @@ import Sidebar from '@/pages/admin/Sidebar.vue'
     min-height: 100px !important;
     width: 100% !important;
 }
+
 </style>

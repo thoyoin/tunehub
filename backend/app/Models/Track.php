@@ -54,7 +54,9 @@ class Track extends Model
 
         $client->database('default');
 
-        $result = $client->select("SELECT count() AS plays FROM track_plays WHERE track_id = {$this->id}");
+        $result = $client->select(
+            "SELECT count() AS plays FROM track_plays WHERE track_id = {$this->id}"
+        );
 
         return (int) $result->rows()[0]['plays'];
     }

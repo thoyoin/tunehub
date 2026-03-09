@@ -33,6 +33,10 @@ Route::prefix('admin')
             Route::get('/playlists', 'getAll');
             Route::patch('/playlists/{playlist}/status', 'updateStatus');
         });
+        Route::controller(\App\Http\Controllers\AdminPanel\AnalyticsController::class)->group(function () {
+            Route::get('/totalPlays', 'getTotalPlays');
+            Route::get('/newUsers', 'getNewUsers');
+        });
     });
 
 Route::controller(ReleaseController::class)->group(function () {

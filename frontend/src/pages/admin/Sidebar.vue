@@ -43,6 +43,19 @@ const auth = useAuthStore()
                         role="group"
                     >
                         <RouterLink
+                            to="/admin/overview"
+                            style="height: 45px"
+                            class="btn btn-playlist d-flex flex-row justify-content-start align-items-center"
+                            :class="{ 'active-item': route.path.startsWith('/admin/overview') }"
+                        >
+                            <img
+                                style="margin-right: 12px"
+                                src="@/assets/svg/users.svg"
+                                alt="users"
+                            >
+                            <span>Overview</span>
+                        </RouterLink>
+                        <RouterLink
                             to="/admin/users"
                             style="height: 45px"
                             class="btn btn-playlist d-flex flex-row justify-content-start align-items-center"

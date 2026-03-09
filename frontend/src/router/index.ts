@@ -10,6 +10,7 @@ import Admin from '@/pages/admin/Admin.vue'
 import Users from "@/pages/admin/users/Users.vue";
 import Release from "@/pages/release/Release.vue";
 import Playlists from "@/pages/admin/playlists/Playlists.vue";
+import Overview from "@/pages/admin/overview/Overview.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,8 +53,8 @@ const router = createRouter({
           }
       },
       {
-          path: '/admin',
-          name: 'admin',
+          path: '/admin/overview',
+          name: 'admin/overview',
           component: Admin,
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
@@ -94,7 +95,7 @@ const router = createRouter({
               if (auth.user?.roles[0]?.slug !== 'admin') next('/');
               else next();
           }
-      }
+      },
   ],
 })
 

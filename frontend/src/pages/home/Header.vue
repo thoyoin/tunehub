@@ -222,7 +222,7 @@ const routeHome = () => {
                     </template>
                     <template v-else>
                         <button
-                            @click="router.push('/admin')"
+                            @click="router.push('/admin/overview')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"
                         >
                             Admin panel

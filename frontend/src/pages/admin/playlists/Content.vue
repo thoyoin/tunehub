@@ -325,14 +325,6 @@ const fetchPage = async (page: number, query?: string) => {
         border-color: #c11c4c !important;
     }
 }
-.search-spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(228, 228, 228, 0.2);
-    border-top: 2px solid rgb(158, 23, 63);
-    border-radius: 50%;
-    animation: spin 0.4s linear infinite;
-}
 
 @keyframes spin {
     from {
@@ -398,5 +390,13 @@ const fetchPage = async (page: number, query?: string) => {
     padding: 1px 8px !important;
     transition: 0.2s !important;
     font-weight: bold !important;
+}
+.search-spinner {
+    width: 18px !important;
+    height: 18px !important;
+    border: 2px solid rgba(228, 228, 228, 0.2) !important;
+    border-top: 2px solid rgb(158, 23, 63) !important;
+    border-radius: 50% !important;
+    animation: spin 0.4s linear infinite !important;
 }
 </style>
