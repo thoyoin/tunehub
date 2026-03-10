@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { useOverviewStore } from "@/stores/AdminPanel/overview";
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import growthUp from "@/assets/svg/growth-up.svg";
 import growthDown from "@/assets/svg/growth-down.svg";
+import StreamsCharts from "@/pages/admin/overview/charts/StreamsCharts.vue";
+import UserGrowthCharts from "@/pages/admin/overview/charts/UserGrowthCharts.vue";
 
 const overviewStore = useOverviewStore();
 
 onMounted(async () => {
     await overviewStore.fetchAllAnalytics();
 });
+
+
 
 </script>
 
@@ -24,8 +28,7 @@ onMounted(async () => {
         class="w-100 home-content"
     >
         <div class="d-flex flex-column align-items-start">
-            <h1 class="fs-3 fw-bold m-0 p-0">Overview</h1>
-            <span class="opacity-50">for the last month</span>
+            <h1 class="fs-3 fw-bold m-0 p-0">Analytics</h1>
         </div>
         <div class="mt-4 d-flex gap-3 flex-wrap">
             <div class="stat-card bg-minor w-100 d-flex flex-column">
@@ -184,6 +187,19 @@ onMounted(async () => {
                 </span>
             </div>
         </div>
+        <div class="mt-4 border px-2">
+            <div class="d-flex flex-column align-items-start">
+                <span class="ms-4 mt-4 fw-bold fs-5">Streams Overview</span>
+                <span class="ms-4 fw-normal opacity-50 ">for the last month</span>
+            </div>
+            <StreamsCharts/>
+        </div>
+        <div class="mt-4 border px-2">
+            <div class="d-flex flex-column align-items-start">
+                <span class="ms-4 mt-4 fw-bold fs-5">User Growth</span>
+            </div>
+            <UserGrowthCharts/>
+        </div>
     </div>
 </template>
 
@@ -222,5 +238,32 @@ onMounted(async () => {
 
 .growth-down {
     color: #ff5a5a;
+}
+
+:deep(.apexcharts-tooltip) {
+    background: transparent !important;
+    color: rgb(228, 228, 228) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid #3a3a3a !important;
+    border-radius: 12px !important;
+}
+
+:deep(.apexcharts-tooltip-title) {
+    background: rgba(158, 23, 63, .2) !important;
+    backdrop-filter: blur(10px) !important;
+    color: #ffffff !important;
+    border-bottom: none !important;
+}
+
+:deep(.apexcharts-xaxistooltip) {
+    background: none !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px !important;
+}
+
+.border {
+    border:1px solid rgba(228, 228, 228, 0.15) !important;
+    border-radius: 18px;
 }
 </style>

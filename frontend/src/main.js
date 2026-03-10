@@ -7,6 +7,7 @@ import router from './router/index.ts'
 import "vue-toastification/dist/index.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import VueApexCharts from "vue3-apexcharts";
 
 const app = createApp(App)
 
@@ -19,5 +20,7 @@ app.use(Toast, {
     closeButton: false,
     hideProgressBar: true,
 })
+
+app.use(VueApexCharts)
 
 app.mount('#app')

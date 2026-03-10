@@ -2,6 +2,17 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import api from "@/lib/api";
 
+interface PlaysPerDay {
+    date: string;
+    plays: string;
+}
+
+interface UserGrowth {
+    date: string;
+    users: string;
+    joined_at: string;
+}
+
 export const useOverviewStore = defineStore("overview", () => {
     const isLoading = ref(false);
     const totalPlays = ref<number | null>(null);
@@ -14,6 +25,9 @@ export const useOverviewStore = defineStore("overview", () => {
     const newReleasesGrowth = ref<number | null>(null);
     const newPlaylists = ref<number | null>(null);
     const newPlaylistsGrowth = ref<number | null>(null);
+
+    const playsPerMonth = ref<PlaysPerDay[] | null>(null);
+    const userGrowth = ref<UserGrowth[] | null>(null);
 
     const fetchTotalPlays = async () => {
         try {
@@ -105,12 +119,46 @@ export const useOverviewStore = defineStore("overview", () => {
         }
     }
 
+    const fetchPlaysPerMonth = async () => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.get<{
+                monthPlays: PlaysPerDay[]
+            }>('/api/admin/plays/month')
+
+            playsPerMonth.value = response.data.monthPlays
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    const fetchUserGrowth = async () => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.get<{
+                userGrowth: UserGrowth[];
+            }>('/api/admin/userGrowth')
+
+            userGrowth.value = response.data.userGrowth
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
     const fetchAllAnalytics = async () => {
         await fetchTotalPlays();
         await fetchNewTracks();
         await fetchNewReleases();
         await fetchNewUsers();
         await fetchNewPlaylists();
+        await fetchPlaysPerMonth();
+        await fetchUserGrowth();
     }
 
     return {
@@ -129,6 +177,8 @@ export const useOverviewStore = defineStore("overview", () => {
         newUsers,
         newUsersGrowth,
         totalPlays,
-        totalPlaysGrowth
+        totalPlaysGrowth,
+        playsPerMonth,
+        userGrowth,
     }
 })

@@ -132,7 +132,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     }
     .btn-play {
         padding: 0 !important;
-        transition: .3s !important;
+        transition: .2s !important;
         border: none !important;
         &:hover {
             opacity: .4 !important;
