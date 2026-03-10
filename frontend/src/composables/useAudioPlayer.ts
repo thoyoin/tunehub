@@ -40,8 +40,6 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
 
             const payload = { ...currentContext.value, track_id: track.id }
 
-            console.log('sent track play: ', payload)
-
             await api.post('/api/recentlyPlayed', payload)
         // }, 20000)
     }, {immediate: true})

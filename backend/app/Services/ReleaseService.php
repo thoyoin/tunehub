@@ -21,6 +21,7 @@ class ReleaseService
         public CheckIfReleaseLiked $checkIfReleaseLiked,
         public CreateLibraryItem $createLibraryItem,
         public GetUserLikedPlaylist $getUserLikedPlaylist,
+        public TrackStatsService $trackStatsService,
     ) {}
 
     public function store($request): void
@@ -104,6 +105,11 @@ class ReleaseService
                 ->get();
 
             $tracks->load('playlists:id');
+
+            $this->trackStatsService->getTracksPlays(
+                $tracks->pluck('id')->toArray(),
+                $tracks
+            );
 
             $isReleaseLiked = $this->checkIfReleaseLiked->handle($release);
 

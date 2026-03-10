@@ -28,6 +28,7 @@ class PlaylistService
         public MinioService $minioService,
         public AddTrackToPlaylist $addTrackToPlaylist,
         public IsTrackAdded $isTrackAdded,
+        public TrackStatsService $trackStatsService,
     ) {}
 
     public function store(): LibraryItem
@@ -56,6 +57,11 @@ class PlaylistService
         $playlistItem = $this->getPlaylistById->handle($playlist);
 
         $orderedTracks = $this->getOrderedPlaylistTracks->handle($playlistItem->item);
+
+        $this->trackStatsService->getTracksPlays(
+            $orderedTracks->pluck('id')->toArray(),
+            $orderedTracks
+        );
 
         return [$playlistItem, $orderedTracks];
     }

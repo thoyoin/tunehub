@@ -29,7 +29,6 @@ class Track extends Model
         'added_ago',
         'released_in',
         'playlist_ids',
-        'plays'
     ];
 
     public function getPlaylistIdsAttribute(): array
@@ -41,24 +40,6 @@ class Track extends Model
         return $this->playlists()
             ->pluck('playlists.id')
             ->toArray();
-    }
-
-    public function getPlaysAttribute(): int
-    {
-        $client = new Client([
-            'host' => env('CLICKHOUSE_HOST'),
-            'port' => env('CLICKHOUSE_PORT', 8123),
-            'username' => env('CLICKHOUSE_USER'),
-            'password' => env('CLICKHOUSE_PASSWORD'),
-        ]);
-
-        $client->database('default');
-
-        $result = $client->select(
-            "SELECT count() AS plays FROM track_plays WHERE track_id = {$this->id}"
-        );
-
-        return (int) $result->rows()[0]['plays'];
     }
 
     public function getFormattedDurationAttribute(): string

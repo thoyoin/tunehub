@@ -10,6 +10,8 @@ use App\Actions\Track\DeleteTrack;
 use App\Actions\Track\IsTrackAdded;
 use App\Actions\Track\IsTrackLiked;
 use App\Jobs\DeleteTrackAudioFile;
+use App\Jobs\DeleteTrackInClickhouse;
+use ClickHouseDB\Client;
 use getID3;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +26,7 @@ class TrackService
         public AddTrackToPlaylist $addTrackToPlaylist,
         public ReleaseService $releaseService,
         public DeleteTrack $deleteTrack,
+        public Client $clickhouse,
     ) {}
 
     public function destroy($track): void
@@ -33,11 +36,12 @@ class TrackService
 
             $this->releaseService->destroyByTrack($track);
 
-            DB::afterCommit(function () use ($audioPath) {
-                DeleteTrackAudioFile::dispatch($audioPath);
-            });
-
             $track->delete();
+
+            DB::afterCommit(function () use ($audioPath, $track) {
+                DeleteTrackAudioFile::dispatch($audioPath);
+                DeleteTrackInClickhouse::dispatch($track->id);
+            });
         });
     }
 
