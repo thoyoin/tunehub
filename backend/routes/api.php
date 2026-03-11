@@ -39,6 +39,8 @@ Route::prefix('admin')
             Route::get('/newTracks', 'getNewTracks');
             Route::get('/newReleases', 'getNewReleases');
             Route::get('/newPlaylists', 'getNewPlaylists');
+            Route::get('/plays/month', 'getMonthPlays');
+            Route::get('/userGrowth', 'getUserGrowth');
         });
     });
 

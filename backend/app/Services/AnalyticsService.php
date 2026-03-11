@@ -34,11 +34,7 @@ class AnalyticsService
 
         $pastMonthResult = (int) $pastMonth->rows()[0]['total_plays'];
 
-        if ($pastMonthResult == 0) {
-            $growth = $currentMonthResult > 0 ? 100 : 0;
-        } else {
-            $growth = ($currentMonthResult - $pastMonthResult) / $pastMonthResult * 100;
-        }
+        $growth = $this->countGrowth->handle($currentMonthResult, $pastMonthResult);
 
         return [$currentMonthResult, $growth];
     }
@@ -98,5 +94,31 @@ class AnalyticsService
         $growth = $this->countGrowth->handle($currentMonth, $pastMonth);
 
         return [$currentMonth, $growth];
+    }
+
+    public function getMonthPlays(): array
+    {
+        $result = $this->clickhouse->select("
+            SELECT
+                formatDateTime(played_at, '%b %d') as date,
+                count() as plays
+            FROM track_plays
+            WHERE played_at >= now() - INTERVAL 30 DAY
+            GROUP BY date
+            ORDER BY date
+        ");
+
+        return $result->rows();
+    }
+
+    public function getUserGrowth(): array
+    {
+        return User::query()
+            ->selectRaw('DATE_FORMAT(created_at, "%b %d") as date, count(*) as users')
+            ->where('created_at', '>=', now()->subDays(30))
+            ->groupByRaw('DATE_FORMAT(created_at, "%b %d")')
+            ->orderBy('date')
+            ->get()
+            ->toArray();
     }
 }

@@ -60,4 +60,22 @@ class AnalyticsController
             'growth' => $growth,
         ]);
     }
+
+    public function getMonthPlays(AnalyticsService $analytics): JsonResponse
+    {
+        $result = $analytics->getMonthPlays();
+
+        return response()->json([
+            'monthPlays' => $result,
+        ]);
+    }
+
+    public function getUserGrowth(AnalyticsService $analytics): JsonResponse
+    {
+        $result = $analytics->getUserGrowth();
+
+        return response()->json([
+            'userGrowth' => $result
+        ]);
+    }
 }
