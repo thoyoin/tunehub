@@ -78,4 +78,13 @@ class AnalyticsController
             'userGrowth' => $result
         ]);
     }
+
+    public function getTopArtists(AnalyticsService $analytics): JsonResponse
+    {
+        $result = $analytics->getTopArtists();
+
+        return response()->json([
+            'topArtists' => $result
+        ]);
+    }
 }

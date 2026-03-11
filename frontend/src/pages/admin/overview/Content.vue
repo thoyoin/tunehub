@@ -200,6 +200,36 @@ onMounted(async () => {
             </div>
             <UserGrowthCharts/>
         </div>
+        <div class="mt-4 border px-4 pb-4">
+            <div class="d-flex flex-column align-items-start">
+                <span class="mt-4 fw-bold fs-5">Top Artists</span>
+            </div>
+            <div>
+                <template v-for="artist in overviewStore.topArtists">
+                    <div
+                        class="border artist-row mt-3 mb-2 p-3 d-flex flex-row
+                            justify-content-between align-items-center
+                        "
+                    >
+                        <div>
+                            <img
+                            style="width: 35px"
+                            class="rounded-circle me-3"
+                            :src="artist.artist.profile_picture"
+                            alt=""
+                            >
+                            <span class="fw-bold">
+                                {{ artist.artist.username }}
+                            </span>
+                        </div>
+                        <div>
+                            <span class="fw-bolder">{{ artist.streams }}</span>
+                            <span class="fw-normal"> streams</span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -265,5 +295,14 @@ onMounted(async () => {
 .border {
     border:1px solid rgba(228, 228, 228, 0.15) !important;
     border-radius: 18px;
+}
+
+.artist-row {
+    transition: .2s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(228, 228, 228, 0.05) !important;
+    }
 }
 </style>

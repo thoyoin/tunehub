@@ -38,7 +38,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
             if (hasBeenListened.value) return
             hasBeenListened.value = true
 
-            const payload = { ...currentContext.value, track_id: track.id }
+            const payload = { ...currentContext.value, track_id: track.id, track_artist_id: track.user_id }
 
             await api.post('/api/recentlyPlayed', payload)
         // }, 20000)

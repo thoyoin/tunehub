@@ -15,7 +15,8 @@ class TrackListened
         public int $userId,
         public int $itemId,
         public int $trackId,
-        public string $itemType
+        public string $itemType,
+        public int $trackArtistId,
     ) {}
 
     /**

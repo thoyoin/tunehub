@@ -14,9 +14,7 @@ class TrackPlayed implements ShouldQueue
     public function __construct(
         public Client $clickhouse
     )
-    {
-        //
-    }
+    {}
 
     /**
      * Handle the event.
@@ -28,7 +26,8 @@ class TrackPlayed implements ShouldQueue
                 $event->trackId,
                 $event->userId,
                 now()->timestamp,
+                $event->trackArtistId,
             ]
-        ], ['track_id', 'user_id', 'played_at']);
+        ], ['track_id', 'user_id', 'played_at', 'track_artist_id']);
     }
 }

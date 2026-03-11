@@ -41,6 +41,7 @@ Route::prefix('admin')
             Route::get('/newPlaylists', 'getNewPlaylists');
             Route::get('/plays/month', 'getMonthPlays');
             Route::get('/userGrowth', 'getUserGrowth');
+            Route::get('/topArtists', 'getTopArtists');
         });
     });
 

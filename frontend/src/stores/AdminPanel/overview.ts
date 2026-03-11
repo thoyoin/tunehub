@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import api from "@/lib/api";
+import type {User} from "@/types/User";
 
 interface PlaysPerDay {
     date: string;
@@ -25,6 +26,7 @@ export const useOverviewStore = defineStore("overview", () => {
     const newReleasesGrowth = ref<number | null>(null);
     const newPlaylists = ref<number | null>(null);
     const newPlaylistsGrowth = ref<number | null>(null);
+    const topArtists = ref<any>(null);
 
     const playsPerMonth = ref<PlaysPerDay[] | null>(null);
     const userGrowth = ref<UserGrowth[] | null>(null);
@@ -151,6 +153,25 @@ export const useOverviewStore = defineStore("overview", () => {
         }
     }
 
+    const fetchTopArtists = async () => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.get<{
+                topArtists: [
+                    artist: User,
+                    streams: string
+                ]
+            }>("/api/admin/topArtists");
+
+            topArtists.value = response.data.topArtists
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
     const fetchAllAnalytics = async () => {
         await fetchTotalPlays();
         await fetchNewTracks();
@@ -159,6 +180,7 @@ export const useOverviewStore = defineStore("overview", () => {
         await fetchNewPlaylists();
         await fetchPlaysPerMonth();
         await fetchUserGrowth();
+        await fetchTopArtists();
     }
 
     return {
@@ -180,5 +202,6 @@ export const useOverviewStore = defineStore("overview", () => {
         totalPlaysGrowth,
         playsPerMonth,
         userGrowth,
+        topArtists
     }
 })

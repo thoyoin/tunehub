@@ -10,6 +10,7 @@ use App\Models\Release;
 use App\Models\Track;
 use App\Models\User;
 use ClickHouseDB\Client;
+use Illuminate\Support\Collection;
 
 class AnalyticsService
 {
@@ -21,14 +22,18 @@ class AnalyticsService
 
     public function getTotalPlays(): array
     {
-        $currentMonth = $this->clickhouse->select(
-            "SELECT count() as total_plays from track_plays where played_at >= now() - INTERVAL 30 DAY"
-        );
+        $currentMonth = $this->clickhouse->select("
+            SELECT count() as total_plays
+            FROM track_plays
+            WHERE played_at >= now() - INTERVAL 30 DAY
+        ");
 
-        $pastMonth = $this->clickhouse->select(
-            "SELECT count() as total_plays FROM track_plays WHERE played_at >= now() - INTERVAL 60 DAY
-                                         AND played_at < now() - INTERVAL 30 DAY"
-        );
+        $pastMonth = $this->clickhouse->select("
+            SELECT count() as total_plays
+            FROM track_plays
+            WHERE played_at >= now() - INTERVAL 60 DAY
+            AND played_at < now() - INTERVAL 30 DAY
+        ");
 
         $currentMonthResult = (int) $currentMonth->rows()[0]['total_plays'];
 
@@ -120,5 +125,31 @@ class AnalyticsService
             ->orderBy('date')
             ->get()
             ->toArray();
+    }
+
+    public function getTopArtists(): Collection
+    {
+        $top = $this->clickhouse->select("
+            SELECT
+                artist_id,
+                sum(plays) AS streams
+                FROM artist_streams
+            GROUP BY artist_id
+            ORDER BY streams DESC
+            LIMIT 10
+        ")
+            ->rows();
+
+        $artists = User::whereIn('id', array_column($top, 'artist_id'))
+            ->get()->keyBy('id');
+
+        return collect($top)->map(function ($row) use ($artists) {
+            $artist = $artists[$row['artist_id']];
+
+            return [
+                'artist' => $artist,
+                'streams' => $row['streams'],
+            ];
+        });
     }
 }
