@@ -58,10 +58,12 @@ class PlaylistService
 
         $orderedTracks = $this->getOrderedPlaylistTracks->handle($playlistItem->item);
 
-        $this->trackStatsService->getTracksPlays(
-            $orderedTracks->pluck('id')->toArray(),
-            $orderedTracks
-        );
+        if (!$orderedTracks->isEmpty()) {
+            $this->trackStatsService->getTracksPlays(
+                $orderedTracks->pluck('id')->toArray(),
+                $orderedTracks
+            );
+        }
 
         return [$playlistItem, $orderedTracks];
     }

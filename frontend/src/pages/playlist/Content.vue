@@ -102,19 +102,21 @@ watch(
                 />
             </div>
             <div style="max-width: 600px" class="d-flex flex-column w-100 justify-content-end">
-                <template v-if="libraryStore.libraryItem?.item.visibility === 'public'">
+                <template v-if="libraryStore.libraryItem?.item.slug !== 'liked-tracks'">
+                    <template v-if="libraryStore.libraryItem?.item.visibility === 'public'">
                     <span
                         class="ms-4 fw-normal opacity-50"
                     >
                         Public Playlist
                     </span>
-                </template>
-                <template v-else>
+                    </template>
+                    <template v-else>
                     <span
                         class="ms-4 fw-normal opacity-50"
                     >
                         Private Playlist
                     </span>
+                    </template>
                 </template>
                 <h1
                     style="font-size: 55px"

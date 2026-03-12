@@ -6,16 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Events/TrackListened.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Events/TrackListened.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/AnalyticsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/AnalyticsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/RecentlyPlayedController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/RecentlyPlayedController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Listeners/TrackPlayed.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Listeners/TrackPlayed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/AnalyticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/AnalyticsService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/RecentlyPlayedService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useAudioPlayer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/PlaylistService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Content.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -544,7 +536,8 @@
       <workItem from="1773043252650" duration="14316000" />
       <workItem from="1773066111225" duration="6310000" />
       <workItem from="1773147960830" duration="15008000" />
-      <workItem from="1773242129053" duration="6512000" />
+      <workItem from="1773242129053" duration="6562000" />
+      <workItem from="1773320721781" duration="825000" />
     </task>
     <servers />
   </component>
