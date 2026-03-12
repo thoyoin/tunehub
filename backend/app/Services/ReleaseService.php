@@ -9,6 +9,7 @@ use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Release\CheckIfReleaseLiked;
 use App\Actions\Track\StoreTrack;
 use App\Jobs\DeleteTrackAudioFile;
+use App\Models\Release;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -169,5 +170,14 @@ class ReleaseService
         $release->status = 'published';
 
         $release->save();
+    }
+
+    public function getArtistLatest($artistId): Release
+    {
+        return Release::where('user_id', $artistId)
+            ->where('status', 'published')
+            ->latest()
+            ->with('tracks')
+            ->first();
     }
 }

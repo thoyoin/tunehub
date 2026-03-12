@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ArtistStudioController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LibraryItemController;
@@ -44,6 +45,12 @@ Route::prefix('admin')
             Route::get('/topArtists', 'getTopArtists');
         });
     });
+
+Route::controller(ArtistController::class)->group(function () {
+    Route::get('/artist/{artist}/releases/latest', 'getLatestRelease');
+    Route::get('/artist/{artist}', 'getArtist');
+    Route::get('/artist/{artist}/tracks/top', 'getTopTracks');
+});
 
 Route::controller(ReleaseController::class)->group(function () {
     Route::get('/release/{release}', 'show');

@@ -1,15 +1,31 @@
 <script setup lang="ts">
 import { useAudioPlayer } from "@/composables/useAudioPlayer.js";
 import { useAuthStore } from "@/stores/auth.js";
+import { useReleaseStore } from "@/stores/release";
 import { ref } from "vue";
+import router from "@/router";
 
 const audioRef = ref(null);
 const auth = useAuthStore();
+const releaseStore = useReleaseStore();
 
 const { prev, hasTrack, volume, next, toggle,
     isPlaying, currentTrack, formatTime, currentTime,
     seek, progress, toggleVolume, isMuted, setVolume,
 } = useAudioPlayer(audioRef);
+
+const handleGetRelease = async () => {
+    if (currentTrack.value) {
+        const id = currentTrack.value.release_id
+
+        await releaseStore.getRelease(id);
+
+        await router.push({
+            name: 'release',
+            params: { ['releaseId']: id }
+        })
+    }
+}
 
 </script>
 
@@ -57,10 +73,14 @@ const { prev, hasTrack, volume, next, toggle,
                             >
                             <div class="d-flex flex-column ms-2">
                                 <span
-                                    style="color: rgb(228,228,228);font-size:12px;font-weight: bold"
-                                    v-text="currentTrack?.title"></span>
+                                    @click="handleGetRelease()"
+                                    class="track-title"
+                                    style="color: rgb(228,228,228);font-size:12px;font-weight: bold;"
+                                    v-text="currentTrack?.title"
+                                ></span>
                                 <span style="color: rgb(228,228,228);font-size:12px;opacity: 50%"
-                                      v-text="currentTrack?.artist"></span>
+                                      v-text="currentTrack?.artist"
+                                ></span>
                             </div>
                         </div>
                         <div
@@ -197,5 +217,14 @@ const { prev, hasTrack, volume, next, toggle,
     border-radius: 15px;
     padding: 0 5px;
 }
+
+.track-title {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+        text-decoration-color: rgba(228, 228, 228, 0.6);
+    }
+}
+
 
 </style>

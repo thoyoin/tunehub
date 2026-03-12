@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Actions\Release\GetLatestReleases;
 use App\Http\Requests\ReleaseUpdateRequest;
 use App\Models\Release;
+use App\Models\User;
 use App\Services\ReleaseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;

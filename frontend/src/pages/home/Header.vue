@@ -5,6 +5,7 @@ import { useSearchStore } from '@/stores/search.ts'
 import { useReleaseStore } from '@/stores/release.ts'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+import { ref } from "vue";
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -260,6 +261,17 @@ const routeHome = () => {
                                     <button
                                         type="button"
                                         class="dropdown-item"
+                                        @click="
+                                            router.push({
+                                            name: 'artist',
+                                            params: { artistId: auth.user?.id},
+                                        })"
+                                    >
+                                        Profile
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="dropdown-item"
                                         data-bs-toggle="modal"
                                         data-bs-target="#settingsModal"
                                     >
@@ -267,7 +279,10 @@ const routeHome = () => {
                                     </button>
                                 </li>
                                 <li>
-                                    <button @click.prevent="logout" class="dropdown-item">
+                                    <button
+                                        @click.prevent="logout"
+                                        class="dropdown-item"
+                                    >
                                         Leave
                                     </button>
                                 </li>

@@ -10,7 +10,7 @@ import Admin from '@/pages/admin/Admin.vue'
 import Users from "@/pages/admin/users/Users.vue";
 import Release from "@/pages/release/Release.vue";
 import Playlists from "@/pages/admin/playlists/Playlists.vue";
-import Overview from "@/pages/admin/overview/Overview.vue";
+import ArtistCard from "@/pages/artist-card/ArtistCard.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +39,11 @@ const router = createRouter({
           path: '/playlist/:playlistId',
           name: 'playlist',
           component: Playlist
+      },
+      {
+          path: '/artist/:artistId',
+          name: 'artist',
+          component: ArtistCard
       },
       {
           path: '/artists',
