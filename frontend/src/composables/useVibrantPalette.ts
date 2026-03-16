@@ -1,4 +1,4 @@
-import { Vibrant } from 'node-vibrant/browser'
+import Vibrant from 'node-vibrant'
 import { ref } from 'vue'
 
 export function useVibrantPalette() {

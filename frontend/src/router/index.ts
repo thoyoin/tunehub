@@ -11,6 +11,7 @@ import Users from "@/pages/admin/users/Users.vue";
 import Release from "@/pages/release/Release.vue";
 import Playlists from "@/pages/admin/playlists/Playlists.vue";
 import ArtistCard from "@/pages/artist-card/ArtistCard.vue";
+import Subscription from "@/pages/subscription/Subscription.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
           path: '/',
           name: 'home',
           component: Home,
+      },
+      {
+          path: '/subscription',
+          name: 'subscription',
+          component: Subscription,
       },
       {
           path: '/release/:releaseId',

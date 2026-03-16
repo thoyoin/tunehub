@@ -209,7 +209,14 @@ const routeHome = () => {
             <div class="d-flex flex-row align-items-center">
                 <template v-if="auth.user">
                     <template v-if="auth.user?.roles[0]?.slug === 'user'">
-                        <button class="btn btn-upgrade">
+                        <button
+                            @click="
+                                router.push({
+                                    name: 'subscription',
+                                })
+                            "
+                            class="btn btn-upgrade"
+                        >
                             Upgrade now
                         </button>
                     </template>

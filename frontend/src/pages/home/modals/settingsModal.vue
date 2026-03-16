@@ -1,46 +1,52 @@
 <script setup lang="ts">
-    import { useAuthStore } from "@/stores/auth.js";
-    import { useImageUpload } from "@/composables/useImageUpload";
-    import api from "@/lib/api";
-    import {ref, watch} from "vue";
-    import { useToast } from "vue-toastification";
+import { useAuthStore } from "@/stores/auth.js";
+import { useImageUpload } from "@/composables/useImageUpload";
+import api from "@/lib/api";
+import { computed, ref, watch } from "vue";
+import { useToast } from "vue-toastification";
 
-    const toast = useToast();
-    const auth = useAuthStore();
-    const {previewUrl, fileToUpload, handleImageUpload} = useImageUpload();
+const toast = useToast();
+const auth = useAuthStore();
+const { previewUrl, fileToUpload, handleImageUpload } = useImageUpload();
 
-    const username = ref<string>("");
-    const email = ref<string>("");
+const username = ref<string>("");
+const email = ref<string>("");
 
-    watch(() => auth.user, (user) => {
+const displayedCover = computed(() => previewUrl.value ?? auth.user?.profile_picture);
+
+watch(
+    () => auth.user,
+    (user) => {
         if (user) {
             username.value = user.username;
-            email.value = user.email
+            email.value = user.email;
         }
-    }, { immediate: true })
+    },
+    { immediate: true },
+);
 
-    const handleUserUpdate = async (): Promise<void> => {
-        const formData = new FormData();
+const handleUserUpdate = async (): Promise<void> => {
+    const formData = new FormData();
 
-        formData.append("username", username.value);
-        formData.append("email", email.value);
+    formData.append("username", username.value);
+    formData.append("email", email.value);
 
-        if (fileToUpload.value) {
-            formData.append("profile_picture", fileToUpload.value);
-        }
-
-        try {
-            await api.post('/api/user/update', formData);
-
-            await auth.fetchUser()
-
-            toast.success('Profile updated successfully!');
-        } catch (error) {
-            console.log(error);
-
-            toast.error('Something went wrong.');
-        }
+    if (fileToUpload.value) {
+        formData.append("profile_picture", fileToUpload.value);
     }
+
+    try {
+        await api.post("/api/user/update", formData);
+
+        await auth.fetchUser();
+
+        toast.success("Profile updated successfully!");
+    } catch (error) {
+        console.log(error);
+
+        toast.error("Something went wrong.");
+    }
+};
 </script>
 
 <template>
@@ -59,21 +65,26 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column align-items-center">
-                            <div class="d-flex flex-column justify-content-start align-items-center w-50">
+                            <div
+                                class="d-flex flex-column justify-content-start align-items-center w-50"
+                            >
                                 <img
-                                    :src="previewUrl ?? auth.user?.profile_picture"
-                                    style="width: 150px; height: 150px;"
+                                    :src="displayedCover"
+                                    style="width: 150px; height: 150px"
                                     class="rounded-2"
                                     alt="profile"
+                                />
+                                <label class="btn btn-add mt-2" for="profilePicture">
+                                    New photo
+                                </label
                                 >
-                                <label class="btn btn-add mt-2" for="profilePicture">New photo</label>
                                 <input
                                     id="profilePicture"
                                     type="file"
                                     @change="handleImageUpload"
                                     class="d-none"
                                     accept="image/*"
-                                >
+                                />
                             </div>
                             <div class="d-flex flex-column align-items-center">
                                 <input
@@ -111,24 +122,24 @@
 </template>
 
 <style scoped>
-    .modal-content {
-        background: rgb(40,40,41);
-        color: rgb(228,228,228);
-        .modal-header {
-            border-color: rgb(75,75,75);
-        }
-        .modal-footer {
-            border-color: rgb(75,75,75);
-        }
+.modal-content {
+    background: rgb(40, 40, 41);
+    color: rgb(228, 228, 228);
+    .modal-header {
+        border-color: rgb(75, 75, 75);
     }
-    .form-control {
-        border-color: rgb(75,75,75) !important;
-        color: rgb(228,228,228) !important;
-        max-width: 600px !important;
+    .modal-footer {
+        border-color: rgb(75, 75, 75);
+    }
+}
+.form-control {
+    border-color: rgb(75, 75, 75) !important;
+    color: rgb(228, 228, 228) !important;
+    max-width: 600px !important;
 
-        &:focus {
-            box-shadow: none;
-            border-color: #ff2667 !important;
-        }
+    &:focus {
+        box-shadow: none;
+        border-color: #ff2667 !important;
     }
+}
 </style>

@@ -285,6 +285,10 @@
       <path value="$PROJECT_DIR$/backend/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/backend/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/backend/vendor/smi2/phpclickhouse" />
+      <path value="$PROJECT_DIR$/backend/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/backend/vendor/laravel/cashier" />
+      <path value="$PROJECT_DIR$/backend/vendor/moneyphp/money" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.5" />

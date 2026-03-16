@@ -172,7 +172,7 @@ class ReleaseService
         $release->save();
     }
 
-    public function getArtistLatest($artistId): Release
+    public function getArtistLatest($artistId): Release | null
     {
         return Release::where('user_id', $artistId)
             ->where('status', 'published')

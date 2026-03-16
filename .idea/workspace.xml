@@ -5,8 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/SearchService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/SearchService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Subscription.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_093220_create_subscriptions_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/composer/autoload_files.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vendor/composer/installed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useVibrantPalette.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useVibrantPalette.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/settingsModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +53,8 @@
         <option value="package.json" />
         <option value="JavaScript File" />
         <option value="PHP File" />
-        <option value="Vue Composition API Component" />
         <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -303,6 +326,10 @@
       <path value="$PROJECT_DIR$/backend/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/backend/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/backend/vendor/smi2/phpclickhouse" />
+      <path value="$PROJECT_DIR$/backend/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/backend/vendor/laravel/cashier" />
+      <path value="$PROJECT_DIR$/backend/vendor/moneyphp/money" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -541,7 +568,9 @@
       <workItem from="1773405419614" duration="9358000" />
       <workItem from="1773420462636" duration="1855000" />
       <workItem from="1773635296038" duration="5522000" />
-      <workItem from="1773640942899" duration="1271000" />
+      <workItem from="1773640942899" duration="5329000" />
+      <workItem from="1773651519893" duration="11060000" />
+      <workItem from="1773675294702" duration="4376000" />
     </task>
     <servers />
   </component>

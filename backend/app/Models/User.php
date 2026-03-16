@@ -9,14 +9,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -95,5 +97,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)
             ->withPivot(['started_at', 'ends_at'])
             ->withTimestamps();
+    }
+
+    public function subscription(): HasOne
+    {
+        return $this->hasOne(Subscription::class)
+            ->where('status', 'active');
     }
 }

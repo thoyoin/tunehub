@@ -2,12 +2,14 @@
 import Header from "@/pages/artist-studio/Header.vue";
 import Content from "@/pages/artist-studio/Content.vue";
 import UploadReleaseModal from "@/pages/artist-studio/modals/UploadReleaseModal.vue";
-import { useAuthStore } from "@/stores/auth.ts";
+import { useAuthStore } from "@/stores/auth";
+import { useArtistStore } from "@/stores/artistStudio";
 import {onMounted} from "vue";
 import EditTrackModal from "@/pages/artist-studio/modals/editTrackModal.vue";
 import EditReleaseModal from "@/pages/artist-studio/modals/editReleaseModal.vue";
 
 const auth = useAuthStore();
+const artistStore = useArtistStore();
 
 onMounted(async () => {
     if (!auth.isReady) {

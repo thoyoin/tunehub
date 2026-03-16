@@ -8,6 +8,7 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\RecentlyPlayedController;
 use App\Http\Controllers\ReleaseController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/register', 'signUp');
     });
 });
+
+Route::post('/stripe/webhook', [\Laravel\Cashier\Http\Controllers\WebhookController::class, 'handleWebhook']);
 
 Route::prefix('admin')
     ->middleware(['auth:sanctum', 'admin'])
@@ -112,5 +115,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/release/{release}/publish', 'publish');
         Route::post('/releases/{release}/add', 'addToLikes');
         Route::put('/releases/{release}', 'update');
+    });
+
+    Route::controller(SubscriptionController::class)->group(function () {
+        Route::post('/user/subscribe', 'subscribe');
     });
 });
