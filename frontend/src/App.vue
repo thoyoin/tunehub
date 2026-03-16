@@ -4,13 +4,22 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
 </script>
 
 <template>
-    <div id="app" >
+    <div id="app">
         <router-view/>
         <AudioPlayer/>
     </div>
 </template>
 
 <style lang="scss">
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.1s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
     .bg-minor {
         background-color: rgba(50,50,51, 15%) !important;
         backdrop-filter: blur(8px) !important;
@@ -298,6 +307,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         display: flex;
         flex-direction: column;
         height: 100%;
+        cursor: default;
     }
     .custom-popover {
         --bs-popover-max-width: 200px !important;

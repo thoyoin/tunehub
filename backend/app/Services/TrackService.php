@@ -69,12 +69,15 @@ class TrackService
         $rows = $this->clickhouse->select("
             SELECT
                 track_id,
-                plays
+                sum(plays) as plays
                 FROM track_plays_total
-            WHERE track_artist_id = $artistId
+            WHERE track_artist_id = {artistId:UInt64}
+            GROUP BY track_id
             ORDER BY plays DESC
             LIMIT 10
-        ")->rows();
+        ", [
+            'artistId' => $artistId,
+        ])->rows();
 
         $tracks = Track::whereIn('id', array_column($rows, 'track_id'))
             ->with('release')

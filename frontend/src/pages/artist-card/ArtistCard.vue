@@ -7,6 +7,7 @@ import { useAuthStore } from "@/stores/auth.ts";
 import { useArtistCardStore } from "@/stores/artistCard.ts";
 import { useRoute } from "vue-router";
 import SettingsModal from "@/pages/home/modals/settingsModal.vue";
+import AuthenticateModal from "@/pages/release/modals/authenticateModal.vue";
 
 const route = useRoute();
 const auth = useAuthStore();
@@ -16,16 +17,17 @@ onMounted(async () => {
     if (!auth.isReady) {
         await auth.fetchUser();
     }
-    if (artistCardStore.artist) {
-        await artistCardStore.fetchLatestRelease();
-        await artistCardStore.fetchTopSongs()
-    }
-});
+})
 
 watch(
     () => route.params.artistId,
     async (id) => {
-        await artistCardStore.fetchArtist(id);
+        if (id) {
+            await artistCardStore.fetchArtist(id);
+            await artistCardStore.fetchLatestRelease();
+            await artistCardStore.fetchTopSongs();
+            await artistCardStore.fetchAlbums();
+        }
     },
     { immediate: true },
 );
@@ -37,6 +39,7 @@ watch(
         <Header />
         <Library />
         <settings-modal v-if="auth.user" />
+        <authenticate-modal />
     </div>
 </template>
 

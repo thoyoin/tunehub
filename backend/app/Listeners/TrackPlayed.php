@@ -27,7 +27,8 @@ class TrackPlayed implements ShouldQueue
                 $event->userId,
                 now()->timestamp,
                 $event->trackArtistId,
+                $event->releaseId
             ]
-        ], ['track_id', 'user_id', 'played_at', 'track_artist_id']);
+        ], ['track_id', 'user_id', 'played_at', 'track_artist_id', 'release_id']);
     }
 }

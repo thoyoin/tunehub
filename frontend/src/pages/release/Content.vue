@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth.ts'
 import { useReleaseStore } from '@/stores/release.ts'
 import { useLibraryStore } from '@/stores/library.ts'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+import { useRouter } from 'vue-router'
 import { watch } from 'vue'
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
@@ -13,6 +14,7 @@ import { useVibrantPalette } from '@/composables/useVibrantPalette.ts'
 const auth = useAuthStore()
 const releaseStore = useReleaseStore()
 const libraryStore = useLibraryStore()
+const router = useRouter()
 const { palette, getCoverPalette } = useVibrantPalette()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
@@ -80,9 +82,14 @@ watch(
                         ></h1>
                         <div class="d-flex flex-row align-items-center mb-2">
                             <h3
-                                style="opacity: 10"
+                                style="opacity: 10; cursor: pointer"
                                 class="ms-4 m-0 fs-5 fw-bold"
                                 v-text="releaseStore.pickedRelease?.artist"
+                                @click="
+                                    router.push({
+                                    name: 'artist',
+                                    params: { artistId: releaseStore.pickedRelease?.user_id},
+                                })"
                             ></h3>
                             <img
                                 class="opacity-50"

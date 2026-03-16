@@ -1,3 +1,5 @@
+import type { Release } from "@/types/Release";
+
 export interface Track {
     added_ago: string | null;
     artist: string;
@@ -24,5 +26,7 @@ export interface Track {
             created_at: string;
             updated_at: string;
         }
-    }
+    };
+    release?: Release;
+    plays?: number;
 }

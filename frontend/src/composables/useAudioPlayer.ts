@@ -3,6 +3,8 @@ import api from '@/lib/api.js'
 import type { Track } from "@/types/Track"
 import type { Item } from "@/types/Item"
 import type { AudioPlayerSingleton } from "@/types/AudioPlayerSingleton";
+import type {Release} from "@/types/Release";
+import type {Playlist} from "@/types/Playlist";
 
 let singleton: AudioPlayerSingleton | null = null;
 
@@ -19,7 +21,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
     const volume = ref<number>(0.1)
     const isMuted = ref<boolean>(false)
     const hasTrack = computed(() => !!currentTrack.value)
-    const currentContext = ref<Item | null>(null)
+    const currentContext = ref<Release | Playlist | null>(null)
     const hasBeenListened = ref(false)
     const listenedTimeout = ref<number | null>(null)
 
@@ -38,7 +40,12 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
             if (hasBeenListened.value) return
             hasBeenListened.value = true
 
-            const payload = { ...currentContext.value, track_id: track.id, track_artist_id: track.user_id }
+            const payload = {
+                ...currentContext.value,
+                track_id: track.id,
+                track_artist_id: track.user_id,
+                release_id: track.release_id ?? null
+            }
 
             await api.post('/api/recentlyPlayed', payload)
         // }, 20000)
@@ -86,7 +93,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
         }
     }, { immediate: true })
 
-    function playTrack(track: Track, newQueue: Track[], item: Item | null) {
+    function playTrack(track: Track, newQueue: Track[], item: Release | Playlist) {
         if (!audioRef.value) return
 
         if (newQueue.length) queue.value = newQueue
@@ -122,7 +129,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
         audioRef.value.volume = isMuted.value ? 0 : volume.value
     }
 
-    function toggleTrack(track: Track, newQueue: Track[], item: Item | null) {
+    function toggleTrack(track: Track, newQueue: Track[], item: Release | Playlist) {
         if (currentTrack.value?.id === track.id) {
             toggle()
         } else {

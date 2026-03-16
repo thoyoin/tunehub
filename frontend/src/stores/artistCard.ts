@@ -7,11 +7,15 @@ import type { Track } from "@/types/Track";
 
 export const useArtistCardStore = defineStore('artistCard', () => {
     const isLoading = ref<boolean>(false);
+    const isReleaseLoading = ref<boolean>(false);
+    const areReleasesLoading = ref<boolean>(false);
+    const areSongsLoading = ref<boolean>(false);
     const artist = ref<User | null>(null);
     const artistLatestRelease = ref<Release | null>(null);
     const artistTopSongs = ref<Track[] | null>(null);
+    const artistAlbums = ref<Release[] | null>(null);
 
-    const fetchArtist = async (id: number) => {
+    const fetchArtist = async (id: string | number) => {
         try {
             isLoading.value = true;
 
@@ -29,38 +33,54 @@ export const useArtistCardStore = defineStore('artistCard', () => {
 
     const fetchLatestRelease = async () => {
         try {
-            isLoading.value = true;
+            isReleaseLoading.value = true;
 
             const response = await api.get<{
                 latestRelease: Release
-            }>(`/api/artist/${artist.value.id}/releases/latest`);
+            }>(`/api/artist/${artist.value?.id}/releases/latest`);
 
             artistLatestRelease.value = response.data.latestRelease
         } catch (e) {
             console.log(e);
         } finally {
-            isLoading.value = false;
+            isReleaseLoading.value = false;
         }
     }
 
     const fetchTopSongs = async () => {
         try {
-            isLoading.value = true;
+            areSongsLoading.value = true;
 
             const response = await api.get<{
                 topTracks: Track[]
-            }>(`/api/artist/${artist.value.id}/tracks/top`)
+            }>(`/api/artist/${artist.value?.id}/tracks/top`)
 
             artistTopSongs.value = response.data.topTracks
         } catch (e) {
             console.log(e);
         } finally {
-            isLoading.value = false;
+            areSongsLoading.value = false;
+        }
+    }
+
+    const fetchAlbums = async () => {
+        try {
+            areReleasesLoading.value = true;
+
+            const response = await api.get<{
+                albums: Release[]
+            }>(`/api/artist/${artist.value?.id}/albums`)
+
+            artistAlbums.value = response.data.albums
+        } catch (e) {
+            console.log(e);
+        } finally {
+            isReleaseLoading.value = false;
         }
     }
 
     return {
         isLoading, fetchArtist, artist, artistLatestRelease, fetchLatestRelease, fetchTopSongs,
-        artistTopSongs,
+        artistTopSongs, areSongsLoading, isReleaseLoading, fetchAlbums, artistAlbums,
     }
 })

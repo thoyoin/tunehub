@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\ArtistService;
 use App\Services\ReleaseService;
 use App\Services\TrackService;
 use Illuminate\Http\JsonResponse;
@@ -33,6 +34,15 @@ class ArtistController extends Controller
 
         return response()->json([
             'topTracks' => $tracks,
+        ]);
+    }
+
+    public function getAlbums(User $artist, ArtistService $artistService): JsonResponse
+    {
+        $albums = $artistService->getAlbums($artist->id);
+
+        return response()->json([
+            'albums' => $albums,
         ]);
     }
 }

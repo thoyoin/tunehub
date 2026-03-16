@@ -27,7 +27,10 @@ export const useReleaseStore = defineStore('release', () => {
         try {
             isLoading.value = true;
 
-            const response = await api.get<[Release, Track[]]>(`/api/release/${id}`)
+            const response = await api.get<{
+                release: Release,
+                tracks: Track[]
+            }>(`/api/release/${id}`)
 
             pickedRelease.value = response.data.release;
             releaseTracks.value = response.data.tracks;

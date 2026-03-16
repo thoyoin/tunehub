@@ -50,6 +50,7 @@ Route::controller(ArtistController::class)->group(function () {
     Route::get('/artist/{artist}/releases/latest', 'getLatestRelease');
     Route::get('/artist/{artist}', 'getArtist');
     Route::get('/artist/{artist}/tracks/top', 'getTopTracks');
+    Route::get('/artist/{artist}/albums', 'getAlbums');
 });
 
 Route::controller(ReleaseController::class)->group(function () {

@@ -1,6 +1,8 @@
 import type { Track } from "@/types/Track";
 import type { Item } from "@/types/Item";
 import type { ComputedRef, Ref } from "vue";
+import type { Release } from "@/types/Release";
+import type { Playlist } from "@/types/Playlist";
 
 export interface AudioPlayerSingleton {
     currentTrack: Ref<Track | null>
@@ -15,12 +17,12 @@ export interface AudioPlayerSingleton {
     hasNext: ComputedRef<boolean>
     hasPrev: ComputedRef<boolean>
     hasTrack: ComputedRef<boolean>
-    currentContext: Ref<Item | null>
+    currentContext: Ref<Release | Playlist | null>
 
-    playTrack: (track: Track, newQueue: Track[], item: Item) => void
+    playTrack: (track: Track, newQueue: Track[], item: Release | Playlist) => void
     toggle: () => void
     toggleVolume: () => void
-    toggleTrack: (track: Track, newQueue: Track[], item: Item) => void
+    toggleTrack: (track: Track, newQueue: Track[], item: Release | Playlist) => void
     next: () => void
     prev: () => void
     seek: (e: MouseEvent) => void
