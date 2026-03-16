@@ -87,4 +87,13 @@ class AnalyticsController
             'topArtists' => $result
         ]);
     }
+
+    public function getTopReleases(AnalyticsService $analytics): JsonResponse
+    {
+        $result = $analytics->getTopReleases();
+
+        return response()->json([
+            'topReleases' => $result
+        ]);
+    }
 }

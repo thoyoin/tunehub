@@ -18,4 +18,5 @@ export interface Release {
     user_id: number;
     user: User;
     tracks: Track[];
+    plays?: number;
 }

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import Content from "@/pages/admin/overview/Content.vue";
+import ReleaseViewModal from "@/pages/admin/modals/ReleaseViewModal.vue";
 </script>
 
 <template>
     <div class="app-wrapper">
         <Content />
+        <release-view-modal/>
     </div>
 </template>
 

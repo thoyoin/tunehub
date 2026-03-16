@@ -5,14 +5,14 @@ import growthUp from "@/assets/svg/growth-up.svg";
 import growthDown from "@/assets/svg/growth-down.svg";
 import StreamsCharts from "@/pages/admin/overview/charts/StreamsCharts.vue";
 import UserGrowthCharts from "@/pages/admin/overview/charts/UserGrowthCharts.vue";
+import { useModerationStore } from "@/stores/AdminPanel/moderation";
 
 const overviewStore = useOverviewStore();
+const moderationStore = useModerationStore();
 
 onMounted(async () => {
     await overviewStore.fetchAllAnalytics();
 });
-
-
 
 </script>
 
@@ -224,6 +224,50 @@ onMounted(async () => {
                         </div>
                         <div>
                             <span class="fw-bolder">{{ artist.streams }}</span>
+                            <span class="fw-normal"> streams</span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="mt-4 border px-4 pb-4">
+            <div class="d-flex flex-column align-items-start">
+                <span class="mt-4 fw-bold fs-5">Top Releases</span>
+            </div>
+            <div>
+                <template v-for="release in overviewStore.topReleases">
+                    <div
+                        data-bs-toggle="modal"
+                        data-bs-target="#releaseViewModal"
+                        @click="moderationStore.setViewRelease(release)"
+                        class="border artist-row mt-3 mb-2 p-3 d-flex flex-row
+                            justify-content-between align-items-center
+                        "
+                    >
+                        <div class="d-flex flex-row align-items-center">
+                            <img
+                                style="width: 35px;height: 35px;"
+                                class="rounded-circle me-3"
+                                :src="release.cover_url"
+                                alt=""
+                            >
+                            <div class="d-flex flex-column">
+                                <span
+                                    style="line-height: 18px"
+                                    class="fw-bold"
+                                >
+                                    {{ release.title }}
+                                </span>
+                                <span
+                                    style="line-height: 18px;font-size: 15px"
+                                    class="fw-normal opacity-50"
+                                >
+                                    {{ release.artist }}
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="fw-bolder">{{ release.plays }}</span>
                             <span class="fw-normal"> streams</span>
                         </div>
                     </div>

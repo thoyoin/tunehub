@@ -43,6 +43,7 @@ Route::prefix('admin')
             Route::get('/plays/month', 'getMonthPlays');
             Route::get('/userGrowth', 'getUserGrowth');
             Route::get('/topArtists', 'getTopArtists');
+            Route::get('/topReleases', 'getTopReleases');
         });
     });
 

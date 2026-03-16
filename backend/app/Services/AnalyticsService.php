@@ -137,11 +137,11 @@ class AnalyticsService
             GROUP BY artist_id
             ORDER BY streams DESC
             LIMIT 10
-        ")
-            ->rows();
+        ")->rows();
 
         $artists = User::whereIn('id', array_column($top, 'artist_id'))
-            ->get()->keyBy('id');
+            ->get()
+            ->keyBy('id');
 
         return collect($top)->map(function ($row) use ($artists) {
             $artist = $artists[$row['artist_id']];
@@ -151,5 +151,31 @@ class AnalyticsService
                 'streams' => $row['streams'],
             ];
         });
+    }
+
+    public function getTopReleases(): Collection
+    {
+        $rows = $this->clickhouse->select("
+            SELECT
+                release_id,
+                sum(plays) AS plays
+                FROM release_streams
+            GROUP BY release_id
+            ORDER BY plays DESC
+            LIMIT 10
+        ")->rows();
+
+        $releases = Release::whereIn('id', array_column($rows, 'release_id'))
+            ->with('user', 'tracks')
+            ->get()
+            ->keyBy('id');
+
+        foreach ($rows as $row) {
+            $releases[$row['release_id']]->plays = $row['plays'];
+        }
+
+        return collect(array_column($rows, 'release_id'))
+            ->map(fn ($id) => $releases[$id])
+            ->values();
     }
 }
