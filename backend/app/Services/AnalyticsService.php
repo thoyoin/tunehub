@@ -140,6 +140,7 @@ class AnalyticsService
         ")->rows();
 
         $artists = User::whereIn('id', array_column($top, 'artist_id'))
+            ->with('roles', 'tracks', 'playlists')
             ->get()
             ->keyBy('id');
 

@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/AnalyticsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AdminPanel/AnalyticsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Services/AnalyticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/AnalyticsService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Overview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/admin/overview/Overview.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/Release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/Release.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -546,7 +542,8 @@
       <workItem from="1773325323770" duration="13232000" />
       <workItem from="1773405419614" duration="9358000" />
       <workItem from="1773420462636" duration="1855000" />
-      <workItem from="1773635296038" duration="5395000" />
+      <workItem from="1773635296038" duration="5522000" />
+      <workItem from="1773640942899" duration="1051000" />
     </task>
     <servers />
   </component>

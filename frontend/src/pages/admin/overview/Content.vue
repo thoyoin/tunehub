@@ -6,9 +6,11 @@ import growthDown from "@/assets/svg/growth-down.svg";
 import StreamsCharts from "@/pages/admin/overview/charts/StreamsCharts.vue";
 import UserGrowthCharts from "@/pages/admin/overview/charts/UserGrowthCharts.vue";
 import { useModerationStore } from "@/stores/AdminPanel/moderation";
+import { useUsersStore } from "@/stores/AdminPanel/users";
 
 const overviewStore = useOverviewStore();
 const moderationStore = useModerationStore();
+const usersStore = useUsersStore();
 
 onMounted(async () => {
     await overviewStore.fetchAllAnalytics();
@@ -207,6 +209,9 @@ onMounted(async () => {
             <div>
                 <template v-for="artist in overviewStore.topArtists">
                     <div
+                        data-bs-toggle="modal"
+                        data-bs-target="#userProfileModal"
+                        @click="usersStore.setViewUser(artist.artist)"
                         class="border artist-row mt-3 mb-2 p-3 d-flex flex-row
                             justify-content-between align-items-center
                         "
