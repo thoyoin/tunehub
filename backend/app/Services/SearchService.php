@@ -29,6 +29,7 @@ class SearchService
                 ->limit(10)
                 ->get(),
             'playlists' => Playlist::where('title', 'LIKE', "%{$query}%")
+                ->where('visibility', 'public')
                 ->with('user')
                 ->limit(10)
                 ->get(),
