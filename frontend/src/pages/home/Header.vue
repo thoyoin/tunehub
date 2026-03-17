@@ -208,7 +208,7 @@ const routeHome = () => {
             </div>
             <div class="d-flex flex-row align-items-center">
                 <template v-if="auth.user">
-                    <template v-if="auth.user?.roles[0]?.slug === 'user'">
+                    <template v-if="!auth.user?.is_subscribed">
                         <button
                             @click="
                                 router.push({
@@ -220,7 +220,7 @@ const routeHome = () => {
                             Upgrade now
                         </button>
                     </template>
-                    <template v-else-if="auth.user?.roles[0]?.slug === 'premium'">
+                    <template v-else>
                         <button
                             @click="router.push('/artists')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"
@@ -228,7 +228,7 @@ const routeHome = () => {
                             Artist Studio
                         </button>
                     </template>
-                    <template v-else>
+                    <template v-if="auth.user?.roles[0]?.slug === 'admin'">
                         <button
                             @click="router.push('/admin/overview')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"
@@ -265,17 +265,19 @@ const routeHome = () => {
                         <form method="POST" @submit.prevent="logout">
                             <ul class="dropdown-menu">
                                 <li>
-                                    <button
-                                        type="button"
-                                        class="dropdown-item"
-                                        @click="
-                                            router.push({
-                                            name: 'artist',
-                                            params: { artistId: auth.user?.id},
-                                        })"
-                                    >
-                                        Profile
-                                    </button>
+                                    <template v-if="auth.user?.is_subscribed">
+                                        <button
+                                            type="button"
+                                            class="dropdown-item"
+                                            @click="
+                                                router.push({
+                                                name: 'artist',
+                                                params: { artistId: auth.user?.id},
+                                            })"
+                                        >
+                                            Profile
+                                        </button>
+                                    </template>
                                     <button
                                         type="button"
                                         class="dropdown-item"

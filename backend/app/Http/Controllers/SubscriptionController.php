@@ -9,19 +9,22 @@ use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
 {
-    public function subscribe(Request $request): JsonResponse
+    public function goToCheckout(Request $request): JsonResponse
     {
         $user = $request->user();
 
-        $subscription = $user->newSubscription('premium', 'price_1TBa6jLLiCzKtruSYomynytQ')
-            ->create($request->payment_method);
+        $priceId = $request->input('price_id');
 
-        $subscription->update([
-            'ends_at' => now()->addMonth(),
-        ]);
+        $user->createOrGetStripeCustomer();
+
+        $checkout = $user->newSubscription('premium', $priceId)
+            ->checkout([
+                'success_url' => 'http://127.0.0.1:5175/subscription/success',
+                'cancel_url' => 'http://127.0.0.1:5175/subscription/cancel',
+            ]);
 
         return response()->json([
-            'message' => 'Subscription successfully created',
+            'url' => $checkout->url
         ]);
     }
 }

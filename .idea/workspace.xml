@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="">
+    <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Auth/GetAuthUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Auth/GetAuthUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-card/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-card/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/subscription/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/subscription/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/subscription/Subscription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/subscription/Subscription.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/subscription/modals/SubscribeModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/subscription/modals/SubscribeModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/subscription.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/subscription.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/User.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -547,6 +560,8 @@
       <workItem from="1773640942899" duration="5329000" />
       <workItem from="1773651519893" duration="11060000" />
       <workItem from="1773675294702" duration="5462000" />
+      <workItem from="1773720100355" duration="4658000" />
+      <workItem from="1773740373253" duration="6669000" />
     </task>
     <servers />
   </component>

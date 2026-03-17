@@ -1,9 +1,9 @@
 <script setup lang="ts">
     import Header from "@/pages/home/Header.vue";
     import { onMounted } from 'vue'
-    import { useAuthStore } from '@/stores/auth.ts'
-    import { useLibraryStore } from "@/stores/library.ts";
-    import { useRecentlyPlayedStore } from '@/stores/recentlyPlayed.ts'
+    import { useAuthStore } from '@/stores/auth'
+    import { useLibraryStore } from "@/stores/library";
+    import { useRecentlyPlayedStore } from '@/stores/recentlyPlayed'
     import Library from "@/pages/home/Library.vue";
     import SettingsModal from "@/pages/home/modals/settingsModal.vue";
     import Content from "@/pages/home/Content.vue";

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useSubscriptionStore } from "@/stores/subscription";
-import { onMounted } from "vue";
 
 const router = useRouter()
-const subscriptionStore = useSubscriptionStore();
+const subscriptionStore = useSubscriptionStore()
+
+// const handleSubscriptionCheckout = async () => {
+//
+// }
 
 </script>
 
@@ -13,6 +16,16 @@ const subscriptionStore = useSubscriptionStore();
         style="color: rgb(228, 228, 228)"
         class="flex-grow-1 subscription-content position-relative"
     >
+        <transition name="fade">
+            <div
+                v-if="subscriptionStore.isLoading"
+                class="loading-overlay d-flex flex-column align-items-center justify-content-center"
+            >
+                <div class="fw-bold opacity-75">Creating a secure payment page</div>
+                <div class="search-spinner my-4"></div>
+                <div class="fw-bold opacity-75">wait a little bit...</div>
+            </div>
+        </transition>
         <div
             class="rounded-5"
             style="border: 1px solid rgba(228, 228, 228, 0.15); margin: 100px 50px 50px 50px; padding: 20px"
@@ -112,9 +125,9 @@ const subscriptionStore = useSubscriptionStore();
                 </div>
                 <div class="mt-4">
                     <button
-                        data-bs-toggle="modal"
-                        data-bs-target="#subscribeModal"
                         class="btn btn-subscription w-100"
+                        @click="subscriptionStore.goToCheckout()"
+                        :disabled="subscriptionStore.isLoading"
                     >
                         Choose Premium
                     </button>
@@ -132,6 +145,32 @@ const subscriptionStore = useSubscriptionStore();
     overflow-y: auto !important;
     padding: 0 30px 150px 30px !important;
     min-height: 0 !important;
+}
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(32, 32, 32, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    pointer-events: auto;
+    user-select: none;
+}
+.search-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(228, 228, 228, 0.2);
+    border-top: 2px solid rgb(158, 23, 63);
+    border-radius: 50%;
+    animation: spin 0.4s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 .btn-subscription {
     background-color: rgba(32,32,32, 30%) !important;

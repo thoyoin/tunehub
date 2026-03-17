@@ -44,7 +44,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = ['joined_at'];
+    protected $appends = [
+        'joined_at',
+        'is_subscribed'
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -56,6 +59,11 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function getIsSubscribedAttribute(): bool
+    {
+        return $this->subscribed('premium');
     }
 
     public function getJoinedAtAttribute(): ?string
@@ -97,11 +105,5 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)
             ->withPivot(['started_at', 'ends_at'])
             ->withTimestamps();
-    }
-
-    public function subscription(): HasOne
-    {
-        return $this->hasOne(Subscription::class)
-            ->where('status', 'active');
     }
 }

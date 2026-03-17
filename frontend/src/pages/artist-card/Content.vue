@@ -265,12 +265,13 @@ const handleGetRelease = async () => {
     min-height: 0 !important;
 }
 .loading-overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: rgba(32, 32, 32, 0.5);
     backdrop-filter: blur(4px);
     z-index: 1000;
-    pointer-events: none;
+    pointer-events: auto;
+    user-select: none;
 }
 .search-spinner {
     width: 18px;

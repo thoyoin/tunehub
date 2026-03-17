@@ -15,4 +15,5 @@ export interface User {
     playlists: Playlist[]
     tracks: Track[]
     roles: Role[]
+    is_subscribed: boolean
 }

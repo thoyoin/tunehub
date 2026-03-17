@@ -12,6 +12,8 @@ import Release from "@/pages/release/Release.vue";
 import Playlists from "@/pages/admin/playlists/Playlists.vue";
 import ArtistCard from "@/pages/artist-card/ArtistCard.vue";
 import Subscription from "@/pages/subscription/Subscription.vue";
+import SubscriptionSuccess from "@/pages/subscription/SubscriptionSuccess.vue";
+import SubscriptionCancel from "@/pages/subscription/SubscriptionCancel.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +54,16 @@ const router = createRouter({
           component: ArtistCard
       },
       {
+          path: '/subscription/success',
+          name: 'subscription.success',
+          component: SubscriptionSuccess,
+      },
+      {
+          path: '/subscription/cancel',
+          name: 'subscription.cancel',
+          component: SubscriptionCancel,
+      },
+      {
           path: '/artists',
           name: 'artists',
           component: ArtistStudio,
@@ -59,7 +71,7 @@ const router = createRouter({
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()
 
-              if (auth.user?.roles[0]?.slug !== 'premium') next('/');
+              if (!auth.user?.is_subscribed) next('/');
               else next();
           }
       },
