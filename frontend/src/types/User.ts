@@ -1,6 +1,33 @@
 import type { Playlist } from './Playlist.js'
 import type { Track } from './Track.js'
 import type { Role } from './Role.js'
+import Subscription from "@/pages/subscription/Subscription.vue";
+
+interface Subscription {
+    created_at: string
+    ends_at: string | null
+    id: number
+    quantity: number
+    stripe_id: string
+    stripe_price: string
+    stripe_status: string
+    trial_ends_at: string | null
+    type: string
+    updated_at: string
+    user_id: number
+    item?: {
+        created_at: string
+        updated_at: string
+        id: number
+        meter_event_name: string | null
+        meter_id: number | null
+        quantity: number
+        stripe_id: string
+        stripe_price: string
+        stripe_product: string
+        subscription_id: number
+    }
+}
 
 export interface User {
     id: number
@@ -16,4 +43,5 @@ export interface User {
     tracks: Track[]
     roles: Role[]
     is_subscribed: boolean
+    subscriptions: Subscription[]
 }

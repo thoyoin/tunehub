@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
-import {ref} from "vue";
+import { ref } from "vue";
 import api from "@/lib/api";
+import type { Subscription } from "@/types/Subscription";
 
 export const useSubscriptionStore = defineStore('subscription', () => {
     const isLoading = ref<boolean>(false);
+    const subscriptionDetails = ref<Subscription | null>(null);
 
     const goToCheckout = async () => {
         isLoading.value = true;
@@ -21,5 +23,21 @@ export const useSubscriptionStore = defineStore('subscription', () => {
         }
     }
 
-    return { isLoading, goToCheckout };
+    const getSubscriptionDetails = async () => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.get<{
+                details: Subscription
+            }>('/api/subscription/details')
+
+            subscriptionDetails.value = response.data.details
+        } catch (e) {
+            console.error(e)
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    return { isLoading, goToCheckout, getSubscriptionDetails, subscriptionDetails };
 })

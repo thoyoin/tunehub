@@ -5,10 +5,6 @@ import { useSubscriptionStore } from "@/stores/subscription";
 const router = useRouter()
 const subscriptionStore = useSubscriptionStore()
 
-// const handleSubscriptionCheckout = async () => {
-//
-// }
-
 </script>
 
 <template>
@@ -40,6 +36,8 @@ const subscriptionStore = useSubscriptionStore()
                 <button
                     style="max-width: 120px"
                     class="btn btn-subscription mt-4"
+                    @click="subscriptionStore.goToCheckout()"
+                    :disabled="subscriptionStore.isLoading"
                 >
                     Get Started
                 </button>

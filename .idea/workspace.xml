@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/SubscriptionModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Auth/GetAuthUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Auth/GetAuthUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-card/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-card/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/subscription/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/subscription/Content.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/subscription/Subscription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/subscription/Subscription.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/subscription/modals/SubscribeModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/subscription/modals/SubscribeModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/subscription/modals/SubscribeModal.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/stores/subscription.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/subscription.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/types/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/User.ts" afterDir="false" />
     </list>
@@ -42,8 +40,8 @@
         <option value="package.json" />
         <option value="JavaScript File" />
         <option value="PHP File" />
-        <option value="TypeScript File" />
         <option value="Vue Composition API Component" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -325,6 +323,9 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="37YbfpXHJ0qYQV4i4pKmDX07Igr" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -339,7 +340,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/src/assets/svg&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/src/pages/home/modals&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -366,18 +367,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/pages/home/modals" />
       <recent name="$PROJECT_DIR$/frontend/src/assets/svg" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/release/modals" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/playlist/modals" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Playlist" />
-      <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/assets/svg" />
+      <recent name="$PROJECT_DIR$/frontend/src/assets/pdf" />
       <recent name="$PROJECT_DIR$/frontend/src/stores/Admin" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/admin/users" />
       <recent name="$PROJECT_DIR$/frontend/src/pages/Release" />
-      <recent name="$PROJECT_DIR$/backend" />
-      <recent name="$PROJECT_DIR$/frontend/src/pages/Home" />
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.Main">
@@ -561,7 +562,8 @@
       <workItem from="1773651519893" duration="11060000" />
       <workItem from="1773675294702" duration="5462000" />
       <workItem from="1773720100355" duration="4658000" />
-      <workItem from="1773740373253" duration="6669000" />
+      <workItem from="1773740373253" duration="11962000" />
+      <workItem from="1773806189139" duration="9285000" />
     </task>
     <servers />
   </component>

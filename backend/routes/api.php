@@ -120,6 +120,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/user/subscribe', 'subscribe');
         Route::post('/subscription/checkout', 'goToCheckout');
+        Route::get('/subscription/details', 'getDetails');
     });
 });
 Route::controller(SubscriptionController::class)->group(function () {

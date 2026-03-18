@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     protected $appends = [
         'joined_at',
-        'is_subscribed'
+        'is_subscribed',
     ];
 
     /**

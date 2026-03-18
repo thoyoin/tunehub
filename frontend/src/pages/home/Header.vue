@@ -2,14 +2,14 @@
 import { useAuthStore } from '@/stores/auth.ts'
 import { useLibraryStore } from '@/stores/library.ts'
 import { useSearchStore } from '@/stores/search.ts'
-import { useReleaseStore } from '@/stores/release.ts'
+import { useSubscriptionStore } from '@/stores/subscription.ts'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import { ref } from "vue";
 
 const router = useRouter()
 const auth = useAuthStore()
 const libraryStore = useLibraryStore()
+const subscriptionStore = useSubscriptionStore()
 const searchStore = useSearchStore()
 const toast = useToast()
 
@@ -264,20 +264,33 @@ const routeHome = () => {
                         </a>
                         <form method="POST" @submit.prevent="logout">
                             <ul class="dropdown-menu">
-                                <li>
-                                    <template v-if="auth.user?.is_subscribed">
+                                <template v-if="auth.user?.is_subscribed">
+                                    <li>
                                         <button
                                             type="button"
                                             class="dropdown-item"
                                             @click="
-                                                router.push({
-                                                name: 'artist',
-                                                params: { artistId: auth.user?.id},
-                                            })"
+                                                    router.push({
+                                                    name: 'artist',
+                                                    params: { artistId: auth.user?.id},
+                                                })"
                                         >
                                             Profile
                                         </button>
-                                    </template>
+                                    </li>
+                                    <li>
+                                        <button
+                                            @click="subscriptionStore.getSubscriptionDetails()"
+                                            type="button"
+                                            class="dropdown-item"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#subscriptionModal"
+                                        >
+                                            Subscription
+                                        </button>
+                                    </li>
+                                </template>
+                                <li>
                                     <button
                                         type="button"
                                         class="dropdown-item"

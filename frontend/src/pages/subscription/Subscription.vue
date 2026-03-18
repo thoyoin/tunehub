@@ -2,7 +2,6 @@
 import Header from "@/pages/subscription/Header.vue";
 import SettingsModal from "@/pages/home/modals/settingsModal.vue";
 import Content from "@/pages/subscription/Content.vue";
-import SubscribeModal from "@/pages/subscription/modals/SubscribeModal.vue";
 import { useAuthStore } from "@/stores/auth";
 import { onMounted } from "vue";
 
@@ -20,7 +19,6 @@ onMounted(async () => {
     <div class="app-wrapper">
         <Header/>
         <settings-modal/>
-        <subscribe-modal/>
         <Content/>
     </div>
 </template>

@@ -7,6 +7,7 @@
     import Library from "@/pages/home/Library.vue";
     import SettingsModal from "@/pages/home/modals/settingsModal.vue";
     import Content from "@/pages/home/Content.vue";
+    import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
 
     const auth = useAuthStore()
     const libraryStore = useLibraryStore()
@@ -28,6 +29,7 @@
         <Library/>
         <Content/>
         <settings-modal v-if="auth.user"/>
+        <subscription-modal v-if="auth.user && auth.user?.is_subscribed"/>
     </div>
 </template>
 
