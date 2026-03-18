@@ -79,4 +79,13 @@ class SubscriptionController extends Controller
             'details' => $data,
         ]);
     }
+
+    public function goToBillingPortal(Request $request): JsonResponse
+    {
+        $url = $request->user()->billingPortalUrl(env('APP_URL') . '/');
+
+        return response()->json([
+            'url' => $url
+        ]);
+    }
 }

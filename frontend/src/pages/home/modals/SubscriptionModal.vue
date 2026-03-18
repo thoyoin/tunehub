@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/auth";
 import { useSubscriptionStore } from "@/stores/subscription";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 
 const auth = useAuthStore();
 const subscriptionStore = useSubscriptionStore();
 
 const expires = computed(
     () =>
-        "0" +
         subscriptionStore.subscriptionDetails?.card.exp_month +
         "/" +
         (subscriptionStore.subscriptionDetails?.card.exp_year % 100),
@@ -23,7 +22,7 @@ const expires = computed(
         aria-labelledby="subscriptionModalTitle"
         aria-hidden="true"
     >
-        <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-dialog sm modal-dialog-centered">
             <div class="modal-content">
                 <transition name="fade">
                     <div
@@ -42,10 +41,10 @@ const expires = computed(
                     </h1>
                 </div>
                 <div class="modal-body">
-                    <div class="d-flex flex-row align-items-center justify-content-between">
+                    <div class="d-flex flex-row align-items-center justify-content-evenly">
                         <img
                             class="rounded-4 me-2"
-                            style="width: 90px; height: 90px"
+                            style="width: 100px; height: 100px"
                             :src="auth.user?.profile_picture"
                             alt="cover"
                         />
@@ -68,17 +67,16 @@ const expires = computed(
                         <div></div>
                     </div>
                     <div class="mt-3" style="border-top: 1px solid rgba(228, 228, 228, 0.15)">
-                        <div class="pt-1 fw-bold">Subscription details</div>
-                        <div class="row d-flex flex-row mb-2">
+                        <div class="row d-flex flex-row my-2">
                             <div class="col d-flex flex-column">
                                 <span class="opacity-50">Plan</span>
-                                <span class="fs-5 fw-bold" style="color: rgb(158, 23, 63)">
+                                <span class="fs-5 fw-bold">
                                     {{ auth.user?.subscriptions[0]?.type }}
                                 </span>
                             </div>
                             <div class="col d-flex flex-column">
                                 <span class="opacity-50">Next Billing</span>
-                                <span class="fs-5 fw-bold" style="color: rgb(158, 23, 63)">
+                                <span class="fs-5 fw-bold">
                                     {{ subscriptionStore.subscriptionDetails?.next_billing }}
                                 </span>
                             </div>
@@ -86,70 +84,87 @@ const expires = computed(
                         <div class="row d-flex flex-row mb-2">
                             <div class="col d-flex flex-column">
                                 <span class="opacity-50">Price</span>
-                                <span class="fs-5 fw-bold" style="color: rgb(158, 23, 63)">
-                                    {{ subscriptionStore.subscriptionDetails?.amount / 100 }}
-                                </span>
+                                <div class="d-flex flex-row align-items-end">
+                                    <span class="fs-5 fw-bold">
+                                        ${{ subscriptionStore.subscriptionDetails?.amount / 100 }}
+                                    </span>
+                                    <span style="margin-left:3px" class="fw-bold">
+                                        / {{ subscriptionStore.subscriptionDetails?.interval }}
+                                    </span>
+                                </div>
                             </div>
                             <div class="col d-flex flex-column">
                                 <span class="opacity-50">Status</span>
-                                <span class="fs-5 fw-bold" style="color: rgb(158, 23, 63)">
+                                <span class="fs-5 fw-bold">
                                     {{ auth.user?.subscriptions[0]?.stripe_status }}
                                 </span>
                             </div>
                         </div>
-                        <div class="mt-3" style="border-top: 1px solid rgba(228, 228, 228, 0.15)">
-                            <div class="py-1 fw-bold d-flex flex-row gap-2 align-items-center">
+                        <div class="" style="border-top: 1px solid rgba(228, 228, 228, 0.15)">
+                            <div class="py-2 fw-bold d-flex flex-row gap-2 align-items-center">
                                 <span>Payment Method</span>
                                 <img src="@/assets/svg/credit.svg" alt="" />
                             </div>
                             <div class="d-flex flex-column gap-1 card-element">
-                                <div class="d-flex flex-row align-items-center">
-                                    <template v-if="subscriptionStore.subscriptionDetails?.card.brand === 'mastercard'">
-                                        <img
-                                            class="me-1"
-                                            style="width: 30px"
-                                            src="@/assets/svg/ma_symbol.svg"
-                                            alt="mastercard"
-                                        >
-                                    </template>
-                                    <template v-else>
-                                        <img
-                                            class="me-1"
-                                            style="width: 35px"
-                                            src="@/assets/svg/visa.svg"
-                                            alt="visa"
-                                        >
-                                    </template>
-                                    <div class="d-flex flex-column">
-                                        <div class="d-flex flex-row gap-1 align-items-center">
+                                <div class="d-flex flex-row align-items-center w-100 justify-content-between">
+                                    <div class="d-flex flex-row">
+                                        <template
+                                            v-if="subscriptionStore.subscriptionDetails?.card.brand === 'mastercard'">
+                                            <img
+                                                class="me-1"
+                                                style="width: 30px"
+                                                src="@/assets/svg/ma_symbol.svg"
+                                                alt="mastercard"
+                                            >
+                                        </template>
+                                        <template v-else>
+                                            <img
+                                                class="me-1"
+                                                style="width: 35px"
+                                                src="@/assets/svg/visa.svg"
+                                                alt="visa"
+                                            >
+                                        </template>
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex flex-row gap-1 align-items-center">
                                             <span>
                                                 {{
                                                     subscriptionStore.subscriptionDetails?.card
                                                         .brand
                                                 }}
                                             </span>
-                                            <span style="margin-top: 6px"> **** </span>
-                                            <span>
+                                                <span style="margin-top: 6px"> **** </span>
+                                                <span>
                                                 {{
-                                                    subscriptionStore.subscriptionDetails?.card
-                                                        .last4
-                                                }}
+                                                        subscriptionStore.subscriptionDetails?.card
+                                                            .last4
+                                                    }}
                                             </span>
-                                        </div>
-                                        <div class="d-flex flex-row">
-                                            <span> Expires {{ expires }} </span>
-                                            <span>
+                                            </div>
+                                            <div class="d-flex flex-row">
+                                                <span> Expires {{ expires }} </span>
+                                                <span>
                                                 <img
                                                     style="width: 20px"
                                                     src="@/assets/svg/dot.svg"
                                                     alt=""
-                                            /></span>
-                                            <span>
+                                                /></span>
+                                                <span>
                                                 {{
-                                                    subscriptionStore.subscriptionDetails?.card
-                                                        .country
-                                                }}
+                                                        subscriptionStore.subscriptionDetails?.card
+                                                            .country
+                                                    }}
                                             </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            @click="subscriptionStore.goToBillingPortal()"
+                                            style="font-size: 14px"
+                                            class="btn-change-card"
+                                        >
+                                            Change
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +172,16 @@ const expires = computed(
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer"></div>
+                <div class="modal-footer">
+                    <div class="d-flex align-items-center justify-content-center w-100">
+                        <button
+                            @click="subscriptionStore.goToBillingPortal()"
+                            class="btn-cancel-subscription"
+                        >
+                            Manage Subscription
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -217,7 +241,7 @@ const expires = computed(
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(228, 228, 228, 0.2);
+    background-color: rgb(158, 23, 63);
     border-radius: 15px;
     padding: 3px 6px;
     font-weight: bold;
@@ -229,10 +253,49 @@ const expires = computed(
     display: flex;
     align-items: start;
     justify-content: center;
-    //background-color: rgba(228, 228, 228, 0.2);
     border: solid 1px rgb(75, 75, 75);
     border-radius: 15px;
     padding: 3px 8px;
     font-size: 12px;
+}
+
+.sm {
+    width: 400px !important;
+}
+
+.btn-change-card {
+    border: solid 1px rgb(75, 75, 75);
+    padding: 3px 6px;
+    border-radius: 20px;
+    transition: .1s ease-in-out;
+
+    &:hover {
+        border-color: rgb(228, 228, 228, .5);
+    }
+
+    &:active {
+        color: rgba(228, 228, 228, .5);
+    }
+}
+
+.btn-cancel-subscription {
+    background: rgb(32,32,32) !important;
+    border: 1px solid rgb(46, 46, 46) !important;
+    border-radius: 15px !important;
+    color: rgb(228,228,228) !important;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px !important;
+    cursor: default;
+    transition: .1s ease-in-out;
+
+    &:hover {
+        border-color: rgb(75, 75, 75) !important;
+    }
+
+    &:active {
+        border-color: rgb(32,32,32) !important;
+    }
 }
 </style>

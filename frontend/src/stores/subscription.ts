@@ -39,5 +39,21 @@ export const useSubscriptionStore = defineStore('subscription', () => {
         }
     }
 
-    return { isLoading, goToCheckout, getSubscriptionDetails, subscriptionDetails };
+    const goToBillingPortal = async () => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.get<{
+                url: string;
+            }>("/api/user/billing-portal");
+
+            window.location.href = response.data.url
+        } catch (e) {
+            console.error(e)
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    return { isLoading, goToCheckout, getSubscriptionDetails, subscriptionDetails, goToBillingPortal };
 })

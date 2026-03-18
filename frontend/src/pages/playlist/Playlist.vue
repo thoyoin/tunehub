@@ -8,6 +8,7 @@ import { onMounted, watch } from 'vue'
 import { useAuthStore} from '@/stores/auth'
 import EditPlaylistModal from '@/pages/playlist/modals/editPlaylistModal.vue'
 import SettingsModal from '@/pages/home/modals/settingsModal.vue'
+import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
 
 const route = useRoute()
 const libraryStore = useLibraryStore()
@@ -40,6 +41,7 @@ onMounted(async () => {
         <Content/>
         <edit-playlist-modal v-if="libraryStore.libraryItem" />
         <settings-modal v-if="auth.user" />
+        <subscription-modal v-if="auth.user && auth.user?.is_subscribed"/>
     </div>
 </template>
 

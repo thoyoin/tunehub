@@ -8,6 +8,7 @@ import { useArtistCardStore } from "@/stores/artistCard.ts";
 import { useRoute } from "vue-router";
 import SettingsModal from "@/pages/home/modals/settingsModal.vue";
 import AuthenticateModal from "@/pages/release/modals/authenticateModal.vue";
+import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
 
 const route = useRoute();
 const auth = useAuthStore();
@@ -40,6 +41,7 @@ watch(
         <Library />
         <settings-modal v-if="auth.user" />
         <authenticate-modal />
+        <subscription-modal v-if="auth.user && auth.user?.is_subscribed"/>
     </div>
 </template>
 

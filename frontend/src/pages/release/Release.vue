@@ -9,6 +9,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useLibraryStore } from '@/stores/library'
 import AuthenticateModal from '@/pages/release/modals/authenticateModal.vue'
 import SettingsModal from '@/pages/home/modals/settingsModal.vue'
+import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
 
 const route = useRoute()
 const releaseStore = useReleaseStore()
@@ -41,6 +42,7 @@ onMounted(async () => {
         <Content/>
         <authenticate-modal />
         <settings-modal v-if="auth.user" />
+        <subscription-modal v-if="auth.user && auth.user?.is_subscribed"/>
     </div>
 </template>
 

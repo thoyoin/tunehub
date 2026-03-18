@@ -119,6 +119,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::post('/user/subscribe', 'subscribe');
+        Route::get('/user/billing-portal', 'goToBillingPortal');
         Route::post('/subscription/checkout', 'goToCheckout');
         Route::get('/subscription/details', 'getDetails');
     });
@@ -127,3 +128,4 @@ Route::controller(SubscriptionController::class)->group(function () {
     Route::get('/checkout/success', 'success')->name('checkout.success');
     Route::get('/checkout/cancel', 'cancel')->name('checkout.cancel');
 });
+
