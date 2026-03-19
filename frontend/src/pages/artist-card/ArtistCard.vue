@@ -36,9 +36,9 @@ watch(
 
 <template>
     <div class="app-wrapper">
-        <Content />
         <Header />
         <Library />
+        <Content />
         <settings-modal v-if="auth.user" />
         <authenticate-modal />
         <subscription-modal v-if="auth.user && auth.user?.is_subscribed"/>

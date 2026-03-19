@@ -55,7 +55,7 @@ const handleGetRelease = async () => {
             }"
             style="height: 360px"
         >
-            <div style="padding: 0 250px" class="d-flex flex-column">
+            <div style="padding: 0 50px 0 350px" class="d-flex flex-column">
                 <div
                     style="
                         margin-top: 150px;

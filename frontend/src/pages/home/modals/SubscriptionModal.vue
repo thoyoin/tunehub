@@ -22,7 +22,7 @@ const expires = computed(
         aria-labelledby="subscriptionModalTitle"
         aria-hidden="true"
     >
-        <div class="modal-dialog sm modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered" style="width: 400px">
             <div class="modal-content">
                 <transition name="fade">
                     <div
@@ -50,9 +50,6 @@ const expires = computed(
                         />
                         <div style="font-size: 15px" class="fw-bold d-flex flex-column">
                             <div class="d-flex flex-column gap-2 align-items-center">
-                                <span>
-                                    {{ auth.user?.subscriptions[0]?.type }}
-                                </span>
                                 <span class="badge">
                                     {{ auth.user?.subscriptions[0]?.stripe_status }}
                                 </span>
@@ -64,7 +61,6 @@ const expires = computed(
                                 </span>
                             </div>
                         </div>
-                        <div></div>
                     </div>
                     <div class="mt-3" style="border-top: 1px solid rgba(228, 228, 228, 0.15)">
                         <div class="row d-flex flex-row my-2">
@@ -88,7 +84,7 @@ const expires = computed(
                                     <span class="fs-5 fw-bold">
                                         ${{ subscriptionStore.subscriptionDetails?.amount / 100 }}
                                     </span>
-                                    <span style="margin-left:3px" class="fw-bold">
+                                    <span style="margin-left: 3px" class="fw-bold">
                                         / {{ subscriptionStore.subscriptionDetails?.interval }}
                                     </span>
                                 </div>
@@ -100,22 +96,28 @@ const expires = computed(
                                 </span>
                             </div>
                         </div>
-                        <div class="" style="border-top: 1px solid rgba(228, 228, 228, 0.15)">
+                        <div style="border-top: 1px solid rgba(228, 228, 228, 0.15)">
                             <div class="py-2 fw-bold d-flex flex-row gap-2 align-items-center">
                                 <span>Payment Method</span>
                                 <img src="@/assets/svg/credit.svg" alt="" />
                             </div>
                             <div class="d-flex flex-column gap-1 card-element">
-                                <div class="d-flex flex-row align-items-center w-100 justify-content-between">
+                                <div
+                                    class="d-flex flex-row align-items-center w-100 justify-content-between"
+                                >
                                     <div class="d-flex flex-row">
                                         <template
-                                            v-if="subscriptionStore.subscriptionDetails?.card.brand === 'mastercard'">
+                                            v-if="
+                                                subscriptionStore.subscriptionDetails?.card
+                                                    .brand === 'mastercard'
+                                            "
+                                        >
                                             <img
                                                 class="me-1"
                                                 style="width: 30px"
                                                 src="@/assets/svg/ma_symbol.svg"
                                                 alt="mastercard"
-                                            >
+                                            />
                                         </template>
                                         <template v-else>
                                             <img
@@ -123,42 +125,42 @@ const expires = computed(
                                                 style="width: 35px"
                                                 src="@/assets/svg/visa.svg"
                                                 alt="visa"
-                                            >
+                                            />
                                         </template>
                                         <div class="d-flex flex-column">
                                             <div class="d-flex flex-row gap-1 align-items-center">
-                                            <span>
-                                                {{
-                                                    subscriptionStore.subscriptionDetails?.card
-                                                        .brand
-                                                }}
-                                            </span>
+                                                <span>
+                                                    {{
+                                                        subscriptionStore.subscriptionDetails?.card
+                                                            .brand
+                                                    }}
+                                                </span>
                                                 <span style="margin-top: 6px"> **** </span>
                                                 <span>
-                                                {{
+                                                    {{
                                                         subscriptionStore.subscriptionDetails?.card
                                                             .last4
                                                     }}
-                                            </span>
+                                                </span>
                                             </div>
                                             <div class="d-flex flex-row">
                                                 <span> Expires {{ expires }} </span>
                                                 <span>
-                                                <img
-                                                    style="width: 20px"
-                                                    src="@/assets/svg/dot.svg"
-                                                    alt=""
+                                                    <img
+                                                        style="width: 20px"
+                                                        src="@/assets/svg/dot.svg"
+                                                        alt=""
                                                 /></span>
                                                 <span>
-                                                {{
+                                                    {{
                                                         subscriptionStore.subscriptionDetails?.card
                                                             .country
                                                     }}
-                                            </span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="ms-2">
                                         <div
                                             @click="subscriptionStore.goToBillingPortal()"
                                             style="font-size: 14px"
@@ -192,13 +194,12 @@ const expires = computed(
     position: fixed;
     inset: 0;
     background: rgba(32, 32, 32, 0.5);
-    //backdrop-filter: blur(4px);
     z-index: 1000;
     pointer-events: auto;
     user-select: none;
     border-radius: 30px;
-    backdrop-filter: saturate(180%) blur(10px);
-    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 .search-spinner {
     width: 18px;
@@ -259,43 +260,42 @@ const expires = computed(
     font-size: 12px;
 }
 
-.sm {
-    width: 400px !important;
-}
-
 .btn-change-card {
     border: solid 1px rgb(75, 75, 75);
     padding: 3px 6px;
     border-radius: 20px;
-    transition: .1s ease-in-out;
+    transition: 0.1s ease-in-out;
 
     &:hover {
-        border-color: rgb(228, 228, 228, .5);
+        border-color: rgb(228, 228, 228, 0.5);
     }
 
     &:active {
-        color: rgba(228, 228, 228, .5);
+        color: rgba(228, 228, 228, 0.5);
     }
 }
 
 .btn-cancel-subscription {
-    background: rgb(32,32,32) !important;
+    background: rgb(32, 32, 32, 0.2) !important;
+    backdrop-filter: blur(4px);
     border: 1px solid rgb(46, 46, 46) !important;
     border-radius: 15px !important;
-    color: rgb(228,228,228) !important;
+    color: rgb(228, 228, 228) !important;
     height: 30px;
     display: flex;
     align-items: center;
     padding: 0 10px !important;
     cursor: default;
-    transition: .1s ease-in-out;
+    transition: 0.1s ease-in-out;
+    font-weight: bold;
+    font-size: 14px;
 
     &:hover {
         border-color: rgb(75, 75, 75) !important;
     }
 
     &:active {
-        border-color: rgb(32,32,32) !important;
+        border-color: rgb(32, 32, 32) !important;
     }
 }
 </style>

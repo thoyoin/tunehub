@@ -208,7 +208,7 @@ const routeHome = () => {
             </div>
             <div class="d-flex flex-row align-items-center">
                 <template v-if="auth.user">
-                    <template v-if="!auth.user?.is_subscribed">
+                    <template v-if="!auth.user?.is_subscribed && auth.user?.roles[0]?.slug !== 'admin'">
                         <button
                             @click="
                                 router.push({
@@ -220,7 +220,7 @@ const routeHome = () => {
                             Upgrade now
                         </button>
                     </template>
-                    <template v-else>
+                    <template v-else-if="auth.user?.roles[0]?.slug !== 'admin'">
                         <button
                             @click="router.push('/artists')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"

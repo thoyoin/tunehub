@@ -7,13 +7,9 @@
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/SubscriptionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/SubscriptionModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/playlist/Playlist.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Release.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/subscription.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/subscription.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -561,7 +557,9 @@
       <workItem from="1773720100355" duration="4658000" />
       <workItem from="1773740373253" duration="11962000" />
       <workItem from="1773806189139" duration="9347000" />
-      <workItem from="1773847037159" duration="5229000" />
+      <workItem from="1773847037159" duration="5277000" />
+      <workItem from="1773919826592" duration="6000" />
+      <workItem from="1773919998596" duration="2736000" />
     </task>
     <servers />
   </component>

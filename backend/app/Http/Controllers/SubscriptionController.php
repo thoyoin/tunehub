@@ -43,36 +43,60 @@ class SubscriptionController extends Controller
         $stripeSub = $sub->asStripeSubscription();
 
         $data = [
-            'current_period_end' => Carbon::createFromTimestamp($user->upcomingInvoice()->period_end)
-                ->toFormattedDateString(),
-            'current_period_start' => Carbon::createFromTimestamp($user->upcomingInvoice()->period_start)
-                ->toFormattedDateString(),
-            'next_billing' => Carbon::create($user->upcomingInvoice()->date()->toDateString())->toFormattedDateString(),
-            'amount' => $stripeSub->items->data[0]->price->unit_amount,
-            'interval' => $stripeSub->items->data[0]->plan->interval,
+            'current_period_end' => Carbon::createFromTimestamp($user
+                ->upcomingInvoice()
+                ->period_end
+            )->toFormattedDateString(),
+            'current_period_start' => Carbon::createFromTimestamp($user
+                ->upcomingInvoice()
+                ->period_start
+            )->toFormattedDateString(),
+            'next_billing' => Carbon::create($user
+                ->upcomingInvoice()
+                ->date()
+                ->toDateString()
+            )->toFormattedDateString(),
+            'amount' => $stripeSub->items
+                ->data[0]
+                ->price
+                ->unit_amount,
+            'interval' => $stripeSub->items
+                ->data[0]
+                ->plan
+                ->interval,
             'currency' => $stripeSub->currency,
             'card' => [],
         ];
 
-        $defaultPmId = $stripeSub->default_payment_method;
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        if($defaultPmId) {
-            Stripe::setApiKey(env('STRIPE_SECRET'));
+        $pm = null;
 
-            $pm = PaymentMethod::retrieve($defaultPmId);
+        if ($stripeSub->default_payment_method) {
+            $pm = PaymentMethod::retrieve($stripeSub->default_payment_method);
+        }
 
-            $card = $pm->card ?? null;
+        if (!$pm && $user->stripe_id) {
+            $methods = PaymentMethod::all([
+                'customer' => $user->stripe_id,
+                'type' => 'card',
+                'limit' => 1,
+            ]);
 
-            if ($card) {
-                $data['card'] = [
-                    'brand' => $card->brand,
-                    'last4' => $card->last4,
-                    'country' => $card->country,
-                    'funding' => $card->funding,
-                    'exp_month' => $card->exp_month,
-                    'exp_year' => $card->exp_year,
-                ];
-            }
+            $pm = $methods->data[0] ?? null;
+        }
+
+        if ($pm && $pm->card) {
+            $card = $pm->card;
+
+            $data['card'] = [
+                'brand' => $card->brand,
+                'last4' => $card->last4,
+                'country' => $card->country,
+                'funding' => $card->funding,
+                'exp_month' => $card->exp_month,
+                'exp_year' => $card->exp_year,
+            ];
         }
 
         return response()->json([
