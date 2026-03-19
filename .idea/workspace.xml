@@ -6,10 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/ArtistStudioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/ArtistStudioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Requests/ReleaseUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Requests/ReleaseUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/SubscriptionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/SubscriptionModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,8 +41,8 @@
         <option value="package.json" />
         <option value="JavaScript File" />
         <option value="PHP File" />
-        <option value="Vue Composition API Component" />
         <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -559,7 +567,7 @@
       <workItem from="1773806189139" duration="9347000" />
       <workItem from="1773847037159" duration="5277000" />
       <workItem from="1773919826592" duration="6000" />
-      <workItem from="1773919998596" duration="2736000" />
+      <workItem from="1773919998596" duration="20745000" />
     </task>
     <servers />
   </component>

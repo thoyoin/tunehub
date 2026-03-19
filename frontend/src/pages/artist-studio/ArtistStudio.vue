@@ -10,7 +10,6 @@ import EditReleaseModal from "@/pages/artist-studio/modals/editReleaseModal.vue"
 import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
 
 const auth = useAuthStore();
-const artistStore = useArtistStore();
 
 onMounted(async () => {
     if (!auth.isReady) {
@@ -25,8 +24,8 @@ onMounted(async () => {
         <Header/>
         <Content/>
         <upload-release-modal v-if="auth.user"/>
-        <edit-track-modal v-if="auth.user"/>
         <edit-release-modal v-if="auth.user"/>
+        <edit-track-modal v-if="auth.user"/>
         <subscription-modal v-if="auth.user && auth.user?.is_subscribed"/>
     </div>
 </template>

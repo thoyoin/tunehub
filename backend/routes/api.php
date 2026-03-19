@@ -102,6 +102,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(ArtistStudioController::class)->group(function () {
         Route::get('/artists/tracks', 'getTracks');
         Route::get('/artists/releases', 'getReleases');
+        Route::get('/artists/streams', 'getStreams');
+        Route::get('/artists/earnings', 'getEarnings');
     });
 
     Route::controller(TrackController::class)->group(function () {

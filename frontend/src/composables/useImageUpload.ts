@@ -19,7 +19,6 @@ export function useImageUpload() {
 
         fileToUpload.value = file;
         previewUrl.value = URL.createObjectURL(file);
-        console.log(previewUrl.value);
     }
 
     onUnmounted((): void => {
@@ -29,5 +28,12 @@ export function useImageUpload() {
         }
     })
 
-    return { previewUrl, fileToUpload, handleImageUpload };
+    const resetUploader = () => {
+        if (previewUrl.value) {
+            URL.revokeObjectURL(previewUrl.value)
+            previewUrl.value = null
+        }
+    }
+
+    return { previewUrl, fileToUpload, handleImageUpload, resetUploader };
 }

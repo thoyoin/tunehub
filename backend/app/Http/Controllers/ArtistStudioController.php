@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
+use App\Services\ArtistStudioService;
 use App\Services\TrackStatsService;
 use Illuminate\Http\JsonResponse;
 
@@ -28,6 +29,24 @@ class ArtistStudioController extends Controller
 
         return response()->json([
             'releases' => $releases,
+        ]);
+    }
+
+    public function getStreams(ArtistStudioService $artistStudioService): JsonResponse
+    {
+        $streams = $artistStudioService->getArtistStats();
+
+        return response()->json([
+            'artistStreams' => $streams,
+        ]);
+    }
+
+    public function getEarnings(ArtistStudioService $artistStudioService): JsonResponse
+    {
+        $earnings = $artistStudioService->getArtistEarnings();
+
+        return response()->json([
+            'earnings' => $earnings,
         ]);
     }
 }

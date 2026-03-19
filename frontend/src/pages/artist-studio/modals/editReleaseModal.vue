@@ -5,7 +5,7 @@ import { useToast } from "vue-toastification";
 import { computed, ref, watch } from "vue";
 import api from "@/lib/api.ts";
 
-const { previewUrl, fileToUpload, handleImageUpload } = useImageUpload();
+const { previewUrl, fileToUpload, handleImageUpload, resetUploader } = useImageUpload();
 const artistStore = useArtistStore();
 const toast = useToast();
 
@@ -51,6 +51,7 @@ const handleReleaseUpdate = async () => {
 function $reset() {
     releaseTitle.value = "";
     artist.value = "";
+    resetUploader();
 }
 </script>
 

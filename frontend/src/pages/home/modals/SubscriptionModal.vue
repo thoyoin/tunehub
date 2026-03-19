@@ -193,13 +193,13 @@ const expires = computed(
 .loading-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(32, 32, 32, 0.5);
+    background: rgba(40,40,41, .5);
     z-index: 1000;
     pointer-events: auto;
     user-select: none;
     border-radius: 30px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 .search-spinner {
     width: 18px;

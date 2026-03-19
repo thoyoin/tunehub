@@ -5,7 +5,7 @@ import { computed, ref, watch } from "vue";
 import api from "@/lib/api.ts";
 import { useToast } from "vue-toastification";
 
-const { previewUrl, fileToUpload, handleImageUpload } = useImageUpload();
+const { previewUrl, fileToUpload, handleImageUpload, resetUploader } = useImageUpload();
 const artistStore = useArtistStore();
 const toast = useToast();
 
@@ -50,6 +50,7 @@ const handleTrackUpdate = async () => {
 function $reset() {
     trackTitle.value = "";
     artist.value = "";
+    resetUploader();
 }
 </script>
 

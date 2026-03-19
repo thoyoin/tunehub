@@ -3,6 +3,8 @@ import { useArtistStore } from '@/stores/artistStudio.ts'
 import { onMounted } from 'vue'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
 import { useToast } from "vue-toastification";
+import ArtistEarnings from "@/pages/artist-studio/charts/ArtistEarnings.vue";
+import { arrayTypeAnnotation } from "@babel/types";
 
 const artistStore = useArtistStore()
 const toast = useToast()
@@ -12,6 +14,8 @@ const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 onMounted(async () => {
     await artistStore.fetchTracks()
     await artistStore.fetchReleases()
+    await artistStore.fetchArtistStreams()
+    await artistStore.fetchArtistEarnings()
 })
 
 const handleReleasePublication = async (id) => {
@@ -31,59 +35,147 @@ const handleReleasePublication = async (id) => {
 <template>
     <div class="flex-grow-1 release-content position-relative">
         <div class="d-flex flex-column">
-            <div class="d-flex position-relative">
-                <div
-                    class="d-flex flex-row z-2 position-fixed bg-major w-100"
-                    style="padding-top: 100px"
-                >
-                    <button
-                        @click="artistStore.viewTracks"
-                        class="btn btn-view fw-bold"
-                        :class="{
+            <div
+                style="margin: 100px 280px 0 150px;padding: 20px 20px 0 20px; color: rgb(228,228,228);
+                border: 1px solid rgba(228, 228, 228, 0.15);"
+                class="rounded-5"
+            >
+                <div class="d-flex flex-row align-items-end">
+                    <span class="fw-bold fs-5 me-3">Artist Studio</span>
+                    <span style="font-size: 13px;line-height: 25px" class="fw-bold opacity-50">All time stats</span>
+                </div>
+                <div class="d-flex flex-row align-items-end mt-2">
+                    <div
+                        class="d-flex flex-row me-5"
+                        style="border-right:1px solid rgba(228, 228, 228, 0.15);padding-bottom: 20px"
+                    >
+                        <div class="d-flex flex-column mx-5 align-items-center">
+                            <span class="fs-3 fw-bold">{{ artistStore.artistStreams }}</span>
+                            <span class="opacity-50 fw-bold">plays</span>
+                        </div>
+                        <img class="opacity-50" src="@/assets/svg/line.svg" alt="">
+                        <div class="d-flex flex-column mx-5 align-items-center">
+                            <span class="fs-3 fw-bold">{{ artistStore.tracks.length }}</span>
+                            <span class="opacity-50 fw-bold">tracks</span>
+                        </div>
+                        <img class="opacity-50" src="@/assets/svg/line.svg" alt="">
+                        <div class="d-flex flex-column mx-5 align-items-center">
+                            <span class="fs-3 fw-bold">{{ artistStore.releases.length }}</span>
+                            <span class="opacity-50 fw-bold">releases</span>
+                        </div>
+                    </div>
+                    <div
+                        style="padding-bottom: 20px"
+                        class="d-flex flex-column me-5 align-items-center gap-1"
+                    >
+                        <button
+                            @click="artistStore.viewTracks()"
+                            class="btn btn-earnings"
+                            :class="{
+                                'active-earnings': artistStore.selectedView === 'tracks'
+                                || artistStore.selectedView === 'releases'
+                            }"
+                        >
+                            <img style="width: 30px" src="@/assets/svg/library.svg" alt="library">
+                        </button>
+                        <span
+                            style="
+                            line-height: 22px;
+                            transition: 0.2s ease-in-out;
+                            "
+                            class="fw-bold opacity-50"
+                            :class="{
+                                'active-earnings': artistStore.selectedView === 'tracks'
+                                || artistStore.selectedView === 'releases'
+                            }"
+                        >
+                            Library
+                        </span>
+                    </div>
+                    <div
+                        style="padding-bottom: 20px"
+                        class="d-flex flex-column me-5 align-items-center gap-1"
+                    >
+                        <button
+                            @click="artistStore.viewEarnings()"
+                            class="btn btn-earnings"
+                            :class="{
+                                'active-earnings': artistStore.selectedView === 'earnings',
+                            }"
+                        >
+                            <img style="width: 30px" src="@/assets/svg/earnings.svg" alt="money">
+                        </button>
+                        <span
+                            style="
+                            line-height: 22px;
+                            transition: 0.2s ease-in-out;
+                            "
+                            class="fw-bold opacity-50"
+                            :class="{
+                                'active-earnings': artistStore.selectedView === 'earnings',
+                            }"
+                        >
+                            Earnings
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column position-relative">
+                <template v-if="artistStore.selectedView !== 'earnings'">
+                    <div
+                        class="d-flex flex-row z-3 position-sticky"
+                        style="margin: 65px 0 0 115px;top: 80px;width: 390px"
+                    >
+                        <button
+                            @click="artistStore.viewTracks"
+                            class="btn btn-view fw-bold"
+                            :class="{
                             'active-view': artistStore.selectedView === 'tracks',
                         }"
-                        style="
-                            color: rgb(228, 228, 228);
-                            margin: 0 0 20px 40px;
-                            font-size: 25px;
-                            cursor: pointer;
-                        "
-                    >
-                        All your tracks
-                    </button>
-                    <button
-                        @click="artistStore.viewReleases"
-                        class="btn btn-view fw-bold"
-                        :class="{
+                        >
+                            All My Tracks
+                        </button>
+                        <button
+                            @click="artistStore.viewReleases"
+                            class="btn btn-view fw-bold"
+                            :class="{
                             'active-view': artistStore.selectedView === 'releases',
                         }"
-                        style="
-                            color: rgb(228, 228, 228);
+                            style="
                             margin: 0 0 20px 40px;
-                            font-size: 25px;
-                            cursor: pointer;
                         "
-                    >
-                        Releases
-                    </button>
-                </div>
+                        >
+                            Releases
+                        </button>
+                    </div>
+                </template>
                 <template v-if="artistStore.selectedView === 'tracks'">
-                    <div class="allItems" style="margin-top: 100px">
+                    <div class="allItems" style="margin-top: 20px">
                         <table class="table table-borderless align-middle">
                             <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                                 <tr>
                                     <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Release</th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Release date</th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Duration</th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%">Plays</th>
-                                    <th scope="col" style="font-weight: lighter; opacity: 60%"></th>
+                                    <th scope="col" style="font-weight: lighter">
+                                        <span style="opacity: 60%">Tracks</span>
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter">
+                                        <span style="opacity: 60%">Release</span>
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter">
+                                        <span style="opacity: 60%">Release Date</span>
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter">
+                                        <span style="opacity: 60%">Duration</span>
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter">
+                                        <span style="opacity: 60%">Plays</span>
+                                    </th>
+                                    <th scope="col" style="font-weight: lighter"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <template v-if="artistStore.tracks.tracks">
-                                    <template v-for="track in artistStore.tracks.tracks">
+                                <template v-if="artistStore.tracks">
+                                    <template v-for="track in artistStore.tracks">
                                         <tr class="track-row rounded-3">
                                             <td
                                                 scope="row"
@@ -97,7 +189,7 @@ const handleReleasePublication = async (id) => {
                                                     @click="
                                                         toggleTrack(
                                                             track,
-                                                            artistStore.tracks.tracks,
+                                                            artistStore.tracks,
                                                             track.release,
                                                         )
                                                     "
@@ -255,7 +347,7 @@ const handleReleasePublication = async (id) => {
                                 </template>
                             </tbody>
                         </table>
-                    <template v-if="artistStore.tracks.tracks?.length === 0">
+                    <template v-if="artistStore.tracks?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
                             style="color: rgb(228, 228, 228); opacity: .8"
@@ -266,7 +358,7 @@ const handleReleasePublication = async (id) => {
                     </div>
                 </template>
                 <template v-if="artistStore.selectedView === 'releases'">
-                    <div class="allItems" style="margin-top: 100px">
+                    <div class="allItems" style="margin-top: 20px">
                         <table class="table table-borderless align-middle">
                             <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                                 <tr>
@@ -280,8 +372,8 @@ const handleReleasePublication = async (id) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <template v-if="artistStore.releases.releases">
-                                    <template v-for="release in artistStore.releases.releases">
+                                <template v-if="artistStore.releases">
+                                    <template v-for="release in artistStore.releases">
                                         <tr class="track-row rounded-3">
                                             <td></td>
                                             <td class="d-flex flex-row">
@@ -403,7 +495,7 @@ const handleReleasePublication = async (id) => {
                                 </template>
                             </tbody>
                         </table>
-                    <template v-if="artistStore.releases.releases?.length === 0">
+                    <template v-if="artistStore.releases?.length === 0">
                         <div
                             class="p-5 fw-bold fs-5 d-flex justify-content-center align-items-center"
                             style="color: rgb(228, 228, 228); opacity: .8"
@@ -411,6 +503,12 @@ const handleReleasePublication = async (id) => {
                             You have no releases yet.
                         </div>
                     </template>
+                    </div>
+                </template>
+                <template v-if="artistStore.selectedView === 'earnings'">
+                    <div class="d-flex mt-5 align-items-center justify-content-center">
+                        <span>Current Balance: {{ artistStore.artistBalance }}</span>
+                        <ArtistEarnings/>
                     </div>
                 </template>
             </div>
@@ -421,6 +519,14 @@ const handleReleasePublication = async (id) => {
 <style scoped>
 .btn-view {
     border-radius: 30px;
+    height: 50px;
+    background-color: rgba(32,32,32, .5);
+    backdrop-filter: blur(4px);
+    color: rgb(228, 228, 228) !important;
+    font-size: 25px;
+    cursor: pointer;
+    opacity: .7;
+    transition: .3s all ease;
 
     &:active {
         border: solid 1px rgb(75, 75, 75) !important;
@@ -428,12 +534,18 @@ const handleReleasePublication = async (id) => {
 
     &:hover {
         border: solid 1px rgb(75, 75, 75) !important;
+        opacity: 1;
     }
 }
 
 .active-view {
     border-bottom: solid 1px rgb(75, 75, 75) !important;
     box-shadow: 0 0 5px 3px rgb(32, 32, 32) !important;
+    opacity: 1 !important;
+}
+
+.active-earnings {
+    opacity: 1 !important;
 }
 
 .scrollable-table thead,
@@ -448,7 +560,7 @@ const handleReleasePublication = async (id) => {
     flex-direction: column !important;
     flex: 1 !important;
     overflow-y: auto !important;
-    padding: 100px 0 90px 0 !important;
+    padding: 0 0 90px 0 !important;
     min-height: 0 !important;
 }
 
@@ -461,5 +573,26 @@ const handleReleasePublication = async (id) => {
     background: rgba(228, 228, 228, 0.15) !important;
     border-radius: 10px !important;
     transition: 0.2s !important;
+}
+
+.btn-earnings {
+    cursor: default;
+    transition: transform 0.2s ease-in-out, width 0.1s ease-in-out;
+    border: none;
+
+    img {
+        transition: .1s ease-in-out !important;
+    }
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:active {
+        img {
+            opacity: 0.7;
+        }
+        transform: scale(1);
+    }
 }
 </style>

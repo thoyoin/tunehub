@@ -24,7 +24,7 @@ class ReleaseUpdateRequest extends FormRequest
         return [
             'releaseTitle' => 'string|required',
             'artist' => 'string|required',
-            'cover_url' => 'string',
+            'cover_url' => 'file',
         ];
     }
 }

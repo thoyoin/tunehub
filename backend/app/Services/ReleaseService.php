@@ -150,13 +150,19 @@ class ReleaseService
     public function update($release, $request): void
     {
         if ($request->hasFile('cover_url')) {
-            $coverUrl = $this->minioService->storeCover($request->file('cover_url'));
+            DB::transaction(function () use ($release, $request) {
+                $coverUrl = $this->minioService->storeCover($request->file('cover_url'));
 
-            $release->update([
-                'title' => $request['releaseTitle'],
-                'artist' => $request['artist'],
-                'cover_url' => $coverUrl,
-            ]);
+                $release->update([
+                    'title' => $request['releaseTitle'],
+                    'artist' => $request['artist'],
+                    'cover_url' => $coverUrl,
+                ]);
+
+                $release->tracks()->update([
+                    'cover_url' => $coverUrl,
+                ]);
+            });
         } else {
             $release->update([
                 'title' => $request['releaseTitle'],
