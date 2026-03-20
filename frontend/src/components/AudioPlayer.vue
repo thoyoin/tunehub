@@ -141,7 +141,7 @@ const handleGetRelease = async () => {
 
 <style scoped>
 .bg-player {
-    background-color: rgba(50,50,51, 40%) !important;
+    background-color: rgba(32,32,32, 50%) !important;
     backdrop-filter: blur(8px) !important;
 }
 .progress-container {

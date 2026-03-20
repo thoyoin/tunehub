@@ -21,8 +21,8 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         opacity: 0;
     }
     .bg-minor {
-        background-color: rgba(50,50,51, 15%) !important;
-        backdrop-filter: blur(8px) !important;
+        background-color: rgba(32,32,32, 50%) !important;
+        backdrop-filter: blur(10px) !important;
         &::placeholder {
             color: rgba(228,228,228, .5) !important;
         }

@@ -16,6 +16,11 @@ interface ArtistStreamsDaily {
     plays: string;
 }
 
+interface ArtistTopTracks {
+    track: Track;
+    streams: string;
+}
+
 export const useArtistStore = defineStore('artistStudio', () => {
     const tracks = ref<Track[]>([])
     const releases = ref<Release[]>([])
@@ -26,8 +31,42 @@ export const useArtistStore = defineStore('artistStudio', () => {
     const artistEarnings = ref<ArtistEarnings | null>(null)
     const artistBalance = ref<number | null>(null)
     const artistStreamsDaily = ref<ArtistStreamsDaily[] | null>(null)
+    const artistTopTracks = ref<ArtistTopTracks[] | null>(null)
+    const artistTopReleases = ref<Release[] | null>(null)
 
     const toast = useToast()
+
+    const fetchArtistTopReleases = async () => {
+        try {
+            isLoading.value = true
+
+            const response = await api.get<Release[]>('/api/artists/top-releases')
+
+            artistTopReleases.value = response.data
+
+            console.log(response.data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            isLoading.value = false
+        }
+    }
+
+    const fetchArtistTopTracks = async () => {
+        try {
+            isLoading.value = true
+
+            const response = await api.get<ArtistTopTracks[]>('/api/artists/top-tracks')
+
+            artistTopTracks.value = response.data
+
+            console.log(response.data)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            isLoading.value = false
+        }
+    }
 
     const fetchArtistStreamsDaily = async () => {
         try {
@@ -38,8 +77,6 @@ export const useArtistStore = defineStore('artistStudio', () => {
             }>('/api/artists/streams/daily')
 
             artistStreamsDaily.value = response.data.streamsDaily
-
-            console.log(artistStreamsDaily.value)
         } catch (error) {
             console.log(error)
         } finally {
@@ -192,10 +229,14 @@ export const useArtistStore = defineStore('artistStudio', () => {
         isLoading,
         fetchArtistStreamsTotal,
         fetchArtistStreamsDaily,
-        artistStreamsTotal,
         fetchArtistEarnings,
+        fetchArtistTopTracks,
+        fetchArtistTopReleases,
+        artistStreamsTotal,
         artistEarnings,
         artistBalance,
         artistStreamsDaily,
+        artistTopTracks,
+        artistTopReleases,
      };
 })

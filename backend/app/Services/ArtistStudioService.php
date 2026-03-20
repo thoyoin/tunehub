@@ -7,6 +7,8 @@ namespace App\Services;
 use App\Actions\Artist\GetArtistStreams;
 use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
+use App\Models\Release;
+use App\Models\Track;
 use ClickHouseDB\Client;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,7 +40,7 @@ class ArtistStudioService
             WHERE
                 artist_id = $artistId
             ORDER BY
-                date DESC
+                date ASC
         ")->rows();
 
         $date = array_column($rows, 'date');
@@ -68,5 +70,70 @@ class ArtistStudioService
             ORDER BY
                 date ASC
         ",['artist_id' => $artistId])->rows();
+    }
+
+    public function getTopTracks()
+    {
+        $artistId = Auth::id();
+
+        $rows = $this->clickhouse->select("
+            SELECT
+                track_id,
+                sum(plays) as streams
+                FROM
+                    track_plays_total
+            WHERE
+                track_artist_id = :artist_id
+            GROUP BY
+                track_id
+            ORDER BY
+                streams DESC
+            LIMIT 5
+        ", ['artist_id' => $artistId])->rows();
+
+        $tracks = Track::whereIn('id', array_column($rows, 'track_id'))
+            ->get()
+            ->keyBy('id');
+
+        return collect($rows)->map(function ($row) use ($tracks) {
+            $track = $tracks[$row['track_id']];
+
+            return [
+                'track' => $track,
+                'streams' => $row['streams'],
+            ];
+        });
+    }
+
+    public function getTopReleases()
+    {
+        $artistId = Auth::id();
+
+        $rows = $this->clickhouse->select("
+            SELECT
+                release_id,
+                sum(plays) as streams
+                FROM
+                    release_streams
+            WHERE
+                release_artist_id = :artist_id
+            GROUP BY
+                release_id
+            ORDER BY
+                streams DESC
+        ", ['artist_id' => $artistId])->rows();
+
+        $releases = Release::where('user_id', $artistId)
+            ->whereIn('id', array_column($rows, 'release_id'))
+            ->get()
+            ->keyBy('id');
+
+        foreach($rows as $row){
+            $releases[$row['release_id']]->plays = $row['streams'];
+        }
+
+        return collect(array_column($rows, 'release_id'))
+            ->map(fn ($id) => $releases[$id])
+            ->values();
     }
 }

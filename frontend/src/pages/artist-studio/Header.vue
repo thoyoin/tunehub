@@ -32,8 +32,6 @@ const routeLogin = () => {
 <template>
     <header class="position-fixed w-100 px-3 z-3" style="max-height: 60px; top: 10px">
         <div
-            style="
-            "
             class="d-flex rounded-5 flex-row w-100 justify-content-between align-items-center"
         >
             <div
@@ -93,6 +91,20 @@ const routeLogin = () => {
     border: none;
     &:active {
         text-decoration-color: #9e173f !important;
+    }
+}
+
+.bg-header {
+    background: radial-gradient(
+        circle,
+        rgba(32, 32, 32, 1) 0%,
+        rgba(32, 32, 32, .9) 20%,
+        rgba(32, 32, 32, 0) 100%
+    ) !important;
+    backdrop-filter: blur(8px) !important;
+
+    &::placeholder {
+        color: rgba(228,228,228, .5) !important;
     }
 }
 </style>

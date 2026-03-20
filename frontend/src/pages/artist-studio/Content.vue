@@ -3,11 +3,13 @@ import { useArtistStore } from '@/stores/artistStudio.ts'
 import { onMounted } from 'vue'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
 import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 import ArtistEarnings from "@/pages/artist-studio/charts/ArtistEarnings.vue";
 import ArtistStreamsCharts from "@/pages/artist-studio/charts/ArtistStreamsCharts.vue";
 
 const artistStore = useArtistStore()
 const toast = useToast()
+const router = useRouter()
 
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
@@ -17,6 +19,8 @@ onMounted(async () => {
     await artistStore.fetchArtistStreamsTotal()
     await artistStore.fetchArtistEarnings()
     await artistStore.fetchArtistStreamsDaily()
+    await artistStore.fetchArtistTopTracks()
+    await artistStore.fetchArtistTopReleases()
 })
 
 const handleReleasePublication = async (id) => {
@@ -37,7 +41,7 @@ const handleReleasePublication = async (id) => {
     <div class="flex-grow-1 release-content position-relative">
         <div class="d-flex flex-column">
             <div
-                style="margin: 100px 280px 0 150px;padding: 20px 20px 0 20px; color: rgb(228,228,228);
+                style="margin: 100px 150px 0 150px;padding: 20px 20px 0 20px; color: rgb(228,228,228);
                 border: 1px solid rgba(228, 228, 228, 0.15);"
                 class="rounded-5"
             >
@@ -551,8 +555,109 @@ const handleReleasePublication = async (id) => {
                         </div>
                         <ArtistStreamsCharts/>
                     </div>
-                    <div>
-
+                    <div class="d-flex flex-row">
+                        <div
+                            style="max-width: 700px;height: 300px"
+                            class="mt-5 border position-relative px-3 w-100 mx-5 d-flex flex-column
+                            align-items-center justify-content-start"
+                        >
+                            <div
+                                style="color: rgb(228,228,228);height: 70px"
+                                class="d-flex bg-title position-absolute flex-column align-items-center
+                                justify-content-start w-100 rounded-4"
+                            >
+                                <span class="ms-4 mt-2 fw-bold fs-5">
+                                    Top Tracks
+                                </span>
+                                <span class="ms-4 fw-bold opacity-50" style="line-height: 5px">
+                                    last 30 days
+                                </span>
+                            </div>
+                            <div
+                                style="color: rgb(228,228,228); padding-top: 60px"
+                                class="w-100 overflow-y-auto pb-3"
+                            >
+                            <template v-for="track in artistStore.artistTopTracks">
+                                <div
+                                    @click="
+                                        router.push({
+                                            name: 'release',
+                                            params: { ['releaseId']: track.track.release_id }
+                                    })"
+                                    style="margin-top: 10px;"
+                                    class="border artist-row d-flex flex-row
+                                    justify-content-between align-items-center p-2
+                                    "
+                                >
+                                    <div class="d-flex flex-row align-items-center">
+                                        <img
+                                            style="width: 50px;height: 50px"
+                                            :src="track.track.cover_url"
+                                            alt="cover"
+                                            class="me-3 rounded-2"
+                                        >
+                                        <span class="fw-bold">
+                                            {{ track.track.title }}
+                                        </span>
+                                    </div>
+                                    <span class="fw-bold opacity-50 me-3">
+                                        {{ track.streams }} plays
+                                    </span>
+                                </div>
+                            </template>
+                            </div>
+                        </div>
+                        <div
+                            style="max-width: 700px;height: 300px"
+                            class="mt-5 border position-relative px-3 w-100 mx-5 d-flex flex-column
+                            align-items-center justify-content-start"
+                        >
+                            <div
+                                style="color: rgb(228,228,228);height: 70px"
+                                class="d-flex bg-title position-absolute flex-column align-items-center
+                                justify-content-start w-100 rounded-4"
+                            >
+                                <span class="ms-4 mt-2 fw-bold fs-5">
+                                    Top Releases
+                                </span>
+                                <span class="ms-4 fw-bold opacity-50" style="line-height: 5px">
+                                    last 30 days
+                                </span>
+                            </div>
+                            <div
+                                style="color: rgb(228,228,228); padding-top: 60px"
+                                class="w-100 overflow-y-auto pb-3"
+                            >
+                                <template v-for="release in artistStore.artistTopReleases">
+                                    <div
+                                        @click="
+                                            router.push({
+                                                name: 'release',
+                                                params: { ['releaseId']: release.id }
+                                        })"
+                                        style="margin-top: 10px;"
+                                        class="border artist-row d-flex flex-row
+                                    justify-content-between align-items-center p-2
+                                    "
+                                    >
+                                        <div class="d-flex flex-row align-items-center">
+                                            <img
+                                                style="width: 50px;height: 50px"
+                                                :src="release.cover_url"
+                                                alt="cover"
+                                                class="me-3 rounded-2"
+                                            >
+                                            <span class="fw-bold">
+                                            {{ release.title }}
+                                        </span>
+                                        </div>
+                                        <span class="fw-bold opacity-50 me-3">
+                                        {{ release.plays }} plays
+                                    </span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -643,5 +748,41 @@ const handleReleasePublication = async (id) => {
 .border {
     border:1px solid rgba(228, 228, 228, 0.15) !important;
     border-radius: 18px;
+}
+
+.artist-row {
+    transition: .2s;
+    cursor: default;
+
+    &:hover {
+        background-color: rgba(228, 228, 228, 0.05) !important;
+    }
+}
+
+.bg-title {
+    background: linear-gradient(
+        to bottom,
+        rgba(32, 32, 32, 1) 0%,
+        rgba(32, 32, 32, .8) 40%,
+        rgba(32, 32, 32, 0) 100%
+    ) !important;
+    backdrop-filter: blur(3px) !important;
+    mask-image: linear-gradient(black 60%, transparent 100%);
+    z-index: 10 !important;
+}
+
+.allItems::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar {
+    display: none;
+}
+
+.allItems,
+.overflow-y-auto {
+    scrollbar-width: none;
+}
+
+.allItems,
+.overflow-y-auto {
+    -ms-overflow-style: none;
 }
 </style>

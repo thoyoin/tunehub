@@ -58,4 +58,18 @@ class ArtistStudioController extends Controller
             'streamsDaily' => $streams,
         ]);
     }
+
+    public function getTopTracks(ArtistStudioService $artistStudioService): JsonResponse
+    {
+        $tracks = $artistStudioService->getTopTracks();
+
+        return response()->json($tracks);
+    }
+
+    public function getTopReleases(ArtistStudioService $artistStudioService): JsonResponse
+    {
+        $releases = $artistStudioService->getTopReleases();
+
+        return response()->json($releases);
+    }
 }
