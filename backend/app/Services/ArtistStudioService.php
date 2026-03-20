@@ -52,4 +52,21 @@ class ArtistStudioService
             'total_earnings' => $totalEarnings,
         ];
     }
+
+    public function getDailyStreams(): array
+    {
+        $artistId = Auth::id();
+
+        return $this->clickhouse->select("
+            SELECT
+                formatDateTime(date, '%b %d, %Y') as date,
+                plays
+                FROM
+                    artist_earnings_daily
+            WHERE
+                artist_id = :artist_id
+            ORDER BY
+                date ASC
+        ",['artist_id' => $artistId])->rows();
+    }
 }

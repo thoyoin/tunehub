@@ -7,17 +7,19 @@
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/ArtistStudioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/ArtistStudioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Requests/ReleaseUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Requests/ReleaseUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ReleaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/ArtistStudioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ArtistStudioService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/composables/useImageUpload.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editReleaseModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editTrackModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/modals/SubscriptionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/modals/SubscriptionModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/charts/ArtistEarnings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/charts/ArtistEarnings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/AdminPanel/overview.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,41 +333,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/src/pages/home/modals&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "I do mind",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/thoyoin/Desktop/TuneHub/frontend/src/pages/home/modals",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "prettierjs.PrettierConfiguration.Package": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/prettier",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "ts.external.directory.path": "/Users/thoyoin/Desktop/TuneHub/frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;clickhouse&quot;,
-      &quot;redis&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "clickhouse",
+      "redis",
+      "mysql"
     ],
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Composition API Component&quot;
+    "vue.recent.templates": [
+      "Vue Composition API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/pages/home/modals" />
@@ -568,6 +570,8 @@
       <workItem from="1773847037159" duration="5277000" />
       <workItem from="1773919826592" duration="6000" />
       <workItem from="1773919998596" duration="20745000" />
+      <workItem from="1773943505512" duration="62000" />
+      <workItem from="1773979131983" duration="8992000" />
     </task>
     <servers />
   </component>

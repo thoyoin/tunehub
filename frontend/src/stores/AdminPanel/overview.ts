@@ -132,6 +132,7 @@ export const useOverviewStore = defineStore("overview", () => {
             }>('/api/admin/plays/month')
 
             playsPerMonth.value = response.data.monthPlays
+            console.log(playsPerMonth.value)
         } catch (e) {
             console.error(e);
         } finally {

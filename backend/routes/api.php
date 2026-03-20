@@ -103,6 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/artists/tracks', 'getTracks');
         Route::get('/artists/releases', 'getReleases');
         Route::get('/artists/streams', 'getStreams');
+        Route::get('/artists/streams/daily', 'getDailyStreams');
         Route::get('/artists/earnings', 'getEarnings');
     });
 

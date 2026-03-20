@@ -49,4 +49,13 @@ class ArtistStudioController extends Controller
             'earnings' => $earnings,
         ]);
     }
+
+    public function getDailyStreams(ArtistStudioService $artistStudioService): JsonResponse
+    {
+        $streams = $artistStudioService->getDailyStreams();
+
+        return response()->json([
+            'streamsDaily' => $streams,
+        ]);
+    }
 }

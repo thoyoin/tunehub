@@ -11,19 +11,43 @@ interface ArtistEarnings {
     total_earnings: number;
 }
 
+interface ArtistStreamsDaily {
+    date: string;
+    plays: string;
+}
+
 export const useArtistStore = defineStore('artistStudio', () => {
     const tracks = ref<Track[]>([])
     const releases = ref<Release[]>([])
     const selectedView = ref<string>('tracks')
     const editingItem = ref<Release | Track | null>(null)
     const isLoading = ref<boolean>(false)
-    const artistStreams = ref<number | null>(null)
-    const artistEarnings = ref<ArtistEarnings[] | null>(null)
+    const artistStreamsTotal = ref<number | null>(null)
+    const artistEarnings = ref<ArtistEarnings | null>(null)
     const artistBalance = ref<number | null>(null)
+    const artistStreamsDaily = ref<ArtistStreamsDaily[] | null>(null)
 
     const toast = useToast()
 
-    const fetchArtistStreams = async () => {
+    const fetchArtistStreamsDaily = async () => {
+        try {
+            isLoading.value = true
+
+            const response = await api.get<{
+                streamsDaily: ArtistStreamsDaily[]
+            }>('/api/artists/streams/daily')
+
+            artistStreamsDaily.value = response.data.streamsDaily
+
+            console.log(artistStreamsDaily.value)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            isLoading.value = false
+        }
+    }
+
+    const fetchArtistStreamsTotal = async () => {
         try {
             isLoading.value = true
 
@@ -31,7 +55,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
                 artistStreams: number
             }>('/api/artists/streams')
 
-            artistStreams.value = response.data.artistStreams
+            artistStreamsTotal.value = response.data.artistStreams
         } catch (error) {
             console.error(error)
         } finally {
@@ -44,10 +68,12 @@ export const useArtistStore = defineStore('artistStudio', () => {
             isLoading.value = true
 
             const response = await api.get<{
-                earnings: ArtistEarnings[]
+                earnings: ArtistEarnings
             }>('/api/artists/earnings')
 
             artistEarnings.value = response.data.earnings
+
+            artistBalance.value = response.data.earnings.total_earnings
         } catch (error) {
             console.error(error)
         } finally {
@@ -139,6 +165,10 @@ export const useArtistStore = defineStore('artistStudio', () => {
         selectedView.value = 'library'
     }
 
+    const viewAnalytics = (): void => {
+        selectedView.value = 'analytics'
+    }
+
     const pullEditingItem = (item: Track | Release): void => {
         editingItem.value = item
     }
@@ -152,6 +182,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
         viewTracks,
         viewReleases,
         viewEarnings,
+        viewAnalytics,
         viewLibrary,
         deleteTrack,
         deleteRelease,
@@ -159,10 +190,12 @@ export const useArtistStore = defineStore('artistStudio', () => {
         editingItem,
         publishRelease,
         isLoading,
-        fetchArtistStreams,
-        artistStreams,
+        fetchArtistStreamsTotal,
+        fetchArtistStreamsDaily,
+        artistStreamsTotal,
         fetchArtistEarnings,
         artistEarnings,
-        artistBalance
+        artistBalance,
+        artistStreamsDaily,
      };
 })

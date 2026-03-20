@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(TelescopeServiceProvider::class);
             $this->app->singleton(Client::class, function () {
                 $client = new Client([
-                    'host' => env('CLICKHOUSE_HOST', 'tunehub-clickhouse'),
+                    'host' => env('CLICKHOUSE_HOST', 'tunehub-clickhouse-1'),
                     'port' => env('CLICKHOUSE_PORT', 8123),
                     'username' => env('CLICKHOUSE_USER', 'default'),
                     'password' => env('CLICKHOUSE_PASSWORD', 'default'),

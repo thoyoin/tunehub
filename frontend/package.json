@@ -21,7 +21,7 @@
     "node-vibrant": "^3.1.6",
     "pinia": "^3.0.4",
     "vue": "^3.5.27",
-    "vue-router": "^5.0.1",
+    "vue-router": "^4.6.4",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-apexcharts": "^1.11.1",
     "vuedraggable": "^4.1.0"
@@ -40,8 +40,18 @@
     "sass-embedded": "^1.97.3",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vite-plugin-vue-devtools": "^8.0.5",
     "vue-tsc": "^3.2.5"
+  },
+  "overrides": {
+    "@babel/types": "7.28.0",
+    "@babel/generator": "7.28.0",
+    "@babel/parser": "7.28.0"
+  },
+  "resolve": {
+    "alias": {
+      "@babel/types": false,
+      "@babel/generator": false
+    }
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

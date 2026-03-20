@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
 import { useToast } from "vue-toastification";
 import ArtistEarnings from "@/pages/artist-studio/charts/ArtistEarnings.vue";
-import { arrayTypeAnnotation } from "@babel/types";
+import ArtistStreamsCharts from "@/pages/artist-studio/charts/ArtistStreamsCharts.vue";
 
 const artistStore = useArtistStore()
 const toast = useToast()
@@ -14,8 +14,9 @@ const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 onMounted(async () => {
     await artistStore.fetchTracks()
     await artistStore.fetchReleases()
-    await artistStore.fetchArtistStreams()
+    await artistStore.fetchArtistStreamsTotal()
     await artistStore.fetchArtistEarnings()
+    await artistStore.fetchArtistStreamsDaily()
 })
 
 const handleReleasePublication = async (id) => {
@@ -50,7 +51,7 @@ const handleReleasePublication = async (id) => {
                         style="border-right:1px solid rgba(228, 228, 228, 0.15);padding-bottom: 20px"
                     >
                         <div class="d-flex flex-column mx-5 align-items-center">
-                            <span class="fs-3 fw-bold">{{ artistStore.artistStreams }}</span>
+                            <span class="fs-3 fw-bold">{{ artistStore.artistStreamsTotal }}</span>
                             <span class="opacity-50 fw-bold">plays</span>
                         </div>
                         <img class="opacity-50" src="@/assets/svg/line.svg" alt="">
@@ -118,10 +119,36 @@ const handleReleasePublication = async (id) => {
                             Earnings
                         </span>
                     </div>
+                    <div
+                        style="padding-bottom: 20px"
+                        class="d-flex flex-column me-5 align-items-center gap-1"
+                    >
+                        <button
+                            @click="artistStore.viewAnalytics()"
+                            class="btn btn-earnings"
+                            :class="{
+                                'active-earnings': artistStore.selectedView === 'analytics',
+                            }"
+                        >
+                            <img style="width: 30px" src="@/assets/svg/analytics.svg" alt="analytics">
+                        </button>
+                        <span
+                            style="
+                            line-height: 22px;
+                            transition: 0.2s ease-in-out;
+                            "
+                            class="fw-bold opacity-50"
+                            :class="{
+                                'active-earnings': artistStore.selectedView === 'analytics',
+                            }"
+                        >
+                            Analytics
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="d-flex flex-column position-relative">
-                <template v-if="artistStore.selectedView !== 'earnings'">
+                <template v-if="artistStore.selectedView === 'tracks' || artistStore.selectedView === 'releases'">
                     <div
                         class="d-flex flex-row z-3 position-sticky"
                         style="margin: 65px 0 0 115px;top: 80px;width: 390px"
@@ -506,9 +533,26 @@ const handleReleasePublication = async (id) => {
                     </div>
                 </template>
                 <template v-if="artistStore.selectedView === 'earnings'">
-                    <div class="d-flex mt-5 align-items-center justify-content-center">
-                        <span>Current Balance: {{ artistStore.artistBalance }}</span>
+                    <div class="d-flex mt-5 border mx-5 p-3 flex-column align-items-center justify-content-center">
+                        <div style="color: rgb(228, 228, 228)">
+                            <span class="ms-4 mt-4 fw-bold fs-5">
+                                Total Balance: ${{ artistStore.artistBalance / 100 }}
+                            </span>
+                        </div>
                         <ArtistEarnings/>
+                    </div>
+                </template>
+                <template v-if="artistStore.selectedView === 'analytics'">
+                    <div class="mt-5 border p-3 mx-5 d-flex flex-column align-items-center justify-content-center">
+                        <div style="color: rgb(228,228,228)">
+                            <span class="ms-4 mt-4 fw-bold fs-5">
+                                Streams per Day
+                            </span>
+                        </div>
+                        <ArtistStreamsCharts/>
+                    </div>
+                    <div>
+
                     </div>
                 </template>
             </div>
@@ -594,5 +638,10 @@ const handleReleasePublication = async (id) => {
         }
         transform: scale(1);
     }
+}
+
+.border {
+    border:1px solid rgba(228, 228, 228, 0.15) !important;
+    border-radius: 18px;
 }
 </style>

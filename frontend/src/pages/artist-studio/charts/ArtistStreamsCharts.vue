@@ -7,51 +7,64 @@ const artistStore = useArtistStore();
 
 const series = computed(() => [
     {
-        name: "Earnings",
-        data: Array.isArray(artistStore.artistEarnings)
-            ? artistStore.artistEarnings.map(i => i.earnings)
-            : artistStore.artistEarnings?.earnings ?? []
+        name: "Streams",
+        data: artistStore.artistStreamsDaily?.map(i => Number(i.plays)) ?? []
     }
 ])
 
 const options = computed(() => ({
     colors: ["rgb(158, 23, 63)"],
     chart: {
-        type: "bar",
-        toolbar: {
-            show: false
-        }
-    },
-    plotOptions: {
-        bar: {
-            columnWidth: "40%"
-        }
-    },
-    dataLabels: {
-        enabled: false,
+        type: "area",
+        toolbar: { show: false },
+        zoom: { enabled: false },
+        animations: {
+            enabled: true,
+            easing: "easeinout",
+            speed: 600
+        },
     },
     xaxis: {
-        categories: Array.isArray(artistStore.artistEarnings)
-            ? artistStore.artistEarnings.map(i => i.date)
-            : artistStore.artistEarnings?.date ?? [],
+        categories:  artistStore.artistStreamsDaily?.map(i => i.date) ?? [],
         labels: {
             style: {
-                fontSize: "12px",
-                colors: "rgb(228,228,228)"
+                colors: "rgb(228,228,228)",
             }
         }
     },
     yaxis: {
         labels: {
-            formatter: (val: number) => val / 100,
             style: {
                 colors: "rgb(228,228,228)"
             }
         }
     },
+    stroke: {
+        curve: "smooth",
+        width: 3
+    },
+    markers: {
+        size: 4,
+        hover: {
+            size: 6
+        }
+    },
+    fill: {
+        type: "gradient",
+        gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.4,
+            opacityTo: 0.05,
+            stops: [0, 90, 100]
+        },
+    },
     tooltip: {
-        y: {
-            formatter: (val: number) => `$${val / 100} earnings`
+        theme: false,
+        x: {
+            show: true
+        },
+        style: {
+            fontSize: '13px'
         }
     },
     grid: {
@@ -59,14 +72,13 @@ const options = computed(() => ({
         strokeDashArray: 4
     },
 }))
-
 </script>
 
 <template>
     <ApexCharts
-        type="bar"
+        type="area"
+        width="1300"
         height="400"
-        width="1300px"
         :options="options"
         :series="series"
     />
