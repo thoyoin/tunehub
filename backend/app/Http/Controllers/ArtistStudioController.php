@@ -9,6 +9,7 @@ use App\Actions\Track\GetUserTracks;
 use App\Services\ArtistStudioService;
 use App\Services\TrackStatsService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ArtistStudioController extends Controller
 {
@@ -71,5 +72,23 @@ class ArtistStudioController extends Controller
         $releases = $artistStudioService->getTopReleases();
 
         return response()->json($releases);
+    }
+
+    public function dropMerch(ArtistStudioService $artistStudioService, Request $request): JsonResponse
+    {
+        $artistStudioService->dropMerch($request);
+
+        return response()->json([
+            'message' => 'Merch has been successfully uploaded.',
+        ]);
+    }
+
+    public function getMerch(ArtistStudioService $artistStudioService): JsonResponse
+    {
+        $merch = $artistStudioService->getMerch();
+
+        return response()->json([
+            'merch' => $merch,
+        ]);
     }
 }

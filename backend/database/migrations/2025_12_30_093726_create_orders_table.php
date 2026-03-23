@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +20,19 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->enum('status', ['pending', 'paid', 'confirmed', 'cancelled'])
                 ->default('pending');
-            $table->integer('total_price');
+            $table->unsignedBigInteger('total_price');
+            $table->string('currency')
+                ->default('usd');
+            $table->string('stripe_session_id')
+                ->nullable();
+            $table->string('stripe_payment_intent_id')
+                ->nullable();
+            $table->string('customer_name')
+                ->nullable();
+            $table->string('customer_email')
+                ->nullable();
+            $table->string('customer_address')
+                ->nullable();
             $table->timestamps();
         });
     }

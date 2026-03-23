@@ -13,7 +13,7 @@ class GetAuthUser
     {
         $user = Auth::user();
 
-        $user->load('roles');
+        $user->load('roles', 'products');
 
         return $user;
     }

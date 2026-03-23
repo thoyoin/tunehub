@@ -44,4 +44,5 @@ export interface User {
     roles: Role[]
     is_subscribed: boolean
     subscriptions: Subscription[]
+    products?: string[]
 }

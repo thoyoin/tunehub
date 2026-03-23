@@ -14,6 +14,7 @@ import ArtistCard from "@/pages/artist-card/ArtistCard.vue";
 import Subscription from "@/pages/subscription/Subscription.vue";
 import SubscriptionSuccess from "@/pages/subscription/SubscriptionSuccess.vue";
 import SubscriptionCancel from "@/pages/subscription/SubscriptionCancel.vue";
+import ArtistStudioMerch from "@/pages/artist-studio-merch/ArtistStudioMerch.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,6 +68,18 @@ const router = createRouter({
           path: '/artists',
           name: 'artists',
           component: ArtistStudio,
+          meta: { requiresAuth: true },
+          beforeEnter: (to, from, next) => {
+              const auth = useAuthStore()
+
+              if (!auth.user?.is_subscribed) next('/');
+              else next();
+          }
+      },
+      {
+          path: '/artists/merch/upload',
+          name: 'artists.merch',
+          component: ArtistStudioMerch,
           meta: { requiresAuth: true },
           beforeEnter: (to, from, next) => {
               const auth = useAuthStore()

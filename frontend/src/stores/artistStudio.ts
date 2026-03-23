@@ -43,8 +43,6 @@ export const useArtistStore = defineStore('artistStudio', () => {
             const response = await api.get<Release[]>('/api/artists/top-releases')
 
             artistTopReleases.value = response.data
-
-            console.log(response.data)
         } catch (error) {
             console.log(error)
         } finally {
@@ -59,8 +57,6 @@ export const useArtistStore = defineStore('artistStudio', () => {
             const response = await api.get<ArtistTopTracks[]>('/api/artists/top-tracks')
 
             artistTopTracks.value = response.data
-
-            console.log(response.data)
         } catch (error) {
             console.error(error)
         } finally {
@@ -206,6 +202,10 @@ export const useArtistStore = defineStore('artistStudio', () => {
         selectedView.value = 'analytics'
     }
 
+    const viewMerch = (): void => {
+        selectedView.value = 'merch'
+    }
+
     const pullEditingItem = (item: Track | Release): void => {
         editingItem.value = item
     }
@@ -221,6 +221,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
         viewEarnings,
         viewAnalytics,
         viewLibrary,
+        viewMerch,
         deleteTrack,
         deleteRelease,
         pullEditingItem,

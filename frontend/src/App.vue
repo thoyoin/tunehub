@@ -76,16 +76,20 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         }
     }
     .btn-artists {
+        display: flex !important;
+        align-items: center !important;
         background-color: rgba(32,32,32, 30%) !important;
         backdrop-filter: blur(10px) !important;
         height: 30px !important;
+        border-radius: 15px !important;
+        font-size: 15px !important;
+        padding: 0 7px !important;
+        color: #ff2667 !important;
+        transition: .1s ease-in-out !important;
 
         &::placeholder {
             color: rgba(228,228,228, .5) !important;
         }
-
-        padding: 0 5px 3px !important;
-        color: #ff2667 !important;
 
         &:hover {
             background-color: rgb(40,40,41) !important;

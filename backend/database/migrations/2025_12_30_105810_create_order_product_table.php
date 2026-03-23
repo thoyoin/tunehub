@@ -21,10 +21,14 @@ return new class extends Migration
             $table->foreignId('product_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->integer('quantity')
+            $table->foreignId('variant_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->string('title_snapshot');
+            $table->unsignedInteger('quantity')
                 ->default(1);
-            $table->integer('price');
-            $table->unique(['order_id', 'product_id']);
+            $table->unsignedBigInteger('unit_price');
+            $table->unsignedBigInteger('subtotal');
             $table->timestamps();
         });
     }

@@ -1,15 +1,19 @@
 <script setup>
-import { useArtistStore } from '@/stores/artistStudio.ts'
+import { useArtistStore } from '@/stores/artistStudio'
+import { useArtistMerchStore } from "@/stores/artistMerch.ts";
 import { onMounted } from 'vue'
-import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 import ArtistEarnings from "@/pages/artist-studio/charts/ArtistEarnings.vue";
 import ArtistStreamsCharts from "@/pages/artist-studio/charts/ArtistStreamsCharts.vue";
 
 const artistStore = useArtistStore()
+const merchStore = useArtistMerchStore()
 const toast = useToast()
 const router = useRouter()
+const auth = useAuthStore()
 
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
@@ -21,6 +25,7 @@ onMounted(async () => {
     await artistStore.fetchArtistStreamsDaily()
     await artistStore.fetchArtistTopTracks()
     await artistStore.fetchArtistTopReleases()
+    await merchStore.fetchArtistMerch()
 })
 
 const handleReleasePublication = async (id) => {
@@ -49,7 +54,7 @@ const handleReleasePublication = async (id) => {
                     <span class="fw-bold fs-5 me-3">Artist Studio</span>
                     <span style="font-size: 13px;line-height: 25px" class="fw-bold opacity-50">All time stats</span>
                 </div>
-                <div class="d-flex flex-row align-items-end mt-2">
+                <div class="d-flex flex-row align-items-end mt-2 w-100">
                     <div
                         class="d-flex flex-row me-5"
                         style="border-right:1px solid rgba(228, 228, 228, 0.15);padding-bottom: 20px"
@@ -77,7 +82,7 @@ const handleReleasePublication = async (id) => {
                             @click="artistStore.viewTracks()"
                             class="btn btn-earnings"
                             :class="{
-                                'active-earnings': artistStore.selectedView === 'tracks'
+                                'active-menu': artistStore.selectedView === 'tracks'
                                 || artistStore.selectedView === 'releases'
                             }"
                         >
@@ -90,7 +95,7 @@ const handleReleasePublication = async (id) => {
                             "
                             class="fw-bold opacity-50"
                             :class="{
-                                'active-earnings': artistStore.selectedView === 'tracks'
+                                'active-menu': artistStore.selectedView === 'tracks'
                                 || artistStore.selectedView === 'releases'
                             }"
                         >
@@ -105,7 +110,7 @@ const handleReleasePublication = async (id) => {
                             @click="artistStore.viewEarnings()"
                             class="btn btn-earnings"
                             :class="{
-                                'active-earnings': artistStore.selectedView === 'earnings',
+                                'active-menu': artistStore.selectedView === 'earnings',
                             }"
                         >
                             <img style="width: 30px" src="@/assets/svg/earnings.svg" alt="money">
@@ -117,7 +122,7 @@ const handleReleasePublication = async (id) => {
                             "
                             class="fw-bold opacity-50"
                             :class="{
-                                'active-earnings': artistStore.selectedView === 'earnings',
+                                'active-menu': artistStore.selectedView === 'earnings',
                             }"
                         >
                             Earnings
@@ -131,7 +136,7 @@ const handleReleasePublication = async (id) => {
                             @click="artistStore.viewAnalytics()"
                             class="btn btn-earnings"
                             :class="{
-                                'active-earnings': artistStore.selectedView === 'analytics',
+                                'active-menu': artistStore.selectedView === 'analytics',
                             }"
                         >
                             <img style="width: 30px" src="@/assets/svg/analytics.svg" alt="analytics">
@@ -143,10 +148,36 @@ const handleReleasePublication = async (id) => {
                             "
                             class="fw-bold opacity-50"
                             :class="{
-                                'active-earnings': artistStore.selectedView === 'analytics',
+                                'active-menu': artistStore.selectedView === 'analytics',
                             }"
                         >
                             Analytics
+                        </span>
+                    </div>
+                    <div
+                        style="padding-bottom: 20px"
+                        class="d-flex flex-grow-1 flex-column me-5 align-items-end gap-1"
+                    >
+                        <button
+                            @click="artistStore.viewMerch()"
+                            class="btn btn-earnings"
+                            :class="{
+                                'active-menu': artistStore.selectedView === 'merch',
+                            }"
+                        >
+                            <img style="width: 30px" src="@/assets/svg/bag.svg" alt="bag">
+                        </button>
+                        <span
+                            style="
+                            line-height: 22px;
+                            transition: 0.2s ease-in-out;
+                            "
+                            class="fw-bold opacity-50"
+                            :class="{
+                                'active-menu': artistStore.selectedView === 'merch',
+                            }"
+                        >
+                            Merch
                         </span>
                     </div>
                 </div>
@@ -660,6 +691,108 @@ const handleReleasePublication = async (id) => {
                         </div>
                     </div>
                 </template>
+                <template v-if="artistStore.selectedView === 'merch'">
+                    <div class="mt-5 p-3 mx-5 d-flex flex-column align-items-center justify-content-center">
+                        <div style="color: rgb(228,228,228)" class="d-flex flex-column align-items-center">
+                            <span class=" fw-bold fs-5">
+                                Your Products
+                            </span>
+                            <div class="mt-3">
+                                <template v-if="merchStore.artistMerch.length !== 0">
+                                    <div class="d-flex flex-row flex-wrap gap-3 w-100">
+                                        <template v-for="product in merchStore.artistMerch">
+                                            <div class="border rounded-5 p-3 position-relative">
+                                                <img
+                                                    class="rounded-4 mb-2"
+                                                    width="200px"
+                                                    height="200px"
+                                                    :src="product.cover_url"
+                                                    alt="cover"
+                                                >
+                                                <span
+                                                    class="badge position-absolute"
+                                                    style="
+                                                            color: black;
+                                                            border-bottom-left-radius:100px;
+                                                            border-bottom-right-radius:100px;
+                                                            background-color: rgba(228,228,228, .8);
+                                                            opacity: .5;
+                                                            padding: 1px 7px 7px;
+                                                            top: 0;
+                                                            left:36%;
+                                                        "
+                                                >
+                                                    {{ product.status }}
+                                                </span>
+                                                <div
+                                                    style="border-top:1px solid rgba(228, 228, 228, 0.15)"
+                                                    class="d-flex flex-column align-items-center "
+                                                >
+                                                    <span class="fw-bold fs-5">{{ product.title }}</span>
+                                                    <div
+                                                        class="d-flex flex-column align-items-start p-2 w-100"
+                                                    >
+                                                        <template v-for="variant in product.product_variants">
+                                                            <div
+                                                                style="font-size: 14px"
+                                                                class="d-flex align-items-center
+                                                                justify-content-between w-100"
+                                                            >
+                                                                <div>
+                                                                    <span class="opacity-50">
+                                                                        <img
+                                                                            style="width: 20px"
+                                                                            src="@/assets/svg/dot.svg"
+                                                                            alt="dot"
+                                                                        >
+                                                                    </span>
+                                                                    <span
+                                                                        class="opacity-50"
+                                                                    >
+                                                                        {{ variant.variant_name }}
+                                                                    </span>
+                                                                </div>
+                                                                <span
+                                                                    class="opacity-50 ms-1"
+                                                                >
+                                                                    Stock: {{ variant.stock }}
+                                                                </span>
+                                                                <div class="opacity-50 ms-2 me-1">
+                                                                    ${{ variant.price }}
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="mt-4 w-100 align-items-center justify-content-center">
+                                        <button
+                                            @click="router.push('/artists/merch/upload')"
+                                            class="btn btn-artists d-flex w-100 justify-content-center"
+                                        >
+                                            Upload Merch
+                                        </button>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <div class="fw-bold d-flex flex-column align-items-center p-5">
+                                        <span class="opacity-50 my-5">Nothing...</span>
+                                        <span class="">Put your first product up for sale!</span>
+                                        <button
+                                            @click="router.push('/artists/merch/upload')"
+                                            class="btn btn-primary mt-3 fw-bold"
+                                            style="color: rgb(228,228,228)"
+                                        >
+                                            Get started
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
     </div>
@@ -693,7 +826,7 @@ const handleReleasePublication = async (id) => {
     opacity: 1 !important;
 }
 
-.active-earnings {
+.active-menu {
     opacity: 1 !important;
 }
 

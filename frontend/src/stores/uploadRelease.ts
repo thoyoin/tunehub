@@ -13,9 +13,9 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
     const editor = ref<boolean>(false)
     const isCoverUploaded = ref<boolean>(false)
     const coverPreview = ref<string | null>(null)
-    const uploadedTracks = ref<
-        { originalIndex: number; file: File; title: string }[]
-    >([])
+    const uploadedTracks = ref<{
+        originalIndex: number; file: File; title: string
+    }[]>([])
     const releaseType = ref<string | null>(null)
     const cover_url = ref<File | null>(null)
     const releaseTitle = ref<string | null>(null)
@@ -51,8 +51,6 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
             file: file,
             title: file.name
         }));
-
-        console.log(uploadedTracks.value.length)
     }
 
     const handleReleaseUpload = async (): Promise<void> => {

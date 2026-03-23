@@ -107,6 +107,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/artists/earnings', 'getEarnings');
         Route::get('/artists/top-tracks', 'getTopTracks');
         Route::get('/artists/top-releases', 'getTopReleases');
+        Route::post('/artists/merch/drop', 'dropMerch');
+        Route::get('/artists/merch', 'getMerch');
     });
 
     Route::controller(TrackController::class)->group(function () {

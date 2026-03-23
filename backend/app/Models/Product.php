@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Product extends Model
@@ -15,9 +16,10 @@ class Product extends Model
         'slug',
         'title',
         'description',
-        'price',
         'user_id',
         'status',
+        'cover_url',
+        'currency',
     ];
 
     protected static function boot()
@@ -42,7 +44,12 @@ class Product extends Model
     public function order(): BelongsToMany
     {
         return $this->belongsToMany(Order::class)
-            ->withPivot(['quantity', 'price'])
+            ->withPivot(['quantity', 'subtotal'])
             ->withTimestamps();
+    }
+
+    public function productVariants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::class);
     }
 }

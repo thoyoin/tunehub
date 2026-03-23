@@ -7,10 +7,15 @@ namespace App\Services;
 use App\Actions\Artist\GetArtistStreams;
 use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\Release;
 use App\Models\Track;
 use ClickHouseDB\Client;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ArtistStudioService
 {
@@ -19,6 +24,7 @@ class ArtistStudioService
         public GetArtistStreams $getArtistStreams,
         public GetUserTracks $getUserTracks,
         public GetUserReleases $getUserReleases,
+        public MinioService $minioService
     )
     {}
 
@@ -135,5 +141,52 @@ class ArtistStudioService
         return collect(array_column($rows, 'release_id'))
             ->map(fn ($id) => $releases[$id])
             ->values();
+    }
+
+    public function dropMerch(Request $request): void
+    {
+        $itemTitle = $request->input('item_title');
+        $itemDescription = $request->input('item_description');
+        $dropDate = $request->input('drop_date');
+        $merchVariants = json_decode($request->input('merch_variants'), true);
+        $userId = auth()->id();
+
+        DB::transaction(function () use (
+            $userId,
+            $itemTitle,
+            $itemDescription,
+            $dropDate,
+            $merchVariants,
+            $request
+        ) {
+            $coverPath = $this->minioService->storeMerchCover($request->file('images')[0]);
+
+            $product = Product::create([
+                'user_id' => $userId,
+                'title' => $itemTitle,
+                'description' => $itemDescription,
+                'cover_url' => $coverPath,
+                'currency' => 'usd',
+                'status' => 'pending',
+            ]);
+
+            foreach($merchVariants as $variant){
+                ProductVariant::create([
+                    'product_id' => $product->id,
+                    'variant_name' => $variant['variant'],
+                    'price' => $variant['price'],
+                    'stock' => $variant['stock'],
+                ]);
+            }
+        });
+    }
+
+    public function getMerch(): Collection
+    {
+        $artistId = Auth::id();
+
+        return Product::where('user_id', $artistId)
+            ->with('productVariants')
+            ->get();
     }
 }

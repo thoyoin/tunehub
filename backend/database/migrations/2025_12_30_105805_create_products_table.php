@@ -18,17 +18,14 @@ return new class extends Migration
                 ->unique();
             $table->text('description');
             $table->unsignedBigInteger('user_id');
+            $table->string('cover_url')
+                ->nullable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
-                ->onDelete('cascade');
-            $table->unsignedBigInteger('price')
-                ->default(0);
+            $table->string('currency')
+                ->default('usd');
             $table->enum('status', ['active', 'inactive', 'sold_out', 'pending', 'rejected', 'approved'])
                 ->default('inactive');
             $table->timestamps();

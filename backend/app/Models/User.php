@@ -106,4 +106,9 @@ class User extends Authenticatable
             ->withPivot(['started_at', 'ends_at'])
             ->withTimestamps();
     }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 }
