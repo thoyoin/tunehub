@@ -701,7 +701,12 @@ const handleReleasePublication = async (id) => {
                                 <template v-if="merchStore.artistMerch.length !== 0">
                                     <div class="d-flex flex-row flex-wrap gap-3 w-100">
                                         <template v-for="product in merchStore.artistMerch">
-                                            <div class="border rounded-5 p-3 position-relative">
+                                            <div
+                                                @click="merchStore.setEditingMerch(product)"
+                                                class="border rounded-5 p-3 position-relative"
+                                                data-bs-target="#editMerchModal"
+                                                data-bs-toggle="modal"
+                                            >
                                                 <img
                                                     class="rounded-4 mb-2"
                                                     width="200px"
@@ -726,51 +731,73 @@ const handleReleasePublication = async (id) => {
                                                 </span>
                                                 <div
                                                     style="border-top:1px solid rgba(228, 228, 228, 0.15)"
-                                                    class="d-flex flex-column align-items-center "
+                                                    class="d-flex flex-column align-items-center mt-2 pt-2"
                                                 >
                                                     <span class="fw-bold fs-5">{{ product.title }}</span>
                                                     <div
-                                                        class="d-flex flex-column align-items-start p-2 w-100"
+                                                        class="d-flex flex-column align-items-start w-100"
                                                     >
-                                                        <template v-for="variant in product.product_variants">
-                                                            <div
-                                                                style="font-size: 14px"
-                                                                class="d-flex align-items-center
-                                                                justify-content-between w-100"
-                                                            >
-                                                                <div>
-                                                                    <span class="opacity-50">
-                                                                        <img
-                                                                            style="width: 20px"
-                                                                            src="@/assets/svg/dot.svg"
-                                                                            alt="dot"
-                                                                        >
-                                                                    </span>
-                                                                    <span
-                                                                        class="opacity-50"
+                                                        <table class="table table-borderless align-middle">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="col p-0 ps-1"></th>
+                                                                    <th
+                                                                        class="col p-0 ps-1"
+                                                                        style="font-weight: lighter;
+                                                                        opacity: 60%;font-size: 15px"
                                                                     >
-                                                                        {{ variant.variant_name }}
-                                                                    </span>
-                                                                </div>
-                                                                <span
-                                                                    class="opacity-50 ms-1"
-                                                                >
-                                                                    Stock: {{ variant.stock }}
-                                                                </span>
-                                                                <div class="opacity-50 ms-2 me-1">
-                                                                    ${{ variant.price }}
-                                                                </div>
-                                                            </div>
-                                                        </template>
+                                                                        Stock
+                                                                    </th>
+                                                                    <th
+                                                                        class="col p-0 ps-2"
+                                                                        style="font-weight: lighter;
+                                                                        opacity: 60%;font-size: 15px"
+                                                                    >
+                                                                        Price
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <template v-for="(variant, index) in product.product_variants">
+                                                                    <tr>
+                                                                        <td style="font-size: 15px" class="p-0 fw-light">
+                                                                            <span
+                                                                                style="font-size: 13px"
+                                                                                class="opacity-50 me-2"
+                                                                            >
+                                                                                {{ index + 1 }}
+                                                                            </span>
+                                                                            <span
+                                                                                class="opacity-50"
+                                                                            >
+                                                                                {{ variant.variant_name }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td style="font-size: 15px" class="p-0 fw-light">
+                                                                            <span
+                                                                                class="opacity-50 ms-1"
+                                                                            >
+                                                                                {{ variant.stock }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td style="font-size: 15px" class="p-0 fw-light">
+                                                                            <div class="opacity-50 ms-2 me-1">
+                                                                                ${{ variant.price }}
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </template>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
                                         </template>
                                     </div>
-                                    <div class="mt-4 w-100 align-items-center justify-content-center">
+                                    <div class="mt-4 w-100 d-flex align-items-center justify-content-center">
                                         <button
                                             @click="router.push('/artists/merch/upload')"
-                                            class="btn btn-artists d-flex w-100 justify-content-center"
+                                            class="btn btn-artists d-flex w-50 justify-content-center"
                                         >
                                             Upload Merch
                                         </button>
@@ -918,4 +945,5 @@ const handleReleasePublication = async (id) => {
 .overflow-y-auto {
     -ms-overflow-style: none;
 }
+
 </style>

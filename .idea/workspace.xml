@@ -5,30 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
-      <change afterPath="$PROJECT_DIR$/backend/app/Models/ProductVariant.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/database/migrations/2026_03_23_120214_create_product_variants_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/svg/bag.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/ArtistStudioMerch.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/Content.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/Header.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/stores/artistMerch.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Auth/GetAuthUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Auth/GetAuthUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/ArtistStudioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/ArtistStudioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Services/ArtistStudioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ArtistStudioService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/MinioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/MinioService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_093731_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_105805_create_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_101010_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_093726_create_orders_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_105810_create_order_product_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2025_12_30_105810_create_order_product_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/ArtistStudioMerch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/ArtistStudioMerch.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/ArtistStudio.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistMerch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistMerch.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -585,7 +571,9 @@
       <workItem from="1774094138139" duration="115000" />
       <workItem from="1774094295663" duration="106000" />
       <workItem from="1774246400346" duration="23201000" />
-      <workItem from="1774277000452" duration="3306000" />
+      <workItem from="1774277000452" duration="3522000" />
+      <workItem from="1774325070809" duration="14256000" />
+      <workItem from="1774356854182" duration="6196000" />
     </task>
     <servers />
   </component>

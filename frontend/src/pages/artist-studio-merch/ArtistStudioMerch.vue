@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import Header from "@/pages/artist-studio-merch/Header.vue";
 import Content from "@/pages/artist-studio-merch/Content.vue";
+import { useArtistMerchStore } from "@/stores/artistMerch";
+
+const merchStore = useArtistMerchStore();
 </script>
 
 <template>

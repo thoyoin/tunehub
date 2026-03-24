@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
+use App\Models\Product;
 use App\Services\ArtistStudioService;
 use App\Services\TrackStatsService;
 use Illuminate\Http\JsonResponse;
@@ -89,6 +90,19 @@ class ArtistStudioController extends Controller
 
         return response()->json([
             'merch' => $merch,
+        ]);
+    }
+
+    public function updateMerch(
+        Product $merch,
+        ArtistStudioService $artistStudioService,
+        Request $request
+    ): JsonResponse
+    {
+        $artistStudioService->updateMerch($request, $merch);
+
+        return response()->json([
+            'message' => 'Merch has been successfully updated.',
         ]);
     }
 }

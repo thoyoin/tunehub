@@ -109,6 +109,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/artists/top-releases', 'getTopReleases');
         Route::post('/artists/merch/drop', 'dropMerch');
         Route::get('/artists/merch', 'getMerch');
+        Route::put('/artists/merch/{merch}/update', 'updateMerch');
     });
 
     Route::controller(TrackController::class)->group(function () {

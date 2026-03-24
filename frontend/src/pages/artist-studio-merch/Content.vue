@@ -110,7 +110,7 @@ onBeforeUnmount(() => {
                                         class="opacity-50 fw-bold mt-4"
                                         style="color: rgb(228, 228, 228)"
                                     >
-                                        No images upload yet...
+                                        No images uploaded yet...
                                     </span>
                                 </template>
                                 <template v-else>
@@ -186,7 +186,7 @@ onBeforeUnmount(() => {
                                     >
                                         <div class="variant-cell variant-main">
                                             <input
-                                                v-model="item.variant"
+                                                v-model="item.variant_name"
                                                 type="text"
                                                 name="variantTitle"
                                                 class="form-control bg-transparent border-0 shadow-none rounded-4 fw-bold"

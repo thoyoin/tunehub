@@ -1,27 +1,32 @@
 import { defineStore } from 'pinia'
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { useToast } from "vue-toastification";
 import api from "@/lib/api";
 
-interface Merch {
-    id: string;
-    variant: string;
+interface NewMerchVariant {
+    variant_name: string;
     price: number;
     stock: number;
 }
 
-interface ProductVariant {
-    created_at: string;
-    id: number;
-    price: number;
-    product_id: number;
-    stock: number;
-    updated_at: string;
+interface EditingProductVariant {
+    id?: number | string;
     variant_name: string;
+    price: number;
+    stock: number;
+}
+
+interface ProductImage {
+    id: number;
+    product_id: number;
+    image_url: string;
+    created_at: string;
+    updated_at: string;
 }
 
 interface ArtistMerch {
+    id: number,
     slug: string,
     title: string,
     description: string,
@@ -29,7 +34,8 @@ interface ArtistMerch {
     status: string,
     cover_url: string,
     currency: string,
-    product_variants: ProductVariant[],
+    product_variants: EditingProductVariant[],
+    product_images: ProductImage[],
 }
 
 export const useArtistMerchStore = defineStore('artistMerch', () => {
@@ -42,7 +48,29 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
     const itemTitle = ref<string>('')
     const itemDescription = ref<string>('')
     const itemArtist = ref<string>(auth.user?.username!)
-    const merchVariants = ref<Merch[]>([])
+    const merchVariants = ref<NewMerchVariant[]>([])
+
+    const editingMerch = ref<ArtistMerch | null>(null)
+    const editingMerchFiles = ref<{ file: File | null; preview: string }[]>([]);
+
+    const galleryImages = computed(() => {
+        const existingImages = (editingMerch.value?.product_images ?? []).map(image => ({
+            ...image,
+            galleryKey: `existing-${image.id}`,
+            preview: image.image_url,
+            source: "existing",
+            isExisting: true,
+        }));
+
+        const newImages = editingMerchFiles.value.map((image, index) => ({
+            ...image,
+            galleryKey: `new-${index}-${image.preview}`,
+            source: "new",
+            isExisting: false,
+        }));
+
+        return [...existingImages, ...newImages];
+    });
 
     const fetchArtistMerch = async () => {
         try {
@@ -94,9 +122,13 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
         merchVariants.value?.splice(index, 1);
     };
 
+    const removeVariantInEditing = (index: number) => {
+        editingMerch.value?.product_variants.splice(index, 1);
+        console.log(editingMerch.value?.product_variants)
+    }
+
     const createEmptyVariant = () => ({
-        id: crypto.randomUUID(),
-        variant: '',
+        variant_name: '',
         price: 0,
         stock: 0,
     });
@@ -104,6 +136,10 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
     const addVariant = () => {
         merchVariants.value?.push(createEmptyVariant());
     };
+
+    const addVariantInEditing = () => {
+        editingMerch.value?.product_variants.push(createEmptyVariant());
+    }
 
     const handleImagesUpload = (e: Event) => {
         const input = e.target as HTMLInputElement;
@@ -124,6 +160,26 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
         input.value = "";
     }
 
+    const handleEditingImagesUpload = (e: Event) => {
+        const input = e.target as HTMLInputElement;
+        const files = Array.from(input.files ?? [])
+
+        if (!files.length) return
+
+        const remainingSlots = Math.max(0, 5 - editingMerchFiles.value.length)
+        const filesToAdd = files.slice(0, remainingSlots)
+
+        filesToAdd.forEach(file => {
+            editingMerchFiles.value.push({
+                file,
+                preview: URL.createObjectURL(file),
+            })
+        });
+        console.log(galleryImages.value)
+
+        input.value = "";
+    }
+
     const removeImage = (index: number) => {
         const item = merchFiles.value[index];
         if (item?.preview) {
@@ -133,12 +189,45 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
         merchFiles.value.splice(index, 1);
     }
 
+    const removeImageInEditing = (imageToRemove: any) => {
+        if (imageToRemove.source === 'existing') {
+            editingMerch.value!.product_images = editingMerch.value!.product_images.filter(
+                image => image.id !== imageToRemove.id
+            );
+            return;
+        }
+
+        const index = editingMerchFiles.value.findIndex(
+            image => image.preview === imageToRemove.preview
+        );
+
+        if (index === -1) return;
+
+        const item = editingMerchFiles.value[index];
+
+        if (item?.preview.startsWith("blob:")) {
+            URL.revokeObjectURL(item?.preview);
+        }
+
+        editingMerchFiles.value.splice(index, 1);
+    }
+
+    const setEditingMerch = (item: ArtistMerch) => {
+        editingMerch.value = item
+    }
+
     const clear = () => {
         merchFiles.value.forEach(item => URL.revokeObjectURL(item.preview));
     }
 
+    const resetEditingMerch = () => {
+        editingMerch.value = null;
+    }
+
     return { merchFiles, removeImage, handleImagesUpload, clear, itemTitle, itemDescription,
          merchVariants, addVariant, removeVariant, itemArtist, handleMerchItemUpload,
-        fetchArtistMerch, artistMerch
+        fetchArtistMerch, artistMerch, editingMerch, setEditingMerch, addVariantInEditing,
+        removeVariantInEditing, resetEditingMerch, editingMerchFiles, handleEditingImagesUpload,
+        removeImageInEditing, galleryImages
     }
 })
