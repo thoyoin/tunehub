@@ -93,18 +93,4 @@ const routeLogin = () => {
         text-decoration-color: #9e173f !important;
     }
 }
-
-.bg-header {
-    background: radial-gradient(
-        circle,
-        rgba(32, 32, 32, 1) 0%,
-        rgba(32, 32, 32, .9) 20%,
-        rgba(32, 32, 32, 0) 100%
-    ) !important;
-    backdrop-filter: blur(8px) !important;
-
-    &::placeholder {
-        color: rgba(228,228,228, .5) !important;
-    }
-}
 </style>

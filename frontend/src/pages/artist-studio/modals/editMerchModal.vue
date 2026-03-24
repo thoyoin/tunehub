@@ -4,7 +4,6 @@ import { useToast } from "vue-toastification";
 import { ref, watch } from "vue";
 import api from "@/lib/api";
 import draggable from "vuedraggable";
-import { Modal } from "bootstrap";
 
 const merchStore = useArtistMerchStore();
 const toast = useToast();
@@ -60,24 +59,6 @@ const handleMerchItemUpdate = async () => {
         toast.success("Successfully updated");
 
         await merchStore.fetchArtistMerch();
-
-        const modalEl = document.getElementById("editMerchModal");
-
-        if (modalEl) {
-            const modal = Modal.getOrCreateInstance(modalEl);
-            modal.hide();
-
-            modalEl.addEventListener(
-                "hidden.bs.modal",
-                () => {
-                    document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
-                    document.body.classList.remove("modal-open");
-                    document.body.style.removeProperty("padding-right");
-                    merchStore.resetEditingMerch();
-                },
-                { once: true }
-            );
-        }
     } catch (error) {
         console.log(error);
 

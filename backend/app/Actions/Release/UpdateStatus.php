@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Actions\Release;
 
 use App\Models\Release;
+use App\Models\User;
+use App\Notifications\ReleaseApproved;
+use App\Notifications\ReleaseRejected;
 use Illuminate\Http\Request;
 
 class UpdateStatus
@@ -16,6 +19,15 @@ class UpdateStatus
         ]);
 
         $status = $request->input('status');
+
+        $user = User::where('id', $release->user_id)
+            ->firstOrFail();
+
+        if ($status === 'approved') {
+            $user->notify(new ReleaseApproved($release));
+        } else if ($status === 'rejected') {
+            $user->notify(new ReleaseRejected($release));
+        }
 
         $release->status = $status;
 
