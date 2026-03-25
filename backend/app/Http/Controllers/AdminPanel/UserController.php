@@ -8,6 +8,7 @@ use App\Actions\AdminPanel\User\GetAllUsers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController
 {
@@ -21,6 +22,10 @@ class UserController
     public function delete(User $user): JsonResponse
     {
         $user->delete();
+
+        Log::info('Moderation: user was deleted', [
+            'username' => $user->username,
+        ]);
 
         return response()->json([
             'message' => 'User deleted successfully.'

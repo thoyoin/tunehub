@@ -5,7 +5,6 @@ import { onMounted } from 'vue'
 import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
 import ArtistEarnings from "@/pages/artist-studio/charts/ArtistEarnings.vue";
 import ArtistStreamsCharts from "@/pages/artist-studio/charts/ArtistStreamsCharts.vue";
 
@@ -13,19 +12,20 @@ const artistStore = useArtistStore()
 const merchStore = useArtistMerchStore()
 const toast = useToast()
 const router = useRouter()
-const auth = useAuthStore()
 
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
 onMounted(async () => {
-    await artistStore.fetchTracks()
-    await artistStore.fetchReleases()
-    await artistStore.fetchArtistStreamsTotal()
-    await artistStore.fetchArtistEarnings()
-    await artistStore.fetchArtistStreamsDaily()
-    await artistStore.fetchArtistTopTracks()
-    await artistStore.fetchArtistTopReleases()
-    await merchStore.fetchArtistMerch()
+    await Promise.all([
+        artistStore.fetchTracks(),
+        artistStore.fetchReleases(),
+        artistStore.fetchArtistStreamsTotal(),
+        artistStore.fetchArtistEarnings(),
+        artistStore.fetchArtistStreamsDaily(),
+        artistStore.fetchArtistTopTracks(),
+        artistStore.fetchArtistTopReleases(),
+        merchStore.fetchArtistMerch(),
+    ])
 })
 
 const handleReleasePublication = async (id) => {
@@ -50,27 +50,50 @@ const handleReleasePublication = async (id) => {
                 border: 1px solid rgba(228, 228, 228, 0.15);"
                 class="rounded-5"
             >
+                <transition name="fade">
+                    <div
+                        v-if="artistStore.isLoading.library"
+                        style="z-index: 9999 !important;"
+                        class="loading-overlay d-flex flex-column align-items-center justify-content-center"
+                    >
+                        <div class="search-spinner mb-2"></div>
+                    </div>
+                </transition>
                 <div class="d-flex flex-row align-items-end">
                     <span class="fw-bold fs-5 me-3">Artist Studio</span>
                     <span style="font-size: 13px;line-height: 25px" class="fw-bold opacity-50">All time stats</span>
                 </div>
                 <div class="d-flex flex-row align-items-end mt-2 w-100">
                     <div
-                        class="d-flex flex-row me-5"
+                        class="d-flex flex-row me-5 position-relative"
                         style="border-right:1px solid rgba(228, 228, 228, 0.15);padding-bottom: 20px"
                     >
+                        <transition name="fade">
+                            <div
+                                v-if="artistStore.isLoading.streamsTotal"
+                                class="loading-overlay d-flex flex-column align-items-center justify-content-center"
+                            >
+                                <div class="search-spinner mb-2"></div>
+                            </div>
+                        </transition>
                         <div class="d-flex flex-column mx-5 align-items-center">
-                            <span class="fs-3 fw-bold">{{ artistStore.artistStreamsTotal }}</span>
+                            <span class="fs-3 fw-bold">
+                                {{ artistStore.artistStreamsTotal }}
+                            </span>
                             <span class="opacity-50 fw-bold">plays</span>
                         </div>
                         <img class="opacity-50" src="@/assets/svg/line.svg" alt="">
                         <div class="d-flex flex-column mx-5 align-items-center">
-                            <span class="fs-3 fw-bold">{{ artistStore.tracks.length }}</span>
+                            <span class="fs-3 fw-bold">
+                                {{ artistStore.tracks.length }}
+                            </span>
                             <span class="opacity-50 fw-bold">tracks</span>
                         </div>
                         <img class="opacity-50" src="@/assets/svg/line.svg" alt="">
                         <div class="d-flex flex-column mx-5 align-items-center">
-                            <span class="fs-3 fw-bold">{{ artistStore.releases.length }}</span>
+                            <span class="fs-3 fw-bold">
+                                {{ artistStore.releases.length }}
+                            </span>
                             <span class="opacity-50 fw-bold">releases</span>
                         </div>
                     </div>
@@ -826,6 +849,36 @@ const handleReleasePublication = async (id) => {
 </template>
 
 <style scoped>
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(32, 32, 32, 0.5);
+    backdrop-filter: blur(4px);
+    border-radius: 18px;
+    z-index: 10;
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.search-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(228, 228, 228, 0.2);
+    border-top: 2px solid rgb(158, 23, 63);
+    border-radius: 50%;
+    animation: spin 0.4s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .btn-view {
     border-radius: 30px;
     height: 50px;

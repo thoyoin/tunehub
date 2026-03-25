@@ -28,7 +28,7 @@ class PlaylistController
         $status = $updateStatus->handle($playlist);
 
         return response()->json([
-            'message' => 'Playlist is_hidden status updated.',
+            'message' => 'Playlist status updated.',
             'is_hidden' => $status,
         ]);
     }

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\ReleaseApproved;
 use App\Notifications\ReleaseRejected;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UpdateStatus
 {
@@ -32,5 +33,10 @@ class UpdateStatus
         $release->status = $status;
 
         $release->save();
+
+        Log::info('Moderation: release status was updated', [
+            'release' => $release->title,
+            'status' => $release->status,
+        ]);
     }
 }

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { reactive, ref } from "vue";
 import api from '@/lib/api'
 import { useToast } from "vue-toastification";
 import type { Release } from "@/types/Release"
@@ -26,7 +26,6 @@ export const useArtistStore = defineStore('artistStudio', () => {
     const releases = ref<Release[]>([])
     const selectedView = ref<string>('tracks')
     const editingItem = ref<Release | Track | null>(null)
-    const isLoading = ref<boolean>(false)
     const artistStreamsTotal = ref<number | null>(null)
     const artistEarnings = ref<ArtistEarnings | null>(null)
     const artistBalance = ref<number | null>(null)
@@ -34,11 +33,19 @@ export const useArtistStore = defineStore('artistStudio', () => {
     const artistTopTracks = ref<ArtistTopTracks[] | null>(null)
     const artistTopReleases = ref<Release[] | null>(null)
 
+    const isLoading = reactive({
+        library: false,
+        earnings: false,
+        analytics: false,
+        merch: false,
+        streamsTotal: false
+    })
+
     const toast = useToast()
 
     const fetchArtistTopReleases = async () => {
         try {
-            isLoading.value = true
+            isLoading.analytics = true
 
             const response = await api.get<Release[]>('/api/artists/top-releases')
 
@@ -46,13 +53,13 @@ export const useArtistStore = defineStore('artistStudio', () => {
         } catch (error) {
             console.log(error)
         } finally {
-            isLoading.value = false
+            isLoading.analytics = false
         }
     }
 
     const fetchArtistTopTracks = async () => {
         try {
-            isLoading.value = true
+            isLoading.analytics = true
 
             const response = await api.get<ArtistTopTracks[]>('/api/artists/top-tracks')
 
@@ -60,13 +67,13 @@ export const useArtistStore = defineStore('artistStudio', () => {
         } catch (error) {
             console.error(error)
         } finally {
-            isLoading.value = false
+            isLoading.analytics = false
         }
     }
 
     const fetchArtistStreamsDaily = async () => {
         try {
-            isLoading.value = true
+            isLoading.analytics = true
 
             const response = await api.get<{
                 streamsDaily: ArtistStreamsDaily[]
@@ -76,13 +83,13 @@ export const useArtistStore = defineStore('artistStudio', () => {
         } catch (error) {
             console.log(error)
         } finally {
-            isLoading.value = false
+            isLoading.analytics = false
         }
     }
 
     const fetchArtistStreamsTotal = async () => {
         try {
-            isLoading.value = true
+            isLoading.streamsTotal = true
 
             const response = await api.get<{
                 artistStreams: number
@@ -92,13 +99,13 @@ export const useArtistStore = defineStore('artistStudio', () => {
         } catch (error) {
             console.error(error)
         } finally {
-            isLoading.value = false
+            isLoading.streamsTotal = false
         }
     }
 
     const fetchArtistEarnings = async () => {
         try {
-            isLoading.value = true
+            isLoading.earnings = true
 
             const response = await api.get<{
                 earnings: ArtistEarnings
@@ -110,12 +117,14 @@ export const useArtistStore = defineStore('artistStudio', () => {
         } catch (error) {
             console.error(error)
         } finally {
-            isLoading.value = false
+            isLoading.earnings = false
         }
     }
 
     const fetchTracks = async (): Promise<void> => {
         try {
+            isLoading.library = true
+
             const response = await api.get<{
                 tracks: Track[]
             }>('/api/artists/tracks')
@@ -123,11 +132,15 @@ export const useArtistStore = defineStore('artistStudio', () => {
             tracks.value = response.data.tracks
         } catch (e) {
             console.error(e)
+        } finally {
+            isLoading.library = false
         }
     }
 
     const fetchReleases = async (): Promise<void> => {
         try {
+            isLoading.library = true
+
             const response = await api.get<{
                 releases: Release[]
             }>('/api/artists/releases')
@@ -135,6 +148,8 @@ export const useArtistStore = defineStore('artistStudio', () => {
             releases.value = response.data.releases
         } catch (e) {
             console.error(e)
+        } finally {
+            isLoading.library = false
         }
     }
 
@@ -170,15 +185,11 @@ export const useArtistStore = defineStore('artistStudio', () => {
 
     const publishRelease = async (releaseId: number): Promise<void> => {
         try {
-            isLoading.value = true
-
             await api.patch(`/api/release/${releaseId}/publish`)
 
             await fetchReleases()
         } catch (e) {
             console.error(e)
-        } finally {
-            isLoading.value = false
         }
     }
 
@@ -209,6 +220,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
     const pullEditingItem = (item: Track | Release): void => {
         editingItem.value = item
     }
+
 
     return {
         tracks,
