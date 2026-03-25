@@ -15,6 +15,7 @@ use App\Models\Track;
 use ClickHouseDB\Client;
 use getID3;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TrackService
 {
@@ -42,6 +43,10 @@ class TrackService
             DB::afterCommit(function () use ($audioPath, $track) {
                 DeleteTrackAudioFile::dispatch($audioPath);
                 DeleteTrackInClickhouse::dispatch($track->id);
+
+                Log::info('Track was deleted', [
+                    'track_id' => $track->id,
+                ]);
             });
         });
     }
@@ -56,8 +61,20 @@ class TrackService
                 'artist' => $request['artist'],
                 'cover_url' => $coverUrl,
             ]);
+
+            Log::info('Track was updated', [
+                'track_id' => $track->id,
+                'title' => $request['trackTitle'],
+                'artist' => $request['artist'],
+            ]);
         } else {
             $track->update([
+                'title' => $request['trackTitle'],
+                'artist' => $request['artist'],
+            ]);
+
+            Log::info('Track was updated', [
+                'track_id' => $track->id,
                 'title' => $request['trackTitle'],
                 'artist' => $request['artist'],
             ]);

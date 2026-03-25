@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserService
 {
@@ -23,6 +24,10 @@ class UserService
         }
 
         $user->update($data);
+
+        Log::info('User was updated', [
+            'username' => $data['username'],
+        ]);
 
         return $user;
     }

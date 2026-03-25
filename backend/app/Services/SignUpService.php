@@ -9,6 +9,7 @@ use App\Actions\LibraryItem\CreateLibraryItem;
 use App\Actions\Playlist\CreateStarterPlaylist;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SignUpService
 {
@@ -26,6 +27,10 @@ class SignUpService
             $playlist = $this->createStarterPlaylist->handle($user);
 
             $this->createLibraryItem->handle($user->id, $playlist->id, 'playlist');
+
+            Log::info('New User was signed Up', [
+                'username' => $request['username'],
+            ]);
 
             Auth::login($user);
         });

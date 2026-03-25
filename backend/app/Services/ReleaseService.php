@@ -13,6 +13,7 @@ use App\Models\Release;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReleaseService
 {
@@ -53,6 +54,12 @@ class ReleaseService
                 ]);
 
             $this->storeTrack->handle($files, $titles, $release);
+
+            Log::info('New Release was stored', [
+                'release_id' => $release->id,
+                'title' => $release->title,
+                'artist' => $release->artist,
+            ]);
         });
     }
 
@@ -65,7 +72,13 @@ class ReleaseService
 
             $release->delete();
 
+            Log::info('Release was deleted', [
+                'title' => $release->title,
+                'artist' => $release->artist,
+            ]);
+
             $this->minioService->destroyCover($coverUrl);
+
         } else {
             $currentPosition = $track->position;
 
@@ -83,11 +96,16 @@ class ReleaseService
 
             $release->delete();
 
-            DB::afterCommit(function () use ($releaseTracks) {
+            DB::afterCommit(function () use ($releaseTracks, $release) {
                 foreach ($releaseTracks as $track) {
                     $audioUrl = $track->audio_url;
                     DeleteTrackAudioFile::dispatch($audioUrl);
                 }
+
+                Log::info('Release was deleted', [
+                    'title' => $release->title,
+                    'artist' => $release->artist,
+                ]);
             });
         });
     }
@@ -176,6 +194,11 @@ class ReleaseService
         $release->status = 'published';
 
         $release->save();
+
+        Log::info('New Release was published', [
+            'title' => $release->title,
+            'artist' => $release->artist,
+        ]);
     }
 
     public function getArtistLatest($artistId): Release | null

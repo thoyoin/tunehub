@@ -16,6 +16,7 @@ use App\Models\Playlist;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PlaylistService
 {
@@ -44,6 +45,12 @@ class PlaylistService
             ]);
 
             $libraryItem = $this->createLibraryItem->handle(auth()->id(), $playlist->id, 'playlist');
+
+            Log::info('New Playlist was stored', [
+                'title' => $playlist->title,
+                'user_id' => $playlist->user_id,
+                'visibility' => $playlist->visibility,
+            ]);
 
             return $libraryItem->with('item')
                 ->where('item_id', $playlist->id)
@@ -79,6 +86,11 @@ class PlaylistService
         if ($url !== $defaultCover) {
             $this->minioService->destroyCover($url);
         }
+
+        Log::info('Playlist was deleted', [
+            'title' => $playlist->title,
+            'user_id' => $playlist->user_id,
+        ]);
     }
 
     public function update($request, $playlist): Playlist
