@@ -162,7 +162,7 @@ watch(
                             <template v-if="auth.user">
                                 <button
                                     type="button"
-                                    style="left: 308px; top: 13px"
+                                    style="left: 311px; top: 13px"
                                     class="btn z-3 btn-play-table position-absolute"
                                     @click="toggleTrack(
                                         track,

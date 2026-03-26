@@ -11,6 +11,12 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
 </template>
 
 <style lang="scss">
+    .app-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 1 100% !important;
+        min-height: 0 !important;
+    }
     .fade-enter-active,
     .fade-leave-active {
         transition: opacity 0.1s ease;
@@ -46,6 +52,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         align-items: center !important;
         justify-content: center !important;
         padding: 0 10px !important;
+        transition: .2s !important;
 
         &:hover {
             background-color: #b31b47 !important;

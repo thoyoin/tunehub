@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Release;
+use App\Models\User;
 use ClickHouseDB\Client;
 
 class ArtistService
@@ -44,5 +45,13 @@ class ArtistService
             ->map(fn ($id) => $releases[$id] ?? null)
             ->filter()
             ->values();
+    }
+
+    public function getArtist($artistId)
+    {
+        return User::where('id', $artistId)
+            ->with('products.productVariants')
+            ->get()
+            ->first();
     }
 }

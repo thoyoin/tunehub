@@ -182,7 +182,7 @@ class ArtistStudioService
             foreach($merchVariants as $variant){
                 ProductVariant::create([
                     'product_id' => $product->id,
-                    'variant_name' => $variant['variant'],
+                    'variant_name' => $variant['variant_name'],
                     'price' => $variant['price'],
                     'stock' => $variant['stock'],
                 ]);
@@ -271,5 +271,10 @@ class ArtistStudioService
                 );
             }
         });
+    }
+
+    public function deleteMerch($merchId): void
+    {
+        Product::where('id', $merchId)->delete();
     }
 }

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useArtistMerchStore } from "@/stores/artistMerch";
+import { useMerchManagementStore } from "@/stores/merchManagement";
 import { useToast } from "vue-toastification";
 import { ref, watch } from "vue";
 import api from "@/lib/api";
 import draggable from "vuedraggable";
 
-const merchStore = useArtistMerchStore();
+const merchStore = useMerchManagementStore();
 const toast = useToast();
 
 const itemTitle = ref("");
@@ -22,7 +22,6 @@ watch(
     (newItem) => {
         if (!newItem) return;
 
-        console.log(merchStore.galleryImages)
         itemTitle.value = newItem.title;
         itemDescription.value = newItem.description;
     },
@@ -232,10 +231,11 @@ const handleMerchItemUpdate = async () => {
                                     <div class="variant-cell w-100 variant-actions">
                                         <button
                                             type="button"
-                                            class="btn variant-danger-btn"
+                                            class="btn variant-danger-btn d-flex align-items-center
+                                            justify-content-center"
                                             @click="merchStore.removeVariantInEditing(index)"
                                         >
-                                            Delete
+                                            <img src="@/assets/svg/reject.svg" alt="delete">
                                         </button>
                                     </div>
                                 </div>
@@ -264,7 +264,22 @@ const handleMerchItemUpdate = async () => {
                     >
                         Cancel
                     </button>
-                    <button class="btn-primary" @click="handleMerchItemUpdate">Save</button>
+                    <div class="d-flex flex-row gap-2">
+                        <button
+                            class="btn variant-danger-btn"
+                            @click="merchStore.handleDeleteMerch()"
+                            :disabled="merchStore.isLoading"
+                        >
+                            Delete
+                        </button>
+                        <button
+                            class="btn-primary"
+                            @click="handleMerchItemUpdate"
+                            :disabled="merchStore.isLoading"
+                        >
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -329,14 +344,22 @@ const handleMerchItemUpdate = async () => {
 .variant-danger-btn {
     border: 1px solid rgb(158, 23, 63);
     color: rgb(228, 228, 228);
-    background: transparent;
-    border-radius: 14px;
-    padding: 2px 10px;
+    background: rgb(32,32,32);
+    border-radius: 15px;
+    height: 30px;
+    padding: 4px 12px;
     font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
-        color: rgb(228, 228, 228);
         background: rgba(158, 23, 63, 0.5);
+        border-color: rgba(158, 23, 63, 0);
+    }
+
+    &:active {
+        color: rgb(158, 23, 63) !important;
     }
 }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ArtistMerchController;
 use App\Http\Controllers\ArtistStudioController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LibraryItemController;
@@ -110,6 +111,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/artists/merch/drop', 'dropMerch');
         Route::get('/artists/merch', 'getMerch');
         Route::put('/artists/merch/{merch}/update', 'updateMerch');
+        Route::delete('/artists/merch/{merch}/delete', 'deleteMerch');
     });
 
     Route::controller(TrackController::class)->group(function () {
@@ -130,6 +132,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user/billing-portal', 'goToBillingPortal');
         Route::post('/subscription/checkout', 'goToCheckout');
         Route::get('/subscription/details', 'getDetails');
+    });
+
+    Route::controller(ArtistMerchController::class)->group(function () {
+       Route::get('/artist/merch/{slug}/get', 'get');
     });
 });
 Route::controller(SubscriptionController::class)->group(function () {

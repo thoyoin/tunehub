@@ -105,4 +105,13 @@ class ArtistStudioController extends Controller
             'message' => 'Merch has been successfully updated.',
         ]);
     }
+
+    public function deleteMerch(Product $merch, ArtistStudioService $artistStudioService): JsonResponse
+    {
+        $artistStudioService->deleteMerch($merch->id);
+
+        return response()->json([
+            'message' => 'Merch has been successfully deleted.',
+        ]);
+    }
 }

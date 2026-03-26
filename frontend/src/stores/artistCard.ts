@@ -24,6 +24,7 @@ export const useArtistCardStore = defineStore('artistCard', () => {
             }>(`/api/artist/${id}`);
 
             artist.value = response.data.artist;
+            console.log(response.data.artist);
         } catch (e) {
             console.log(e);
         } finally {

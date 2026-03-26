@@ -2,6 +2,7 @@ import type { Playlist } from './Playlist.js'
 import type { Track } from './Track.js'
 import type { Role } from './Role.js'
 import Subscription from "@/pages/subscription/Subscription.vue";
+import type { ArtistMerch } from "@/types/ArtistMerch";
 
 interface Subscription {
     created_at: string
@@ -44,5 +45,5 @@ export interface User {
     roles: Role[]
     is_subscribed: boolean
     subscriptions: Subscription[]
-    products?: string[]
+    products?: ArtistMerch[]
 }

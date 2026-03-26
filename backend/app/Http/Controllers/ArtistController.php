@@ -12,8 +12,10 @@ use Illuminate\Http\JsonResponse;
 
 class ArtistController extends Controller
 {
-    public function getArtist(User $artist): JsonResponse
+    public function getArtist(User $artist, ArtistService $artistService): JsonResponse
     {
+        $artist = $artistService->getArtist($artist->id);
+
         return response()->json([
             'artist' => $artist,
         ]);

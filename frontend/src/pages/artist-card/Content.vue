@@ -219,7 +219,12 @@ const handleGetRelease = async () => {
                         </div>
                     </div>
                 </div>
-                <div class="mt-4" style="padding-bottom: 200px">
+                <div
+                    class="mt-4"
+                    :class="{
+                        'padding-bottom': !artistCardStore.artist?.products?.length
+                    }"
+                >
                     <span class="fw-bold fs-5">Albums</span>
                     <div class="d-flex flex-row gap-4 mt-3">
                         <template v-for="album in artistCardStore.artistAlbums">
@@ -250,6 +255,40 @@ const handleGetRelease = async () => {
                         </template>
                     </div>
                 </div>
+                <template v-if="artistCardStore.artist?.products?.length">
+                    <div class="mt-4" style="padding-bottom: 200px">
+                        <span class="fw-bold fs-5">Merch</span>
+                        <div class="d-flex flex-column gap-1 mt-3">
+                            <template v-for="product in artistCardStore.artist?.products">
+                                <div
+                                    @click="router.push({
+                                        name: 'artist.merch.all',
+                                        params: { artistId: artistCardStore.artist.id},
+                                    })"
+                                    class="d-flex merch-card flex-row align-items-center"
+                                >
+                                    <img
+                                        class="me-3 ms-1 rounded-2"
+                                        style="width: 55px;height: 55px"
+                                        :src="product.cover_url"
+                                        alt="cover"
+                                    >
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold">
+                                            {{ product.title }}
+                                        </span>
+                                        <span
+                                            style="font-size: 15px"
+                                            class="opacity-50"
+                                        >
+                                            {{ product.description }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
     </div>
@@ -330,4 +369,18 @@ const handleGetRelease = async () => {
     }
 }
 
+.merch-card {
+    transition: .2s;
+    border-radius: 25px;
+    max-width: 500px;
+    padding: 10px;
+
+    &:hover {
+        background-color: rgba(228, 228, 228, 0.05);
+    }
+}
+
+.padding-bottom {
+    padding-bottom: 100px;
+}
 </style>

@@ -145,7 +145,7 @@ const handleGetRelease = async () => {
     backdrop-filter: blur(8px) !important;
 }
 .progress-container {
-    background-color: rgb(32,32,32) !important;
+    background-color: rgb(22,22,22) !important;
     border-radius: 5px !important;
     width: 100%;
     height: 4px;
@@ -180,8 +180,8 @@ const handleGetRelease = async () => {
         to right,
         rgba(228,228,228, 50%) 0%,
         rgba(228,228,228, 50%) var(--volume-percent),
-        rgb(35,35,35) var(--volume-percent),
-        rgb(45,45,45) 100%
+        rgb(22,22,22) var(--volume-percent),
+        rgb(22,22,22) 100%
     );
     &:hover {
         height: 10px !important;
@@ -209,7 +209,7 @@ const handleGetRelease = async () => {
 .volume::-moz-range-track {
     transition: .3s !important;
     height: 5px;
-    background-color: rgb(32,32,32);
+    background-color: rgb(22,22,22) !important;
     border-radius: 5px;
 }
 

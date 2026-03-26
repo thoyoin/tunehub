@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { useAuthStore } from "@/stores/auth";
-import { useArtistMerchStore } from "@/stores/artistMerch";
+import { useMerchManagementStore } from "@/stores/merchManagement";
 import { onBeforeUnmount, ref } from "vue";
 import draggable from "vuedraggable";
 
-const auth = useAuthStore();
-const artistMerchStore = useArtistMerchStore();
+const merchManagementStore = useMerchManagementStore();
 
 const fileInputRef = ref<HTMLInputElement | null>(null);
 
@@ -14,7 +12,7 @@ const openFilePicker = () => {
 };
 
 onBeforeUnmount(() => {
-    artistMerchStore.clear();
+    merchManagementStore.clear();
 });
 </script>
 
@@ -44,7 +42,7 @@ onBeforeUnmount(() => {
                                 style="color: rgb(228, 228, 228)"
                                 name="itemTitle"
                                 id="itemTitle"
-                                v-model="artistMerchStore.itemTitle"
+                                v-model="merchManagementStore.itemTitle"
                                 class="mb-2 form-control bg-minor rounded-4 w-75"
                                 placeholder="Enter title"
                                 required
@@ -63,7 +61,7 @@ onBeforeUnmount(() => {
                                 name="itemDescription"
                                 type="text"
                                 id="itemDescription"
-                                v-model="artistMerchStore.itemDescription"
+                                v-model="merchManagementStore.itemDescription"
                                 class="mb-2 form-control bg-minor rounded-4 w-75"
                                 placeholder="Enter description"
                                 required
@@ -83,7 +81,7 @@ onBeforeUnmount(() => {
                                 style="color: rgb(228, 228, 228)"
                                 name="itemArtist"
                                 id="itemArtist"
-                                v-model="artistMerchStore.itemArtist"
+                                v-model="merchManagementStore.itemArtist"
                                 class="mb-2 form-control bg-minor rounded-4 w-75"
                                 disabled
                                 required
@@ -103,9 +101,9 @@ onBeforeUnmount(() => {
                                     accept="image/*"
                                     multiple
                                     class="d-none"
-                                    @change="artistMerchStore.handleImagesUpload($event)"
+                                    @change="merchManagementStore.handleImagesUpload($event)"
                                 />
-                                <template v-if="!artistMerchStore.merchFiles.length">
+                                <template v-if="!merchManagementStore.merchFiles.length">
                                     <span
                                         class="opacity-50 fw-bold mt-4"
                                         style="color: rgb(228, 228, 228)"
@@ -116,7 +114,7 @@ onBeforeUnmount(() => {
                                 <template v-else>
                                     <div class="d-flex flex-row w-100 gap-3">
                                         <draggable
-                                            v-model="artistMerchStore.merchFiles"
+                                            v-model="merchManagementStore.merchFiles"
                                             item-key="preview"
                                             class="d-flex flex-row flex-wrap gap-3"
                                         >
@@ -140,7 +138,7 @@ onBeforeUnmount(() => {
                                                     </span>
                                                     <button
                                                         @click.stop="
-                                                            artistMerchStore.removeImage(index)
+                                                            merchManagementStore.removeImage(index)
                                                         "
                                                         class="btn remove-btn w-100"
                                                     >
@@ -180,7 +178,7 @@ onBeforeUnmount(() => {
 
                                 <div class="d-flex flex-column gap-3 mt-3">
                                     <div
-                                        v-for="(item, index) in artistMerchStore.merchVariants"
+                                        v-for="(item, index) in merchManagementStore.merchVariants"
                                         :key="item.id"
                                         class="variant-row rounded-5 px-3"
                                     >
@@ -217,10 +215,11 @@ onBeforeUnmount(() => {
                                         <div class="variant-cell w-100 variant-actions">
                                             <button
                                                 type="button"
-                                                class="btn variant-danger-btn"
-                                                @click="artistMerchStore.removeVariant(index)"
+                                                class="btn variant-danger-btn d-flex align-items-center
+                                                justify-content-center"
+                                                @click="merchManagementStore.removeVariant(index)"
                                             >
-                                                Delete
+                                                <img src="@/assets/svg/reject.svg" alt="delete">
                                             </button>
                                         </div>
                                     </div>
@@ -231,7 +230,7 @@ onBeforeUnmount(() => {
                                         <button
                                             type="button"
                                             class="btn btn-artists px-3"
-                                            @click="artistMerchStore.addVariant"
+                                            @click="merchManagementStore.addVariant"
                                         >
                                             Add
                                         </button>
@@ -246,8 +245,9 @@ onBeforeUnmount(() => {
                     >
                         <div class="w-100 d-flex flex-row justify-content-end">
                             <button
-                                @click="artistMerchStore.handleMerchItemUpload"
+                                @click="merchManagementStore.handleMerchItemUpload"
                                 class="btn btn-primary"
+                                :disabled="merchManagementStore.isLoading"
                             >
                                 Publish
                             </button>
@@ -352,14 +352,22 @@ onBeforeUnmount(() => {
 .variant-danger-btn {
     border: 1px solid rgb(158, 23, 63);
     color: rgb(228, 228, 228);
-    background: transparent;
-    border-radius: 14px;
-    padding: 2px 10px;
+    background: rgb(32,32,32);
+    border-radius: 15px;
+    height: 30px;
+    padding: 4px 12px;
     font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
-        color: rgb(228, 228, 228);
-        background: rgba(158, 23, 63, .5);
+        background: rgba(158, 23, 63, 0.5);
+        border-color: rgba(158, 23, 63, 0);
+    }
+
+    &:active {
+        color: rgb(158, 23, 63) !important;
     }
 }
 

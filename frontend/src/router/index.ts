@@ -15,6 +15,9 @@ import Subscription from "@/pages/subscription/Subscription.vue";
 import SubscriptionSuccess from "@/pages/subscription/SubscriptionSuccess.vue";
 import SubscriptionCancel from "@/pages/subscription/SubscriptionCancel.vue";
 import ArtistStudioMerch from "@/pages/artist-studio-merch/ArtistStudioMerch.vue";
+import ArtistMerchList from "@/pages/artist-merch/ArtistMerchList.vue";
+import ArtistMerchLayout from "@/pages/artist-merch/ArtistMerchLayout.vue";
+import ArtistMerchShow from "@/pages/artist-merch/ArtistMerchShow.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +41,23 @@ const router = createRouter({
           path: '/subscription',
           name: 'subscription',
           component: Subscription,
+      },
+      {
+          path: '/artist/:artistId/merch',
+          name: 'artist.merch',
+          component: ArtistMerchLayout,
+          children: [
+              {
+                  path: '',
+                  name: 'artist.merch.all',
+                  component: ArtistMerchList,
+              },
+              {
+                  path: ':slug',
+                  name: 'artist.merch.show',
+                  component: ArtistMerchShow,
+              }
+          ]
       },
       {
           path: '/release/:releaseId',

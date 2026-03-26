@@ -175,7 +175,7 @@ export const useArtistStore = defineStore('artistStudio', () => {
             await fetchReleases()
             await fetchTracks()
 
-            toast.success('release successfully deleted!')
+            toast.success('Release successfully deleted!')
         } catch (e) {
             console.error(e)
 

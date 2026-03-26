@@ -1,6 +1,6 @@
 <script setup>
 import { useArtistStore } from '@/stores/artistStudio'
-import { useArtistMerchStore } from "@/stores/artistMerch.ts";
+import { useMerchManagementStore } from "@/stores/merchManagement.ts";
 import { onMounted } from 'vue'
 import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { useToast } from "vue-toastification";
@@ -9,7 +9,7 @@ import ArtistEarnings from "@/pages/artist-studio/charts/ArtistEarnings.vue";
 import ArtistStreamsCharts from "@/pages/artist-studio/charts/ArtistStreamsCharts.vue";
 
 const artistStore = useArtistStore()
-const merchStore = useArtistMerchStore()
+const merchStore = useMerchManagementStore()
 const toast = useToast()
 const router = useRouter()
 
@@ -504,7 +504,7 @@ const handleReleasePublication = async (id) => {
                                                     {{ release.released_in }}
                                                 </span>
                                             </td>
-                                            <td class="fw-lighter">
+                                            <td class="fw-lighter ps-4">
                                                 <span style="opacity: 60%; font-size: 15px">
                                                     {{ release.tracks.length }}
                                                 </span>
@@ -726,7 +726,8 @@ const handleReleasePublication = async (id) => {
                                         <template v-for="product in merchStore.artistMerch">
                                             <div
                                                 @click="merchStore.setEditingMerch(product)"
-                                                class="border rounded-5 p-3 position-relative"
+                                                class="merch-card p-3 d-flex justify-content-start
+                                                flex-column"
                                                 data-bs-target="#editMerchModal"
                                                 data-bs-toggle="modal"
                                             >
@@ -754,13 +755,14 @@ const handleReleasePublication = async (id) => {
                                                 </span>
                                                 <div
                                                     style="border-top:1px solid rgba(228, 228, 228, 0.15)"
-                                                    class="d-flex flex-column align-items-center mt-2 pt-2"
+                                                    class="d-flex flex-column align-items-center
+                                                    mt-2 pt-2"
                                                 >
                                                     <span class="fw-bold fs-5">{{ product.title }}</span>
                                                     <div
                                                         class="d-flex flex-column align-items-start w-100"
                                                     >
-                                                        <table class="table table-borderless align-middle">
+                                                        <table class="table table-borderless align-middle mt-2">
                                                             <thead>
                                                                 <tr>
                                                                     <th class="col p-0 ps-1"></th>
@@ -997,6 +999,13 @@ const handleReleasePublication = async (id) => {
 .allItems,
 .overflow-y-auto {
     -ms-overflow-style: none;
+}
+
+.merch-card {
+    border:1px solid rgba(228, 228, 228, 0.15) !important;
+    border-radius: 30px !important;
+    position: relative !important;
+    width: 230px;
 }
 
 </style>
