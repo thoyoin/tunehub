@@ -10,7 +10,7 @@ const router = useRouter();
 watch(
     () => route.params.artistId,
     async (id) => {
-        if (id) {
+        if (id && !merchStore.artist && typeof id === "string") {
             await merchStore.fetchArtist(id);
         }
     },

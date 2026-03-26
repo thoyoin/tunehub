@@ -40,7 +40,10 @@ watch(
         <div class="d-flex flex-row browse-btn align-items-center">
             <img style="width: 20px" src="@/assets/svg/arrowLeft.svg" alt="">
             <span
-                @click="router.back()"
+                @click="router.push({
+                    name: 'artist.merch.all',
+                    params: { artistId: merchStore.artist?.id},
+                })"
                 class="fw-bold ms-2"
             >
                 Browse all
@@ -129,6 +132,33 @@ watch(
                 </div>
             </div>
         </div>
+        <div class="d-flex mt-5 flex-column">
+            <span class="fw-bold fs-5">More items from {{ merchStore.artist?.username }}</span>
+            <div class="d-flex flex-row mt-4 gap-4">
+                <template v-for="product in merchStore.artist?.products">
+                    <template v-if="product.slug !== route.params.slug">
+                        <div
+                            @click="router.push({
+                                name: 'artist.merch.show',
+                                params: {
+                                    slug: product.slug
+                                }
+                            })"
+                            class="merch-card"
+                        >
+                            <img
+                                class="rounded-3 mb-2"
+                                style="width: 180px;height: 180px"
+                                :src="product.cover_url"
+                                alt="cover"
+                            >
+                            <div class="fw-bold">{{ product.title }}</div>
+                            <span class="opacity-50">${{ product.product_variants[0]?.price }}</span>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -208,6 +238,20 @@ watch(
     &:focus {
         box-shadow: none !important;
         border-color: rgb(158, 23, 63) !important;
+    }
+}
+
+.merch-card {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    transition: .2s;
+
+    &:hover {
+        div {
+            transition: .1s;
+            color: rgb(158, 23, 63);
+        }
     }
 }
 </style>
