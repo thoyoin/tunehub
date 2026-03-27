@@ -326,4 +326,34 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         --bs-popover-body-color: rgb(228,228,228) !important;
         --bs-popover-border-radius: 20px !important;
     }
+
+    .loading-overlay {
+        position: absolute !important;
+        inset: 0 !important;
+        background: rgba(32, 32, 32, 0.5) !important;
+        backdrop-filter: blur(4px) !important;
+        border-radius: 18px !important;
+        z-index: 100 !important;
+        pointer-events: all !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    .search-spinner {
+        width: 18px !important;
+        height: 18px !important;
+        border: 2px solid rgba(228, 228, 228, 0.2) !important;
+        border-top: 2px solid rgb(158, 23, 63) !important;
+        border-radius: 50% !important;
+        animation: spin 0.4s linear infinite !important;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
 </style>

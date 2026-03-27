@@ -16,22 +16,14 @@ const router = useRouter()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
 onMounted(async () => {
-    await Promise.all([
-        artistStore.fetchTracks(),
-        artistStore.fetchReleases(),
-        artistStore.fetchArtistStreamsTotal(),
-        artistStore.fetchArtistEarnings(),
-        artistStore.fetchArtistStreamsDaily(),
-        artistStore.fetchArtistTopTracks(),
-        artistStore.fetchArtistTopReleases(),
-        merchStore.fetchArtistMerch(),
-    ])
+    await artistStore.fetchStudioArtistData();
 })
 
 const handleReleasePublication = async (id) => {
     try {
         await artistStore.publishRelease(id)
 
+        await artistStore.fetchStudioArtistData(true)
         toast.success('Release has been published successfully.')
     } catch (error) {
         console.log(error)
@@ -54,7 +46,7 @@ const handleReleasePublication = async (id) => {
                     <div
                         v-if="artistStore.isLoading.library"
                         style="z-index: 9999 !important;"
-                        class="loading-overlay d-flex flex-column align-items-center justify-content-center"
+                        class="loading-overlay"
                     >
                         <div class="search-spinner mb-2"></div>
                     </div>

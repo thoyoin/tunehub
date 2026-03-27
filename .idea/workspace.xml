@@ -6,8 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-merch/ArtistMerchList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-merch/ArtistMerchList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-merch/ArtistMerchShow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-merch/ArtistMerchShow.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-card/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-card/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home/Library.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/release/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistCard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistCard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistStudio.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/library.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/library.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/recentlyPlayed.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/release.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/release.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -570,7 +581,9 @@
       <workItem from="1774449178962" duration="9804000" />
       <workItem from="1774521316178" duration="16634000" />
       <workItem from="1774538551219" duration="885000" />
-      <workItem from="1774539463236" duration="4384000" />
+      <workItem from="1774539463236" duration="4441000" />
+      <workItem from="1774585658087" duration="111000" />
+      <workItem from="1774611733271" duration="4515000" />
     </task>
     <servers />
   </component>

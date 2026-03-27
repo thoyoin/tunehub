@@ -27,8 +27,6 @@ watch(
     async (url) => {
         if (url) {
             await getCoverPalette(url)
-
-            await libraryStore.fetchUserPlaylists()
         }
     },
     { immediate: true },
@@ -40,9 +38,9 @@ watch(
         <transition name="fade">
             <div
                 v-if="releaseStore.isLoading"
-                class="loading-overlay d-flex align-items-center justify-content-center"
+                class="loading-overlay"
             >
-                <span class="fw-bold fs-5 opacity-50"> Loading... </span>
+                <div class="search-spinner mb-2"></div>
             </div>
         </transition>
         <div
@@ -410,18 +408,6 @@ watch(
     100% {
         height: 4px;
     }
-}
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(32, 32, 32, 0.35);
-    backdrop-filter: blur(4px);
-    z-index: 1;
-    pointer-events: none;
 }
 
 .fade-enter-active,

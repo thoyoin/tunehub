@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { reactive, ref } from "vue";
+import { useMerchManagementStore } from "@/stores/merchManagement";
 import api from '@/lib/api'
 import { useToast } from "vue-toastification";
 import type { Release } from "@/types/Release"
@@ -22,6 +23,7 @@ interface ArtistTopTracks {
 }
 
 export const useArtistStore = defineStore('artistStudio', () => {
+    const isStudioLoaded = ref(false);
     const tracks = ref<Track[]>([])
     const releases = ref<Release[]>([])
     const selectedView = ref<string>('tracks')
@@ -32,6 +34,8 @@ export const useArtistStore = defineStore('artistStudio', () => {
     const artistStreamsDaily = ref<ArtistStreamsDaily[] | null>(null)
     const artistTopTracks = ref<ArtistTopTracks[] | null>(null)
     const artistTopReleases = ref<Release[] | null>(null)
+
+    const merchStore = useMerchManagementStore();
 
     const isLoading = reactive({
         library: false,
@@ -221,6 +225,22 @@ export const useArtistStore = defineStore('artistStudio', () => {
         editingItem.value = item
     }
 
+    const fetchStudioArtistData = async (force: boolean = false) => {
+        if (isStudioLoaded.value && !force) return
+
+        await Promise.all([
+            fetchTracks(),
+            fetchReleases(),
+            fetchArtistStreamsTotal(),
+            fetchArtistEarnings(),
+            fetchArtistStreamsDaily(),
+            fetchArtistTopTracks(),
+            fetchArtistTopReleases(),
+            merchStore.fetchArtistMerch(),
+        ])
+
+        isStudioLoaded.value = true
+    }
 
     return {
         tracks,
@@ -251,5 +271,6 @@ export const useArtistStore = defineStore('artistStudio', () => {
         artistStreamsDaily,
         artistTopTracks,
         artistTopReleases,
+        fetchStudioArtistData
      };
 })

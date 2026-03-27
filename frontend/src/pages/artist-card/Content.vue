@@ -36,7 +36,7 @@ const handleGetRelease = async () => {
     <div style="color: rgb(228, 228, 228)" class="flex-grow-1 playlist-content position-relative">
         <transition name="fade">
             <div
-                v-if="artistCardStore.isLoading"
+                v-if="artistCardStore.isLoading.artist"
                 class="loading-overlay d-flex flex-column align-items-center justify-content-center"
             >
                 <div class="search-spinner mb-2"></div>
@@ -81,8 +81,16 @@ const handleGetRelease = async () => {
                     </div>
                 </div>
                 <div class="mt-4 row">
-                    <div class="col-6">
+                    <div class="col-6 position-relative">
                         <span class="fw-bold fs-5">Latest Release</span>
+                            <transition name="fade">
+                                <div
+                                    v-if="artistCardStore.isLoading.release"
+                                    class="loading-overlay"
+                                >
+                                    <div class="search-spinner mb-2"></div>
+                                </div>
+                            </transition>
                         <template v-if="!artistCardStore.artistLatestRelease">
                             <div class="mt-4 opacity-50">
                                 You have not released anything yet...
@@ -94,14 +102,6 @@ const handleGetRelease = async () => {
                                 @click="handleGetRelease()"
                                 class="mt-4 d-flex flex-row align-items-center position-relative"
                             >
-                                <transition name="fade">
-                                    <div
-                                        v-if="artistCardStore.isReleaseLoading"
-                                        class="loading-overlay d-flex flex-column align-items-center justify-content-center"
-                                    >
-                                        <div class="search-spinner mb-2"></div>
-                                    </div>
-                                </transition>
                                 <img
                                     class="rounded-3"
                                     style="
@@ -131,7 +131,7 @@ const handleGetRelease = async () => {
                         <div class="overflow-y-auto flex-1 mt-2 position-relative">
                             <transition name="fade">
                                 <div
-                                    v-if="artistCardStore.areSongsLoading"
+                                    v-if="artistCardStore.isLoading.songs"
                                     class="loading-overlay d-flex flex-column align-items-center justify-content-center"
                                 >
                                     <div class="search-spinner mb-2"></div>
@@ -226,7 +226,15 @@ const handleGetRelease = async () => {
                     }"
                 >
                     <span class="fw-bold fs-5">Albums</span>
-                    <div class="d-flex flex-row gap-4 mt-3">
+                    <div class="d-flex flex-row gap-4 mt-3 position-relative">
+                        <transition name="fade">
+                            <div
+                                v-if="artistCardStore.isLoading.albums"
+                                class="loading-overlay d-flex flex-column align-items-center justify-content-center"
+                            >
+                                <div class="search-spinner mb-2"></div>
+                            </div>
+                        </transition>
                         <template v-for="album in artistCardStore.artistAlbums">
                             <div class="d-flex flex-column">
                                 <div
@@ -302,32 +310,6 @@ const handleGetRelease = async () => {
     overflow-y: auto !important;
     padding: 0 0 90px 0 !important;
     min-height: 0 !important;
-}
-.loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(32, 32, 32, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    pointer-events: auto;
-    user-select: none;
-}
-.search-spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(228, 228, 228, 0.2);
-    border-top: 2px solid rgb(158, 23, 63);
-    border-radius: 50%;
-    animation: spin 0.4s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 .cover-play-btn {

@@ -1,28 +1,29 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue'
-import { useAuthStore } from '@/stores/auth.ts'
-import api from '@/lib/api.ts'
-import type { Item } from '../types/Item.js'
-import type { Track } from '../types/Track.js'
+import { useAuthStore } from '@/stores/auth'
+import api from '@/lib/api'
+import type { Item } from '@/types/Item'
 
 export const useRecentlyPlayedStore = defineStore('recentlyPlayedStore', () => {
-    const items = ref<Item>(null)
+    const items = ref<Item[] | null>(null)
     const isLoading = ref<boolean>(false)
-
-    const auth = useAuthStore()
+    const isDataLoaded = ref<boolean>(false)
 
     const fetchRecentlyPlayed = async (): Promise<void> => {
-        if (auth.user) {
+        if (!isDataLoaded.value) {
             try {
                 isLoading.value = true;
 
-                const response = await api.get<Item[]>('/api/recentlyPlayed')
+                const response = await api.get<{
+                    playedHistory: Item[]
+                }>('/api/recentlyPlayed')
 
                 items.value = response.data.playedHistory
             } catch (e) {
                 console.error(e)
             } finally {
                 isLoading.value = false
+                isDataLoaded.value = true
             }
         }
     }

@@ -26,11 +26,8 @@ onMounted(async () => {
 watch(
     () => route.params.artistId,
     async (id) => {
-        if (id) {
-            await artistCardStore.fetchArtist(id);
-            await artistCardStore.fetchLatestRelease();
-            await artistCardStore.fetchTopSongs();
-            await artistCardStore.fetchAlbums();
+        if (typeof (id) === "string") {
+            await artistCardStore.ensureDataIsLoaded(id);
         }
     },
     { immediate: true },

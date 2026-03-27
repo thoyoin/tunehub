@@ -65,11 +65,9 @@
                 <transition name="fade">
                     <div
                         v-if="libraryStore.isLibraryLoading"
-                        class="loading-overlay d-flex align-items-center justify-content-center"
+                        class="loading-overlay"
                     >
-                    <span class="fw-bold opacity-50">
-                        Loading...
-                    </span>
+                        <div class="search-spinner mb-2"></div>
                     </div>
                 </transition>
                 <template v-if="auth.user">
@@ -201,17 +199,6 @@
         border-top:1px solid rgba(228, 228, 228, 0.15) !important;
         border-left:1px solid rgba(228, 228, 228, 0.15) !important;
         border-right:1px solid rgba(228, 228, 228, 0.15) !important;
-    }
-    .loading-overlay {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        background: rgba(32, 32, 32, 0.35);
-        backdrop-filter: blur(2px);
-        z-index: 1;
-        pointer-events: none;
     }
     .cover-play-btn {
         z-index: 100;

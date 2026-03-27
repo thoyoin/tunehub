@@ -1,15 +1,17 @@
 import { defineStore } from 'pinia';
-import { ref } from "vue";
+import {reactive, ref } from "vue";
 import type { User } from "@/types/User";
 import api from "@/lib/api";
 import type { Release } from "@/types/Release";
 import type { Track } from "@/types/Track";
 
 export const useArtistCardStore = defineStore('artistCard', () => {
-    const isLoading = ref<boolean>(false);
-    const isReleaseLoading = ref<boolean>(false);
-    const areReleasesLoading = ref<boolean>(false);
-    const areSongsLoading = ref<boolean>(false);
+    const isLoading = reactive({
+        artist: false,
+        release: false,
+        albums: false,
+        songs: false,
+    });
     const artist = ref<User | null>(null);
     const artistLatestRelease = ref<Release | null>(null);
     const artistTopSongs = ref<Track[] | null>(null);
@@ -17,24 +19,23 @@ export const useArtistCardStore = defineStore('artistCard', () => {
 
     const fetchArtist = async (id: string | number) => {
         try {
-            isLoading.value = true;
+            isLoading.artist = true;
 
             const response = await api.get<{
                 artist: User
             }>(`/api/artist/${id}`);
 
             artist.value = response.data.artist;
-            console.log(response.data.artist);
         } catch (e) {
             console.log(e);
         } finally {
-            isLoading.value = false;
+            isLoading.artist = false;
         }
     }
 
     const fetchLatestRelease = async () => {
         try {
-            isReleaseLoading.value = true;
+            isLoading.release = true;
 
             const response = await api.get<{
                 latestRelease: Release
@@ -44,13 +45,13 @@ export const useArtistCardStore = defineStore('artistCard', () => {
         } catch (e) {
             console.log(e);
         } finally {
-            isReleaseLoading.value = false;
+            isLoading.release = false;
         }
     }
 
     const fetchTopSongs = async () => {
         try {
-            areSongsLoading.value = true;
+            isLoading.songs = true;
 
             const response = await api.get<{
                 topTracks: Track[]
@@ -60,13 +61,13 @@ export const useArtistCardStore = defineStore('artistCard', () => {
         } catch (e) {
             console.log(e);
         } finally {
-            areSongsLoading.value = false;
+            isLoading.songs = false;
         }
     }
 
     const fetchAlbums = async () => {
         try {
-            areReleasesLoading.value = true;
+            isLoading.albums = true;
 
             const response = await api.get<{
                 albums: Release[]
@@ -76,12 +77,23 @@ export const useArtistCardStore = defineStore('artistCard', () => {
         } catch (e) {
             console.log(e);
         } finally {
-            isReleaseLoading.value = false;
+            isLoading.albums = false;
         }
+    }
+
+    const ensureDataIsLoaded = async (id: string) => {
+        if (artist.value?.id === Number(id)) return
+
+        await Promise.all([
+            await fetchArtist(id),
+            fetchLatestRelease(),
+            fetchTopSongs(),
+            fetchAlbums(),
+        ]);
     }
 
     return {
         isLoading, fetchArtist, artist, artistLatestRelease, fetchLatestRelease, fetchTopSongs,
-        artistTopSongs, areSongsLoading, isReleaseLoading, fetchAlbums, artistAlbums,
+        artistTopSongs, fetchAlbums, artistAlbums, ensureDataIsLoaded
     }
 })

@@ -14,6 +14,7 @@ const { currentTrack, isPlaying, toggleTrack, currentContext } = useAudioPlayer(
 
 onMounted(async () => {
     await releaseStore.fetchLatestReleases()
+    await recentlyPlayedStore.fetchRecentlyPlayed()
 })
 
 watch(

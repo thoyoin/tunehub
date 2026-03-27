@@ -16,14 +16,25 @@ export const useLibraryStore = defineStore('library',() => {
     const libraryItem = ref<LibraryItem | null>(null);
     const itemTracks = ref<Track[]>([]);
     const isRelease = ref<boolean>(false);
-    const isReady = ref<boolean>(false);
     const userPlaylists = ref<Playlist[]>([]);
     const isLoading = ref<boolean>(false);
     const playlistVisibility = ref<string>(
         libraryItem.value?.visibility === 'public' ? 'public' : 'private'
     );
+    const isLibraryDataLoaded = ref<boolean>(false);
 
     const auth = useAuthStore();
+
+    const fetchLibraryData = async (force: boolean = false) => {
+        if (isLibraryDataLoaded.value && !force) return;
+
+        await Promise.all([
+            fetchItems(),
+            fetchUserPlaylists(),
+        ])
+
+        isLibraryDataLoaded.value = true
+    }
 
     async function fetchItems(): Promise<void> {
         if (auth.user) {
@@ -39,7 +50,6 @@ export const useLibraryStore = defineStore('library',() => {
                 console.error(e);
             } finally {
                 isLibraryLoading.value = false;
-                isReady.value = true;
             }
         }
     }
@@ -157,12 +167,12 @@ export const useLibraryStore = defineStore('library',() => {
         libraryItem,
         itemTracks,
         isRelease,
-        isReady,
         userPlaylists,
         fetchUserPlaylists,
         isLoading,
         updateVisibility,
         playlistVisibility,
-        setVisibility
+        setVisibility,
+        fetchLibraryData,
     };
 })
