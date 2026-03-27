@@ -132,7 +132,14 @@ class ReleaseService
             return [$release, $tracks];
         } else {
 
-            return [$release, $release->tracks];
+            $tracks = $release->tracks()->get();
+
+            $this->trackStatsService->getTracksPlays(
+                $tracks->pluck('id')->toArray(),
+                $tracks
+            );
+
+            return [$release, $tracks];
         }
     }
 

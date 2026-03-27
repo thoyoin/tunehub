@@ -211,12 +211,10 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         &:hover td {
             background-color: rgba(50,50,51, 50%) !important;
             cursor: default !important;
-            transition: background-color .2s ease, box-shadow .15s ease !important;
+            transition: background-color .2s ease !important;
         }
 
         &:hover {
-            box-shadow: inset 0 0 0 1px rgb(60,60,61) !important;
-
             .add-like {
                 opacity: .7 !important;
             }
@@ -233,13 +231,13 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         }
 
         &:hover td:first-child {
-            border-top-left-radius: 20px !important;
-            border-bottom-left-radius: 20px !important;
+            border-top-left-radius: 10px !important;
+            border-bottom-left-radius: 10px !important;
         }
 
         &:hover td:last-child {
-            border-top-right-radius: 20px !important;
-            border-bottom-right-radius: 20px !important;
+            border-top-right-radius: 10px !important;
+            border-bottom-right-radius: 10px !important;
         }
     }
     .position-number {
@@ -299,7 +297,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     .btn-play-table {
         opacity: 0 !important;
         padding: 0 !important;
-        transition: .3s !important;
+        transition: .2s !important;
         border: none !important;
         z-index: 0 !important;
 
@@ -313,12 +311,32 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     html, body {
         height: 100% !important;
         margin: 0 !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
     }
     #app {
         display: flex;
         flex-direction: column;
         height: 100%;
         cursor: default;
+    }
+
+    * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    *::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
     }
     .custom-popover {
         --bs-popover-max-width: 200px !important;
@@ -333,7 +351,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
         background: rgba(32, 32, 32, 0.5) !important;
         backdrop-filter: blur(4px) !important;
         border-radius: 18px !important;
-        z-index: 100 !important;
+        z-index: 1 !important;
         pointer-events: all !important;
         display: flex !important;
         align-items: center !important;

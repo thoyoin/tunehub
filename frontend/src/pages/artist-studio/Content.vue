@@ -16,7 +16,10 @@ const router = useRouter()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
 onMounted(async () => {
-    await artistStore.fetchStudioArtistData();
+    await Promise.all([
+        artistStore.fetchArtistStreamsTotal(),
+        artistStore.fetchStudioArtistData(),
+    ])
 })
 
 const handleReleasePublication = async (id) => {
@@ -45,7 +48,6 @@ const handleReleasePublication = async (id) => {
                 <transition name="fade">
                     <div
                         v-if="artistStore.isLoading.library"
-                        style="z-index: 9999 !important;"
                         class="loading-overlay"
                     >
                         <div class="search-spinner mb-2"></div>
@@ -118,6 +120,7 @@ const handleReleasePublication = async (id) => {
                         </span>
                     </div>
                     <div
+                        @click="artistStore.fetchArtistEarnings()"
                         style="padding-bottom: 20px"
                         class="d-flex flex-column me-5 align-items-center gap-1"
                     >
@@ -144,6 +147,7 @@ const handleReleasePublication = async (id) => {
                         </span>
                     </div>
                     <div
+                        @click="artistStore.fetchArtistStreamsDaily()"
                         style="padding-bottom: 20px"
                         class="d-flex flex-column me-5 align-items-center gap-1"
                     >
@@ -200,7 +204,7 @@ const handleReleasePublication = async (id) => {
             <div class="d-flex flex-column position-relative">
                 <template v-if="artistStore.selectedView === 'tracks' || artistStore.selectedView === 'releases'">
                     <div
-                        class="d-flex flex-row z-3 position-sticky"
+                        class="d-flex flex-row position-sticky"
                         style="margin: 65px 0 0 115px;top: 80px;width: 390px"
                     >
                         <button
@@ -843,36 +847,6 @@ const handleReleasePublication = async (id) => {
 </template>
 
 <style scoped>
-.loading-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(32, 32, 32, 0.5);
-    backdrop-filter: blur(4px);
-    border-radius: 18px;
-    z-index: 10;
-    pointer-events: all;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.search-spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(228, 228, 228, 0.2);
-    border-top: 2px solid rgb(158, 23, 63);
-    border-radius: 50%;
-    animation: spin 0.4s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .btn-view {
     border-radius: 30px;
     height: 50px;
@@ -920,17 +894,6 @@ const handleReleasePublication = async (id) => {
     min-height: 0 !important;
 }
 
-.release-content::-webkit-scrollbar {
-    height: 5px !important;
-    width: 5px !important;
-}
-
-.release-content::-webkit-scrollbar-thumb {
-    background: rgba(228, 228, 228, 0.15) !important;
-    border-radius: 10px !important;
-    transition: 0.2s !important;
-}
-
 .btn-earnings {
     cursor: default;
     transition: transform 0.2s ease-in-out, width 0.1s ease-in-out;
@@ -976,21 +939,6 @@ const handleReleasePublication = async (id) => {
     backdrop-filter: blur(3px) !important;
     mask-image: linear-gradient(black 60%, transparent 100%);
     z-index: 10 !important;
-}
-
-.allItems::-webkit-scrollbar,
-.overflow-y-auto::-webkit-scrollbar {
-    display: none;
-}
-
-.allItems,
-.overflow-y-auto {
-    scrollbar-width: none;
-}
-
-.allItems,
-.overflow-y-auto {
-    -ms-overflow-style: none;
 }
 
 .merch-card {

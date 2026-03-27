@@ -30,7 +30,6 @@ export const useLibraryStore = defineStore('library',() => {
 
         await Promise.all([
             fetchItems(),
-            fetchUserPlaylists(),
         ])
 
         isLibraryDataLoaded.value = true
@@ -51,38 +50,6 @@ export const useLibraryStore = defineStore('library',() => {
             } finally {
                 isLibraryLoading.value = false;
             }
-        }
-    }
-
-    async function fetchUserPlaylists(): Promise<void> {
-        if (auth.user) {
-            try {
-                const { data } = await api.get<{
-                    playlists: Playlist[]
-                }>(`/api/playlists`)
-
-                userPlaylists.value = data.playlists
-            } catch (e) {
-                console.error(e);
-            }
-        }
-    }
-
-    async function getPlaylist(playlistId: number) {
-        try {
-            isPlaylistLoading.value = true;
-
-            const response = await api.get<{
-                playlistItem: LibraryItem,
-                tracks: Track[]
-            }>(`/api/playlist/${playlistId}`)
-
-            libraryItem.value = response.data.playlistItem;
-            itemTracks.value = response.data.tracks;
-        } catch (e) {
-            console.error(e);
-        } finally {
-            isPlaylistLoading.value = false;
         }
     }
 
@@ -163,12 +130,10 @@ export const useLibraryStore = defineStore('library',() => {
         selectedLibraryItem,
         clearAllSelectedItems,
         clearSelectedItem,
-        getPlaylist,
         libraryItem,
         itemTracks,
         isRelease,
         userPlaylists,
-        fetchUserPlaylists,
         isLoading,
         updateVisibility,
         playlistVisibility,

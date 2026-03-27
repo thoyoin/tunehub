@@ -6,7 +6,6 @@ import { useRoute } from 'vue-router'
 import { useReleaseStore } from '@/stores/release'
 import { onMounted, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import { useLibraryStore } from '@/stores/library'
 import AuthenticateModal from '@/pages/release/modals/authenticateModal.vue'
 import SettingsModal from '@/pages/home/modals/settingsModal.vue'
 import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
@@ -14,12 +13,13 @@ import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
 const route = useRoute()
 const releaseStore = useReleaseStore()
 const auth = useAuthStore()
-const libraryStore = useLibraryStore()
 
 watch(
     () => route.params.releaseId,
     async (id) => {
-        await releaseStore.getRelease(id)
+        if (typeof id === 'string') {
+            await releaseStore.getRelease(id)
+        }
     },
     { immediate: true },
 )
@@ -27,10 +27,6 @@ watch(
 onMounted(async () => {
     if (!auth.isReady) {
         await auth.fetchUser()
-    }
-
-    if (!libraryStore.isReady) {
-        await libraryStore.fetchItems()
     }
 })
 </script>

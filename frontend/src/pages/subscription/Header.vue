@@ -10,9 +10,7 @@ import { ref } from "vue";
 const router = useRouter()
 const auth = useAuthStore()
 const libraryStore = useLibraryStore()
-const searchStore = useSearchStore()
 const toast = useToast()
-
 const logout = async () => {
     try {
         await auth.logout()
@@ -22,7 +20,6 @@ const logout = async () => {
         toast.error('Something went wrong')
     }
 }
-
 const routeHome = () => {
     router.push('/')
     libraryStore.clearAllSelectedItems()

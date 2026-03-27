@@ -3,6 +3,7 @@ import { useLibraryStore } from '@/stores/library'
 import { useAuthStore } from '@/stores/auth'
 import { useReleaseStore } from '@/stores/release'
 import { useAudioPlayer } from '@/composables/useAudioPlayer'
+import { usePlaylistStore } from '@/stores/playlist'
 import { useToast } from 'vue-toastification'
 import api from '@/lib/api'
 import { watch } from 'vue'
@@ -18,12 +19,13 @@ const libraryStore = useLibraryStore()
 const toast = useToast()
 const auth = useAuthStore()
 const releaseStore = useReleaseStore()
+const playlistStore = usePlaylistStore()
 const { palette, getCoverPalette } = useVibrantPalette()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
 const handlePlaylistDeletion = async () => {
     try {
-        await api.delete(`/api/playlist/${libraryStore.libraryItem?.item.id}`)
+        await api.delete(`/api/playlist/${playlistStore.playlist?.item.id}`)
 
         await libraryStore.fetchItems()
 
@@ -53,12 +55,12 @@ const handleGetRelease = async (id: number) => {
 }
 
 watch(
-    () => libraryStore.libraryItem?.item.cover_url,
+    () => playlistStore.playlist?.item.cover_url,
     async (url) => {
         if (url) {
             await getCoverPalette(url)
 
-            await libraryStore.fetchUserPlaylists()
+            await playlistStore.fetchUserPlaylists()
         }
     },
     { immediate: true },
@@ -69,10 +71,10 @@ watch(
     <div style="color: rgb(228, 228, 228)" class="flex-grow-1 playlist-content position-relative">
         <transition name="fade">
             <div
-                v-if="libraryStore.isPlaylistLoading"
-                class="loading-overlay d-flex align-items-center justify-content-center"
+                v-if="playlistStore.isLoading"
+                class="loading-overlay"
             >
-                <span class="fw-bold fs-5 opacity-50"> Loading... </span>
+                <div class="search-spinner mb-2"></div>
             </div>
         </transition>
         <div
@@ -91,7 +93,7 @@ watch(
         >
             <div>
                 <img
-                    :src="libraryStore.libraryItem?.item.cover_url"
+                    :src="playlistStore.playlist?.item.cover_url"
                     alt="cover"
                     :style="{
                         width: '210px',
@@ -102,8 +104,8 @@ watch(
                 />
             </div>
             <div style="max-width: 600px" class="d-flex flex-column w-100 justify-content-end">
-                <template v-if="libraryStore.libraryItem?.item.slug !== 'liked-tracks'">
-                    <template v-if="libraryStore.libraryItem?.item.visibility === 'public'">
+                <template v-if="playlistStore.playlist?.item.slug !== 'liked-tracks'">
+                    <template v-if="playlistStore.playlist?.item.visibility === 'public'">
                     <span
                         class="ms-4 fw-normal opacity-50"
                     >
@@ -121,16 +123,16 @@ watch(
                 <h1
                     style="font-size: 55px"
                     class="ms-4 fw-bold"
-                    v-text="libraryStore.libraryItem?.item.title"
+                    v-text="playlistStore.playlist?.item.title"
                 ></h1>
                 <h5
                     style="opacity: 0.3; font-size: 20px"
                     class="ms-4 mt-1 fw-light"
-                    v-text="libraryStore.libraryItem?.item.description"
+                    v-text="playlistStore.playlist?.item.description"
                 ></h5>
                 <div class="d-flex flex-row align-items-center">
                     <img
-                        :src="libraryStore.libraryItem?.user.profile_picture"
+                        :src="playlistStore.playlist?.user.profile_picture"
                         style="width: 30px; height: 30px"
                         class="rounded-5 ms-4"
                         alt="profile"
@@ -138,7 +140,7 @@ watch(
                     <h3
                         style="opacity: 10"
                         class="ms-2 mb-0 fs-5 fw-bold"
-                        v-text="libraryStore.libraryItem?.user.username"
+                        v-text="playlistStore.playlist?.user.username"
                     ></h3>
                     <img
                         class="opacity-50"
@@ -151,17 +153,17 @@ watch(
                     >
                         {{ libraryStore.itemTracks?.length }} songs
                     </h3>
-                    <template v-if="libraryStore.itemTracks?.length > 0">
+                    <template v-if="playlistStore.playlistTracks?.length! > 0">
                         <span
                             style="font-size: 16px"
                             class="m-0 opacity-50"
                         >
-                            , {{ libraryStore.libraryItem?.item.playlist_duration }}
+                            , {{ playlistStore.playlist?.item.playlist_duration }}
                         </span>
                     </template>
                 </div>
             </div>
-            <template v-if="libraryStore.libraryItem?.item.slug !== 'liked-tracks'">
+            <template v-if="playlistStore.playlist?.item.slug !== 'liked-tracks'">
                 <div class="w-50 text-end p-2 me-5 z-">
                     <a
                         class="btn btn-settings p-0"
@@ -217,7 +219,7 @@ watch(
                 </tr>
             </thead>
             <tbody>
-                <template v-for="track in libraryStore.itemTracks" :key="track.id">
+                <template v-for="track in playlistStore.playlistTracks" :key="track.id">
                     <tr class="track-row rounded-5">
                         <td
                             class="position-relative"
@@ -236,8 +238,8 @@ watch(
                                     class="btn z-3 btn-play-table position-absolute"
                                     @click="toggleTrack(
                                         track,
-                                        libraryStore.itemTracks,
-                                        libraryStore.libraryItem
+                                        playlistStore.playlistTracks,
+                                        playlistStore.playlist
                                         )"
                                 >
                                     <template v-if="currentTrack?.id !== track.id">
@@ -301,10 +303,10 @@ watch(
                         </td>
                         <td>
                             <button
-                                @click="handleGetRelease(track.release.id)"
+                                @click="handleGetRelease(track.release?.id)"
                                 style="opacity: 60%; font-size: 15px; font-weight: lighter"
                                 class="btn btn-get-release p-0"
-                                v-text="track.release.title"
+                                v-text="track.release?.title"
                             ></button>
                         </td>
                         <td>
@@ -316,7 +318,7 @@ watch(
                         <td class="text-center">
                             <template
                                 v-if="
-                                    auth.user && libraryStore.libraryItem?.item.slug === 'liked-tracks'
+                                    auth.user && playlistStore.playlist?.item.slug === 'liked-tracks'
                                 "
                             >
                                 <button
@@ -356,7 +358,7 @@ watch(
                                         <img src="@/assets/svg/dropdownArrow.svg" alt="arrow" />
                                     </button>
                                     <ul class="dropdown-menu submenu">
-                                        <template v-for="playlist in libraryStore.userPlaylists">
+                                        <template v-for="playlist in playlistStore.userPlaylists">
                                             <template v-if="playlist.slug === 'liked-tracks'">
                                                 <li class="d-flex align-items-center">
                                                     <button
@@ -425,7 +427,7 @@ watch(
                 </template>
             </tbody>
         </table>
-        <template v-if="libraryStore.itemTracks.length === 0">
+        <template v-if="playlistStore.playlistTracks?.length === 0">
             <div class="d-flex align-items-center justify-content-center">
                 <span class="fw-bold opacity-75">You haven't added any tracks yet.</span>
             </div>
@@ -520,18 +522,6 @@ watch(
     100% {
         height: 4px;
     }
-}
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(32, 32, 32, 0.35);
-    backdrop-filter: blur(4px);
-    z-index: 1;
-    pointer-events: none;
 }
 
 .fade-enter-active,

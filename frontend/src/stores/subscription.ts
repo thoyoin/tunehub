@@ -6,6 +6,7 @@ import type { Subscription } from "@/types/Subscription";
 export const useSubscriptionStore = defineStore('subscription', () => {
     const isLoading = ref<boolean>(false);
     const subscriptionDetails = ref<Subscription | null>(null);
+    const isDetailsDataLoaded = ref<boolean>(false);
 
     const goToCheckout = async () => {
         isLoading.value = true;
@@ -23,7 +24,9 @@ export const useSubscriptionStore = defineStore('subscription', () => {
         }
     }
 
-    const getSubscriptionDetails = async () => {
+    const getSubscriptionDetails = async (force: boolean = false) => {
+        if (isDetailsDataLoaded.value && !force) return
+
         try {
             isLoading.value = true;
 
@@ -36,6 +39,7 @@ export const useSubscriptionStore = defineStore('subscription', () => {
             console.error(e)
         } finally {
             isLoading.value = false;
+            isDetailsDataLoaded.value = true;
         }
     }
 

@@ -82,7 +82,7 @@ const expires = computed(
                                 <span class="opacity-50">Price</span>
                                 <div class="d-flex flex-row align-items-end">
                                     <span class="fs-5 fw-bold">
-                                        ${{ subscriptionStore.subscriptionDetails?.amount / 100 }}
+                                        ${{ subscriptionStore.subscriptionDetails?.amount! / 100 }}
                                     </span>
                                     <span style="margin-left: 3px" class="fw-bold">
                                         / {{ subscriptionStore.subscriptionDetails?.interval }}

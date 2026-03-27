@@ -21,7 +21,7 @@ watch(
     () => currentContext,
     async (context) => {
         if (context) {
-            await recentlyPlayedStore.fetchRecentlyPlayed()
+            await recentlyPlayedStore.fetchRecentlyPlayed(true)
         }
     },
 )
@@ -211,6 +211,7 @@ watch(
     color: rgb(228, 228, 228) !important;
     border: none !important;
     transition: 0.2s;
+    cursor: default;
 
     &:hover {
         color: rgba(228, 228, 228, 0.4) !important;
@@ -317,43 +318,5 @@ watch(
     &:hover {
         opacity: 1 !important;
     }
-}
-
-.recently-row {
-    scroll-behavior: smooth !important;
-}
-
-.recently-row::-webkit-scrollbar {
-    height: 4px !important;
-}
-
-.recently-row::-webkit-scrollbar-track {
-    background: rgba(228, 228, 228, 0) !important;
-    border-radius: 10px !important;
-}
-
-.recently-row::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0)
-    ) !important;
-    border-radius: 10px !important;
-    transition: 0.2s !important;
-}
-
-.recently-row::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 38, 103, 1) !important;
-}
-
-.home-content::-webkit-scrollbar {
-    height: 5px !important;
-    width: 5px !important;
-}
-
-.home-content::-webkit-scrollbar-thumb {
-    background: rgba(228, 228, 228, 0.15) !important;
-    border-radius: 10px !important;
-    transition: 0.2s !important;
 }
 </style>

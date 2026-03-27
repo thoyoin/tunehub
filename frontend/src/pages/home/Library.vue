@@ -11,7 +11,7 @@
     const router = useRouter();
     const { isPlaying, toggleTrack, currentContext } = useAudioPlayer()
 
-    onMounted(() => {
+    onMounted(async () => {
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
         [...popoverTriggerList].forEach(el => {
             new Popover(el);
@@ -200,6 +200,10 @@
         border-left:1px solid rgba(228, 228, 228, 0.15) !important;
         border-right:1px solid rgba(228, 228, 228, 0.15) !important;
     }
+    .btn-playlist {
+        cursor: default !important;
+    }
+
     .cover-play-btn {
         z-index: 100;
         position: absolute;

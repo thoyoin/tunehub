@@ -6,18 +6,22 @@ import { useRoute } from 'vue-router'
 import { useLibraryStore } from '@/stores/library'
 import { onMounted, watch } from 'vue'
 import { useAuthStore} from '@/stores/auth'
+import { usePlaylistStore } from "@/stores/playlist";
 import EditPlaylistModal from '@/pages/playlist/modals/editPlaylistModal.vue'
 import SettingsModal from '@/pages/home/modals/settingsModal.vue'
 import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
 
 const route = useRoute()
 const libraryStore = useLibraryStore()
+const playlistStore = usePlaylistStore()
 const auth = useAuthStore()
 
 watch(
     () => route.params.playlistId,
     async (id) => {
-        await libraryStore.getPlaylist(id)
+        if (typeof id === 'string') {
+            await playlistStore.getPlaylist(id)
+        }
     },
     { immediate: true },
 )
@@ -25,10 +29,6 @@ watch(
 onMounted(async () => {
     if (!auth.isReady) {
         await auth.fetchUser()
-    }
-
-    if (!libraryStore.isReady) {
-        await libraryStore.fetchItems()
     }
 })
 

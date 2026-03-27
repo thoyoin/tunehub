@@ -16,7 +16,7 @@ onMounted(async () => {
         await auth.fetchUser()
     }
 
-    await libraryStore.fetchLibraryData();
+    await libraryStore.fetchLibraryData()
 })
 </script>
 

@@ -146,7 +146,7 @@ watch(
             </thead>
             <tbody>
                 <template v-for="track in releaseStore.releaseTracks" :key="track.id">
-                    <tr class="track-row rounded-5">
+                    <tr class="track-row">
                         <td
                             class="position-relative"
                             style="width: 10px; padding-left: 320px; padding-right: 0"

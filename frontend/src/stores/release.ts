@@ -31,7 +31,7 @@ export const useReleaseStore = defineStore('release', () => {
         }
     }
 
-    const getRelease = async (id: number) => {
+    const getRelease = async (id: number | string) => {
         try {
             isLoading.value = true;
 

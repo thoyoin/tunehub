@@ -79,9 +79,9 @@ class PlaylistService
     {
         $url = $playlist->cover_url;
 
-        $playlist->delete();
+        $defaultCover = 'http://localhost:9000/tunehub/defaults/default_cover.jpg';
 
-        $defaultCover = 'http://localhost:9000/tunehub/defaults/default_cover.png';
+        $playlist->delete();
 
         if ($url !== $defaultCover) {
             $this->minioService->destroyCover($url);

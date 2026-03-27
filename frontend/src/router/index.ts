@@ -3,7 +3,7 @@ import Login from "@/pages/auth/Login.vue";
 import Home from "@/pages/home/Home.vue";
 import Register from "@/pages/auth/Register.vue";
 import ArtistStudio from "@/pages/artist-studio/ArtistStudio.vue";
-import { useAuthStore } from '@/stores/auth.js'
+import { useAuthStore } from '@/stores/auth'
 import Moderation from '@/pages/admin/moderation/Moderation.vue'
 import Playlist from '@/pages/playlist/Playlist.vue'
 import Admin from '@/pages/admin/Admin.vue'
@@ -88,71 +88,62 @@ const router = createRouter({
           path: '/artists',
           name: 'artists',
           component: ArtistStudio,
-          meta: { requiresAuth: true },
-          beforeEnter: (to, from, next) => {
-              const auth = useAuthStore()
-
-              if (!auth.user?.is_subscribed) next('/');
-              else next();
-          }
+          meta: { requiresAuth: true, requiresSubscription: true },
       },
       {
           path: '/artists/merch/upload',
           name: 'artists.merch',
           component: ArtistStudioMerch,
-          meta: { requiresAuth: true },
-          beforeEnter: (to, from, next) => {
-              const auth = useAuthStore()
-
-              if (!auth.user?.is_subscribed) next('/');
-              else next();
-          }
+          meta: { requiresAuth: true, requiresSubscription: true },
       },
       {
           path: '/admin/overview',
           name: 'admin/overview',
           component: Admin,
-          beforeEnter: (to, from, next) => {
-              const auth = useAuthStore()
-
-              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
-              else next();
-          }
+          meta: { requiresAuth: true, requiresAdmin: true },
       },
       {
           path: '/admin/users',
           name: 'admin/users',
           component: Users,
-          beforeEnter: (to, from, next) => {
-              const auth = useAuthStore()
-
-              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
-              else next();
-          }
+          meta: { requiresAuth: true, requiresAdmin: true },
       },
       {
           path: '/admin/moderation',
           name: 'admin/moderation',
           component: Moderation,
-          beforeEnter: (to, from, next) => {
-              const auth = useAuthStore()
+          meta: { requiresAuth: true, requiresAdmin: true },
 
-              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
-              else next();
-          }
       },
       {
           path: '/admin/playlists',
           name: 'admin/playlists',
           component: Playlists,
-          beforeEnter: (to, from, next) => {
-              const auth = useAuthStore()
-
-              if (auth.user?.roles[0]?.slug !== 'admin') next('/');
-              else next();
-          }
+          meta: { requiresAuth: true, requiresAdmin: true },
       },
   ],
+})
+
+router.beforeEach(async (to) => {
+    const auth = useAuthStore()
+
+    if (!auth.isReady) {
+        await auth.fetchUser()
+    }
+
+    if (to.meta.requiresAuth && !auth.user) {
+        return '/login'
+    }
+
+    if (to.meta.requiresSubscription && !auth.user?.is_subscribed) {
+        return '/'
+    }
+
+    if (to.meta.requiresAdmin) {
+        const isAdmin = auth.user?.roles[0]?.slug !== 'admin'
+
+        if (!isAdmin) return '/'
+    }
 })
 
 export default router
