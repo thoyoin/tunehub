@@ -9,6 +9,7 @@ use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Track\DeleteTrack;
 use App\Actions\Track\IsTrackAdded;
 use App\Actions\Track\IsTrackLiked;
+use App\Jobs\DeleteCoverFile;
 use App\Jobs\DeleteTrackAudioFile;
 use App\Jobs\DeleteTrackInClickhouse;
 use App\Models\Track;
@@ -43,6 +44,7 @@ class TrackService
             DB::afterCommit(function () use ($audioPath, $track) {
                 DeleteTrackAudioFile::dispatch($audioPath);
                 DeleteTrackInClickhouse::dispatch($track->id);
+                DeleteCoverFile::dispatch($track->cover_url);
 
                 Log::info('Track was deleted', [
                     'track_id' => $track->id,

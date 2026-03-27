@@ -16,6 +16,12 @@ class TrackStatsService
 
     public function getTracksPlays(array $tracksIds, $tracks): Collection
     {
+        $tracksIds = array_map('intval', $tracksIds);
+
+        if (empty($tracksIds)) {
+            return $tracks;
+        }
+
         $ids = implode(',', $tracksIds);
 
         $result = $this->clickhouse->select("
@@ -33,7 +39,7 @@ class TrackStatsService
 
         foreach ($tracks as $track) {
             $track->plays = $plays[$track->id] ?? 0;
-        };
+        }
 
         return $tracks;
     }

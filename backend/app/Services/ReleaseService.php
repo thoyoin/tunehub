@@ -68,17 +68,12 @@ class ReleaseService
         $release = $track->release()->withCount('tracks')->first();
 
         if ($release && $release->tracks_count === 1) {
-            $coverUrl = $track->cover_url;
-
             $release->delete();
 
             Log::info('Release was deleted', [
                 'title' => $release->title,
                 'artist' => $release->artist,
             ]);
-
-            $this->minioService->destroyCover($coverUrl);
-
         } else {
             $currentPosition = $track->position;
 
