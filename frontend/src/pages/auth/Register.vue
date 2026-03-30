@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { ref } from 'vue'
-    import { useAuthStore } from '@/stores/auth.ts'
+    import { useAuthStore } from '@/stores/auth'
     import { useRouter } from "vue-router";
 
     const auth = useAuthStore()
@@ -10,6 +10,7 @@
     const username = ref('')
     const password = ref('')
     const password_confirmation = ref('')
+    const middle_name = ref('')
 
     async function handleRegister() {
         try {
@@ -18,6 +19,7 @@
                 username: username.value,
                 password: password.value,
                 password_confirmation: password_confirmation.value,
+                middle_name: middle_name.value,
             })
 
             await router.push('/')
@@ -95,6 +97,14 @@
                         >
                             {{auth.errors.password[0]}}
                         </span>
+                        <input
+                            v-model="middle_name"
+                            name="middle_name"
+                            tabindex="-1"
+                            autocomplete="off"
+                            class="honeypot-field"
+                            type="text"
+                        >
                     </div>
                     <div class="form-floating mb-3 w-100">
                         <input

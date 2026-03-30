@@ -6,13 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Listeners/TrackPlayed.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Listeners/TrackPlayed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/ArtistStudioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ArtistStudioService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/ArtistStudioMerch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio-merch/ArtistStudioMerch.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Actions/Auth/SignIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Actions/Auth/SignIn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Requests/SignInFormRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Requests/SignInFormRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Requests/SignUpFormRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Requests/SignUpFormRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Requests/TrackStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Requests/TrackStoreRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Services/SignUpService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/SignUpService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/Content.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/charts/ArtistEarnings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/charts/ArtistEarnings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/merchManagement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/merchManagement.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/UploadReleaseModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/auth/Register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/uploadRelease.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -581,7 +585,7 @@
       <workItem from="1774712326909" duration="2692000" />
       <workItem from="1774782058054" duration="2000" />
       <workItem from="1774851516741" duration="2894000" />
-      <workItem from="1774855209663" duration="3159000" />
+      <workItem from="1774855209663" duration="5781000" />
     </task>
     <servers />
   </component>

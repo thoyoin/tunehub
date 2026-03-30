@@ -20,6 +20,7 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
     const cover_url = ref<File | null>(null)
     const releaseTitle = ref<string | null>(null)
     const release_date = ref<string | null>(null)
+    const label_name = ref<string>('')
     const artist = ref<string | undefined>(auth.user?.username)
     const processing = ref<boolean>(false)
 
@@ -70,7 +71,7 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
                 toast.error('Missing required release fields')
                 return
             }
-
+            formData.append('label_name', label_name.value)
             formData.append('releaseTitle', releaseTitle.value)
             formData.append('type', releaseType.value)
             formData.append('release_date', release_date.value)
@@ -92,7 +93,6 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
             toast.error('Something went wrong.')
         } finally {
             processing.value = false
-
         }
     }
 
@@ -121,6 +121,7 @@ export const useUploadReleaseStore = defineStore('uploadRelease', () => {
         artist,
         release_date,
         processing,
+        label_name,
         $reset
     }
 })

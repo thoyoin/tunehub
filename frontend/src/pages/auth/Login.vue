@@ -1,18 +1,20 @@
 <script setup lang="ts">
     import { ref } from 'vue'
-    import { useAuthStore } from '@/stores/auth.ts'
+    import { useAuthStore } from '@/stores/auth'
     import { useRouter } from 'vue-router'
 
     const auth = useAuthStore()
     const email = ref('')
     const password = ref('')
+    const middle_name = ref('')
     const router = useRouter()
 
     async function handleLogin() {
         try {
             await auth.login({
                 email: email.value,
-                password: password.value
+                password: password.value,
+                middle_name: middle_name.value,
             })
 
             await router.push('/')
@@ -73,6 +75,14 @@
                         >
                             {{auth.errors.email[0]}}
                         </span>
+                        <input
+                            v-model="middle_name"
+                            name="middle_name"
+                            tabindex="-1"
+                            autocomplete="off"
+                            class="honeypot-field"
+                            type="text"
+                        >
                     </div>
                     <div class="mt-5 d-flex">
                         <button

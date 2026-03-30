@@ -739,7 +739,8 @@ const handleReleasePublication = async (id) => {
                                                             opacity: .5;
                                                             padding: 1px 7px 7px;
                                                             top: 0;
-                                                            left:36%;
+                                                            left:50%;
+                                                            transform: translateX(-50%);
                                                         "
                                                 >
                                                     {{ product.status }}

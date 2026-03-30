@@ -141,6 +141,14 @@ const uploadStore = useUploadReleaseStore();
                                                 class="mb-2 form-control bg-minor rounded-4"
                                                 required
                                             >
+                                            <input
+                                                v-model="uploadStore.label_name"
+                                                name="label_name"
+                                                tabindex="-1"
+                                                autocomplete="off"
+                                                class="honeypot-field"
+                                                type="text"
+                                            >
                                             <label
                                                 for="release_date"
                                                 style="font-size: 13px"

@@ -21,6 +21,10 @@ class SignUpService
 
     public function handle($request): void
     {
+        $request->validated();
+
+        $request->safe()->except('middle_name');
+
         DB::transaction(function () use ($request) {
             $user = $this->signUp->handle($request);
 

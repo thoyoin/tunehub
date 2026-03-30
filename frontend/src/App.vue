@@ -374,4 +374,9 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
             transform: rotate(360deg);
         }
     }
+
+    .honeypot-field {
+        position: absolute !important;
+        left: -9999px !important;
+    }
 </style>

@@ -31,6 +31,7 @@ class TrackStoreRequest extends FormRequest
             'audio_url' => 'required|array|min:1',
             'audio_url.*' => 'required|file|mimetypes:audio/mpeg,audio/wav,audio/mp3,audio/x-wav|max:51200',
             'cover_url' => 'required|image|mimetypes:image/jpeg,image/png,image/jpg,image/webp|max:5120',
+            'label_name' => 'nullable|max:0',
         ];
     }
 }

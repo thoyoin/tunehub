@@ -24,6 +24,7 @@ class SignInFormRequest extends FormRequest
         return [
             'email' => ['required', 'email'],
             'password' => ['required'],
+            'middle_name' => ['nullable', 'max:0'],
         ];
     }
 }

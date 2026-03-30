@@ -11,7 +11,9 @@ class SignIn
 {
     public function handle($request): void
     {
-        if (! Auth::attempt($request->validated())) {
+        $request->validated();
+
+        if (!Auth::attempt($request->safe()->except('middle_name'))) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials do not match our records.'],
             ]);
