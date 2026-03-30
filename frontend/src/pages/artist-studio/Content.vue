@@ -74,7 +74,7 @@ const handleReleasePublication = async (id) => {
                             <span class="fs-3 fw-bold">
                                 {{ artistStore.artistStreamsTotal }}
                             </span>
-                            <span class="opacity-50 fw-bold">plays</span>
+                            <span class="opacity-50 fw-bold">streams</span>
                         </div>
                         <img class="opacity-50" src="@/assets/svg/line.svg" alt="">
                         <div class="d-flex flex-column mx-5 align-items-center">
@@ -588,11 +588,6 @@ const handleReleasePublication = async (id) => {
                 </template>
                 <template v-if="artistStore.selectedView === 'earnings'">
                     <div class="d-flex mt-5 border mx-5 p-3 flex-column align-items-center justify-content-center">
-                        <div style="color: rgb(228, 228, 228)">
-                            <span class="ms-4 mt-4 fw-bold fs-5">
-                                Total Balance: ${{ artistStore.artistBalance / 100 }}
-                            </span>
-                        </div>
                         <ArtistEarnings/>
                     </div>
                 </template>

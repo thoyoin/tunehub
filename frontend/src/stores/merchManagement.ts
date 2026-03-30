@@ -22,6 +22,11 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
     const itemDescription = ref<string>('')
     const itemArtist = ref<string>(auth.user?.username!)
     const merchVariants = ref<NewMerchVariant[]>([])
+    const showMerchUploadModal = ref<boolean>(false)
+    const uploadModalData = ref<{
+        title: string,
+        message: string,
+    } | null>(null);
 
     const editingMerch = ref<ArtistMerch | null>(null)
     const editingMerchFiles = ref<{ file: File | null; preview: string }[]>([]);
@@ -81,7 +86,12 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
 
             await fetchArtistMerch()
 
-            toast.success('Merch successfully uploaded!')
+            uploadModalData.value = {
+                title: 'Merch was successfully uploaded',
+                message: 'Your product has been uploaded and submitted for moderation. After verification, ' +
+                    'it will be available to users.'
+            }
+            showMerchUploadModal.value = true
         } catch (error) {
             console.log(error)
 
@@ -234,6 +244,7 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
          merchVariants, addVariant, removeVariant, itemArtist, handleMerchItemUpload,
         fetchArtistMerch, artistMerch, editingMerch, setEditingMerch, addVariantInEditing,
         removeVariantInEditing, resetEditingMerch, editingMerchFiles, handleEditingImagesUpload,
-        removeImageInEditing, galleryImages, handleDeleteMerch, isLoading
+        removeImageInEditing, galleryImages, handleDeleteMerch, isLoading, showMerchUploadModal,
+        uploadModalData,
     }
 })

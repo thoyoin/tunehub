@@ -9,10 +9,20 @@ const series = computed(() => [
     {
         name: "Earnings",
         data: Array.isArray(artistStore.artistEarnings)
-            ? artistStore.artistEarnings.map(i => i.earnings)
-            : artistStore.artistEarnings?.earnings ?? []
+            ? artistStore.artistEarnings.map(i => i.earnings / 100)
+            : artistStore.artistEarnings?.earnings.map(i => i / 100) ?? []
     }
 ])
+
+const maxEarnings = computed(() => {
+    const data = Array.isArray(artistStore.artistEarnings)
+        ? artistStore.artistEarnings.map(i => i.earnings)
+        : artistStore.artistEarnings?.earnings ?? [];
+
+    if (!data.length) return 0;
+
+    return Math.max(...data) / 100;
+});
 
 const options = computed(() => ({
     colors: ["rgb(158, 23, 63)"],
@@ -42,8 +52,10 @@ const options = computed(() => ({
         }
     },
     yaxis: {
+        min: 0,
+        max: maxEarnings.value,
         labels: {
-            formatter: (val: number) => val / 100,
+            formatter: (val: number) => val.toFixed(2),
             style: {
                 colors: "rgb(228,228,228)"
             }
@@ -51,7 +63,7 @@ const options = computed(() => ({
     },
     tooltip: {
         y: {
-            formatter: (val: number) => `$${val / 100} earnings`
+            formatter: (val: number) => `$${val} earnings`
         }
     },
     grid: {

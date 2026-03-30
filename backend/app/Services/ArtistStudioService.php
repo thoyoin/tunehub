@@ -172,7 +172,6 @@ class ArtistStudioService
                 'description' => $itemDescription,
                 'cover_url' => $coverPaths[0] ?? null,
                 'currency' => 'usd',
-                'status' => 'pending',
             ]);
 
             $product->productImages()->createMany(

@@ -21,6 +21,10 @@ class TrackPlayed implements ShouldQueue
      */
     public function handle(TrackListened $event): void
     {
+        if ($event->trackArtistId === $event->userId) {
+            return;
+        }
+
         $this->clickhouse->insert('track_plays', [
             [
                 $event->trackId,

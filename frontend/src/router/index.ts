@@ -100,7 +100,6 @@ const router = createRouter({
           path: '/admin/overview',
           name: 'admin/overview',
           component: Admin,
-          meta: { requiresAuth: true, requiresAdmin: true },
       },
       {
           path: '/admin/users',
@@ -140,7 +139,7 @@ router.beforeEach(async (to) => {
     }
 
     if (to.meta.requiresAdmin) {
-        const isAdmin = auth.user?.roles[0]?.slug !== 'admin'
+        const isAdmin = auth.user?.roles[0]?.slug === 'admin'
 
         if (!isAdmin) return '/'
     }
