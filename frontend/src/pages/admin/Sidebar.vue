@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const router = useRouter()
@@ -84,18 +84,18 @@ const auth = useAuthStore()
                             </span>
                         </RouterLink>
                         <RouterLink
-                            to="/admin/playlists"
+                            to="/admin/merch"
                             style="height: 45px"
                             class="btn btn-playlist d-flex flex-row justify-content-start align-items-center"
-                            :class="{ 'active-item': route.path.startsWith('/admin/playlists') }"
+                            :class="{ 'active-item': route.path.startsWith('/admin/merch') }"
                         >
                             <img
                                 style="margin-right: 12px"
-                                src="@/assets/svg/playlistsMenu.svg"
+                                src="@/assets/svg/bag.svg"
                                 alt="users"
                             >
-                            <span :class="{ 'active-item': route.path.startsWith('/admin/playlists')}">
-                                Playlists
+                            <span :class="{ 'active-item': route.path.startsWith('/admin/merch')}">
+                                Merch
                             </span>
                         </RouterLink>
                     </div>

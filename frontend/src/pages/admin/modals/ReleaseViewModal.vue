@@ -93,7 +93,12 @@ const handleReleaseStatusUpdate = async (status: string) => {
                                 style="font-size: 15px"
                             >
                                 <div class="d-flex opacity-50">
-                                    <img class="me-2" src="@/assets/svg/note.svg" alt="note" />
+                                    <img
+                                        style="width: 20px"
+                                        class="me-2"
+                                        src="@/assets/svg/note.svg"
+                                        alt="note"
+                                    />
                                     Tracks:
                                 </div>
                                 <div class="d-flex" style="overflow: clip">
@@ -106,11 +111,12 @@ const handleReleaseStatusUpdate = async (status: string) => {
                             >
                                 <div class="d-flex opacity-50">
                                     <img
+                                        style="width: 18px"
                                         class="me-2"
                                         src="@/assets/svg/calendar.svg"
                                         alt="calendar"
                                     />
-                                    Release Date:
+                                    <span class="w-100">Release Date:</span>
                                 </div>
                                 <div class="d-flex">
                                     {{ moderationStore.viewRelease?.release_date }}
@@ -122,6 +128,7 @@ const handleReleaseStatusUpdate = async (status: string) => {
                             >
                                 <div class="d-flex opacity-50">
                                     <img
+                                        style="width: 20px"
                                         class="me-2"
                                         src="@/assets/svg/clockWhite.svg"
                                         alt="calendar"

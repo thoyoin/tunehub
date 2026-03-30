@@ -9,7 +9,6 @@ import Playlist from '@/pages/playlist/Playlist.vue'
 import Admin from '@/pages/admin/Admin.vue'
 import Users from "@/pages/admin/users/Users.vue";
 import Release from "@/pages/release/Release.vue";
-import Playlists from "@/pages/admin/playlists/Playlists.vue";
 import ArtistCard from "@/pages/artist-card/ArtistCard.vue";
 import Subscription from "@/pages/subscription/Subscription.vue";
 import SubscriptionSuccess from "@/pages/subscription/SubscriptionSuccess.vue";
@@ -18,6 +17,7 @@ import ArtistStudioMerch from "@/pages/artist-studio-merch/ArtistStudioMerch.vue
 import ArtistMerchList from "@/pages/artist-merch/ArtistMerchList.vue";
 import ArtistMerchLayout from "@/pages/artist-merch/ArtistMerchLayout.vue";
 import ArtistMerchShow from "@/pages/artist-merch/ArtistMerchShow.vue";
+import Merch from "@/pages/admin/merch/Merch.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -115,9 +115,9 @@ const router = createRouter({
 
       },
       {
-          path: '/admin/playlists',
-          name: 'admin/playlists',
-          component: Playlists,
+          path: '/admin/merch',
+          name: 'admin/merch',
+          component: Merch,
           meta: { requiresAuth: true, requiresAdmin: true },
       },
   ],

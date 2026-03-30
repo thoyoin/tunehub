@@ -1,50 +1,32 @@
 <script setup lang="ts">
-import { useModerationStore } from "@/stores/AdminPanel/moderation";
-import { onMounted, ref, watch} from "vue";
-import { useToast } from "vue-toastification";
+import { useMerchStore } from "@/stores/AdminPanel/merch";
+import { onMounted, ref, watch } from "vue";
 
-const moderationStore = useModerationStore();
-const toast = useToast();
+const adminMerchStore = useMerchStore();
 
 const currentPage = ref<number>(1);
 
-const fetchPage = async (page: number, query?: string) => {
+const fetchPage = async (page: number) => {
     currentPage.value = page;
 
-    await moderationStore.fetchByStatus(moderationStore.selectedView, page, query);
+    await adminMerchStore.fetchMerchData(adminMerchStore.selectedView, page);
 };
 
-onMounted( async() => {
-    await moderationStore.fetchByStatus(moderationStore.selectedView, 1);
-});
-
-watch(() => moderationStore.selectedView, (status) =>
-    moderationStore.fetchByStatus(status)
-);
-
-watch(() => moderationStore.searchInput, (query) => {
-    if (!query) return
-
-    fetchPage(1, query);
+onMounted(async () => {
+    await adminMerchStore.fetchMerchData()
 })
 
-const handleReleaseStatusUpdate = async (status: string, id: number) => {
-    try {
-        await moderationStore.updateReleaseStatus(status, id)
-    } catch (e) {
-        console.error(e)
-    } finally {
-        toast.success("Release status updated");
-    }
-}
-
+watch(
+    () => adminMerchStore.selectedView,
+    (status) => adminMerchStore.fetchMerchData(status, 1, true),
+);
 </script>
 
 <template>
     <div class="position-relative">
         <transition name="fade">
             <div
-                v-if="moderationStore.isLoading"
+                v-if="adminMerchStore.isLoading"
                 class="loading-overlay d-flex flex-column align-items-center justify-content-center"
             >
                 <div class="search-spinner mb-2"></div>
@@ -53,67 +35,65 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
         <table class="table table-borderless align-middle" style="padding: 25px 0 0 295px">
             <thead style="border-bottom: 1px solid rgba(228, 228, 228, 0.15)">
                 <tr>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Release</th>
+                    <th scope="col" style="font-weight: lighter; opacity: 60%">Merch</th>
                     <th scope="col" style="font-weight: lighter; opacity: 60%">Artist</th>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Type</th>
-                    <th scope="col" style="font-weight: lighter; opacity: 60%">Tracks</th>
+                    <th scope="col" style="font-weight: lighter; opacity: 60%">Status</th>
                 </tr>
             </thead>
             <tbody>
-                <template v-for="release in moderationStore.releases?.data" :key="release.id">
+                <template v-for="product in adminMerchStore.merch?.data" :key="product.id">
                     <tr
                         data-bs-toggle="modal"
-                        data-bs-target="#releaseViewModal"
-                        @click="moderationStore.setViewRelease(release)"
+                        data-bs-target="#merchViewModal"
+                        @click="adminMerchStore.setViewingMerch(product)"
                         class="table-row"
                         style="border-bottom: 1px solid rgba(228, 228, 228, 0.05)"
                     >
                         <td style="font-size: 15px">
                             <div class="d-flex align-items-center">
                                 <img
-                                class="rounded-1 me-2"
-                                style="
-                                    width: 35px;
-                                    height: 35px;
-                                    border: 1px solid rgba(228, 228, 228, 0.1);
-                                "
-                                :src="release.cover_url"
-                                alt="cover"
-                            />
-                                <span class="opacity-75">{{ release.title }}</span>
+                                    class="rounded-1 me-2"
+                                    style="
+                                        width: 35px;
+                                        height: 35px;
+                                        border: 1px solid rgba(228, 228, 228, 0.1);
+                                    "
+                                    :src="product.cover_url"
+                                    alt="cover"
+                                />
+                                <span class="opacity-75">{{ product.title }}</span>
                             </div>
                         </td>
                         <td style="font-size: 15px">
                             <div class="d-flex flex-row align-items-center">
                                 <img
-                                class="rounded-circle me-2"
-                                style="
-                                    width: 30px;
-                                    height: 30px;
-                                    border: 1px solid rgba(228, 228, 228, 0.1);
-                                "
-                                :src="release.user.profile_picture"
-                                alt="artist"
-                            />
-                                <span class="opacity-75">{{ release.artist }}</span>
+                                    class="rounded-circle me-2"
+                                    style="
+                                        width: 30px;
+                                        height: 30px;
+                                        border: 1px solid rgba(228, 228, 228, 0.1);
+                                    "
+                                    :src="product.user?.profile_picture"
+                                    alt="artist"
+                                />
+                                <span class="opacity-75">{{ product.user?.username }}</span>
                             </div>
                         </td>
                         <td style="font-size: 15px">
-                            <span class="opacity-75">{{ release.release_type }}</span>
-                        </td>
-                        <td>
-                            <span class="opacity-75">{{ release.tracks.length }}</span>
+                            <div>
+                                <span class="opacity-50">{{ product.status }}</span>
+                            </div>
                         </td>
                     </tr>
                 </template>
             </tbody>
         </table>
-        <template v-if="moderationStore.releases?.data?.length !== 0">
+        <template v-if="adminMerchStore.merch?.data?.length !== 0">
             <div class="opacity-50 w-100">
-            <span>
-                Showing {{ moderationStore.releases?.from }}-{{ moderationStore.releases?.to }} of
-                {{ moderationStore.releases?.total }}
-            </span>
+                <span>
+                    Showing {{ adminMerchStore.merch?.from }}-{{ adminMerchStore.merch?.to }} of
+                    {{ adminMerchStore.merch?.total }}
+                </span>
             </div>
         </template>
         <template v-else>
@@ -123,16 +103,16 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
         </template>
         <div class="d-flex justify-content-end align-items-center mt-3" style="gap: 10px">
             <button
-                class="btn btn-pagination"
                 @click="fetchPage(currentPage - 1)"
                 :disabled="currentPage === 1"
+                class="btn btn-pagination"
             >
                 <img src="@/assets/svg/arrowLeft.svg" alt="prev" />
             </button>
             <button
-                class="btn btn-pagination"
                 @click="fetchPage(currentPage + 1)"
-                :disabled="currentPage === moderationStore.releases?.last_page"
+                :disabled="currentPage === adminMerchStore.merch?.last_page"
+                class="btn btn-pagination"
             >
                 <img src="@/assets/svg/arrowRight.svg" alt="next" />
             </button>
@@ -140,7 +120,7 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
     </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .options {
     transition: 0.2s;
 
@@ -180,16 +160,18 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
 }
 .table-row {
     &:hover td {
-        background-color: rgba(50,50,51, 50%) !important;
+        background-color: rgba(50, 50, 51, 50%) !important;
         cursor: pointer;
-        transition: background-color .2s ease, box-shadow .15s ease !important;
+        transition:
+            background-color 0.2s ease,
+            box-shadow 0.15s ease !important;
     }
 
     &:hover {
-        box-shadow: inset 0 0 0 1px rgb(60,60,61) !important;
+        box-shadow: inset 0 0 0 1px rgb(60, 60, 61) !important;
 
         .add-like {
-            opacity: .7 !important;
+            opacity: 0.7 !important;
         }
         .btn-play-table {
             opacity: 1 !important;
@@ -203,5 +185,4 @@ const handleReleaseStatusUpdate = async (status: string, id: number) => {
         }
     }
 }
-
 </style>

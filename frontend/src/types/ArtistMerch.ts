@@ -1,3 +1,5 @@
+import type { User } from "@/types/User";
+
 interface EditingProductVariant {
     id?: number | string;
     variant_name: string;
@@ -24,4 +26,5 @@ export interface ArtistMerch {
     currency: string,
     product_variants: EditingProductVariant[],
     product_images: ProductImage[],
+    user?: User,
 }

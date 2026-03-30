@@ -22,7 +22,6 @@ const options = computed(() => ({
     },
     plotOptions: {
         bar: {
-            borderRadius: 20,
             columnWidth: "40%"
         }
     },

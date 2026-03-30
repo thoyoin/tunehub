@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPanel\MerchController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ArtistMerchController;
 use App\Http\Controllers\ArtistStudioController;
@@ -34,9 +35,9 @@ Route::prefix('admin')
             Route::get('/releases', 'getReleases');
             Route::patch('/releases/{release}/status', 'updateStatus');
         });
-        Route::controller(\App\Http\Controllers\AdminPanel\PlaylistController::class)->group(function () {
-            Route::get('/playlists', 'getAll');
-            Route::patch('/playlists/{playlist}/status', 'updateStatus');
+        Route::controller(MerchController::class)->group(function () {
+            Route::get('/merch', 'get');
+            Route::patch('/merch/{merch}/status/update', 'updateStatus');
         });
         Route::controller(\App\Http\Controllers\AdminPanel\AnalyticsController::class)->group(function () {
             Route::get('/totalPlays', 'getTotalPlays');
