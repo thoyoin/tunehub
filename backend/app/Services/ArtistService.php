@@ -50,8 +50,13 @@ class ArtistService
     public function getArtist($artistId)
     {
         return User::where('id', $artistId)
-            ->with('products.productVariants')
-            ->get()
+            ->whereHas('products', function ($query) {
+                $query->where('status', 'active');
+            })
+            ->with(['products' => function ($query) {
+                $query->where('status', 'active')
+                    ->with('productVariants');
+            }])
             ->first();
     }
 }

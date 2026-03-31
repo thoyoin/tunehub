@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Actions\Artist\GetArtistStreams;
 use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
+use App\Jobs\ArchiveStripeProduct;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Release;
@@ -25,7 +26,8 @@ class ArtistStudioService
         public GetArtistStreams $getArtistStreams,
         public GetUserTracks $getUserTracks,
         public GetUserReleases $getUserReleases,
-        public MinioService $minioService
+        public MinioService $minioService,
+        public ArchiveStripeProduct $archiveStripeProduct,
     )
     {}
 
@@ -274,6 +276,35 @@ class ArtistStudioService
 
     public function deleteMerch($merchId): void
     {
-        Product::where('id', $merchId)->delete();
+        $merch = Product::with(['productVariants', 'productImages'])
+            ->where('id', $merchId)
+            ->firstOrFail();
+
+        $merch->update([
+            'status' => 'inactive'
+        ]);
+
+        ArchiveStripeProduct::dispatch($merch);
+
+        Log::info('Merch was archived', [
+            'merch_id' => $merchId,
+            'stripe_product_id' => $merch->stripe_product_id,
+            'deleted_variants_count' => $merch->productVariants->count(),
+            'deleted_images_count' => $merch->productImages->count(),
+        ]);
+    }
+
+    public function publishMerch(Product $merch): void
+    {
+        $merch->update([
+            'status' => 'active'
+        ]);
+
+        $merch->save();
+
+        Log::info('Merch status was changed', [
+            'merch_id' => $merch->id,
+            'status' => $merch->status
+        ]);
     }
 }

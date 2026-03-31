@@ -1,30 +1,41 @@
 <script setup lang="ts">
 import { useArtistMerchStore } from "@/stores/artistMerch";
 import { useRoute, useRouter } from "vue-router";
-import { watch} from "vue";
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { computed, ref, watch } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const merchStore = useArtistMerchStore();
 const route = useRoute();
 const router = useRouter();
+
+const selectedVariantId = ref<number | null>(null);
+const quantity = ref<number>(1);
+
+const selectedVariant = computed(() => {
+    return merchStore.artistMerch?.product_variants?.find(
+        (variant) => variant.id === selectedVariantId.value
+    ) ?? merchStore.artistMerch?.product_variants[0]?.variant_name
+});
 
 watch(
     [() => route.params.slug, () => route.params.artistId],
     async ([slug, artistId]) => {
         if (slug && typeof slug === "string") {
             await merchStore.fetchMerch(slug);
+
+            selectedVariantId.value = merchStore.artistMerch?.product_variants?.[0] ?? null;
+            quantity.value =  1
         }
         if (!merchStore.artist && typeof artistId === "string") {
-            await merchStore.fetchArtist(artistId)
+            await merchStore.fetchArtist(artistId);
         }
     },
     { immediate: true },
 );
-
 </script>
 
 <template>
@@ -38,12 +49,14 @@ watch(
     </transition>
     <div class="d-flex flex-column" style="padding: 150px 200px 50px">
         <div class="d-flex flex-row browse-btn align-items-center">
-            <img style="width: 20px" src="@/assets/svg/arrowLeft.svg" alt="">
+            <img style="width: 20px" src="@/assets/svg/arrowLeft.svg" alt="" />
             <span
-                @click="router.push({
-                    name: 'artist.merch.all',
-                    params: { artistId: merchStore.artist?.id},
-                })"
+                @click="
+                    router.push({
+                        name: 'artist.merch.all',
+                        params: { artistId: merchStore.artist?.id },
+                    })
+                "
                 class="fw-bold ms-2"
             >
                 Browse all
@@ -65,30 +78,28 @@ watch(
                         :key="image.id"
                         class="merch-swiper__slide"
                     >
-                        <img
-                            :src="image.image_url"
-                            class="merch-swiper__image"
-                            alt="image"
-                        />
+                        <img :src="image.image_url" class="merch-swiper__image" alt="image" />
                     </SwiperSlide>
                 </Swiper>
             </div>
-            <div class="d-flex flex-column" style="margin-left: 100px;margin-top: 30px">
+            <div class="d-flex flex-column" style="margin-left: 100px; margin-top: 30px">
                 <span class="fw-bold fs-5">{{ merchStore.artistMerch?.title }}</span>
                 <div class="d-flex flex-row mt-3 align-items-center">
                     <img
                         class="rounded-circle"
-                        style="width: 50px;height: 50px"
+                        style="width: 50px; height: 50px"
                         :src="merchStore.artist?.profile_picture"
                         alt="cover"
-                    >
+                    />
                     <span
-                        @click="router.push({
-                            name: 'artist',
-                            params: {
-                                artistId: route.params.artistId,
-                            }
-                        })"
+                        @click="
+                            router.push({
+                                name: 'artist',
+                                params: {
+                                    artistId: route.params.artistId,
+                                },
+                            })
+                        "
                         class="fw-normal ms-2 browse-btn"
                     >
                         {{ merchStore.artist?.username }}
@@ -100,35 +111,50 @@ watch(
                         {{ merchStore.artistMerch?.currency.toUpperCase() }}
                     </span>
                     <span class="ms-4 fs-4">
-                        ${{ merchStore.artistMerch?.product_variants[0]?.price }}
+                        ${{ selectedVariant?.price }}
                     </span>
                 </div>
                 <div class="d-flex flex-column mt-4">
                     <div class="mb-2">
                         <span class="badge opacity-50 mb-1">Size</span>
-                        <select class="form-select" aria-label="Default select example">
-                            <template v-for="(product, index) in merchStore.artistMerch?.product_variants">
-                                <option :value="index + 1">{{ product.variant_name }}</option>
-                            </template>
+                        <select
+                            v-model="selectedVariantId"
+                            class="form-select"
+                        >
+                            <option
+                                v-for="product in merchStore.artistMerch?.product_variants"
+                                :key="product.id"
+                                :value="product.id"
+                            >
+                                {{ product.variant_name }}
+                            </option>
                         </select>
                     </div>
                     <div>
                         <span class="badge opacity-50 mb-1">Quantity</span>
-                        <select class="form-select" aria-label="Default select example">
+                        <select
+                            v-model="quantity"
+                            class="form-select"
+                        >
                             <option value="1">1</option>
-                            <option value="1">2</option>
-                            <option value="1">3</option>
-                            <option value="1">4</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
                         </select>
                     </div>
                 </div>
                 <div class="mt-4 d-flex flex-row align-items-center gap-5">
-                    <button class="btn btn-primary fs-5 fw-light">
-                        Add to card
+                    <button
+                        @click="selectedVariant && merchStore.addToCart({
+                            product: merchStore.artistMerch!,
+                            variant: selectedVariant,
+                            quantity,
+                        })"
+                        class="btn btn-primary fs-5 fw-light"
+                    >
+                        Add to cart
                     </button>
-                    <button class="btn btn-primary fs-5 fw-light">
-                        But it now
-                    </button>
+                    <button class="btn btn-primary fs-5 fw-light">But it now</button>
                 </div>
             </div>
         </div>
@@ -138,22 +164,26 @@ watch(
                 <template v-for="product in merchStore.artist?.products">
                     <template v-if="product.slug !== route.params.slug">
                         <div
-                            @click="router.push({
-                                name: 'artist.merch.show',
-                                params: {
-                                    slug: product.slug
-                                }
-                            })"
+                            @click="
+                                router.push({
+                                    name: 'artist.merch.show',
+                                    params: {
+                                        slug: product.slug,
+                                    },
+                                })
+                            "
                             class="merch-card"
                         >
                             <img
                                 class="rounded-3 mb-2"
-                                style="width: 180px;height: 180px"
+                                style="width: 180px; height: 180px"
                                 :src="product.cover_url"
                                 alt="cover"
-                            >
+                            />
                             <div class="fw-bold">{{ product.title }}</div>
-                            <span class="opacity-50">${{ product.product_variants[0]?.price }}</span>
+                            <span class="opacity-50"
+                                >${{ product.product_variants[0]?.price }}</span
+                            >
                         </div>
                     </template>
                 </template>
@@ -191,8 +221,8 @@ watch(
 
 .merch-swiper__image {
     display: block;
-    max-width: 100%;
-    max-height: 620px;
+    max-width: 500px;
+    max-height: 500px;
     object-fit: contain;
     user-select: none;
     border-radius: 15px;
@@ -204,7 +234,9 @@ watch(
     top: 100%;
     transform: translateY(-50%);
     color: #f3f3f3;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        opacity 0.2s ease;
     z-index: 100;
 }
 
@@ -230,9 +262,9 @@ watch(
 }
 
 .form-select {
-    transition: .2s !important;
-    background-color: rgb(32,32,32);
-    border: 1px solid rgba(228,228,228, 0.15);
+    transition: 0.2s !important;
+    background-color: rgb(32, 32, 32);
+    border: 1px solid rgba(228, 228, 228, 0.15);
     color: #fff;
 
     &:focus {
@@ -245,11 +277,11 @@ watch(
     display: flex;
     align-items: start;
     flex-direction: column;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
         div {
-            transition: .1s;
+            transition: 0.1s;
             color: rgb(158, 23, 63);
         }
     }

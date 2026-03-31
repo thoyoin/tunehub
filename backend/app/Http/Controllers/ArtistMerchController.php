@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Services\ArtistMerchService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ArtistMerchController extends Controller
 {
@@ -16,6 +16,15 @@ class ArtistMerchController extends Controller
 
         return response()->json([
             'merch' => $merch
+        ]);
+    }
+
+    public function goToCheckout(ArtistMerchService $artistMerchService, Request $request): JsonResponse
+    {
+        $url = $artistMerchService->goToCheckout($request);
+
+        return response()->json([
+            'url' => $url
         ]);
     }
 }

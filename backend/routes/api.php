@@ -113,6 +113,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/artists/merch', 'getMerch');
         Route::put('/artists/merch/{merch}/update', 'updateMerch');
         Route::delete('/artists/merch/{merch}/delete', 'deleteMerch');
+        Route::patch('/artists/merch/{merch}/publish', 'publishMerch');
     });
 
     Route::controller(TrackController::class)->group(function () {
@@ -137,8 +138,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(ArtistMerchController::class)->group(function () {
        Route::get('/artist/merch/{slug}/get', 'get');
+       Route::post('/artist/merch/checkout', 'goToCheckout');
     });
 });
+
 Route::controller(SubscriptionController::class)->group(function () {
     Route::get('/checkout/success', 'success')->name('checkout.success');
     Route::get('/checkout/cancel', 'cancel')->name('checkout.cancel');

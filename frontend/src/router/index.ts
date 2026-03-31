@@ -18,6 +18,8 @@ import ArtistMerchList from "@/pages/artist-merch/ArtistMerchList.vue";
 import ArtistMerchLayout from "@/pages/artist-merch/ArtistMerchLayout.vue";
 import ArtistMerchShow from "@/pages/artist-merch/ArtistMerchShow.vue";
 import Merch from "@/pages/admin/merch/Merch.vue";
+import Success from "@/pages/artist-merch/MerchAfterCheckout/Success.vue"
+import Cancel from "@/pages/artist-merch/MerchAfterCheckout/Cancel.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -83,6 +85,16 @@ const router = createRouter({
           path: '/subscription/cancel',
           name: 'subscription.cancel',
           component: SubscriptionCancel,
+      },
+      {
+          path: '/merch/payment/success',
+          name: 'merch.payment.success',
+          component: Success,
+      },
+      {
+          path: '/merch/payment/cancel',
+          name: 'merch.payment.cancel',
+          component: Cancel,
       },
       {
           path: '/artists',

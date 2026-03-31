@@ -20,6 +20,7 @@ class Product extends Model
         'status',
         'cover_url',
         'currency',
+        'stripe_product_id',
     ];
 
     protected static function boot()

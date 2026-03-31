@@ -2,6 +2,7 @@
 import Header from "@/pages/artist-merch/Header.vue";
 import { onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
+import CartModal from "@/pages/artist-merch/CartModal.vue";
 
 const auth = useAuthStore();
 
@@ -11,7 +12,6 @@ onMounted(() => {
     }
 });
 
-
 </script>
 
 <template>
@@ -20,6 +20,7 @@ onMounted(() => {
         <div style="color: rgb(228, 228, 228)" class="flex-grow-1 content position-relative">
             <router-view/>
         </div>
+        <cart-modal/>
     </div>
 </template>
 

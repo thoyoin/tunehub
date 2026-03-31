@@ -8,7 +8,6 @@ import { useToast } from "vue-toastification";
 export const useMerchStore = defineStore('merch', () => {
     const isLoading = ref(false);
     const merch = ref<PaginatedResponse<ArtistMerch> | null>(null)
-    const isDataLoaded = ref<boolean>(false);
     const selectedView = ref<
         'all' | 'moderating' | 'rejected'
     >('all')
@@ -16,9 +15,7 @@ export const useMerchStore = defineStore('merch', () => {
 
     const toast = useToast()
 
-    const fetchMerchData = async (status?: string, page: number = 1, force: boolean = false) => {
-        if (isDataLoaded.value && !force) return
-
+    const fetchMerchData = async (status?: string, page: number = 1) => {
         try {
             isLoading.value = true;
 
@@ -29,8 +26,6 @@ export const useMerchStore = defineStore('merch', () => {
             })
 
             merch.value = response.data.merch
-
-            isDataLoaded.value = true
         } catch (e) {
             console.log(e)
         } finally {

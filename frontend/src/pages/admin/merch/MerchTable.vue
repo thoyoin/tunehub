@@ -18,7 +18,7 @@ onMounted(async () => {
 
 watch(
     () => adminMerchStore.selectedView,
-    (status) => adminMerchStore.fetchMerchData(status, 1, true),
+    (status) => adminMerchStore.fetchMerchData(status, 1),
 );
 </script>
 

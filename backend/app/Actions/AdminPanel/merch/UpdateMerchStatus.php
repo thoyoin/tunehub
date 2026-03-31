@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\AdminPanel\merch;
 
+use App\Jobs\CreateStripeProductForMerch;
 use App\Models\Product;
 use App\Models\User;
 use App\Notifications\MerchApproved;
@@ -30,6 +31,8 @@ class UpdateMerchStatus
 
         if ($status === 'approved') {
             $artist->notify(new MerchApproved($merch));
+
+            CreateStripeProductForMerch::dispatch($merch->id);
         } else if ($status === 'rejected') {
             $artist->notify(new MerchRejected($merch));
         }

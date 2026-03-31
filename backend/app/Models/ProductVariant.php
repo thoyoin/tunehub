@@ -12,6 +12,7 @@ class ProductVariant extends Model
         'variant_name',
         'price',
         'stock',
+        'stripe_price_id',
     ];
 
     public function product(): BelongsTo

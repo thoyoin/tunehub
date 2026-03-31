@@ -52,7 +52,6 @@ const handleMerchItemUpdate = async () => {
             });
         }
 
-        console.log(formData.get("merch_variants"));
         await api.put(`/api/artists/merch/${merchStore.editingMerch?.id}/update`, formData);
 
         toast.success("Successfully updated");
@@ -64,6 +63,12 @@ const handleMerchItemUpdate = async () => {
         toast.error("Something went wrong");
     }
 };
+
+const handleMerchPublication = async () => {
+    await merchStore.handleMerchPublication();
+
+    toast.success('Merch was successfully published')
+}
 </script>
 
 <template>
@@ -256,29 +261,44 @@ const handleMerchItemUpdate = async () => {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        class="btn btn-cancel"
-                        @click="merchStore.resetEditingMerch()"
-                    >
-                        Cancel
-                    </button>
-                    <div class="d-flex flex-row gap-2">
-                        <button
-                            class="btn variant-danger-btn"
-                            @click="merchStore.handleDeleteMerch()"
-                            :disabled="merchStore.isLoading"
-                        >
-                            Delete
-                        </button>
-                        <button
-                            class="btn-primary"
-                            @click="handleMerchItemUpdate"
-                            :disabled="merchStore.isLoading"
-                        >
-                            Save
-                        </button>
+                    <div class="d-flex flex-column gap-2 w-100">
+                        <div class="d-flex flex-row w-100 justify-content-between">
+                            <button
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                class="btn btn-cancel"
+                                @click="merchStore.resetEditingMerch()"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                class="btn-primary"
+                                @click="handleMerchItemUpdate"
+                                :disabled="merchStore.isLoading"
+                            >
+                                Save
+                            </button>
+                        </div>
+                        <div class="d-flex flex-row w-100 justify-content-between">
+                            <button
+                                class="btn variant-danger-btn"
+                                @click="merchStore.handleDeleteMerch()"
+                                :disabled="merchStore.isLoading"
+                            >
+                                Delete
+                            </button>
+                            <button
+                                class="btn-primary"
+                                @click="handleMerchPublication"
+                                :disabled="
+                                merchStore.editingMerch?.status !== 'approved'
+                                && merchStore.editingMerch?.status === 'active'
+                                || merchStore.isLoading
+                                "
+                            >
+                                Publish
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

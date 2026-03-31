@@ -112,10 +112,27 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
             toast.success('Merch successfully deleted.')
 
             await fetchArtistMerch();
+
         } catch (e) {
             console.log(e)
 
             toast.error('Something went wrong.')
+        } finally {
+            isLoading.value = false
+        }
+    }
+
+    const handleMerchPublication = async () => {
+        try {
+            isLoading.value = true
+
+            const response = await api.patch(
+                `/api/artists/merch/${editingMerch.value?.id}/publish`
+            )
+
+            await fetchArtistMerch();
+        } catch (e) {
+            console.log(e)
         } finally {
             isLoading.value = false
         }
@@ -245,6 +262,6 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
         fetchArtistMerch, artistMerch, editingMerch, setEditingMerch, addVariantInEditing,
         removeVariantInEditing, resetEditingMerch, editingMerchFiles, handleEditingImagesUpload,
         removeImageInEditing, galleryImages, handleDeleteMerch, isLoading, showMerchUploadModal,
-        uploadModalData,
+        uploadModalData, handleMerchPublication
     }
 })

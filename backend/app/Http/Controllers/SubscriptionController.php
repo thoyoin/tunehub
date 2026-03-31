@@ -26,7 +26,7 @@ class SubscriptionController extends Controller
                 'cancel_url' => 'http://127.0.0.1:5175/subscription/cancel',
             ]);
 
-        if($user->stripe_id) {
+        if ($user->stripe_id) {
             $user->updateDefaultPaymentMethodFromStripe();
         }
 

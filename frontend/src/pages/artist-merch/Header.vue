@@ -54,6 +54,15 @@ const routeHome = () => {
                 border-top: 1px solid rgba(228, 228, 228, 0.15);"
                 class="bg-minor px-3 d-flex rounded-5 align-items-center justify-content-center"
             >
+                <div class="me-3 ms-1">
+                    <button
+                        data-bs-target="#cartModal"
+                        data-bs-toggle="modal"
+                        class="btn btn-cart"
+                    >
+                        <img src="@/assets/svg/cart.svg" alt="cart">
+                    </button>
+                </div>
                 <div class="dropdown">
                     <a
                         class="btn btn-settings me-2 p-0"
@@ -81,5 +90,25 @@ const routeHome = () => {
 </template>
 
 <style scoped>
+.btn-cart {
+    border: none;
+    cursor: default;
+    transition: .2s;
 
+    img {
+        transition: .1s;
+    }
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
+
+    &:active {
+        img {
+            transform: scale(.95);
+        }
+    }
+}
 </style>
