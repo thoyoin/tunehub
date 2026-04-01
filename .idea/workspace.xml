@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77bc28bb-6f6c-49ea-85d6-65d52ff016b2" name="Changes" comment="fix">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Services/ArtistService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Services/ArtistService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-card/ArtistCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-merch/ArtistMerchShow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-merch/ArtistMerchShow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-merch/CartModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-merch/CartModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editMerchModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/artist-studio/modals/editMerchModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistCard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistCard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/artistMerch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/artistMerch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/SubscriptionController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -586,7 +579,7 @@
       <workItem from="1774879235948" duration="10745000" />
       <workItem from="1774929636098" duration="4664000" />
       <workItem from="1774956325618" duration="18573000" />
-      <workItem from="1775016528103" duration="6286000" />
+      <workItem from="1775016528103" duration="6699000" />
     </task>
     <servers />
   </component>
