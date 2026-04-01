@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useArtistMerchStore } from "@/stores/artistMerch";
 import { useRoute, useRouter } from "vue-router";
-import { computed, ref, watch } from "vue";
+import { computed, watch } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination } from "swiper/modules";
+import { useToast } from "vue-toastification";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -11,14 +12,12 @@ import "swiper/css/pagination";
 const merchStore = useArtistMerchStore();
 const route = useRoute();
 const router = useRouter();
-
-const selectedVariantId = ref<number | null>(null);
-const quantity = ref<number>(1);
+const toast = useToast();
 
 const selectedVariant = computed(() => {
     return merchStore.artistMerch?.product_variants?.find(
-        (variant) => variant.id === selectedVariantId.value
-    ) ?? merchStore.artistMerch?.product_variants[0]?.variant_name
+        (variant) => variant.id === merchStore.selectedVariantId
+    ) ?? null
 });
 
 watch(
@@ -27,8 +26,8 @@ watch(
         if (slug && typeof slug === "string") {
             await merchStore.fetchMerch(slug);
 
-            selectedVariantId.value = merchStore.artistMerch?.product_variants?.[0] ?? null;
-            quantity.value =  1
+            merchStore.selectVariantId(Number( merchStore.artistMerch?.product_variants?.[0]?.id));
+            merchStore.resetQuantity()
         }
         if (!merchStore.artist && typeof artistId === "string") {
             await merchStore.fetchArtist(artistId);
@@ -36,6 +35,28 @@ watch(
     },
     { immediate: true },
 );
+
+const variantQuantityInCart = computed(() => {
+    if (!selectedVariant.value) {
+        return
+    }
+
+    const existingItem = merchStore.cart.find(item => {
+         return item.product_id === merchStore.artistMerch?.id
+            && item.variant_id === merchStore.selectedVariantId
+    })
+
+    return existingItem?.quantity
+})
+
+const isSoldout = computed(() => {
+    if (!selectedVariant.value) {
+        return true
+    }
+
+    return merchStore.merchQuantity + variantQuantityInCart.value > selectedVariant.value.stock;
+})
+
 </script>
 
 <template>
@@ -118,7 +139,7 @@ watch(
                     <div class="mb-2">
                         <span class="badge opacity-50 mb-1">Size</span>
                         <select
-                            v-model="selectedVariantId"
+                            v-model.number="merchStore.selectedVariantId"
                             class="form-select"
                         >
                             <option
@@ -133,7 +154,7 @@ watch(
                     <div>
                         <span class="badge opacity-50 mb-1">Quantity</span>
                         <select
-                            v-model="quantity"
+                            v-model.number="merchStore.merchQuantity"
                             class="form-select"
                         >
                             <option value="1">1</option>
@@ -148,13 +169,20 @@ watch(
                         @click="selectedVariant && merchStore.addToCart({
                             product: merchStore.artistMerch!,
                             variant: selectedVariant,
-                            quantity,
-                        })"
+                            quantity: merchStore.merchQuantity,
+                        }); toast.success(`${merchStore.artistMerch?.title} was added to cart`)"
                         class="btn btn-primary fs-5 fw-light"
+                        :disabled="!selectedVariant || isSoldout"
                     >
                         Add to cart
                     </button>
-                    <button class="btn btn-primary fs-5 fw-light">But it now</button>
+                    <button
+                        :disabled="!selectedVariant || isSoldout"
+                        class="btn btn-primary fs-5 fw-light"
+                        @click="merchStore.checkoutRightNow()"
+                    >
+                        But it now
+                    </button>
                 </div>
             </div>
         </div>
@@ -286,4 +314,10 @@ watch(
         }
     }
 }
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+}
+
 </style>

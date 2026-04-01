@@ -26,8 +26,8 @@ onMounted(async () => {
 watch(
     () => route.params.artistId,
     async (id) => {
-        if (typeof (id) === "string") {
-            await artistCardStore.ensureDataIsLoaded(id);
+        if (id && typeof (id) === "string") {
+            await artistCardStore.ensureDataIsLoaded(Number(id));
         }
     },
     { immediate: true },

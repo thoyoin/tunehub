@@ -81,8 +81,8 @@ export const useArtistCardStore = defineStore('artistCard', () => {
         }
     }
 
-    const ensureDataIsLoaded = async (id: string) => {
-        if (artist.value?.id === Number(id)) return
+    const ensureDataIsLoaded = async (id: number) => {
+        if (artist.value?.id === id) return
 
         await Promise.all([
             await fetchArtist(id),

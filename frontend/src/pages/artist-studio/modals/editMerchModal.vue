@@ -263,32 +263,34 @@ const handleMerchPublication = async () => {
                 <div class="modal-footer">
                     <div class="d-flex flex-column gap-2 w-100">
                         <div class="d-flex flex-row w-100 justify-content-between">
+                            <div class="d-flex flex-row gap-3">
+                                <button
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    class="btn btn-cancel"
+                                    @click="merchStore.resetEditingMerch()"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    class="btn variant-danger-btn"
+                                    @click="merchStore.handleDeleteMerch()"
+                                    :disabled="merchStore.isLoading"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                             <button
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                                class="btn btn-cancel"
-                                @click="merchStore.resetEditingMerch()"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                class="btn-primary"
+                                class="btn btn-artists"
                                 @click="handleMerchItemUpdate"
                                 :disabled="merchStore.isLoading"
                             >
                                 Save
                             </button>
                         </div>
-                        <div class="d-flex flex-row w-100 justify-content-between">
+                        <div class="d-flex flex-row w-100 justify-content-center">
                             <button
-                                class="btn variant-danger-btn"
-                                @click="merchStore.handleDeleteMerch()"
-                                :disabled="merchStore.isLoading"
-                            >
-                                Delete
-                            </button>
-                            <button
-                                class="btn-primary"
+                                class="btn btn-primary"
                                 @click="handleMerchPublication"
                                 :disabled="
                                 merchStore.editingMerch?.status !== 'approved'

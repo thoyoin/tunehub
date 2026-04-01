@@ -39,12 +39,22 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
     const artist = ref<User | null>(null);
     const artistMerch = ref<ArtistMerch | null>(null);
     const cart = ref<CartItem[]>([])
+    const merchQuantity = ref<number>(1)
+    const selectedVariantId = ref<number>(0)
     const cartSubtotalPrice = computed(() =>
         cart.value.reduce(
             (sum, item) => sum + item.price * item.quantity,
             0
         )
     );
+
+    const selectVariantId = (id: number) => {
+        selectedVariantId.value = id;
+    }
+
+    const resetQuantity = () => {
+        merchQuantity.value = 1;
+    }
 
     const fetchArtist = async (id: string) => {
         try {
@@ -55,7 +65,6 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
             }>(`/api/artist/${id}`);
 
             artist.value = response.data.artist;
-            console.log(response.data.artist);
         } catch (e) {
             console.error(e);
         } finally {
@@ -72,7 +81,6 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
             }>(`/api/artist/merch/${slug}/get`)
 
             artistMerch.value = response.data.merch;
-            console.log(response.data.merch);
         } catch (e) {
             console.error(e);
         } finally {
@@ -91,9 +99,14 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
         const quantityToAdd = payload.quantity
 
         if (existingItem) {
-            existingItem.quantity = Number(existingItem.quantity)
-                + Number(payload.quantity);
+            const nextQuantity = existingItem.quantity + quantityToAdd
 
+            if (nextQuantity > stock) {
+                existingItem.quantity = stock
+                return
+            }
+
+            existingItem.quantity = nextQuantity
             return
         }
 
@@ -116,7 +129,9 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
         try {
             isLoading.value = true;
 
-            const response = await api.post('/api/artist/merch/checkout', {
+            const response = await api.post<{
+                url: string
+            }>('/api/artist/merch/checkout', {
                 cart: cart.value.map((item) => ({
                     product_id: item.product_id,
                     variant_id: item.variant_id,
@@ -132,8 +147,32 @@ export const useArtistMerchStore = defineStore('artistMerch', () => {
         }
     }
 
+    const checkoutRightNow = async () => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.post<{
+                url: string
+            }>('/api/artist/merch/checkout', {
+                cart: [
+                    {
+                        product_id: artistMerch.value?.id,
+                        variant_id: selectedVariantId.value,
+                        quantity: merchQuantity.value,
+                    },
+                ]
+            })
+
+            window.location.href = response.data.url
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
     return {
         isLoading, fetchArtist, artist, fetchMerch, artistMerch, addToCart, cart, cartSubtotalPrice,
-        checkoutMerch,
+        checkoutMerch, merchQuantity, resetQuantity, selectedVariantId, selectVariantId, checkoutRightNow,
     }
 })
