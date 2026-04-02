@@ -18,6 +18,11 @@ use Laravel\Prompts\Table;
 
 class TrackController extends Controller
 {
+    public function __construct(
+        public TrackService $trackService,
+    )
+    {}
+
     public function store(
         TrackStoreRequest $trackRequest,
         ReleaseService $releaseService,
@@ -34,11 +39,10 @@ class TrackController extends Controller
 
     public function destroy(
         Track $track,
-        TrackService $trackService,
     ): JsonResponse {
         Gate::authorize('delete', $track);
 
-        $trackService->destroy($track);
+        $this->trackService->destroy($track);
 
         return response()->json([
             'message' => 'Track has been deleted successfully.',
@@ -48,11 +52,10 @@ class TrackController extends Controller
     public function update(
         Track $track,
         TrackUpdateRequest $request,
-        TrackService $trackService,
     ): JsonResponse {
         Gate::authorize('update', $track);
 
-        $trackService->update($track, $request);
+        $this->trackService->update($track, $request);
 
         return response()->json([
             'message' => 'Track has been updated successfully.',

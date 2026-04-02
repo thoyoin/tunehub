@@ -15,18 +15,23 @@ use Illuminate\Support\Facades\Gate;
 
 class PlaylistController extends Controller
 {
-    public function store(PlaylistService $playlistService): JsonResponse
+    public function __construct(
+        public PlaylistService $playlistService,
+    )
+    {}
+
+    public function store(): JsonResponse
     {
-        $newLibraryItem = $playlistService->store();
+        $newLibraryItem = $this->playlistService->store();
 
         return response()->json([
             'libraryItem' => $newLibraryItem,
         ]);
     }
 
-    public function show(Playlist $playlist, PlaylistService $playlistService): JsonResponse
+    public function show(Playlist $playlist): JsonResponse
     {
-        [$playlistItem, $tracks] = $playlistService->get($playlist);
+        [$playlistItem, $tracks] = $this->playlistService->get($playlist);
 
         return response()->json([
             'playlistItem' => $playlistItem,
@@ -34,11 +39,11 @@ class PlaylistController extends Controller
         ]);
     }
 
-    public function destroy(Playlist $playlist, PlaylistService $playlistService): JsonResponse
+    public function destroy(Playlist $playlist): JsonResponse
     {
         Gate::authorize('delete', $playlist);
 
-        $playlistService->delete($playlist);
+        $this->playlistService->delete($playlist);
 
         return response()->json([
             'message' => 'playlist successfully deleted',
@@ -48,11 +53,10 @@ class PlaylistController extends Controller
     public function update(
         Playlist $playlist,
         PlaylistUpdateRequest $request,
-        PlaylistService $playlistService
     ): JsonResponse {
         Gate::authorize('update', $playlist);
 
-        $playlist = $playlistService->update($request, $playlist);
+        $playlist = $this->playlistService->update($request, $playlist);
 
         return response()->json([
             'message' => 'Successfully updated playlist.',
@@ -63,9 +67,8 @@ class PlaylistController extends Controller
     public function updateVisibility(
         Playlist $playlist,
         Request $request,
-        PlaylistService $playlistService
     ): JsonResponse {
-        $visibility = $playlistService->updateVisibility($playlist, $request);
+        $visibility = $this->playlistService->updateVisibility($playlist, $request);
 
         return response()->json([
             'message' => 'Successfully updated playlist.',
@@ -73,25 +76,25 @@ class PlaylistController extends Controller
         ]);
     }
 
-    public function getAll(PlaylistService $playlistService): JsonResponse
+    public function getAll(): JsonResponse
     {
-        $playlists = $playlistService->getAll();
+        $playlists = $this->playlistService->getAll();
 
         return response()->json([
             'playlists' => $playlists,
         ]);
     }
 
-    public function addTrack(Playlist $playlist, Track $track, PlaylistService $playlistService): JsonResponse
+    public function addTrack(Playlist $playlist, Track $track): JsonResponse
     {
-        $response = $playlistService->addTrack($playlist, $track);
+        $response = $this->playlistService->addTrack($playlist, $track);
 
         return response()->json($response);
     }
 
-    public function addTrackToLikes(Track $track, PlaylistService $playlistService): JsonResponse
+    public function addTrackToLikes(Track $track): JsonResponse
     {
-        $response = $playlistService->addTrackToLikes($track);
+        $response = $this->playlistService->addTrackToLikes($track);
 
         return response()->json($response);
     }

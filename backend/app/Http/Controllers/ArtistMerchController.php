@@ -10,18 +10,23 @@ use Illuminate\Http\Request;
 
 class ArtistMerchController extends Controller
 {
-    public function get(string $slug, ArtistMerchService $artistMerchService): JsonResponse
+    public function __construct(
+        public ArtistMerchService $artistMerchService,
+    )
+    {}
+
+    public function get(string $slug): JsonResponse
     {
-        $merch = $artistMerchService->get($slug);
+        $merch = $this->artistMerchService->get($slug);
 
         return response()->json([
             'merch' => $merch
         ]);
     }
 
-    public function goToCheckout(ArtistMerchService $artistMerchService, Request $request): JsonResponse
+    public function goToCheckout(Request $request): JsonResponse
     {
-        $url = $artistMerchService->goToCheckout($request);
+        $url = $this->artistMerchService->goToCheckout($request);
 
         return response()->json([
             'url' => $url

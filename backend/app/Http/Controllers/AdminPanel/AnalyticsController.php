@@ -11,9 +11,14 @@ use function Termwind\parse;
 
 class AnalyticsController
 {
-    public function getTotalPlays(AnalyticsService $analytics): JsonResponse
+    public function __construct(
+        public AnalyticsService $analyticsService
+    )
+    {}
+
+    public function getTotalPlays(): JsonResponse
     {
-        [$totalPlays, $growth] = $analytics->getTotalPlays();
+        [$totalPlays, $growth] = $this->analyticsService->getTotalPlays();
 
         return response()->json([
             'totalPlays' => $totalPlays,
@@ -21,9 +26,9 @@ class AnalyticsController
         ]);
     }
 
-    public function getNewUsers(AnalyticsService $analytics): JsonResponse
+    public function getNewUsers(): JsonResponse
     {
-        [$newUsers, $growth] = $analytics->getNewUsers();
+        [$newUsers, $growth] = $this->analyticsService->getNewUsers();
 
         return response()->json([
             'newUsers' => $newUsers,
@@ -31,9 +36,9 @@ class AnalyticsController
         ]);
     }
 
-    public function getNewTracks(AnalyticsService $analytics): JsonResponse
+    public function getNewTracks(): JsonResponse
     {
-        [$newTracks, $growth] = $analytics->getNewTracks();
+        [$newTracks, $growth] = $this->analyticsService->getNewTracks();
 
         return response()->json([
             'newTracks' => $newTracks,
@@ -41,9 +46,9 @@ class AnalyticsController
         ]);
     }
 
-    public function getNewReleases(AnalyticsService $analytics): JsonResponse
+    public function getNewReleases(): JsonResponse
     {
-        [$newReleases, $growth] = $analytics->getNewReleases();
+        [$newReleases, $growth] = $this->analyticsService->getNewReleases();
 
         return response()->json([
             'newReleases' => $newReleases,
@@ -51,9 +56,9 @@ class AnalyticsController
         ]);
     }
 
-    public function getNewPlaylists(AnalyticsService $analytics): JsonResponse
+    public function getNewPlaylists(): JsonResponse
     {
-        [$newPlaylists, $growth] = $analytics->getNewPlaylists();
+        [$newPlaylists, $growth] = $this->analyticsService->getNewPlaylists();
 
         return response()->json([
             'newPlaylists' => $newPlaylists,
@@ -61,36 +66,36 @@ class AnalyticsController
         ]);
     }
 
-    public function getMonthPlays(AnalyticsService $analytics): JsonResponse
+    public function getMonthPlays(): JsonResponse
     {
-        $result = $analytics->getMonthPlays();
+        $result = $this->analyticsService->getMonthPlays();
 
         return response()->json([
             'monthPlays' => $result,
         ]);
     }
 
-    public function getUserGrowth(AnalyticsService $analytics): JsonResponse
+    public function getUserGrowth(): JsonResponse
     {
-        $result = $analytics->getUserGrowth();
+        $result = $this->analyticsService->getUserGrowth();
 
         return response()->json([
             'userGrowth' => $result
         ]);
     }
 
-    public function getTopArtists(AnalyticsService $analytics): JsonResponse
+    public function getTopArtists(): JsonResponse
     {
-        $result = $analytics->getTopArtists();
+        $result = $this->analyticsService->getTopArtists();
 
         return response()->json([
             'topArtists' => $result
         ]);
     }
 
-    public function getTopReleases(AnalyticsService $analytics): JsonResponse
+    public function getTopReleases(): JsonResponse
     {
-        $result = $analytics->getTopReleases();
+        $result = $this->analyticsService->getTopReleases();
 
         return response()->json([
             'topReleases' => $result

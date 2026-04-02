@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 
 class ArtistStudioController extends Controller
 {
+    public function __construct(
+        public ArtistStudioService $artistStudioService,
+    )
+    {}
+
     public function getTracks(GetUserTracks $getUserTracks, TrackStatsService $trackStatsService): JsonResponse
     {
         $tracks = $getUserTracks->handle();
@@ -34,90 +39,86 @@ class ArtistStudioController extends Controller
         ]);
     }
 
-    public function getStreams(ArtistStudioService $artistStudioService): JsonResponse
+    public function getStreams(): JsonResponse
     {
-        $streams = $artistStudioService->getArtistStats();
+        $streams = $this->artistStudioService->getArtistStats();
 
         return response()->json([
             'artistStreams' => $streams,
         ]);
     }
 
-    public function getEarnings(ArtistStudioService $artistStudioService): JsonResponse
+    public function getEarnings(): JsonResponse
     {
-        $earnings = $artistStudioService->getArtistEarnings();
+        $earnings = $this->artistStudioService->getArtistEarnings();
 
         return response()->json([
             'earnings' => $earnings,
         ]);
     }
 
-    public function getDailyStreams(ArtistStudioService $artistStudioService): JsonResponse
+    public function getDailyStreams(): JsonResponse
     {
-        $streams = $artistStudioService->getDailyStreams();
+        $streams = $this->artistStudioService->getDailyStreams();
 
         return response()->json([
             'streamsDaily' => $streams,
         ]);
     }
 
-    public function getTopTracks(ArtistStudioService $artistStudioService): JsonResponse
+    public function getTopTracks(): JsonResponse
     {
-        $tracks = $artistStudioService->getTopTracks();
+        $tracks = $this->artistStudioService->getTopTracks();
 
         return response()->json($tracks);
     }
 
-    public function getTopReleases(ArtistStudioService $artistStudioService): JsonResponse
+    public function getTopReleases(): JsonResponse
     {
-        $releases = $artistStudioService->getTopReleases();
+        $releases = $this->artistStudioService->getTopReleases();
 
         return response()->json($releases);
     }
 
-    public function dropMerch(ArtistStudioService $artistStudioService, Request $request): JsonResponse
+    public function dropMerch(Request $request): JsonResponse
     {
-        $artistStudioService->dropMerch($request);
+        $this->artistStudioService->dropMerch($request);
 
         return response()->json([
             'message' => 'Merch has been successfully uploaded.',
         ]);
     }
 
-    public function getMerch(ArtistStudioService $artistStudioService): JsonResponse
+    public function getMerch(): JsonResponse
     {
-        $merch = $artistStudioService->getMerch();
+        $merch = $this->artistStudioService->getMerch();
 
         return response()->json([
             'merch' => $merch,
         ]);
     }
 
-    public function updateMerch(
-        Product $merch,
-        ArtistStudioService $artistStudioService,
-        Request $request
-    ): JsonResponse
+    public function updateMerch(Product $merch, Request $request): JsonResponse
     {
-        $artistStudioService->updateMerch($request, $merch);
+        $this->artistStudioService->updateMerch($request, $merch);
 
         return response()->json([
             'message' => 'Merch has been successfully updated.',
         ]);
     }
 
-    public function deleteMerch(Product $merch, ArtistStudioService $artistStudioService): JsonResponse
+    public function deleteMerch(Product $merch): JsonResponse
     {
-        $artistStudioService->deleteMerch($merch->id);
+        $this->artistStudioService->deleteMerch($merch->id);
 
         return response()->json([
             'message' => 'Merch has been successfully deleted.',
         ]);
     }
 
-    public function publishMerch(Product $merch, ArtistStudioService $artistStudioService): JsonResponse
+    public function publishMerch(Product $merch): JsonResponse
     {
-        $artistStudioService->publishMerch($merch);
+        $this->artistStudioService->publishMerch($merch);
 
         return response()->json([
             'message' => 'Merch has been successfully published.',

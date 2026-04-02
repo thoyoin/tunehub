@@ -7,7 +7,6 @@ namespace App\Http\Controllers\AdminPanel;
 use App\Actions\Release\GetReleases;
 use App\Actions\Release\UpdateStatus;
 use App\Models\Release;
-use App\Services\TrackStatsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -24,8 +23,11 @@ class ReleaseController
         return response()->json($releases);
     }
 
-    public function updateStatus(Request $request, UpdateStatus $updateStatus, Release $release): JsonResponse
-    {
+    public function updateStatus(
+        Request $request,
+        UpdateStatus $updateStatus,
+        Release $release
+    ): JsonResponse {
         Gate::authorize('updateStatus', Release::class);
 
         $updateStatus->handle($request, $release);

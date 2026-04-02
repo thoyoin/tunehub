@@ -10,16 +10,21 @@ use Illuminate\Http\Request;
 
 class SearchController
 {
-    public function getContent(Request $request, SearchService $searchService): JsonResponse
+    public function __construct(
+        public SearchService $searchService
+    )
+    {}
+
+    public function getContent(Request $request): JsonResponse
     {
-        $content = $searchService->getContent($request);
+        $content = $this->searchService->getContent($request);
 
         return response()->json($content);
     }
 
-    public function getUsers(Request $request, SearchService $searchService): JsonResponse
+    public function getUsers(Request $request): JsonResponse
     {
-        $users = $searchService->getUsers($request);
+        $users = $this->searchService->getUsers($request);
 
         return response()->json($users);
     }

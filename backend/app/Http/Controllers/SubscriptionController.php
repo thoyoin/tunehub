@@ -10,29 +10,32 @@ use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
 {
-    public function goToCheckout(
-        Request $request,
-        SubscriptionService $subscriptionService
-    ): JsonResponse {
-        $url = $subscriptionService->goToCheckout($request);
+    public function __construct(
+        public SubscriptionService $subscriptionService
+    )
+    {}
+
+    public function goToCheckout(Request $request,): JsonResponse
+    {
+        $url = $this->subscriptionService->goToCheckout($request);
 
         return response()->json([
             'url' => $url
         ]);
     }
 
-    public function getDetails(Request $request, SubscriptionService $subscriptionService): JsonResponse
+    public function getDetails(Request $request): JsonResponse
     {
-        $data = $subscriptionService->getDetails($request);
+        $data = $this->subscriptionService->getDetails($request);
 
         return response()->json([
             'details' => $data,
         ]);
     }
 
-    public function goToBillingPortal(Request $request, SubscriptionService $subscriptionService): JsonResponse
+    public function goToBillingPortal(Request $request): JsonResponse
     {
-        $url = $subscriptionService->goToBillingPortal($request);
+        $url = $this->subscriptionService->goToBillingPortal($request);
 
         return response()->json([
             'url' => $url

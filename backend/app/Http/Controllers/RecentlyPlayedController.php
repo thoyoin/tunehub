@@ -10,18 +10,23 @@ use Illuminate\Http\Request;
 
 class RecentlyPlayedController
 {
-    public function store(Request $request, RecentlyPlayedService $recentlyPlayedService): JsonResponse
+    public function __construct(
+        public RecentlyPlayedService $recentlyPlayedService
+    )
+    {}
+
+    public function store(Request $request): JsonResponse
     {
         $data = $request->only('id', 'item_type', 'track_id', 'track_artist_id', 'release_id');
 
-        $response = $recentlyPlayedService->store($data);
+        $response = $this->recentlyPlayedService->store($data);
 
         return response()->json($response);
     }
 
-    public function get(RecentlyPlayedService $recentlyPlayedService): JsonResponse
+    public function get(): JsonResponse
     {
-        $recentlyPlayed = $recentlyPlayedService->get();
+        $recentlyPlayed = $this->recentlyPlayedService->get();
 
         return response()->json([
             'playedHistory' => $recentlyPlayed
