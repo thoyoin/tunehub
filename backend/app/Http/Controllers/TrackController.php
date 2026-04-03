@@ -6,15 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TrackStoreRequest;
 use App\Http\Requests\TrackUpdateRequest;
-use App\Models\Playlist;
 use App\Models\Release;
 use App\Models\Track;
 use App\Services\ReleaseService;
 use App\Services\TrackService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Prompts\Table;
 
 class TrackController extends Controller
 {

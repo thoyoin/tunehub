@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username');
-            $table->string('slug')->nullable()->unique();
-            $table->string('email')->unique();
+            $table->string('slug')
+                ->nullable()
+                ->unique();
+            $table->string('email')
+                ->unique();
             $table->string('password');
-            $table->string('profile_picture');
+            $table->string('profile_picture')
+                ->default('http://localhost:9000/tunehub/defaults/profile_cover.jpg');
             $table->timestamps();
             $table->rememberToken();
         });

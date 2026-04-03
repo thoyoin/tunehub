@@ -11,6 +11,7 @@ use App\Services\ArtistStudioService;
 use App\Services\TrackStatsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ArtistStudioController extends Controller
 {
@@ -82,11 +83,13 @@ class ArtistStudioController extends Controller
 
     public function dropMerch(Request $request): JsonResponse
     {
+        Gate::authorize('create', Product::class);
+
         $this->artistStudioService->dropMerch($request);
 
         return response()->json([
             'message' => 'Merch has been successfully uploaded.',
-        ]);
+        ], 201);
     }
 
     public function getMerch(): JsonResponse
@@ -100,6 +103,8 @@ class ArtistStudioController extends Controller
 
     public function updateMerch(Product $merch, Request $request): JsonResponse
     {
+        Gate::authorize('update', Product::class);
+
         $this->artistStudioService->updateMerch($request, $merch);
 
         return response()->json([
@@ -109,6 +114,8 @@ class ArtistStudioController extends Controller
 
     public function deleteMerch(Product $merch): JsonResponse
     {
+        Gate::authorize('delete', Product::class);
+
         $this->artistStudioService->deleteMerch($merch->id);
 
         return response()->json([
@@ -118,6 +125,8 @@ class ArtistStudioController extends Controller
 
     public function publishMerch(Product $merch): JsonResponse
     {
+        Gate::authorize('publish', $merch);
+
         $this->artistStudioService->publishMerch($merch);
 
         return response()->json([

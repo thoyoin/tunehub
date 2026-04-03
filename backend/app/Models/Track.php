@@ -6,12 +6,15 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use ClickHouseDB\Client;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Track extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'release_id',

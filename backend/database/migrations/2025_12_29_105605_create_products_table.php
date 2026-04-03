@@ -26,9 +26,10 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->string('currency')
                 ->default('usd');
-            $table->enum('status', ['active', 'inactive', 'sold_out', 'pending', 'rejected', 'approved'])
+            $table->enum('status', ['active', 'inactive', 'sold_out', 'moderating', 'rejected', 'approved'])
                 ->default('inactive');
             $table->timestamps();
+            $table->string('stripe_product_id')->nullable();
         });
     }
 

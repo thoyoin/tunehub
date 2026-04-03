@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('stock');
             $table->timestamps();
+            $table->string('stripe_price_id')->nullable();
         });
     }
 
