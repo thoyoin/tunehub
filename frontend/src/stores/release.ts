@@ -64,8 +64,6 @@ export const useReleaseStore = defineStore('release', () => {
         if (pickedRelease.value) {
             await getRelease(pickedRelease.value.id)
         }
-
-        await libraryStore.fetchItems()
     }
 
     const addTrackToPlaylist = async (trackId: number, playlistId: number) => {
@@ -75,8 +73,6 @@ export const useReleaseStore = defineStore('release', () => {
             if (pickedRelease.value) {
                 await getRelease(pickedRelease.value.id)
             }
-
-            await libraryStore.fetchItems()
         } catch (e) {
             console.log(e)
         }

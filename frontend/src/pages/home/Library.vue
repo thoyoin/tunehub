@@ -21,7 +21,7 @@
 
     const handleItemSelection = async (item) => {
         try {
-            libraryStore.selectLibraryItem(item)
+            libraryStore.selectLibraryItem(item.item.id)
 
             const isRelease = item.item_type === 'release'
             const routeName = isRelease ? 'release' : 'playlist'

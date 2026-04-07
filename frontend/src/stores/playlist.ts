@@ -40,21 +40,17 @@ export const usePlaylistStore = defineStore("playlist", () => {
         await api.post(`/api/liked/track/${id}`)
 
         if (playlist.value) {
-            await getPlaylist(playlist.id)
+            await getPlaylist(playlist.value.item_id)
         }
-
-        await libraryStore.fetchItems()
     }
 
     const addTrackToPlaylist = async (id: number, playlistId: number) => {
         try {
-            await api.post(`/api/playlist/${playlistId}/track/${trackId}`)
+            await api.post(`/api/playlist/${playlistId}/track/${id}`)
 
             if (playlist.value) {
-                await playlistStore.getPlaylist(libraryStore.libraryItem?.id!)
+                await getPlaylist(libraryStore.libraryItem?.id!)
             }
-
-            await libraryStore.fetchItems()
         } catch (e) {
             console.error(e)
         }
@@ -76,6 +72,6 @@ export const usePlaylistStore = defineStore("playlist", () => {
 
     return {
         playlist, playlistTracks, isLoading, getPlaylist, fetchUserPlaylists, userPlaylists,
-        addTrackToLikes,
+        addTrackToLikes, addTrackToPlaylist
     }
 })
