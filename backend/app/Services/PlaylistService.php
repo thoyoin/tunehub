@@ -11,6 +11,7 @@ use App\Actions\Playlist\GetOrderedPlaylistTracks;
 use App\Actions\Playlist\GetPlaylistById;
 use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Track\IsTrackAdded;
+use App\Jobs\DeleteCoverFile;
 use App\Models\LibraryItem;
 use App\Models\Playlist;
 use Illuminate\Http\JsonResponse;
@@ -77,18 +78,22 @@ class PlaylistService
 
     public function delete($playlist): void
     {
-        $url = $playlist->cover_url;
+        DB::transaction(function () use ($playlist) {
+            $url = $playlist->cover_url;
 
-        $playlist->delete();
+            $playlist->delete();
 
-        if ($url !== env('default_cover')) {
-            $this->minioService->destroyCover($url);
-        }
+            DB::afterCommit(function () use ($url, $playlist) {
+                if ($url !== env('default_cover')) {
+                    DeleteCoverFile::dispatch($url);
+                }
 
-        Log::info('Playlist was deleted', [
-            'title' => $playlist->title,
-            'user_id' => $playlist->user_id,
-        ]);
+                Log::info('Playlist was deleted', [
+                    'title' => $playlist->title,
+                    'user_id' => $playlist->user_id,
+                ]);
+            });
+        });
     }
 
     public function update($request, $playlist): Playlist

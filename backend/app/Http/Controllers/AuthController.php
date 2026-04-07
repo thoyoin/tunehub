@@ -10,7 +10,6 @@ use App\Http\Requests\SignInFormRequest;
 use App\Http\Requests\SignUpFormRequest;
 use App\Services\SignUpService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -18,7 +17,7 @@ class AuthController extends Controller
     public function signIn(
         SignInFormRequest $request,
         SignIn $signIn,
-    ): JsonResponse|RedirectResponse
+    ): JsonResponse
     {
         $signIn->handle($request);
 

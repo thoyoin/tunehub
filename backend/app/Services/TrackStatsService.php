@@ -22,14 +22,16 @@ class TrackStatsService
             return $tracks;
         }
 
-        $ids = implode(',', $tracksIds);
-
-        $result = $this->clickhouse->select("
+        $result = $this->clickhouse->select('
             SELECT track_id, sum(plays) as plays
             FROM track_plays_total
-            WHERE track_id IN ($ids)
+            WHERE track_id IN {track_ids:Array(UInt64)}
             GROUP BY track_id
-        ");
+        ',
+            [
+                'track_ids' => $tracksIds,
+            ]
+        );
 
         $plays = [];
 
