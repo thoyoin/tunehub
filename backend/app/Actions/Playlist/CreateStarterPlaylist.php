@@ -14,7 +14,7 @@ class CreateStarterPlaylist
              'title' => 'Liked tracks',
              'description' => null,
              'user_id' => $user->id,
-             'cover_url' => 'http://localhost:9000/tunehub/defaults/likedtracks.jpg',
+             'cover_url' => env('default_cover'),
              'visibility' => 'private',
         ]);
     }
