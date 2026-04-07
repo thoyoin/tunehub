@@ -15,7 +15,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_DATABASE: tunehub_test
+          MYSQL_DATABASE: testing
           MYSQL_USER: tunehub
           MYSQL_PASSWORD: secret
           MYSQL_ROOT_PASSWORD: root
@@ -70,7 +70,7 @@ jobs:
           echo "DB_CONNECTION=mysql" >> .env
           echo "DB_HOST=127.0.0.1" >> .env
           echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=tunehub_test" >> .env
+          echo "DB_DATABASE=testing" >> .env
           echo "DB_USERNAME=tunehub" >> .env
           echo "DB_PASSWORD=secret" >> .env
           echo "CACHE_STORE=file" >> .env
