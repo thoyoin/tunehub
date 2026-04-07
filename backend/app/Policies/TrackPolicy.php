@@ -9,7 +9,11 @@ class TrackPolicy
 {
     public function before(User $user)
     {
-        if ($user->roles->contains('slug', 'admin')) {
+        if (
+            $user->roles()
+            ->where('slug', 'admin')
+            ->exists()
+        ) {
             return true;
         }
     }
@@ -35,7 +39,11 @@ class TrackPolicy
      */
     public function create(User $user): bool
     {
-        return $user->roles->contains('slug', 'premium');
+        return $user
+            ->roles()
+            ->where('slug', 'premium')
+            ->exists()
+            || $user->is_subscribed;
     }
 
     /**

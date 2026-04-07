@@ -9,7 +9,11 @@ class ProductPolicy
 {
     public function before(User $user)
     {
-        if ($user->roles()->where('slug', 'admin')->exists()) {
+        if (
+            $user->roles()
+            ->where('slug', 'admin')
+            ->exists()
+        ) {
             return true;
         }
 
@@ -26,7 +30,9 @@ class ProductPolicy
 
     public function create(User $user): bool
     {
-        return $user->roles()->where('slug', 'premium')->exists()
+        return $user->roles()
+                ->where('slug', 'premium')
+                ->exists()
             || $user->is_subscribed;
     }
 

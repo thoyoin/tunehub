@@ -79,4 +79,27 @@ class CreateReleaseTest extends TestCase
             'release_id' => $release->id,
         ]);
     }
+
+    public function test_non_artist_cannot_create_release(): void
+    {
+        $artist = User::factory()->create();
+
+        $this->actingAs($artist);
+
+        $cover = UploadedFile::fake()->image('cover.jpg');
+        $audio1 = UploadedFile::fake()->create('audio1.mp3', 1000, 'audio/mp3');
+        $audio2 = UploadedFile::fake()->create('audio2.mp3', 1000, 'audio/mp3');
+
+        $response = $this->postJson('/api/track', [
+            'releaseTitle' => 'testTitle',
+            'artist' => 'testArtist',
+            'type' => 'album',
+            'cover_url' => $cover,
+            'release_date' => now()->addMonth()->toDateString(),
+            'title' => ['Track 1', 'Track 2'],
+            'audio_url' => [$audio1, $audio2],
+        ]);
+
+        $response->assertStatus(403);
+    }
 }

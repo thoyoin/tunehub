@@ -10,7 +10,12 @@ class ReleasePolicy
 {
     public function before(User $user): bool|null
     {
-        if ($user->roles->contains('slug', 'admin')) {
+        if (
+            $user->roles()
+                ->where('slug', 'admin')
+                ->exists()
+            || $user->is_subscribed
+        ) {
             return true;
         }
 
@@ -19,12 +24,20 @@ class ReleasePolicy
 
     public function updateStatus(User $user, Release $release): bool
     {
-        return $user->roles->contains('slug', 'admin');
+        return $user->roles()
+                ->where('slug', 'premium')
+                ->exists()
+            || $user->is_subscribed;
     }
 
     public function publish(User $user, Release $release): bool
     {
-        return $user->roles->contains('slug', 'premium') && $user->id = $release->user_id;
+        return (
+            $user->roles()
+                ->where('slug', 'premium')
+                ->exists()
+            || $user->is_subscribed
+            ) && $user->id = $release->user_id && $release->status === 'approved';
     }
 
     /**
@@ -48,7 +61,10 @@ class ReleasePolicy
      */
     public function create(User $user): bool
     {
-        return $user->roles->contains('slug', 'premium');
+        return $user->roles()
+                ->where('slug', 'premium')
+                ->exists()
+            || $user->is_subscribed;
     }
 
     /**
@@ -56,7 +72,12 @@ class ReleasePolicy
      */
     public function update(User $user, Release $release): bool
     {
-        return $user->id === $release->user_id && $user->roles->contains('slug', 'premium');
+        return $user->id === $release->user_id && (
+            $user->roles()
+                ->where('slug', 'premium')
+                ->exists()
+            || $user->is_subscribed
+            );
     }
 
     /**
@@ -64,7 +85,10 @@ class ReleasePolicy
      */
     public function delete(User $user, Release $release): bool
     {
-        return $user->id === $release->user_id || $user->roles->contains('slug', 'admin');
+        return $user->id === $release->user_id || $user->roles()
+                ->where('slug', 'admin')
+                ->exists()
+            || $user->is_subscribed;
     }
 
     /**

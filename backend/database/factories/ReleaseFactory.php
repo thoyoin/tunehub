@@ -21,6 +21,7 @@ class ReleaseFactory extends Factory
             'release_type' => 'album',
             'release_date' => $this->faker->date(),
             'artist' => $this->faker->name(),
+            'status' => 'pending',
         ];
     }
 }
