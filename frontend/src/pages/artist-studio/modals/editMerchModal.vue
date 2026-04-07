@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useMerchManagementStore } from "@/stores/merchManagement";
 import { useToast } from "vue-toastification";
 import { ref, watch } from "vue";
-import api from "@/lib/api";
 import draggable from "vuedraggable";
+
+import api from "@/lib/api";
+import { useMerchManagementStore } from "@/stores/merchManagement";
 
 const merchStore = useMerchManagementStore();
 const toast = useToast();

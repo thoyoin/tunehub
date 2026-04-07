@@ -1,16 +1,15 @@
 <script setup>
-import { useAuthStore } from '@/stores/auth.ts'
-import { useLibraryStore } from '@/stores/library.ts'
-import { useSearchStore } from '@/stores/search.ts'
-import { useReleaseStore } from '@/stores/release.ts'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import { ref } from "vue";
+
+import { useAuthStore } from '@/stores/auth'
+import { useLibraryStore } from '@/stores/library'
 
 const router = useRouter()
 const auth = useAuthStore()
 const libraryStore = useLibraryStore()
 const toast = useToast()
+
 const logout = async () => {
     try {
         await auth.logout()
@@ -20,6 +19,7 @@ const logout = async () => {
         toast.error('Something went wrong')
     }
 }
+
 const routeHome = () => {
     router.push('/')
     libraryStore.clearAllSelectedItems()

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useOverviewStore } from "@/stores/AdminPanel/overview";
 import { onMounted } from "vue";
+
 import growthUp from "@/assets/svg/growth-up.svg";
 import growthDown from "@/assets/svg/growth-down.svg";
 import StreamsCharts from "@/pages/admin/overview/charts/StreamsCharts.vue";
 import UserGrowthCharts from "@/pages/admin/overview/charts/UserGrowthCharts.vue";
+import { useOverviewStore } from "@/stores/AdminPanel/overview";
 import { useModerationStore } from "@/stores/AdminPanel/moderation";
 import { useUsersStore } from "@/stores/AdminPanel/users";
 

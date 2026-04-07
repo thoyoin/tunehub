@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
+
 import api from '@/lib/api'
+
 import type { Item } from '@/types/Item'
 
 export const useRecentlyPlayedStore = defineStore('recentlyPlayedStore', () => {

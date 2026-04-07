@@ -1,10 +1,11 @@
-<script setup>
-    import { useAuthStore } from "@/stores/auth.ts";
-    import { useLibraryStore } from "@/stores/library.ts";
-    import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+<script setup lang="ts">
+    import { useRouter } from "vue-router";
     import {onMounted} from "vue";
     import Popover from "bootstrap/js/dist/popover";
-    import { useRouter } from "vue-router";
+
+    import { useAuthStore } from "@/stores/auth";
+    import { useLibraryStore } from "@/stores/library";
+    import { useAudioPlayer } from '@/composables/useAudioPlayer'
 
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
@@ -20,7 +21,7 @@
 
     const handleItemSelection = async (item) => {
         try {
-            libraryStore.selectLibraryItem(item.id)
+            libraryStore.selectLibraryItem(item)
 
             const isRelease = item.item_type === 'release'
             const routeName = isRelease ? 'release' : 'playlist'
@@ -79,7 +80,7 @@
                             <div
                                 style="height: 58px"
                                 class="d-flex align-items-center btn btn-playlist p-2 mb-2 text-start"
-                                :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem }"
+                                :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem?.id }"
                             >
                                 <div class="position-relative">
                                     <img

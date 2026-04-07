@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useMerchStore } from "@/stores/AdminPanel/merch";
 import MerchTable from "@/pages/admin/merch/MerchTable.vue";
+import { useMerchStore } from "@/stores/AdminPanel/merch";
 
 const adminMerchStore = useMerchStore();
 

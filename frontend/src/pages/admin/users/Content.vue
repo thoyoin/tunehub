@@ -1,6 +1,7 @@
 <script setup>
-import { useUsersStore } from '@/stores/AdminPanel/users.ts'
 import { onMounted, computed, ref, watch } from 'vue'
+
+import { useUsersStore } from '@/stores/AdminPanel/users.ts'
 
 const adminPanelStore = useUsersStore()
 

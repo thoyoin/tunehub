@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import ApexCharts from "vue3-apexcharts";
-import { useArtistStore } from "@/stores/artistStudio";
 import { computed } from "vue";
+
+import { useArtistStore } from "@/stores/artistStudio";
 
 const artistStore = useArtistStore();
 

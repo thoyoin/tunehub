@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { useAuthStore } from "@/stores/auth";
 import { useSubscriptionStore } from "@/stores/subscription";
-import { computed } from "vue";
 
 const auth = useAuthStore();
 const subscriptionStore = useSubscriptionStore();

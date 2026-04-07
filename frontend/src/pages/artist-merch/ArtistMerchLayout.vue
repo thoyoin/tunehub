@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import Header from "@/pages/artist-merch/Header.vue";
 import { onMounted } from "vue";
-import { useAuthStore } from "@/stores/auth";
+
+import Header from "@/pages/artist-merch/Header.vue";
 import CartModal from "@/pages/artist-merch/CartModal.vue";
+import { useAuthStore } from "@/stores/auth";
 
 const auth = useAuthStore();
 

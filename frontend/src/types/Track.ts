@@ -27,6 +27,6 @@ export interface Track {
             updated_at: string;
         }
     };
-    release?: Release;
+    release: Release;
     plays?: number;
 }

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
+
 import { useAuthStore } from "@/stores/auth";
 import { useArtistMerchStore } from "@/stores/artistMerch";
-import { onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
 
 const merchStore = useArtistMerchStore();
 const auth = useAuthStore();

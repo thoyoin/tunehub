@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useAuthStore } from "@/stores/auth.js";
-import { useImageUpload } from "@/composables/useImageUpload";
-import api from "@/lib/api";
 import { computed, ref, watch } from "vue";
 import { useToast } from "vue-toastification";
+
+import api from "@/lib/api";
+import { useImageUpload } from "@/composables/useImageUpload";
+import { useAuthStore } from "@/stores/auth.js";
 
 const toast = useToast();
 const auth = useAuthStore();

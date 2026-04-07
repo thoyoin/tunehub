@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useModerationStore } from "@/stores/AdminPanel/moderation";
 import { onMounted, ref, watch} from "vue";
 import { useToast } from "vue-toastification";
+
+import { useModerationStore } from "@/stores/AdminPanel/moderation";
 
 const moderationStore = useModerationStore();
 const toast = useToast();

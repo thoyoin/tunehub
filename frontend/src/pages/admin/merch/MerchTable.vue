@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useMerchStore } from "@/stores/AdminPanel/merch";
 import { onMounted, ref, watch } from "vue";
+
+import { useMerchStore } from "@/stores/AdminPanel/merch";
 
 const adminMerchStore = useMerchStore();
 

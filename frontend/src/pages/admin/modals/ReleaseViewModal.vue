@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useModerationStore } from "@/stores/AdminPanel/moderation";
 import { useToast } from "vue-toastification";
+
+import { useModerationStore } from "@/stores/AdminPanel/moderation";
 import { useAudioPlayer } from "@/composables/useAudioPlayer";
 
 const moderationStore = useModerationStore();

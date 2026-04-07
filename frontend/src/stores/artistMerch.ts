@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 import { computed, ref} from "vue";
-import type {User} from "@/types/User";
+
 import api from "@/lib/api";
+
+import type {User} from "@/types/User";
 import type { ArtistMerch } from "@/types/ArtistMerch";
 
 interface ProductVariant {

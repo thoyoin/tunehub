@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
-import { useLibraryStore } from "@/stores/library.js";
 import { ref } from 'vue';
+
 import api from '@/lib/api'
+import { useLibraryStore } from "@/stores/library.js";
+
 import type { Release } from "@/types/Release"
 import type { Track } from "@/types/Track"
 
@@ -61,8 +63,6 @@ export const useReleaseStore = defineStore('release', () => {
 
         if (pickedRelease.value) {
             await getRelease(pickedRelease.value.id)
-        } else {
-            await libraryStore.getPlaylist(libraryStore.libraryItem?.id!)
         }
 
         await libraryStore.fetchItems()
@@ -74,15 +74,12 @@ export const useReleaseStore = defineStore('release', () => {
 
             if (pickedRelease.value) {
                 await getRelease(pickedRelease.value.id)
-            } else {
-                await libraryStore.getPlaylist(libraryStore.libraryItem?.id!)
             }
 
             await libraryStore.fetchItems()
         } catch (e) {
             console.log(e)
         }
-
     }
 
     const clearPickedRelease = () => {

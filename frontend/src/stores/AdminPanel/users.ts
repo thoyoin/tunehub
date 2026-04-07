@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import api from '@/lib/api'
 import { useDebounceFn } from '@vueuse/core'
+
+import api from '@/lib/api'
+
 import type { PaginatedResponse } from '@/types/PaginatedResponse'
 import type { User } from '@/types/User'
 

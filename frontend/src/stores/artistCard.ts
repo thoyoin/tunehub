@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
 import {reactive, ref } from "vue";
-import type { User } from "@/types/User";
+
 import api from "@/lib/api";
+
+import type { User } from "@/types/User";
 import type { Release } from "@/types/Release";
 import type { Track } from "@/types/Track";
 

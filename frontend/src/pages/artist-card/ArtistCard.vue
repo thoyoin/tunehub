@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import { onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
+
 import Header from "@/pages/home/Header.vue";
 import Library from "@/pages/home/Library.vue";
 import Content from "@/pages/artist-card/Content.vue";
-import { onMounted, watch } from "vue";
-import { useAuthStore } from "@/stores/auth";
-import { useArtistCardStore } from "@/stores/artistCard";
-import { useLibraryStore } from "@/stores/library";
-import { useRoute } from "vue-router";
 import SettingsModal from "@/pages/home/modals/settingsModal.vue";
 import AuthenticateModal from "@/pages/release/modals/authenticateModal.vue";
 import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
+import { useLibraryStore } from "@/stores/library";
+import { useAuthStore } from "@/stores/auth";
+import { useArtistCardStore } from "@/stores/artistCard";
 
 const route = useRoute();
 const auth = useAuthStore();

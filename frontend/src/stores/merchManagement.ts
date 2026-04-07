@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from "vue";
-import { useAuthStore } from "@/stores/auth";
 import { useToast } from "vue-toastification";
+
 import api from "@/lib/api";
+import { useAuthStore } from "@/stores/auth";
+
 import type { ArtistMerch } from "@/types/ArtistMerch";
 
 interface NewMerchVariant {

@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+
 import Header from "@/pages/artist-studio-merch/Header.vue";
 import Content from "@/pages/artist-studio-merch/Content.vue";
-import { useMerchManagementStore } from "@/stores/merchManagement";
 import MerchAfterUploadModal from "@/pages/artist-studio-merch/modals/MerchAfterUploadModal.vue";
-import { useRouter } from "vue-router";
+import { useMerchManagementStore } from "@/stores/merchManagement";
 
 const router = useRouter();
 const merchStore = useMerchManagementStore();

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { useLibraryStore } from "@/stores/library";
 import { useToast } from "vue-toastification";
+
+import { useLibraryStore } from "@/stores/library";
 import { useAuthStore } from "@/stores/auth";
 
 const libraryStore = useLibraryStore();

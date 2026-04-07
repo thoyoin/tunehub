@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import Login from "@/pages/auth/Login.vue";
 import Home from "@/pages/home/Home.vue";
 import Register from "@/pages/auth/Register.vue";
 import ArtistStudio from "@/pages/artist-studio/ArtistStudio.vue";
-import { useAuthStore } from '@/stores/auth'
 import Moderation from '@/pages/admin/moderation/Moderation.vue'
 import Playlist from '@/pages/playlist/Playlist.vue'
 import Admin from '@/pages/admin/Admin.vue'
@@ -20,6 +20,7 @@ import ArtistMerchShow from "@/pages/artist-merch/ArtistMerchShow.vue";
 import Merch from "@/pages/admin/merch/Merch.vue";
 import Success from "@/pages/artist-merch/MerchAfterCheckout/Success.vue"
 import Cancel from "@/pages/artist-merch/MerchAfterCheckout/Cancel.vue"
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

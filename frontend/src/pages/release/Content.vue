@@ -1,19 +1,21 @@
-<script setup>
-import { useAuthStore } from '@/stores/auth.ts'
-import { useReleaseStore } from '@/stores/release.ts'
-import { useLibraryStore } from '@/stores/library.ts'
-import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
+import { useReleaseStore } from '@/stores/release'
+import { useLibraryStore } from '@/stores/library'
+import { usePlaylistStore } from "@/stores/playlist";
+import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { useRouter } from 'vue-router'
 import { watch } from 'vue'
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
 import likedIcon from '@/assets/svg/heartFilled.svg'
 import likeIcon from '@/assets/svg/heart.svg'
-import { useVibrantPalette } from '@/composables/useVibrantPalette.ts'
+import { useVibrantPalette } from '@/composables/useVibrantPalette'
 
 const auth = useAuthStore()
 const releaseStore = useReleaseStore()
 const libraryStore = useLibraryStore()
+const playlistStore = usePlaylistStore()
 const router = useRouter()
 const { palette, getCoverPalette } = useVibrantPalette()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
@@ -27,6 +29,8 @@ watch(
     async (url) => {
         if (url) {
             await getCoverPalette(url)
+
+            await playlistStore.fetchUserPlaylists()
         }
     },
     { immediate: true },
@@ -267,7 +271,7 @@ watch(
                                         <img src="@/assets/svg/dropdownArrow.svg" alt="arrow">
                                     </button>
                                     <ul class="dropdown-menu submenu">
-                                        <template v-for="playlist in libraryStore.userPlaylists">
+                                        <template v-for="playlist in playlistStore.userPlaylists">
                                             <template v-if="playlist.slug === 'liked-tracks'">
                                                 <li class="d-flex align-items-center">
                                                     <button

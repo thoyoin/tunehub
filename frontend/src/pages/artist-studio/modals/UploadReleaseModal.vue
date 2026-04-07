@@ -1,6 +1,7 @@
 <script setup>
-import { useUploadReleaseStore} from "@/stores/uploadRelease.ts";
 import draggable from "vuedraggable";
+
+import { useUploadReleaseStore} from "@/stores/uploadRelease.ts";
 
 const uploadStore = useUploadReleaseStore();
 
