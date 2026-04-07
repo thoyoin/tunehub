@@ -17,7 +17,7 @@ class SignUp
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'profile_picture' => 'http://localhost:9000/tunehub/defaults/profile_cover.jpg',
+            'profile_picture' => config('media.defaults.profile_picture_url'),
         ]);
 
         $user->roles()->attach(1);

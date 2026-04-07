@@ -42,7 +42,7 @@ class PlaylistService
                 'title' => 'My playlist'.' #'.($numberOfPlaylists + 1),
                 'description' => null,
                 'user_id' => auth()->id(),
-                'cover_url' => env('default_cover'),
+                'cover_url' => config('media.defaults.playlist_cover_url'),
             ]);
 
             $libraryItem = $this->createLibraryItem->handle(auth()->id(), $playlist->id, 'playlist');
@@ -83,8 +83,10 @@ class PlaylistService
 
             $playlist->delete();
 
-            DB::afterCommit(function () use ($url, $playlist) {
-                if ($url !== env('default_cover')) {
+            $defaultCover = config('media.defaults.playlist_cover_url');
+
+            DB::afterCommit(function () use ($url, $playlist, $defaultCover) {
+                if ($url !== $defaultCover) {
                     DeleteCoverFile::dispatch($url);
                 }
 

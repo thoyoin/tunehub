@@ -14,7 +14,7 @@ class CreateStarterPlaylist
              'title' => 'Liked tracks',
              'description' => null,
              'user_id' => $user->id,
-             'cover_url' => env('default_cover'),
+             'cover_url' => config('media.defaults.liked_playlist_cover_url'),
              'visibility' => 'private',
         ]);
     }

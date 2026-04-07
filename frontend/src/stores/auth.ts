@@ -90,5 +90,12 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    return {fetchUser, user, isReady, logout, login, register, loading, errors};
+    const clearAuthState = async () => {
+        isReady.value = false;
+        user.value = null;
+    }
+
+    return {
+        fetchUser, user, isReady, logout, login, register, loading, errors, clearAuthState
+    };
 })
