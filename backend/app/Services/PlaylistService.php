@@ -41,7 +41,7 @@ class PlaylistService
                 'title' => 'My playlist'.' #'.($numberOfPlaylists + 1),
                 'description' => null,
                 'user_id' => auth()->id(),
-                'cover_url' => 'http://localhost:9000/tunehub/defaults/default_cover.jpg',
+                'cover_url' => env('default_cover'),
             ]);
 
             $libraryItem = $this->createLibraryItem->handle(auth()->id(), $playlist->id, 'playlist');
@@ -79,11 +79,9 @@ class PlaylistService
     {
         $url = $playlist->cover_url;
 
-        $defaultCover = 'http://localhost:9000/tunehub/defaults/default_cover.jpg';
-
         $playlist->delete();
 
-        if ($url !== $defaultCover) {
+        if ($url !== env('default_cover')) {
             $this->minioService->destroyCover($url);
         }
 
