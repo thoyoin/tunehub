@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { useArtistMerchStore } from "@/stores/artistMerch";
 import { useRoute, useRouter } from "vue-router";
 import { computed, watch } from "vue";
+import { useToast } from "vue-toastification";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination } from "swiper/modules";
-import { useToast } from "vue-toastification";
+
+import { useArtistMerchStore } from "@/stores/artistMerch";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

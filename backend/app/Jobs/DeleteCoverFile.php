@@ -27,6 +27,10 @@ class DeleteCoverFile implements ShouldQueue
      */
     public function handle(MinioService $minioService): void
     {
+        if (!$this->coverUrl) {
+            return;
+        }
+
         $minioService->destroyCover($this->coverUrl);
     }
 }

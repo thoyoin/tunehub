@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useArtistMerchStore } from "@/stores/artistMerch";
 import { useRoute, useRouter } from "vue-router";
 import { watch } from "vue";
+
+import { useArtistMerchStore } from "@/stores/artistMerch";
 
 const merchStore = useArtistMerchStore();
 const route = useRoute();

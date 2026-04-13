@@ -1,7 +1,10 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { useAuthStore } from "@/stores/auth";
+
 import api from "@/lib/api";
+import { useAuthStore } from "@/stores/auth";
+import { useLibraryStore } from "@/stores/library";
+
 import type { LibraryItem } from "@/types/LibraryItem";
 import type { Track } from "@/types/Track";
 import type { Playlist } from "@/types/Playlist";
@@ -12,6 +15,8 @@ export const usePlaylistStore = defineStore("playlist", () => {
     const userPlaylists = ref<Playlist[]>([])
     const isLoading = ref(false)
     const auth = useAuthStore()
+
+    const libraryStore = useLibraryStore()
 
     const getPlaylist = async (playlistId: number | string) => {
         try {
@@ -67,5 +72,6 @@ export const usePlaylistStore = defineStore("playlist", () => {
 
     return {
         playlist, playlistTracks, isLoading, getPlaylist, fetchUserPlaylists, userPlaylists,
+        addTrackToLikes, addTrackToPlaylist
     }
 })

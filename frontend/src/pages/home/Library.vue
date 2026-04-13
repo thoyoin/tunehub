@@ -1,7 +1,11 @@
 <script setup lang="ts">
+    import { useRouter } from "vue-router";
     import {onMounted} from "vue";
     import Popover from "bootstrap/js/dist/popover";
-    import { useRouter } from "vue-router";
+
+    import { useAuthStore } from "@/stores/auth";
+    import { useLibraryStore } from "@/stores/library";
+    import { useAudioPlayer } from '@/composables/useAudioPlayer'
 
     import { useAuthStore } from "@/stores/auth";
     import { useLibraryStore } from "@/stores/library";
@@ -22,7 +26,7 @@
 
     const handleItemSelection = async (item: LibraryItem) => {
         try {
-            libraryStore.selectLibraryItem(item.id)
+            libraryStore.selectLibraryItem(item.item.id)
 
             libraryStore.selectLibraryItem(item)
 
@@ -83,7 +87,7 @@
                             <div
                                 style="height: 58px"
                                 class="d-flex align-items-center btn btn-playlist p-2 mb-2 text-start"
-                                :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem }"
+                                :class="{ activeLibraryItem: libraryItem.id === libraryStore.selectedLibraryItem?.id }"
                             >
                                 <div class="position-relative">
                                     <img

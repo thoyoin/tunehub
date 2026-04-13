@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { useDebounceFn } from "@vueuse/core";
+
+import api from "@/lib/api";
+
 import type { PaginatedResponse } from "@/types/PaginatedResponse";
 import type { Playlist } from "@/types/Playlist";
-import api from "@/lib/api";
-import { useDebounceFn } from "@vueuse/core";
 
 export const usePlaylistsStore = defineStore('playlists', () => {
     const playlists = ref<PaginatedResponse<Playlist[]> | null>(null)

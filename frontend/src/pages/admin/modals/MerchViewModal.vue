@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useMerchStore } from "@/stores/AdminPanel/merch";
 import { useRouter } from "vue-router";
+
+import { useMerchStore } from "@/stores/AdminPanel/merch";
 
 const adminMerchStore = useMerchStore();
 const router = useRouter();

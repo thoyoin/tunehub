@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from "vue";
+
 import api from "@/lib/api";
+
 import type { Subscription } from "@/types/Subscription";
 
 export const useSubscriptionStore = defineStore('subscription', () => {

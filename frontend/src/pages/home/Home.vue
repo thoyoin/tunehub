@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import Header from "@/pages/home/Header.vue";
 import { onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useLibraryStore } from "@/stores/library";
+
+import Header from "@/pages/home/Header.vue";
 import Library from "@/pages/home/Library.vue";
 import SettingsModal from "@/pages/home/modals/settingsModal.vue";
 import Content from "@/pages/home/Content.vue";
 import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
+import { useAuthStore } from '@/stores/auth'
+import { useLibraryStore } from "@/stores/library";
 
 const auth = useAuthStore()
 const libraryStore = useLibraryStore()

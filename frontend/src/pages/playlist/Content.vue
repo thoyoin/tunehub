@@ -303,7 +303,7 @@ watch(
                         </td>
                         <td>
                             <button
-                                @click="handleGetRelease(track.release?.id)"
+                                @click="handleGetRelease(track.release.id)"
                                 style="opacity: 60%; font-size: 15px; font-weight: lighter"
                                 class="btn btn-get-release p-0"
                                 v-text="track.release?.title"
@@ -323,7 +323,7 @@ watch(
                             >
                                 <button
                                     class="btn btn-add-like"
-                                    @click="releaseStore.addTrackToLikes(track.id)"
+                                    @click="playlistStore.addTrackToLikes(track.id)"
                                 >
                                     <img
                                         style="width: 25px"
@@ -363,7 +363,7 @@ watch(
                                                 <li class="d-flex align-items-center">
                                                     <button
                                                         @click="
-                                                            releaseStore.addTrackToLikes(track.id)
+                                                            playlistStore.addTrackToLikes(track.id)
                                                         "
                                                         class="dropdown-item d-flex justify-content-between"
                                                     >
@@ -392,7 +392,7 @@ watch(
                                                 <li>
                                                     <button
                                                         @click="
-                                                            releaseStore.addTrackToPlaylist(
+                                                            playlistStore.addTrackToPlaylist(
                                                                 track.id,
                                                                 playlist.id,
                                                             )

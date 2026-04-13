@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useMerchManagementStore } from "@/stores/merchManagement";
 import { onBeforeUnmount, ref } from "vue";
 import draggable from "vuedraggable";
+
+import { useMerchManagementStore } from "@/stores/merchManagement";
 
 const merchManagementStore = useMerchManagementStore();
 

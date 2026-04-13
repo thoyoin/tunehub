@@ -3,7 +3,6 @@ import { useArtistMerchStore } from "@/stores/artistMerch";
 
 const merchStore = useArtistMerchStore();
 
-
 function incrementQuantity(index: number): void {
     const item = merchStore.cart[index];
 

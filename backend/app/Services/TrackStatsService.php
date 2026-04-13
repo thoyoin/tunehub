@@ -25,7 +25,7 @@ class TrackStatsService
         $result = $this->clickhouse->select('
             SELECT track_id, sum(plays) as plays
             FROM track_plays_total
-            WHERE track_id IN {track_ids:Array(UInt64)}
+            WHERE track_id IN (:track_ids)
             GROUP BY track_id
         ',
             [

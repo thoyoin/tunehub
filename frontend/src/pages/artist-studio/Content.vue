@@ -1,12 +1,13 @@
 <script setup>
-import { useArtistStore } from '@/stores/artistStudio'
-import { useMerchManagementStore } from "@/stores/merchManagement.ts";
-import { onMounted } from 'vue'
-import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+import { onMounted } from 'vue'
+
 import ArtistEarnings from "@/pages/artist-studio/charts/ArtistEarnings.vue";
 import ArtistStreamsCharts from "@/pages/artist-studio/charts/ArtistStreamsCharts.vue";
+import { useArtistStore } from '@/stores/artistStudio'
+import { useMerchManagementStore } from "@/stores/merchManagement.ts";
+import { useAudioPlayer } from '@/composables/useAudioPlayer'
 
 const artistStore = useArtistStore()
 const merchStore = useMerchManagementStore()

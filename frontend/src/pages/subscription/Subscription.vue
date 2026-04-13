@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+
 import Header from "@/pages/subscription/Header.vue";
 import SettingsModal from "@/pages/home/modals/settingsModal.vue";
 import Content from "@/pages/subscription/Content.vue";
 import { useAuthStore } from "@/stores/auth";
-import { onMounted } from "vue";
 
 const auth = useAuthStore();
 

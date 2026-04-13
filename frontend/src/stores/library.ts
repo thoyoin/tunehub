@@ -1,12 +1,12 @@
 import {defineStore} from "pinia";
-import { useAuthStore } from "@/stores/auth";
 import {ref, watch} from "vue";
+
 import api from "@/lib/api";
-import type { Item } from "@/types/Item"
+import { useAuthStore } from "@/stores/auth";
+
 import type { LibraryItem } from "@/types/LibraryItem"
 import type { Playlist } from "@/types/Playlist"
 import type { Track } from "@/types/Track"
-import type { Release } from "@/types/Release";
 
 export const useLibraryStore = defineStore('library',() => {
     const items = ref<LibraryItem[]>([]);
@@ -102,14 +102,14 @@ export const useLibraryStore = defineStore('library',() => {
         selectedLibraryItem.value = item;
     }
 
-    watch(selectedLibraryItem, async (id) => {
-        if (!id) return
+    watch(selectedLibraryItem, async (item) => {
+        if (!item?.id) return
 
         try {
             const response = await api.get<{
                 libraryItem: LibraryItem;
                 isRelease: boolean;
-            }>(`/api/libraryItems/${id}`)
+            }>(`/api/libraryItems/${item.id}`)
 
             libraryItem.value = response.data.libraryItem
             isRelease.value = response.data.isRelease;

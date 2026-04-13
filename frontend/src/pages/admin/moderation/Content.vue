@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useModerationStore } from "@/stores/AdminPanel/moderation";
 import ReleasesTable from "@/pages/admin/moderation/ReleasesTable.vue";
+import { useModerationStore } from "@/stores/AdminPanel/moderation";
 
 const moderationStore = useModerationStore();
 

@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia';
 import { reactive, ref } from "vue";
-import { useMerchManagementStore } from "@/stores/merchManagement";
-import api from '@/lib/api'
 import { useToast } from "vue-toastification";
+
+import api from '@/lib/api'
+import { useMerchManagementStore } from "@/stores/merchManagement";
+
 import type { Release } from "@/types/Release"
 import type { Track } from "@/types/Track"
 

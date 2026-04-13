@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+
+import api from "@/lib/api";
+
 import type { PaginatedResponse } from "@/types/PaginatedResponse";
 import type { Release } from "@/types/Release";
-import api from "@/lib/api";
 
 export const useModerationStore = defineStore("moderation", () => {
     const releases = ref<PaginatedResponse<Release[]> | null>(null)

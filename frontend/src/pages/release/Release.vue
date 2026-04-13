@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
+import { onMounted, watch } from 'vue'
+
 import Header from '@/pages/home/Header.vue'
 import Library from '@/pages/home/Library.vue'
 import Content from '@/pages/release/Content.vue'
-import { useRoute } from 'vue-router'
-import { useReleaseStore } from '@/stores/release'
-import { onMounted, watch } from 'vue'
-import { useAuthStore } from '@/stores/auth'
 import AuthenticateModal from '@/pages/release/modals/authenticateModal.vue'
 import SettingsModal from '@/pages/home/modals/settingsModal.vue'
 import SubscriptionModal from "@/pages/home/modals/SubscriptionModal.vue";
+import { useReleaseStore } from '@/stores/release'
+import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const releaseStore = useReleaseStore()

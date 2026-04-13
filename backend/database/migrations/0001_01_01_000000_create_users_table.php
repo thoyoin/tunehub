@@ -21,7 +21,7 @@ return new class extends Migration
                 ->unique();
             $table->string('password');
             $table->string('profile_picture')
-                ->default('http://localhost:9000/tunehub/defaults/profile_cover.jpg');
+                ->default(config('media.defaults.profile_picture_url'));
             $table->timestamps();
             $table->rememberToken();
         });

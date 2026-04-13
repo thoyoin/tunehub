@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { ref } from "vue";
+import router from "@/router";
+
 import { useAudioPlayer } from "@/composables/useAudioPlayer.js";
 import { useAuthStore } from "@/stores/auth.js";
 import { useReleaseStore } from "@/stores/release";
-import { ref } from "vue";
-import router from "@/router";
 
 const audioRef = ref(null);
 const auth = useAuthStore();

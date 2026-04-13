@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useArtistCardStore } from "@/stores/artistCard";
-import { useVibrantPalette } from "@/composables/useVibrantPalette";
 import { useRouter } from "vue-router";
 import { watch } from "vue";
+
+import { useVibrantPalette } from "@/composables/useVibrantPalette";
 import { useAudioPlayer } from "@/composables/useAudioPlayer";
+import { useArtistCardStore } from "@/stores/artistCard";
 import { useAuthStore } from "@/stores/auth";
 import { useReleaseStore } from "@/stores/release";
 

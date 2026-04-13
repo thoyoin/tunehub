@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from "vue";
+import { useToast } from "vue-toastification";
+
 import api from "@/lib/api";
+
 import type { ArtistMerch } from "@/types/ArtistMerch";
 import type { PaginatedResponse } from "@/types/PaginatedResponse";
-import { useToast } from "vue-toastification";
 
 export const useMerchStore = defineStore('merch', () => {
     const isLoading = ref(false);

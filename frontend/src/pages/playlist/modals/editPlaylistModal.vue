@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { useLibraryStore } from '@/stores/library'
-import { useImageUpload } from '@/composables/useImageUpload'
 import { useToast } from 'vue-toastification'
 import { ref, watch } from 'vue'
+
 import api from '@/lib/api'
+import { useLibraryStore } from '@/stores/library'
+import { useImageUpload } from '@/composables/useImageUpload'
+import { usePlaylistStore } from '@/stores/playlist'
 
 const libraryStore = useLibraryStore()
+const playlistStore = usePlaylistStore()
 const toast = useToast()
 
 const { previewUrl, fileToUpload, handleImageUpload } = useImageUpload()
@@ -50,7 +53,7 @@ const handlePlaylistUpdate = async () => {
         await api.put(`/api/playlist/${libraryStore.libraryItem.item.id}`, formData)
 
         await libraryStore.fetchItems()
-        await libraryStore.getPlaylist(libraryStore.libraryItem.item.id)
+        await playlistStore.getPlaylist(libraryStore.libraryItem.item.id)
 
         toast.success('playlist updated successfully!')
     } catch (error) {

@@ -1,10 +1,11 @@
 <script setup>
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+
 import { useAuthStore } from '@/stores/auth.ts'
 import { useLibraryStore } from '@/stores/library.ts'
 import { useSearchStore } from '@/stores/search.ts'
 import { useSubscriptionStore } from '@/stores/subscription.ts'
-import { useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
 
 const router = useRouter()
 const auth = useAuthStore()
