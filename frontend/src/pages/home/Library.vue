@@ -1,10 +1,12 @@
-<script setup>
-    import { useAuthStore } from "@/stores/auth.ts";
-    import { useLibraryStore } from "@/stores/library.ts";
-    import { useAudioPlayer } from '@/composables/useAudioPlayer.ts'
+<script setup lang="ts">
     import {onMounted} from "vue";
     import Popover from "bootstrap/js/dist/popover";
     import { useRouter } from "vue-router";
+
+    import { useAuthStore } from "@/stores/auth";
+    import { useLibraryStore } from "@/stores/library";
+    import { useAudioPlayer } from '@/composables/useAudioPlayer'
+    import type { LibraryItem } from "@/types/LibraryItem";
 
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
@@ -18,9 +20,11 @@
         });
     });
 
-    const handleItemSelection = async (item) => {
+    const handleItemSelection = async (item: LibraryItem) => {
         try {
             libraryStore.selectLibraryItem(item.id)
+
+            libraryStore.selectLibraryItem(item)
 
             const isRelease = item.item_type === 'release'
             const routeName = isRelease ? 'release' : 'playlist'

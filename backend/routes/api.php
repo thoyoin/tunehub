@@ -146,4 +146,3 @@ Route::controller(SubscriptionController::class)->group(function () {
     Route::get('/checkout/success', 'success')->name('checkout.success');
     Route::get('/checkout/cancel', 'cancel')->name('checkout.cancel');
 });
-

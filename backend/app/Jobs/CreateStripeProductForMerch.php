@@ -26,6 +26,7 @@ class CreateStripeProductForMerch implements ShouldQueue
     /**
      * Execute the job.
      */
+
     public function handle(StripeClient $stripeClient): void
     {
         $merch = Product::with(['productVariants', 'productImages'])

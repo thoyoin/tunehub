@@ -31,6 +31,26 @@ export const usePlaylistStore = defineStore("playlist", () => {
         }
     }
 
+    const addTrackToLikes = async (id: number) => {
+        await api.post(`/api/liked/track/${id}`)
+
+        if (playlist.value) {
+            await getPlaylist(playlist.value.item_id)
+        }
+    }
+
+    const addTrackToPlaylist = async (id: number, playlistId: number) => {
+        try {
+            await api.post(`/api/playlist/${playlistId}/track/${id}`)
+
+            if (playlist.value) {
+                await getPlaylist(playlist.value.item_id)
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     const fetchUserPlaylists = async () => {
         if (auth.user) {
             try {

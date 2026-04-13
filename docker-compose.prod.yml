@@ -1,0 +1,93 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: tunehub-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/prod.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - tunehub
+
+  backend:
+    image: thoyoin/tunehub-backend:latest
+    container_name: tunehub-backend
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+      - redis
+      - clickhouse
+      - minio
+    networks:
+      - tunehub
+
+  worker:
+    image: thoyoin/tunehub-backend:latest
+    container_name: tunehub-worker
+    command: php artisan queue:work --tries=3 --timeout=90
+    env_file:
+      - .env
+    depends_on:
+      - backend
+      - redis
+      - mysql
+    networks:
+      - tunehub
+
+  frontend:
+    image: thoyoin/tunehub-frontend:latest
+    container_name: tunehub-frontend
+    networks:
+      - tunehub
+
+  mysql:
+    image: mysql:8.4
+    container_name: tunehub-mysql
+    env_file:
+      - .env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - tunehub
+
+  redis:
+    image: redis:7-alpine
+    container_name: tunehub-redis
+    volumes:
+      - redis-data:/data
+    networks:
+      - tunehub
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24
+    container_name: tunehub-clickhouse
+    env_file:
+      - .env
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+    networks:
+      - tunehub
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: tunehub-minio
+    env_file:
+      - .env
+    command: minio server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
+    networks:
+      - tunehub
+
+networks:
+  tunehub:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  redis-data:
+  clickhouse-data:
+  minio-data:
