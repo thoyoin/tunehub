@@ -44,7 +44,6 @@ class TrackService
             DB::afterCommit(function () use ($audioPath, $track) {
                 DeleteTrackAudioFile::dispatch($audioPath);
                 DeleteTrackInClickhouse::dispatch($track->id);
-                DeleteCoverFile::dispatch($track->cover_url);
 
                 Log::info('Track was deleted', [
                     'track_id' => $track->id,
@@ -56,6 +55,8 @@ class TrackService
     public function update($track, $request): void
     {
         if ($request->hasFile('cover_url')) {
+            $oldTrackCover = $track->cover_url;
+
             $coverUrl = $this->minioService->storeCover($request->file('cover_url'));
 
             $track->update([
@@ -63,6 +64,8 @@ class TrackService
                 'artist' => $request['artist'],
                 'cover_url' => $coverUrl,
             ]);
+
+            DeleteCoverFile::dispatch($oldTrackCover);
 
             Log::info('Track was updated', [
                 'track_id' => $track->id,

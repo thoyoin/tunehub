@@ -8,6 +8,7 @@ use App\Actions\LibraryItem\CreateLibraryItem;
 use App\Actions\Playlist\GetUserLikedPlaylist;
 use App\Actions\Release\CheckIfReleaseLiked;
 use App\Actions\Track\StoreTrack;
+use App\Jobs\DeleteCoverFile;
 use App\Jobs\DeleteTrackAudioFile;
 use App\Models\Release;
 use Carbon\Carbon;
@@ -63,12 +64,14 @@ class ReleaseService
         });
     }
 
-    public function destroyByTrack($track): void
+    public function destroyByTrack($track)
     {
         $release = $track->release()->withCount('tracks')->first();
 
         if ($release && $release->tracks_count === 1) {
             $release->delete();
+
+            DeleteCoverFile::dispatch($release->cover_url);
 
             Log::info('Release was deleted', [
                 'title' => $release->title,
@@ -96,6 +99,8 @@ class ReleaseService
                     $audioUrl = $track->audio_url;
                     DeleteTrackAudioFile::dispatch($audioUrl);
                 }
+
+                DeleteCoverFile::dispatch($release->cover_url);
 
                 Log::info('Release was deleted', [
                     'title' => $release->title,

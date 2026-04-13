@@ -24,6 +24,8 @@
         try {
             libraryStore.selectLibraryItem(item)
 
+            await libraryStore.loadLibraryItem(item)
+
             const isRelease = item.item_type === 'release'
             const routeName = isRelease ? 'release' : 'playlist'
             const paramKey = routeName + 'Id'

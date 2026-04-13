@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {ref, watch} from "vue";
+import {ref} from "vue";
 
 import api from "@/lib/api";
 import { useAuthStore } from "@/stores/auth";
@@ -102,7 +102,7 @@ export const useLibraryStore = defineStore('library',() => {
         selectedLibraryItem.value = item;
     }
 
-    watch(selectedLibraryItem, async (item) => {
+    const loadLibraryItem = async (item: libraryItem) => {
         if (!item?.id) return
 
         try {
@@ -118,12 +118,13 @@ export const useLibraryStore = defineStore('library',() => {
 
             throw e
         }
-    })
+    };
 
     return {
         items,
         isLibraryLoading,
         isPlaylistLoading,
+        loadLibraryItem,
         fetchItems,
         createPlaylist,
         selectLibraryItem,

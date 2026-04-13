@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 import api from '@/lib/api'
-import { useLibraryStore } from "@/stores/library.js";
+import { useLibraryStore } from "@/stores/library";
 
 import type { Release } from "@/types/Release"
 import type { Track } from "@/types/Track"
@@ -54,8 +54,9 @@ export const useReleaseStore = defineStore('release', () => {
     const addReleaseToLikes = async (id: number) => {
         await api.post(`/api/releases/${id}/add`)
 
-        await libraryStore.fetchItems()
         await getRelease(id)
+
+        await libraryStore.fetchItems()
     }
 
     const addTrackToLikes = async (id: number) => {
@@ -64,6 +65,8 @@ export const useReleaseStore = defineStore('release', () => {
         if (pickedRelease.value) {
             await getRelease(pickedRelease.value.id)
         }
+
+        await libraryStore.fetchItems();
     }
 
     const addTrackToPlaylist = async (trackId: number, playlistId: number) => {
@@ -73,6 +76,8 @@ export const useReleaseStore = defineStore('release', () => {
             if (pickedRelease.value) {
                 await getRelease(pickedRelease.value.id)
             }
+
+            await libraryStore.fetchItems();
         } catch (e) {
             console.log(e)
         }
