@@ -151,7 +151,7 @@ watch(
                         style="font-size: 16px"
                         class="m-0 opacity-50"
                     >
-                        {{ libraryStore.itemTracks?.length }} songs
+                        {{ playlistStore.playlistTracks?.length }} songs
                     </h3>
                     <template v-if="playlistStore.playlistTracks?.length! > 0">
                         <span

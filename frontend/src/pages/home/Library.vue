@@ -6,6 +6,7 @@
     import { useAuthStore } from "@/stores/auth";
     import { useLibraryStore } from "@/stores/library";
     import { useAudioPlayer } from '@/composables/useAudioPlayer'
+    import type { LibraryItem } from "@/types/LibraryItem";
 
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
@@ -19,9 +20,9 @@
         });
     });
 
-    const handleItemSelection = async (item) => {
+    const handleItemSelection = async (item: LibraryItem) => {
         try {
-            libraryStore.selectLibraryItem(item.item.id)
+            libraryStore.selectLibraryItem(item)
 
             const isRelease = item.item_type === 'release'
             const routeName = isRelease ? 'release' : 'playlist'

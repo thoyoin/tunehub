@@ -49,7 +49,7 @@ export const usePlaylistStore = defineStore("playlist", () => {
             await api.post(`/api/playlist/${playlistId}/track/${id}`)
 
             if (playlist.value) {
-                await getPlaylist(libraryStore.libraryItem?.id!)
+                await getPlaylist(playlist.value.id)
             }
         } catch (e) {
             console.error(e)
