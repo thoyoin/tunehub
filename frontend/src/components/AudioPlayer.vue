@@ -2,8 +2,8 @@
 import { ref } from "vue";
 import router from "@/router";
 
-import { useAudioPlayer } from "@/composables/useAudioPlayer.js";
-import { useAuthStore } from "@/stores/auth.js";
+import { useAudioPlayer } from "@/composables/useAudioPlayer";
+import { useAuthStore } from "@/stores/auth";
 import { useReleaseStore } from "@/stores/release";
 
 const audioRef = ref(null);

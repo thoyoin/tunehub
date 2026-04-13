@@ -346,7 +346,7 @@ import AudioPlayer from "@/components/AudioPlayer.vue";
     }
 
     .loading-overlay {
-        position: absolute !important;
+        position: fixed !important;
         inset: 0 !important;
         background: rgba(32, 32, 32, 0.5) !important;
         backdrop-filter: blur(4px) !important;

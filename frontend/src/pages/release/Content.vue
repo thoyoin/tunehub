@@ -1,26 +1,28 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth'
-import { useReleaseStore } from '@/stores/release'
-import { useLibraryStore } from '@/stores/library'
-import { usePlaylistStore } from "@/stores/playlist";
-import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { useRouter } from 'vue-router'
 import { watch } from 'vue'
+
+import { useAuthStore } from '@/stores/auth'
+import { useReleaseStore } from '@/stores/release'
+import { usePlaylistStore } from "@/stores/playlist";
+import { useAudioPlayer } from '@/composables/useAudioPlayer'
+import { useVibrantPalette } from '@/composables/useVibrantPalette'
+
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
 import likedIcon from '@/assets/svg/heartFilled.svg'
 import likeIcon from '@/assets/svg/heart.svg'
-import { useVibrantPalette } from '@/composables/useVibrantPalette'
+
+import type { Track } from "@/types/Track";
 
 const auth = useAuthStore()
 const releaseStore = useReleaseStore()
-const libraryStore = useLibraryStore()
 const playlistStore = usePlaylistStore()
 const router = useRouter()
 const { palette, getCoverPalette } = useVibrantPalette()
 const { currentTrack, isPlaying, toggleTrack } = useAudioPlayer()
 
-function isTrackAdded(track, playlistId) {
+function isTrackAdded(track: Track, playlistId: number) {
     return track.playlist_ids.includes(playlistId)
 }
 

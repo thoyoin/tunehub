@@ -11,6 +11,7 @@ Alpine.plugin(sort)
 window.Alpine = Alpine;
 
 Alpine.start()
+
 document.addEventListener("DOMContentLoaded", () => {
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     [...popoverTriggerList].forEach(el => {

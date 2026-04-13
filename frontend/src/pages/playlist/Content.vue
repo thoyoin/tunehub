@@ -1,18 +1,21 @@
 <script setup lang="ts">
+import { useToast } from 'vue-toastification'
+import { watch } from 'vue'
+import router from '@/router/index'
+
+import api from '@/lib/api'
 import { useLibraryStore } from '@/stores/library'
 import { useAuthStore } from '@/stores/auth'
 import { useReleaseStore } from '@/stores/release'
-import { useAudioPlayer } from '@/composables/useAudioPlayer'
 import { usePlaylistStore } from '@/stores/playlist'
-import { useToast } from 'vue-toastification'
-import api from '@/lib/api'
-import { watch } from 'vue'
+import { useAudioPlayer } from '@/composables/useAudioPlayer'
+import { useVibrantPalette } from '@/composables/useVibrantPalette'
+
 import addedIcon from '@/assets/svg/added.svg'
 import addIcon from '@/assets/svg/add.svg'
 import likedIcon from '@/assets/svg/heartFilled.svg'
 import likeIcon from '@/assets/svg/heart.svg'
-import { useVibrantPalette } from '@/composables/useVibrantPalette'
-import router from '@/router/index'
+
 import type { Track } from "@/types/Track";
 
 const libraryStore = useLibraryStore()

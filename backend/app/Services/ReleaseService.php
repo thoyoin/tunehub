@@ -64,27 +64,32 @@ class ReleaseService
         });
     }
 
-    public function destroyByTrack($track)
+    public function destroyByTrack($track): void
     {
-        $release = $track->release()->withCount('tracks')->first();
+        DB::transaction(function () use ($track) {
+            $release = $track->release()->withCount('tracks')->first();
 
-        if ($release && $release->tracks_count === 1) {
-            $release->delete();
+            if ($release && $release->tracks_count === 1) {
+                $release->delete();
 
-            DeleteCoverFile::dispatch($release->cover_url);
+                DB::afterCommit(function () use ($release) {
+                    DeleteCoverFile::dispatch($release->cover_url);
 
-            Log::info('Release was deleted', [
-                'title' => $release->title,
-                'artist' => $release->artist,
-            ]);
-        } else {
-            $currentPosition = $track->position;
+                    Log::info('Release was deleted', [
+                        'title' => $release->title,
+                        'artist' => $release->artist,
+                    ]);
+                });
 
-            DB::table('tracks')
-                ->where('release_id', $release->id)
-                ->where('position', '>', $currentPosition)
-                ->decrement('position');
-        }
+            } else {
+                $currentPosition = $track->position;
+
+                DB::table('tracks')
+                    ->where('release_id', $release->id)
+                    ->where('position', '>', $currentPosition)
+                    ->decrement('position');
+            }
+        });
     }
 
     public function destroy($release): void

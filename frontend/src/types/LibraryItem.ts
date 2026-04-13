@@ -1,5 +1,5 @@
-import type { Item } from './Item.js'
-import type { User } from './User.js'
+import type { Item } from './Item'
+import type { User } from './User'
 
 export interface LibraryItem {
     id: number;

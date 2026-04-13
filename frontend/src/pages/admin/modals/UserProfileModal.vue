@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useToast } from 'vue-toastification'
 
-import { useUsersStore } from '@/stores/AdminPanel/users.js'
+import { useUsersStore } from '@/stores/AdminPanel/users'
 
 const adminPanelStore = useUsersStore()
 const toast = useToast()

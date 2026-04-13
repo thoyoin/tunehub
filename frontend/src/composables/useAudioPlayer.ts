@@ -1,6 +1,6 @@
 import { computed, type Ref, ref, watch } from "vue";
 
-import api from '@/lib/api.js'
+import api from '@/lib/api'
 
 import type { Track } from "@/types/Track"
 import type { AudioPlayerSingleton } from "@/types/AudioPlayerSingleton";

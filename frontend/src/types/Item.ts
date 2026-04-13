@@ -1,4 +1,4 @@
-import type { Track } from './Track.js'
+import type { Track } from './Track'
 
 export interface Item {
     created_at: string;

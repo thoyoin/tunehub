@@ -102,7 +102,7 @@ export const useLibraryStore = defineStore('library',() => {
         selectedLibraryItem.value = item;
     }
 
-    const loadLibraryItem = async (item: libraryItem) => {
+    const loadLibraryItem = async (item: LibraryItem) => {
         if (!item?.id) return
 
         try {

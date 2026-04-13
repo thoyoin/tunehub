@@ -54,36 +54,34 @@ class TrackService
 
     public function update($track, $request): void
     {
-        if ($request->hasFile('cover_url')) {
-            $oldTrackCover = $track->cover_url;
+        DB::transaction(function () use ($track, $request) {
+            if ($request->hasFile('cover_url')) {
+                $oldTrackCover = $track->cover_url;
 
-            $coverUrl = $this->minioService->storeCover($request->file('cover_url'));
+                $coverUrl = $this->minioService->storeCover($request->file('cover_url'));
 
-            $track->update([
-                'title' => $request['trackTitle'],
-                'artist' => $request['artist'],
-                'cover_url' => $coverUrl,
-            ]);
+                $track->update([
+                    'title' => $request['trackTitle'],
+                    'artist' => $request['artist'],
+                    'cover_url' => $coverUrl,
+                ]);
 
-            DeleteCoverFile::dispatch($oldTrackCover);
-
-            Log::info('Track was updated', [
-                'track_id' => $track->id,
-                'title' => $request['trackTitle'],
-                'artist' => $request['artist'],
-            ]);
-        } else {
-            $track->update([
-                'title' => $request['trackTitle'],
-                'artist' => $request['artist'],
-            ]);
+                DB::afterCommit(function () use ($oldTrackCover) {
+                    DeleteCoverFile::dispatch($oldTrackCover);
+                });
+            } else {
+                $track->update([
+                    'title' => $request['trackTitle'],
+                    'artist' => $request['artist'],
+                ]);
+            }
 
             Log::info('Track was updated', [
                 'track_id' => $track->id,
                 'title' => $request['trackTitle'],
                 'artist' => $request['artist'],
             ]);
-        }
+        });
     }
 
     public function getArtistTopTracks($artistId)

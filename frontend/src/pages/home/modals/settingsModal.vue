@@ -4,7 +4,7 @@ import { useToast } from "vue-toastification";
 
 import api from "@/lib/api";
 import { useImageUpload } from "@/composables/useImageUpload";
-import { useAuthStore } from "@/stores/auth.js";
+import { useAuthStore } from "@/stores/auth";
 
 const toast = useToast();
 const auth = useAuthStore();

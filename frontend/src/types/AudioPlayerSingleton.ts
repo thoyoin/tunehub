@@ -1,6 +1,6 @@
-import type { Track } from "@/types/Track";
-import type { Item } from "@/types/Item";
 import type { ComputedRef, Ref } from "vue";
+
+import type { Track } from "@/types/Track";
 import type { Release } from "@/types/Release";
 import type { Playlist } from "@/types/Playlist";
 

@@ -2,9 +2,9 @@ import { defineStore } from 'pinia';
 import { ref} from 'vue';
 import { useToast } from "vue-toastification";
 
-import api from "@/lib/api.js";
-import { useAuthStore } from "@/stores/auth.js";
-import { useArtistStore } from "@/stores/artistStudio.js";
+import api from "@/lib/api";
+import { useAuthStore } from "@/stores/auth";
+import { useArtistStore } from "@/stores/artistStudio";
 
 export const useUploadReleaseStore = defineStore('uploadRelease', () => {
     const auth = useAuthStore();

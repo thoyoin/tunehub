@@ -98,18 +98,29 @@ class PlaylistService
         });
     }
 
-    public function update($request, $playlist): Playlist
+    public function update($request, $playlist)
     {
-        $data = $request->only(['title', 'description', 'cover_url', ]);
+        return DB::transaction(function () use ($request, $playlist) {
+            $data = $request->only(['title', 'description', 'cover_url']);
 
-        if ($request->hasFile('cover_url')) {
-            $url = $this->minioService->storeCover($request->file('cover_url'));
-            $data['cover_url'] = $url;
-        }
+            if ($request->hasFile('cover_url')) {
+                $oldCover = $playlist->cover_url;
+                $defaultCover = config('media.defaults.playlist_cover_url');
 
-        $playlist->update($data);
+                $url = $this->minioService->storeCover($request->file('cover_url'));
+                $data['cover_url'] = $url;
 
-        return $playlist;
+                DB::afterCommit(function () use ($oldCover, $defaultCover) {
+                    if ($oldCover !== $defaultCover) {
+                        DeleteCoverFile::dispatch($oldCover);
+                    }
+                });
+            }
+
+            $playlist->update($data);
+
+            return $playlist;
+        });
     }
 
     public function updateVisibility(Playlist $playlist, Request $request)
