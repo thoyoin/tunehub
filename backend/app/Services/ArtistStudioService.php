@@ -49,7 +49,7 @@ class ArtistStudioService
             WHERE
                 artist_id = $artistId
             ORDER BY
-                date ASC
+                date DESC
         ")->rows();
 
         $date = array_column($rows, 'date');
@@ -77,7 +77,7 @@ class ArtistStudioService
             WHERE
                 artist_id = :artist_id
             ORDER BY
-                date ASC
+                date DESC
         ",['artist_id' => $artistId])->rows();
     }
 

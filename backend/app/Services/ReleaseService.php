@@ -64,32 +64,29 @@ class ReleaseService
         });
     }
 
-    public function destroyByTrack($track): void
+    public function destroyByTrack($track): bool
     {
-        DB::transaction(function () use ($track) {
-            $release = $track->release()->withCount('tracks')->first();
+        $release = $track->release()->withCount('tracks')->first();
 
-            if ($release && $release->tracks_count === 1) {
-                $release->delete();
+        if ($release && $release->tracks_count === 1) {
+            $release->delete();
 
-                DB::afterCommit(function () use ($release) {
-                    DeleteCoverFile::dispatch($release->cover_url);
+            Log::info('Release was deleted', [
+                'title' => $release->title,
+                'artist' => $release->artist,
+            ]);
 
-                    Log::info('Release was deleted', [
-                        'title' => $release->title,
-                        'artist' => $release->artist,
-                    ]);
-                });
+            return true;
+        } else {
+            $currentPosition = $track->position;
 
-            } else {
-                $currentPosition = $track->position;
+            DB::table('tracks')
+                ->where('release_id', $release->id)
+                ->where('position', '>', $currentPosition)
+                ->decrement('position');
 
-                DB::table('tracks')
-                    ->where('release_id', $release->id)
-                    ->where('position', '>', $currentPosition)
-                    ->decrement('position');
-            }
-        });
+            return false;
+        }
     }
 
     public function destroy($release): void
@@ -181,6 +178,7 @@ class ReleaseService
     {
         if ($request->hasFile('cover_url')) {
             DB::transaction(function () use ($release, $request) {
+                $oldCover = $release->cover_url;
                 $coverUrl = $this->minioService->storeCover($request->file('cover_url'));
 
                 $release->update([
@@ -192,6 +190,10 @@ class ReleaseService
                 $release->tracks()->update([
                     'cover_url' => $coverUrl,
                 ]);
+
+                DB::afterCommit(function () use ($oldCover) {
+                    DeleteCoverFile::dispatch($oldCover);
+                });
             });
         } else {
             $release->update([

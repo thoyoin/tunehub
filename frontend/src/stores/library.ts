@@ -12,7 +12,6 @@ export const useLibraryStore = defineStore('library',() => {
     const items = ref<LibraryItem[]>([]);
     const isLibraryLoading = ref<boolean>(false);
     const isPlaylistLoading = ref<boolean>(false);
-    const selectedLibraryItem = ref<LibraryItem | null>(null);
     const libraryItem = ref<LibraryItem | null>(null);
     const itemTracks = ref<Track[]>([]);
     const isRelease = ref<boolean>(false);
@@ -88,18 +87,8 @@ export const useLibraryStore = defineStore('library',() => {
         playlistVisibility.value = visibility;
     }
 
-    function clearAllSelectedItems(): void {
-        libraryItem.value = null;
-        selectedLibraryItem.value = null;
-    }
-
     function clearSelectedItem(): void {
         libraryItem.value = null;
-        selectedLibraryItem.value = null;
-    }
-
-    function selectLibraryItem(item: LibraryItem): void {
-        selectedLibraryItem.value = item;
     }
 
     const loadLibraryItem = async (item: LibraryItem) => {
@@ -127,9 +116,6 @@ export const useLibraryStore = defineStore('library',() => {
         loadLibraryItem,
         fetchItems,
         createPlaylist,
-        selectLibraryItem,
-        selectedLibraryItem,
-        clearAllSelectedItems,
         clearSelectedItem,
         libraryItem,
         itemTracks,

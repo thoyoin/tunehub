@@ -110,7 +110,7 @@ class AnalyticsService
             FROM track_plays
             WHERE played_at >= now() - INTERVAL 30 DAY
             GROUP BY date
-            ORDER BY date
+            ORDER BY date desc
         ");
 
         return $result->rows();
@@ -119,10 +119,10 @@ class AnalyticsService
     public function getUserGrowth(): array
     {
         return User::query()
-            ->selectRaw('DATE_FORMAT(created_at, "%b %d") as date, count(*) as users')
-            ->where('created_at', '>=', now()->subDays(30))
-            ->groupByRaw('DATE_FORMAT(created_at, "%b %d")')
-            ->orderBy('date')
+            ->selectRaw('DATE(created_at) as full_date, DATE_FORMAT(created_at, "%b %d") as date, count(*) as users')
+            ->where('created_at', '>=', now()->subDays(29)->startOfDay())
+            ->groupByRaw('DATE(created_at), DATE_FORMAT(created_at, "%b %d")')
+            ->orderBy('full_date')
             ->get()
             ->toArray();
     }

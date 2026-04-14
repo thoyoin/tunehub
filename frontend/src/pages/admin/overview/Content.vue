@@ -200,6 +200,7 @@ onMounted(async () => {
         <div class="mt-4 border px-2">
             <div class="d-flex flex-column align-items-start">
                 <span class="ms-4 mt-4 fw-bold fs-5">User Growth</span>
+                <span class="ms-4 fw-normal opacity-50 ">for the last month</span>
             </div>
             <UserGrowthCharts/>
         </div>

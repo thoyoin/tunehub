@@ -36,14 +36,19 @@ class TrackService
     {
         DB::transaction(function () use ($track) {
             $audioPath = $track->audio_url;
+            $cover = $track->cover_url;
 
-            $this->releaseService->destroyByTrack($track);
+            $isReleaseDeleted = $this->releaseService->destroyByTrack($track);
 
             $track->delete();
 
-            DB::afterCommit(function () use ($audioPath, $track) {
+            DB::afterCommit(function () use ($audioPath, $track, $isReleaseDeleted, $cover) {
                 DeleteTrackAudioFile::dispatch($audioPath);
                 DeleteTrackInClickhouse::dispatch($track->id);
+
+                if ($isReleaseDeleted) {
+                    DeleteTrackInClickhouse::dispatch($cover);
+                }
 
                 Log::info('Track was deleted', [
                     'track_id' => $track->id,

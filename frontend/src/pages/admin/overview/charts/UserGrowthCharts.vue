@@ -5,6 +5,16 @@ import { computed } from "vue";
 
 const overviewStore = useOverviewStore();
 
+const visibleLabelStep = computed(() => {
+    const pointsCount = overviewStore.userGrowth?.length ?? 0;
+
+    if (pointsCount <= 8) return 1;
+    if (pointsCount <= 16) return 2;
+    if (pointsCount <= 24) return 3;
+
+    return 4;
+});
+
 const series = computed(() => [
     {
         name: "User Growth",
@@ -22,7 +32,7 @@ const options = computed(() => ({
     },
     plotOptions: {
         bar: {
-            columnWidth: "40%"
+            columnWidth: "55%"
         }
     },
     dataLabels: {
@@ -30,10 +40,24 @@ const options = computed(() => ({
     },
     xaxis: {
         categories: overviewStore.userGrowth?.map(i => i.date) ?? [],
+        tickPlacement: "on",
         labels: {
+            rotate: -45,
+            rotateAlways: true,
+            hideOverlappingLabels: true,
+            trim: true,
             style: {
-                fontSize: "12px",
+                fontSize: "11px",
                 colors: "rgb(228,228,228)"
+            },
+            formatter: (value: string, _timestamp?: number, index?: number) => {
+                const step = visibleLabelStep.value;
+
+                if (typeof index === "number" && index % step !== 0) {
+                    return "";
+                }
+
+                return value;
             }
         }
     },
@@ -61,7 +85,7 @@ const options = computed(() => ({
 <template>
     <ApexCharts
         type="bar"
-        height="300"
+        height="340"
         :options="options"
         :series="series"
     />
