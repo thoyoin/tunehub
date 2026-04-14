@@ -76,13 +76,14 @@ const options = computed(() => ({
 </script>
 
 <template>
-    <ApexCharts
-        type="area"
-        width="1300"
-        height="400"
-        :options="options"
-        :series="series"
-    />
+    <div class="chart-wrapper">
+        <ApexCharts
+            type="area"
+            height="400"
+            :options="options"
+            :series="series"
+        />
+    </div>
 </template>
 
 <style scoped>
@@ -106,5 +107,9 @@ const options = computed(() => ({
     color: #ffffff !important;
     border: none !important;
     border-radius: 12px !important;
+}
+.chart-wrapper {
+    width: 100%;
+    max-width: 1300px;
 }
 </style>
