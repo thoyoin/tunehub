@@ -3,6 +3,8 @@ Thumbs.db
 *.swp
 *.swo
 
+review-comments.patch
+
 .idea/
 .vscode/
 *.code-workspace
