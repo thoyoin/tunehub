@@ -47,7 +47,7 @@ class TrackService
                 DeleteTrackInClickhouse::dispatch($track->id);
 
                 if ($isReleaseDeleted) {
-                    DeleteTrackInClickhouse::dispatch($cover);
+                    DeleteCoverFile::dispatch($cover);
                 }
 
                 Log::info('Track was deleted', [

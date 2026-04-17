@@ -20,7 +20,7 @@ class SearchService
             return response()->json();
         }
 
-        return $response = [
+        return [
             'releases' => Release::where(function ($q) use ($query) {
                 $q->where('title', 'LIKE', "%{$query}%")
                     ->orWhere('artist', 'LIKE', "%{$query}%");
@@ -53,10 +53,11 @@ class SearchService
             return response()->json();
         }
 
-        return $response = [
-            'users' => User::where('username', 'LIKE', "%{$query}%")
-            ->orwhere('email', 'LIKE', "%{$query}%")
-            ->paginate(10)
+        return [
+            'users' => User::query()
+                ->select(['id', 'username', 'profile_picture'])
+                ->where('username', 'LIKE', "%{$query}%")
+                ->paginate(10),
         ];
     }
 }

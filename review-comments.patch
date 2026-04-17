@@ -1,0 +1,710 @@
+diff --git a/README.md b/README.md
+new file mode 100644
+index 00000000..61a6f74e
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,24 @@
++# TuneHub Review Notes
++
++Этот файл не про продуктовую документацию, а про системные замечания по репозиторию и поставке.
++
++## Repository-Level Issues
++
++- В репозитории нет одного очевидного source of truth для сборки: рядом лежат root [composer.json](./composer.json) и [package.json](./package.json), а также отдельные [backend/composer.json](./backend/composer.json) и [frontend/package.json](./frontend/package.json).
++- CI в [.github/workflows/ci.yml](./.github/workflows/ci.yml) валидирует npm из `backend/`, хотя фронтенд живет в `frontend/`. В таком виде pipeline не гарантирует, что реально собирается то приложение, которое отдается пользователю.
++- Тестовый контур хрупкий: [backend/phpunit.xml](./backend/phpunit.xml) задает `DB_DATABASE=testing`, и конфигурация легко расходится с реальным способом запуска тестов.
++- В git закоммичены зависимости и артефакты сборки: `vendor/`, `backend/vendor/`, `backend/public/build/`, а также IDE-мусор вроде `.idea/`. Это ухудшает reviewability, обновление зависимостей и качество diff'ов.
++
++## Why It Matters
++
++- PR'ы зашумляются vendor/build-файлами и по ним тяжелее ревьюить реальные изменения.
++- CI не является надежным quality gate, потому что проверяет не ту структуру проекта, которую реально использует приложение.
++- Репозиторий выглядит как несколько полусвязанных приложений без явно задокументированного build entrypoint.
++- Локальные допущения начинают просачиваться в prod, потому что окружения и сборочная модель не сведены к одной схеме.
++
++## What Should Be True
++
++1. Должен быть один понятный backend root и один понятный frontend root.
++2. CI должен явно устанавливать зависимости и собирать оба приложения из их настоящих директорий.
++3. Vendor, build artifacts и IDE-файлы должны быть в `.gitignore`, а не в истории git.
++4. Тестовая конфигурация должна совпадать с реальным способом запуска тестов, а не жить отдельно от него.
+diff --git a/backend/app/Actions/AdminPanel/User/GetAllUsers.php b/backend/app/Actions/AdminPanel/User/GetAllUsers.php
+index 22a3ada0..610bb147 100644
+--- a/backend/app/Actions/AdminPanel/User/GetAllUsers.php
++++ b/backend/app/Actions/AdminPanel/User/GetAllUsers.php
+@@ -13,6 +13,8 @@ public function handle($request): LengthAwarePaginator
+     {
+         $search = $request->query('search');
+ 
++        // список пользователей грузит playlists, tracks и roles на каждую запись
++        // для admin index это тяжелый eager loading и дорогая сериализация без явной необходимости
+         return User::with(['playlists', 'tracks', 'roles'])
+             ->when($search, fn ($query) =>
+                 $query->where('username', 'like', '%' . $search . '%')
+diff --git a/backend/app/Actions/Auth/GetAuthUser.php b/backend/app/Actions/Auth/GetAuthUser.php
+index 0c96d1ed..78e30da4 100644
+--- a/backend/app/Actions/Auth/GetAuthUser.php
++++ b/backend/app/Actions/Auth/GetAuthUser.php
+@@ -13,6 +13,8 @@ public function handle(): Authenticatable
+     {
+         $user = Auth::user();
+ 
++        // auth user всегда тащит roles и products
++        // для базового current-user payload это тяжелее чем нужно и размывает минимальный контракт ответа
+         $user->load('roles', 'products');
+ 
+         return $user;
+diff --git a/backend/app/Actions/Auth/SignUp.php b/backend/app/Actions/Auth/SignUp.php
+index a65d3aa7..196a5940 100644
+--- a/backend/app/Actions/Auth/SignUp.php
++++ b/backend/app/Actions/Auth/SignUp.php
+@@ -20,8 +20,13 @@ public function handle($request): Model|User
+             'profile_picture' => config('media.defaults.profile_picture_url'),
+         ]);
+ 
++        // роль пришивается по магическому id=1
++        // это хрупкая связка с seed/order данных, а не стабильная идентификация роли
+         $user->roles()->attach(1);
+ 
++        // здесь уже создается сессия
++        // ниже SignUpService делает Auth::login($user) еще раз
++        // side effect размазан по двум слоям и ownership логина неочевиден
+         Auth::login($user);
+ 
+         return $user;
+diff --git a/backend/app/Http/Controllers/ArtistStudioController.php b/backend/app/Http/Controllers/ArtistStudioController.php
+index 091b9419..69e1ea6a 100644
+--- a/backend/app/Http/Controllers/ArtistStudioController.php
++++ b/backend/app/Http/Controllers/ArtistStudioController.php
+@@ -101,8 +101,27 @@ public function getMerch(): JsonResponse
+         ]);
+     }
+ 
++    // Gate::authorize неправильно по контракту лары
++    // передача Product::class в Gate ок только для class-level abilities, например create
++    // для instance-level abilities (update, delete, publish) нужно передавать сам объект, то есть $merch
++    //
++    // \Illuminate\Auth\Access\Gate::callPolicyMethod посмотри как работает метод
++    // if (isset($arguments[0]) && is_string($arguments[0])) {
++    //    array_shift($arguments);
++    // }
++    //
++    // return $policy->{$method}($user, ...$arguments);
++
++    // То есть если был передан Product::class, лара:
++    // - использует строку, чтобы найти ProductPolicy
++    // - потом выкидывает эту строку из аргументов
++    // - и вызывает update($user) / delete($user) без $product
++    // А у тебя policy требует второй аргумент Product $product
++    //
++    // ферштеен?
+     public function updateMerch(Product $merch, Request $request): JsonResponse
+     {
++        // тут наверно Gate::authorize('update', $merch);
+         Gate::authorize('update', Product::class);
+ 
+         $this->artistStudioService->updateMerch($request, $merch);
+@@ -114,6 +133,7 @@ public function updateMerch(Product $merch, Request $request): JsonResponse
+ 
+     public function deleteMerch(Product $merch): JsonResponse
+     {
++        // тут наверно Gate::authorize('delete', $merch);
+         Gate::authorize('delete', Product::class);
+ 
+         $this->artistStudioService->deleteMerch($merch->id);
+diff --git a/backend/app/Http/Controllers/LibraryItemController.php b/backend/app/Http/Controllers/LibraryItemController.php
+index 96c1615e..f01f39c1 100644
+--- a/backend/app/Http/Controllers/LibraryItemController.php
++++ b/backend/app/Http/Controllers/LibraryItemController.php
+@@ -11,8 +11,16 @@
+ use App\Models\LibraryItem;
+ use Illuminate\Http\JsonResponse;
+ 
++
++// роут-то публичный - да?
++//
++// Route::controller(LibraryItemController::class)->group(function () {
++//    Route::get('/libraryItems/{id}', 'show');
++// });
+ class LibraryItemController extends Controller
+ {
++    // получается контроллер - публичная давалка чужих вещей
++
+     public function show(
+         LibraryItem $id,
+         GetUserLibraryItem $getUserLibraryItem,
+diff --git a/backend/app/Http/Controllers/PlaylistController.php b/backend/app/Http/Controllers/PlaylistController.php
+index 9a5f29dd..4b2db5b2 100644
+--- a/backend/app/Http/Controllers/PlaylistController.php
++++ b/backend/app/Http/Controllers/PlaylistController.php
+@@ -8,6 +8,7 @@
+ use App\Models\Playlist;
+ use App\Models\Track;
+ use App\Services\PlaylistService;
++// мусор в коде
+ use App\Services\TrackService;
+ use Illuminate\Http\JsonResponse;
+ use Illuminate\Http\Request;
+@@ -29,8 +30,17 @@ public function store(): JsonResponse
+         ]);
+     }
+ 
++    // при таком роутинге
++    //
++    // Route::middleware('auth:sanctum')->group(function () {
++    //    ....
++    //    Route::controller(PlaylistController::class)->group(function () {
++    //    ....
++    // смотри ниже комменты
++
+     public function show(Playlist $playlist): JsonResponse
+     {
++        // любой авторизованный пользователь может читать приватные плейлисты по id (смотри еще ниже)
+         [$playlistItem, $tracks] = $this->playlistService->get($playlist);
+ 
+         return response()->json([
+@@ -68,6 +78,7 @@ public function updateVisibility(
+         Playlist $playlist,
+         Request $request,
+     ): JsonResponse {
++        // ...менять им visibility (смотри еще ниже)
+         $visibility = $this->playlistService->updateVisibility($playlist, $request);
+ 
+         return response()->json([
+@@ -87,6 +98,7 @@ public function getAll(): JsonResponse
+ 
+     public function addTrack(Playlist $playlist, Track $track): JsonResponse
+     {
++        //  ...и добавлять туда треки.
+         $response = $this->playlistService->addTrack($playlist, $track);
+ 
+         return response()->json($response);
+diff --git a/backend/app/Http/Controllers/RecentlyPlayedController.php b/backend/app/Http/Controllers/RecentlyPlayedController.php
+index 24f8c470..aaafca06 100644
+--- a/backend/app/Http/Controllers/RecentlyPlayedController.php
++++ b/backend/app/Http/Controllers/RecentlyPlayedController.php
+@@ -17,6 +17,7 @@ public function __construct(
+ 
+     public function store(Request $request): JsonResponse
+     {
++        // т.е. я прям сам воткнул себе любые прям любые данные и даже не проверил?
+         $data = $request->only('id', 'item_type', 'track_id', 'track_artist_id', 'release_id');
+ 
+         $response = $this->recentlyPlayedService->store($data);
+diff --git a/backend/app/Http/Controllers/SubscriptionController.php b/backend/app/Http/Controllers/SubscriptionController.php
+index e89870b1..b96c70f3 100644
+--- a/backend/app/Http/Controllers/SubscriptionController.php
++++ b/backend/app/Http/Controllers/SubscriptionController.php
+@@ -10,6 +10,8 @@
+ 
+ class SubscriptionController extends Controller
+ {
++    // в этом контроллере нет subscribe(), хотя в api.php на него повешен POST /user/subscribe
++    // значит маршрут мертвый и заканчивается runtime BadMethodCallException
+     public function __construct(
+         public SubscriptionService $subscriptionService
+     )
+diff --git a/backend/app/Http/Controllers/UserController.php b/backend/app/Http/Controllers/UserController.php
+index f918275f..2118e5f9 100644
+--- a/backend/app/Http/Controllers/UserController.php
++++ b/backend/app/Http/Controllers/UserController.php
+@@ -14,6 +14,8 @@ class UserController extends Controller
+ {
+     public function update(Request $request, UserService $userService): JsonResponse
+     {
++        // update принимает сырой Request без FormRequest/validate()
++        // на этом слое уже не видно проверки email uniqueness / username rules / avatar mime/size
+         $user = $userService->update($request);
+ 
+         return response()->json([
+diff --git a/backend/app/Listeners/SyncRecentlyPlayedHistory.php b/backend/app/Listeners/SyncRecentlyPlayedHistory.php
+index 41e5efbd..17c080c8 100644
+--- a/backend/app/Listeners/SyncRecentlyPlayedHistory.php
++++ b/backend/app/Listeners/SyncRecentlyPlayedHistory.php
+@@ -23,6 +23,8 @@ public function handle(TrackListened $event): void
+     {
+         $key = "user:{$event->userId}:recentlyPlayed";
+ 
++        // itemType/itemId прилетают из того же непроверенного client payload
++        // listener без серверной верификации складывает их прямо в redis history
+         Redis::zadd(
+             $key,
+             now()->timestamp,
+diff --git a/backend/app/Listeners/TrackPlayed.php b/backend/app/Listeners/TrackPlayed.php
+index b1141698..ba038488 100644
+--- a/backend/app/Listeners/TrackPlayed.php
++++ b/backend/app/Listeners/TrackPlayed.php
+@@ -25,6 +25,7 @@ public function handle(TrackListened $event): void
+             return;
+         }
+ 
++        // и тут прям непроверенные данные и сразу в БД
+         $this->clickhouse->insert('track_plays', [
+             [
+                 $event->trackId,
+diff --git a/backend/app/Models/Payment.php b/backend/app/Models/Payment.php
+index 69de9cab..0f0c3f46 100644
+--- a/backend/app/Models/Payment.php
++++ b/backend/app/Models/Payment.php
+@@ -6,5 +6,7 @@
+ 
+ class Payment extends Model
+ {
+-    //
++    // модель пустая, и это хорошо показывает состояние merch payment flow:
++    // таблица есть, но я не нашел кода который реально пишет сюда платежи после checkout
++    // если бизнес ожидает audit trail по one-time payments, сейчас его просто нет
+ }
+diff --git a/backend/app/Models/User.php b/backend/app/Models/User.php
+index 93ae1fb2..53b1063e 100644
+--- a/backend/app/Models/User.php
++++ b/backend/app/Models/User.php
+@@ -39,11 +39,15 @@ class User extends Authenticatable
+      *
+      * @var list<string>
+      */
++    // здесь скрыты только password/remember_token
++    // stripe/customer/billing поля в hidden не добавлены, значит они могут утекать в API-ответы
+     protected $hidden = [
+         'password',
+         'remember_token',
+     ];
+ 
++    // is_subscribed аппендится на каждую сериализацию User
++    // это делает модель тяжелее и тащит subscription-логику почти в любой ответ с user
+     protected $appends = [
+         'joined_at',
+         'is_subscribed',
+diff --git a/backend/app/Notifications/ReleaseApproved.php b/backend/app/Notifications/ReleaseApproved.php
+index cb697dbc..e3a60372 100644
+--- a/backend/app/Notifications/ReleaseApproved.php
++++ b/backend/app/Notifications/ReleaseApproved.php
+@@ -39,6 +39,8 @@ public function toMail(object $notifiable): MailMessage
+             ->subject('Release Approved')
+             ->greeting('Hello, ' . $notifiable->username)
+             ->line('Your release "'. $this->release->title .'" has been approved.')
++            // MailMessage::attach ждет локальный filesystem path
++            // cover_url здесь выглядит как HTTP URL, так что отправка письма может упасть
+             ->attach($this->release->cover_url)
+             ->action('View', url('/release/' . $this->release->id))
+             ->line('Keep going!');
+diff --git a/backend/app/Policies/ReleasePolicy.php b/backend/app/Policies/ReleasePolicy.php
+index c8a95dcc..f07e8fd1 100644
+--- a/backend/app/Policies/ReleasePolicy.php
++++ b/backend/app/Policies/ReleasePolicy.php
+@@ -4,12 +4,14 @@
+ 
+ use App\Models\Release;
+ use App\Models\User;
++// мусор в коде
+ use Illuminate\Auth\Access\Response;
+ 
+ class ReleasePolicy
+ {
+     public function before(User $user): bool|null
+     {
++        // раздает полный доступ всем is_subscribed ----> подписчик может публиковать и менять чужие релизы
+         if (
+             $user->roles()
+                 ->where('slug', 'admin')
+@@ -37,6 +39,7 @@ public function publish(User $user, Release $release): bool
+                 ->where('slug', 'premium')
+                 ->exists()
+             || $user->is_subscribed
++                // присваивание вместо сравнения
+             ) && $user->id = $release->user_id && $release->status === 'approved';
+     }
+ 
+diff --git a/backend/app/Providers/AppServiceProvider.php b/backend/app/Providers/AppServiceProvider.php
+index 6e5ef7c8..5d27f078 100644
+--- a/backend/app/Providers/AppServiceProvider.php
++++ b/backend/app/Providers/AppServiceProvider.php
+@@ -21,6 +21,9 @@ public function register(): void
+             $this->app->register(TelescopeServiceProvider::class);
+         }
+ 
++        // singleton infrastructure не должен читать env() напрямую в runtime
++        // после config:cache такие зависимости становятся неявными и хрупкими
++        // host/port/user/password/db для clickhouse должны идти через config()
+         $this->app->singleton(Client::class, function () {
+             $client = new Client([
+                 'host' => env('CLICKHOUSE_HOST', 'tunehub-clickhouse-1'),
+diff --git a/backend/app/Services/ArtistMerchService.php b/backend/app/Services/ArtistMerchService.php
+index 5eba91a3..3d454cdc 100644
+--- a/backend/app/Services/ArtistMerchService.php
++++ b/backend/app/Services/ArtistMerchService.php
+@@ -19,22 +19,37 @@ public function __construct(
+     public function get($slug)
+     {
+         return Product::where('slug', $slug)
++
++            // в 2025_12_29_105605_create_products_table.php
++            // $table->enum('status', ['active', 'inactive', 'sold_out', 'moderating', 'rejected', 'approved'])
++            // sold_out - да? или soldout?
+             ->where('status', 'active' || 'soldout')
++            // я бы сделал нормальный мужской енам на пхп и не занимался бы херней, в бд надо сделать стринг
++            // потому что прикинь - затра бизнес скажет давай введем еще 1 статус "ехал_но_исчез"
++            // тогда сразу что - надо миграцию пилить, миграцию выполнить - а какой-то джун запилит ее криво и сломает базу
++            // а так поставил в енам в пхп доп значение - провалидировал на входе и провфит!
++            // распыление ответсвенности между БД (когда в бд типизация) и пхп - возможно ок, но я бы такое не отдавал на проверку базе
++
++            // ну и самое главное - тут хардкод - так лучше не делать (я про 'active' || 'soldout')
+             ->with(['productImages', 'productVariants', 'user'])
+             ->first();
+     }
+ 
++    // тут сервер валидирует только форму payload, но не доменные инварианты корзины
++
+     public function goToCheckout(Request $request)
+     {
+         $validated = $request->validate([
+             'cart' => ['required', 'array', 'min:1'],
+-            'cart.*.product_id' => ['required', 'integer', 'exists:products,id'],
+-            'cart.*.variant_id' => ['required', 'integer', 'exists:product_variants,id'],
+-            'cart.*.quantity' => ['required', 'integer', 'min:1'],
++            'cart.*.product_id' => ['required', 'integer', 'exists:products,id'], // существует в products
++            'cart.*.variant_id' => ['required', 'integer', 'exists:product_variants,id'], // существует в product_variants
++            'cart.*.quantity' => ['required', 'integer', 'min:1'], // >= 1
+         ]);
+ 
+         $cartItems = collect($validated['cart']);
+ 
++        // дальше checkout строится только по variant_id
++        // product_id после form validation почти не участвует в логике вообще
+         $variants = ProductVariant::with('product')
+             ->whereIn('id', $cartItems->pluck('variant_id')->all())
+             ->get()
+@@ -43,15 +58,29 @@ public function goToCheckout(Request $request)
+         $lineItems = $cartItems->map(function (array $item) use ($variants) {
+             $variant = $variants->get($item['variant_id']);
+ 
++            // вот здесь и видно основную дыру:
++            // если product_id и variant_id по отдельности существуют - запрос проходит
++            // но сервер вообще не проверяет что variant.product_id === item.product_id
++            // то есть client может прислать любой product_id + любой variant_id
++            //
++            // кроме этого тут нет проверок что:
++            // - product.status === 'active'
++            // - item.quantity <= variant.stock
++            // - variant.stripe_price_id заполнен и вообще пригоден для продажи
++            //
++            // по сути сервер валидирует форму payload, но не бизнес-смысл корзины
++            // такие инварианты должен проверять именно сервер перед сборкой line_items
+             return [
+                 'price' => $variant->stripe_price_id,
+                 'quantity' => (int) $item['quantity'],
+             ];
+         })->values()->all();
+ 
++
+         $session = $this->stripeClient->checkout->sessions->create([
+             'mode' => 'payment',
+             'line_items' => $lineItems,
++            // тут чего хардкод url?? срочно надо фиксить
+             'success_url' => 'http://127.0.0.1:5175/merch/payment/success',
+             'cancel_url' => 'http://127.0.0.1:5175//merch/payment/cancel',
+             'customer_email' => (string) $request->user()->email,
+diff --git a/backend/app/Services/ArtistService.php b/backend/app/Services/ArtistService.php
+index e3135798..9f5f2b5e 100644
+--- a/backend/app/Services/ArtistService.php
++++ b/backend/app/Services/ArtistService.php
+@@ -17,6 +17,9 @@ public function __construct(
+ 
+     public function getAlbums($artistId)
+     {
++        // здесь fragile raw sql assembly:
++        // если у артиста нет релизов, implode даст пустую строку и запрос превратится в IN ()
++        // плюс ниже код предполагает что все release_id из clickhouse все еще существуют в mysql
+         $artistReleases = Release::where('user_id', $artistId)
+             ->get()
+             ->pluck('id')
+diff --git a/backend/app/Services/MinioService.php b/backend/app/Services/MinioService.php
+index 8a866985..1b58399e 100644
+--- a/backend/app/Services/MinioService.php
++++ b/backend/app/Services/MinioService.php
+@@ -8,6 +8,9 @@
+ 
+ class MinioService
+ {
++    // здесь все generated media URLs насильно переписываются на 127.0.0.1:9000
++    // это моментально ломает любые не локальные окружения и зашивает dev host прямо в данные
++    // такие адреса должны собираться из конфигурации storage/app url, а не через str_replace
+     public function storeCover($file): string
+     {
+         $path = Storage::disk('s3')->putFile('covers', $file);
+diff --git a/backend/app/Services/RecentlyPlayedService.php b/backend/app/Services/RecentlyPlayedService.php
+index 210f6676..8130a0a5 100644
+--- a/backend/app/Services/RecentlyPlayedService.php
++++ b/backend/app/Services/RecentlyPlayedService.php
+@@ -14,6 +14,7 @@ class RecentlyPlayedService
+ {
+     public function store($data): JsonResponse
+     {
++        // и прям непроверенные данные взял еще и пихнул в очередь?
+         TrackListened::dispatch(
+             auth()->id(),
+             $data['id'],
+@@ -22,6 +23,7 @@ public function store($data): JsonResponse
+             $data['track_artist_id'],
+             $data['release_id']
+         );
++        // получатеся они там полетели и в бд и в редис - история не очень - надо править
+ 
+         return response()->json([
+             'sentData' => $data,
+diff --git a/backend/app/Services/SearchService.php b/backend/app/Services/SearchService.php
+index 48dcc11d..1f42cb27 100644
+--- a/backend/app/Services/SearchService.php
++++ b/backend/app/Services/SearchService.php
+@@ -53,6 +53,9 @@ public function getUsers($request): JsonResponse|array
+             return response()->json();
+         }
+ 
++        // это публичный search endpoint, а ниже поиск идет не только по username, но и по email
++        // плюс наружу отдаются полные User модели
++        // в таком виде это прямой user/email enumeration для анонимного клиента
+         return $response = [
+             'users' => User::where('username', 'LIKE', "%{$query}%")
+             ->orwhere('email', 'LIKE', "%{$query}%")
+diff --git a/backend/app/Services/SignUpService.php b/backend/app/Services/SignUpService.php
+index 096af6b2..a7bcfa5f 100644
+--- a/backend/app/Services/SignUpService.php
++++ b/backend/app/Services/SignUpService.php
+@@ -36,6 +36,8 @@ public function handle($request): void
+                 'username' => $request['username'],
+             ]);
+ 
++            // повторный Auth::login($user): SignUp::handle() уже логинит пользователя
++            // сейчас это просто дубль, но ownership создания сессии уже размазан
+             Auth::login($user);
+         });
+     }
+diff --git a/backend/app/Services/SubscriptionService.php b/backend/app/Services/SubscriptionService.php
+index efcfe101..24e44f05 100644
+--- a/backend/app/Services/SubscriptionService.php
++++ b/backend/app/Services/SubscriptionService.php
+@@ -19,6 +19,9 @@ public function goToCheckout(Request $request)
+ 
+         $user->createOrGetStripeCustomer();
+ 
++        // checkout URLs захардкожены на local vite server
++        // вне dev-машины такой redirect просто сломает subscription flow
++        // это должно идти из config, а не из 127.0.0.1:5175
+         $checkout = $user->newSubscription('premium', $priceId)
+             ->checkout([
+                 'success_url' => 'http://127.0.0.1:5175/subscription/success',
+@@ -37,6 +40,9 @@ public function getDetails(Request $request)
+         $user = $request->user();
+         $sub = $user->subscription('premium');
+ 
++        // тут нет защиты от случая когда подписка отменена / неактивна / без upcoming invoice
++        // дальше код трижды дергает upcomingInvoice() и полагается что он всегда есть
++        // такой happy-path легко превращается в 500 на нестандартном stripe state
+         $stripeSub = $sub->asStripeSubscription();
+ 
+         $data = [
+@@ -65,6 +71,7 @@ public function getDetails(Request $request)
+             'card' => [],
+         ];
+ 
++        // runtime service layer не должен читать env() напрямую...
+         Stripe::setApiKey(env('STRIPE_SECRET'));
+ 
+         $pm = null;
+@@ -101,6 +108,7 @@ public function getDetails(Request $request)
+ 
+     public function goToBillingPortal(Request $request)
+     {
++        // billing portal URL опять завязан на env() в runtime-коде...
+         return $request->user()->billingPortalUrl(env('APP_URL') . '/');
+     }
+ }
+diff --git a/backend/app/Services/TrackService.php b/backend/app/Services/TrackService.php
+index c6e5f447..62dd7260 100644
+--- a/backend/app/Services/TrackService.php
++++ b/backend/app/Services/TrackService.php
+@@ -46,6 +46,9 @@ public function destroy($track): void
+                 DeleteTrackAudioFile::dispatch($audioPath);
+                 DeleteTrackInClickhouse::dispatch($track->id);
+ 
++                // тут cleanup сломан: DeleteTrackInClickhouse ждет int $trackId
++                // а при удалении последнего трека сюда уходит URL обложки релиза
++                // в итоге медиа остается сиротой, а в analytics уезжает бессмысленный delete
+                 if ($isReleaseDeleted) {
+                     DeleteTrackInClickhouse::dispatch($cover);
+                 }
+diff --git a/backend/app/Services/UserService.php b/backend/app/Services/UserService.php
+index 1a0022fb..dcc3ae3a 100644
+--- a/backend/app/Services/UserService.php
++++ b/backend/app/Services/UserService.php
+@@ -15,10 +15,14 @@ public function __construct(
+ 
+     public function update($request)
+     {
++        // сервис берет username/email/profile_picture из уже недопроверенного payload
++        // без явной валидации тут легко пропустить кривой email и неподходящий файл аватара
+         $data = $request->only(['username', 'email', 'profile_picture']);
+         $user = Auth::user();
+ 
+         if ($request->hasFile('profile_picture')) {
++            // загрузка файла идет без проверки mime/type/size
++            // сервис просто отдает файл в storage и доверяет предыдущему слою, которого здесь нет
+             $url = $this->minioService->storeProfile($request->file('profile_picture'));
+             $data['profile_picture'] = $url;
+         }
+diff --git a/backend/config/cors.php b/backend/config/cors.php
+index 9df87cab..f6d7bc73 100644
+--- a/backend/config/cors.php
++++ b/backend/config/cors.php
+@@ -19,6 +19,8 @@
+ 
+     'allowed_methods' => ['*'],
+ 
++    // cors захардкожен на локальный frontend origin
++    // такой конфиг мгновенно ломает production/staging SPA если origin отличается от 127.0.0.1:5175
+     'allowed_origins' => ['http://127.0.0.1:5175'],
+ 
+     'allowed_origins_patterns' => [],
+diff --git a/backend/database/migrations/2026_01_06_160106_create_roles_table.php b/backend/database/migrations/2026_01_06_160106_create_roles_table.php
+index 7f9904f1..a6555ff5 100644
+--- a/backend/database/migrations/2026_01_06_160106_create_roles_table.php
++++ b/backend/database/migrations/2026_01_06_160106_create_roles_table.php
+@@ -14,6 +14,8 @@ public function up(): void
+         Schema::create('roles', function (Blueprint $table) {
+             $table->id();
+             $table->string('name');
++            // slug используется как идентификатор роли по всему приложению
++            // но unique constraint тут нет, значит модель прав не защищена на уровне БД
+             $table->string('slug');
+             $table->timestamps();
+         });
+diff --git a/backend/database/migrations/2026_03_16_114820_create_customer_columns.php b/backend/database/migrations/2026_03_16_114820_create_customer_columns.php
+index 974b381e..9fa7ba9d 100644
+--- a/backend/database/migrations/2026_03_16_114820_create_customer_columns.php
++++ b/backend/database/migrations/2026_03_16_114820_create_customer_columns.php
+@@ -12,6 +12,8 @@
+     public function up(): void
+     {
+         Schema::table('users', function (Blueprint $table) {
++            // billing/stripe поля добавляются прямо в users
++            // если модель User не скрывает их в serialization, они легко протекут в API-ответы
+             $table->string('stripe_id')->nullable()->index();
+             $table->string('pm_type')->nullable();
+             $table->string('pm_last_four', 4)->nullable();
+diff --git a/backend/routes/api.php b/backend/routes/api.php
+index cee5700d..5e3cdd11 100644
+--- a/backend/routes/api.php
++++ b/backend/routes/api.php
+@@ -22,6 +22,9 @@
+     });
+ });
+ 
++// тут есть только Cashier webhook для subscription flow
++// merch checkout.session.completed path я в проекте не нашел:
++// нет обработчика который создает Order / пишет Payment / уменьшает stock
+ Route::post('/stripe/webhook', [\Laravel\Cashier\Http\Controllers\WebhookController::class, 'handleWebhook']);
+ 
+ Route::prefix('admin')
+@@ -66,10 +69,14 @@
+ 
+ Route::controller(SearchController::class)->group(function () {
+     Route::get('/search', 'getContent');
++    // этот роут висит вне auth:sanctum и дает публичный вход в user search
++    // ниже в сервисе поиск идет еще и по email, то есть это готовый user/email enumeration
+     Route::get('/search/users', 'getUsers');
+ });
+ 
+ Route::controller(LibraryItemController::class)->group(function () {
++    // library item details торчат наружу вообще без auth
++    // при текущем контроллере/action это прямой публичный вход в чужую библиотеку по id
+     Route::get('/libraryItems/{id}', 'show');
+ });
+ 
+@@ -85,6 +92,8 @@
+         Route::post('/playlist', 'store');
+         Route::put('/playlist/{playlist}', 'update');
+         Route::delete('/playlist/{playlist}', 'destroy');
++        // сами маршруты сидят за auth:sanctum, но show/addTrack/updateVisibility дальше не делают owner-check
++        // поэтому любой авторизованный пользователь может читать и менять чужой playlist по id
+         Route::get('/playlist/{playlist}', 'show');
+         Route::get('/playlists', 'getAll');
+         Route::post('/playlist/{playlist}/track/{track}', 'addTrack');
+@@ -130,6 +139,8 @@
+     });
+ 
+     Route::controller(SubscriptionController::class)->group(function () {
++        // мертвый роут: в SubscriptionController метода subscribe() нет
++        // такой маршрут заканчивается runtime BadMethodCallException
+         Route::post('/user/subscribe', 'subscribe');
+         Route::get('/user/billing-portal', 'goToBillingPortal');
+         Route::post('/subscription/checkout', 'goToCheckout');
+@@ -146,4 +157,3 @@
+     Route::get('/checkout/success', 'success')->name('checkout.success');
+     Route::get('/checkout/cancel', 'cancel')->name('checkout.cancel');
+ });
+-
+diff --git a/frontend/src/composables/useAudioPlayer.ts b/frontend/src/composables/useAudioPlayer.ts
+index edd1bab3..cd88186a 100644
+--- a/frontend/src/composables/useAudioPlayer.ts
++++ b/frontend/src/composables/useAudioPlayer.ts
+@@ -37,6 +37,9 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
+         if (!track) return
+         if (!currentContext.value) return
+ 
++        // защитный threshold на 20 секунд закомментирован
++        // поэтому play считается мгновенно при любом переключении трека
++        // такая логика раздувает analytics и потенциально earnings
+         // listenedTimeout.value = window.setTimeout(async () => {
+             if (hasBeenListened.value) return
+             hasBeenListened.value = true
+diff --git a/frontend/src/pages/home/Header.vue b/frontend/src/pages/home/Header.vue
+index 2d96dc90..2aba8636 100644
+--- a/frontend/src/pages/home/Header.vue
++++ b/frontend/src/pages/home/Header.vue
+@@ -209,6 +209,10 @@ const routeHome = () => {
+             </div>
+             <div class="d-flex flex-row align-items-center">
+                 <template v-if="auth.user">
++                    <!-- review:
++                    UI-ветвление завязано на roles[0]?.slug
++                    если порядок ролей изменится, фронт начнет неверно определять admin/non-admin
++                    -->
+                     <template v-if="!auth.user?.is_subscribed && auth.user?.roles[0]?.slug !== 'admin'">
+                         <button
+                             @click="
+diff --git a/frontend/src/router/index.ts b/frontend/src/router/index.ts
+index abef9f73..041c8052 100644
+--- a/frontend/src/router/index.ts
++++ b/frontend/src/router/index.ts
+@@ -110,6 +110,8 @@ const router = createRouter({
+           meta: { requiresAuth: true, requiresSubscription: true },
+       },
+       {
++          // это единственный admin-route без requiresAuth / requiresAdmin
++          // shell админки можно открыть даже анонимно, и только потом все упрется в backend API
+           path: '/admin/overview',
+           name: 'admin/overview',
+           component: Admin,
+@@ -152,6 +154,8 @@ router.beforeEach(async (to) => {
+     }
+ 
+     if (to.meta.requiresAdmin) {
++        // проверка роли завязана на roles[0]
++        // порядок ролей не должен определять права пользователя
+         const isAdmin = auth.user?.roles[0]?.slug === 'admin'
+ 
+         if (!isAdmin) return '/'
+diff --git a/frontend/src/stores/subscription.ts b/frontend/src/stores/subscription.ts
+index 9131325d..936d757b 100644
+--- a/frontend/src/stores/subscription.ts
++++ b/frontend/src/stores/subscription.ts
+@@ -15,6 +15,9 @@ export const useSubscriptionStore = defineStore('subscription', () => {
+ 
+         try {
+             const response = await api.post('/api/subscription/checkout', {
++                // live stripe price_id зашит прямо во фронтовый бандл
++                // это конфигурация окружения, а не UI-константа
++                // staging/prod values должны приезжать из env/config
+                 price_id: 'price_1TBa6jLLiCzKtruSYomynytQ',
+             })
+ 

@@ -103,7 +103,7 @@ class ArtistStudioController extends Controller
 
     public function updateMerch(Product $merch, Request $request): JsonResponse
     {
-        Gate::authorize('update', Product::class);
+        Gate::authorize('update', $merch);
 
         $this->artistStudioService->updateMerch($request, $merch);
 
@@ -114,7 +114,7 @@ class ArtistStudioController extends Controller
 
     public function deleteMerch(Product $merch): JsonResponse
     {
-        Gate::authorize('delete', Product::class);
+        Gate::authorize('delete', $merch);
 
         $this->artistStudioService->deleteMerch($merch->id);
 

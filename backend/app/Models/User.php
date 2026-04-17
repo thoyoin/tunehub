@@ -39,14 +39,15 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
     protected $hidden = [
         'password',
         'remember_token',
+        'stripe_id',
     ];
 
     protected $appends = [
         'joined_at',
-        'is_subscribed',
     ];
 
     /**

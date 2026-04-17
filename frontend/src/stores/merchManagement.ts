@@ -62,7 +62,6 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
 
             artistMerch.value = response.data.merch
 
-            console.log(response.data)
         } catch (error) {
             console.log(error)
         } finally {
@@ -107,14 +106,11 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
         try {
             isLoading.value = true
 
-            const response = await api.delete(
-                `/api/artists/merch/${editingMerch.value?.id}/delete`
-            )
+            await api.delete(`/api/artists/merch/${editingMerch.value?.id}/delete`)
 
             toast.success('Merch successfully deleted.')
 
             await fetchArtistMerch();
-
         } catch (e) {
             console.log(e)
 
@@ -128,9 +124,7 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
         try {
             isLoading.value = true
 
-            const response = await api.patch(
-                `/api/artists/merch/${editingMerch.value?.id}/publish`
-            )
+            await api.patch(`/api/artists/merch/${editingMerch.value?.id}/publish`)
 
             await fetchArtistMerch();
         } catch (e) {

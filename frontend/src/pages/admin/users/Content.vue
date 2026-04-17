@@ -63,7 +63,7 @@ onMounted(async () => {
         >
             <img
                 style="top: 12px; left: 15px"
-                class="position-absolute z-2"
+                class="position-absolute z-1"
                 src="@/assets/svg/search.svg"
                 alt="search"
             />
@@ -128,7 +128,7 @@ onMounted(async () => {
                                         <span class="opacity-75">{{ user.email }}</span>
                                     </td>
                                     <td style="font-size: 15px">
-                                        <span class="opacity-75">{{ user.roles[0].name }}</span>
+                                        <span class="opacity-75">{{ user.roles[0]?.name }}</span>
                                     </td>
                                     <td style="font-size: 15px">
                                         <span class="opacity-75">{{ user.joined_at }}</span>

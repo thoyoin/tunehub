@@ -28,7 +28,15 @@ const handleUserDeletion = async (id: number) => {
         aria-hidden="true"
     >
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content position-relative">
+                <transition name="fade">
+                    <div
+                        v-if="adminPanelStore.isLoading"
+                        class="loading-overlay d-flex flex-column align-items-center justify-content-center"
+                    >
+                        <div class="search-spinner mb-2"></div>
+                    </div>
+                </transition>
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="userProfileModalLabel">User Profile</h1>
                     <button
@@ -79,7 +87,7 @@ const handleUserDeletion = async (id: number) => {
                                     Email:
                                 </div>
                                 <div class="d-flex" style="overflow: clip">
-                                    {{ adminPanelStore.viewUser?.email }}
+                                    {{ adminPanelStore.viewUserDetailed?.email }}
                                 </div>
                             </div>
                             <div
@@ -95,7 +103,7 @@ const handleUserDeletion = async (id: number) => {
                                     Joined:
                                 </div>
                                 <div class="d-flex">
-                                    {{ adminPanelStore.viewUser?.joined_at }}
+                                    {{ adminPanelStore.viewUserDetailed?.joined_at }}
                                 </div>
                             </div>
                             <div
@@ -111,7 +119,7 @@ const handleUserDeletion = async (id: number) => {
                                     Tracks:
                                 </div>
                                 <div class="d-flex">
-                                    {{ adminPanelStore.viewUser?.tracks?.length }}
+                                    {{ adminPanelStore.viewUserDetailed?.tracks_count }}
                                 </div>
                             </div>
                         </div>
@@ -121,7 +129,7 @@ const handleUserDeletion = async (id: number) => {
                         >
                             <div class="d-flex flex-column align-items-center">
                                 <span style="font-size: 25px">
-                                    {{ adminPanelStore.viewUser?.playlists?.length }}
+                                    {{ adminPanelStore.viewUserDetailed?.playlists_count}}
                                 </span>
                                 <span style="font-size: 15px" class="opacity-50">Playlists</span>
                             </div>
@@ -130,7 +138,7 @@ const handleUserDeletion = async (id: number) => {
                 </div>
                 <div class="footer">
                     <button
-                        @click="handleUserDeletion(adminPanelStore.viewUser?.id)"
+                        @click="handleUserDeletion(adminPanelStore.viewUserDetailed?.id!)"
                         class="btn btn-primary w-50"
                         :disabled="adminPanelStore.isLoading"
                     >

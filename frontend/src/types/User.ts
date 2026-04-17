@@ -48,3 +48,21 @@ export interface User {
     subscriptions: Subscription[]
     products?: ArtistMerch[]
 }
+
+export interface UserDetailed {
+    id: number
+    email: string
+    username: string
+    slug: string
+    role: string
+    profile_picture: string
+    updated_at: string
+    joined_at: string
+    created_at: string
+    playlists_count: number
+    tracks_count: number
+    roles: Role[]
+    is_subscribed: boolean
+    subscriptions: Subscription[]
+    products?: ArtistMerch[]
+}

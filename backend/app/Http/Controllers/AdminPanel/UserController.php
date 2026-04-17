@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Actions\AdminPanel\User\GetAllUsers;
+use App\Actions\AdminPanel\User\GetUserDetails;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,5 +31,12 @@ class UserController
         return response()->json([
             'message' => 'User deleted successfully.'
         ]);
+    }
+
+    public function getDetails(User $user, GetUserDetails $getUserDetails): JsonResponse
+    {
+        $userDetails = $getUserDetails->handle($user);
+
+        return response()->json($userDetails);
     }
 }

@@ -35,8 +35,6 @@ class SignUpService
             Log::info('New User was signed Up', [
                 'username' => $request['username'],
             ]);
-
-            Auth::login($user);
         });
     }
 }

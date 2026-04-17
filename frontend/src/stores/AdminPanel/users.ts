@@ -5,12 +5,13 @@ import { useDebounceFn } from '@vueuse/core'
 import api from '@/lib/api'
 
 import type { PaginatedResponse } from '@/types/PaginatedResponse'
-import type { User } from '@/types/User'
+import type {User, UserDetailed} from '@/types/User'
 
 export const useUsersStore = defineStore('users', () => {
     const users = ref<PaginatedResponse<User> | null>(null);
     const search = ref<string | null>(null)
     const viewUser = ref<User | null>(null);
+    const viewUserDetailed = ref<UserDetailed | null>(null);
     const isLoading = ref<boolean>(false);
 
     const fetchUsers = useDebounceFn(
@@ -29,12 +30,30 @@ export const useUsersStore = defineStore('users', () => {
         }
     }, 300)
 
+    const fetchUserDetails = async () => {
+        try {
+            isLoading.value = true;
+
+            const response = await api.get(`/api/admin/users/${viewUser.value?.id}`);
+
+            viewUserDetailed.value = response.data;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
     const setLoading = (): void => {
         isLoading.value = true;
     }
 
-    const setViewUser = (newView: User | null): void => {
+    const setViewUser = async (newView: User | null) => {
         viewUser.value = newView;
+
+        if (!viewUserDetailed || viewUserDetailed.value?.id !== viewUser.value?.id) {
+            await fetchUserDetails();
+        }
     }
 
     const deleteUser = async (id: number): Promise<void> => {
@@ -51,5 +70,8 @@ export const useUsersStore = defineStore('users', () => {
         }
     }
 
-    return { users, fetchUsers, setViewUser, viewUser, deleteUser, isLoading, setLoading, search };
+    return {
+        users, fetchUsers, setViewUser, viewUser, deleteUser, isLoading, setLoading, search,
+        fetchUserDetails, viewUserDetailed
+    };
 });

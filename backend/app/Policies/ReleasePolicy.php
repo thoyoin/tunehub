@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Release;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ReleasePolicy
 {
@@ -14,7 +13,6 @@ class ReleasePolicy
             $user->roles()
                 ->where('slug', 'admin')
                 ->exists()
-            || $user->is_subscribed
         ) {
             return true;
         }
@@ -37,7 +35,7 @@ class ReleasePolicy
                 ->where('slug', 'premium')
                 ->exists()
             || $user->is_subscribed
-            ) && $user->id = $release->user_id && $release->status === 'approved';
+            ) && $user->id === $release->user_id && $release->status === 'approved';
     }
 
     /**

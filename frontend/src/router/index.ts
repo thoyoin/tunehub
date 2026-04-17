@@ -113,6 +113,7 @@ const router = createRouter({
           path: '/admin/overview',
           name: 'admin/overview',
           component: Admin,
+          meta: { requiresAuth: true, requiresAdmin: true },
       },
       {
           path: '/admin/users',

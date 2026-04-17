@@ -40,4 +40,12 @@ return [
         'public' => env('STRIPE_KEY'),
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
+
+    'clickhouse' => [
+        'host' => env('CLICKHOUSE_HOST', 'tunehub-clickhouse-1'),
+        'port' => env('CLICKHOUSE_PORT', 8123),
+        'username' => env('CLICKHOUSE_USER', 'default'),
+        'password' => env('CLICKHOUSE_PASSWORD', 'default'),
+        'db' => env('CLICKHOUSE_DB', 'default'),
+    ]
 ];

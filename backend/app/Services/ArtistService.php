@@ -17,20 +17,29 @@ class ArtistService
 
     public function getAlbums($artistId)
     {
-        $artistReleases = Release::where('user_id', $artistId)
-            ->get()
+        $ids = Release::where('user_id', $artistId)
             ->pluck('id')
-            ->implode(', ');
+            ->all();
+
+        if (empty($ids)) {
+            return collect();
+        }
+
+        $idsList = implode(',', $ids);
 
         $rows = $this->clickhouse->select("
             select
                 release_id,
                 sum(plays) as plays
                 from release_streams
-                where release_id IN ($artistReleases)
+                where release_id IN (:ids)
             group by release_id
             order by plays desc
-        ")->rows();
+        ",
+            [
+                'ids' =>  $idsList,
+            ]
+        )->rows();
 
 
         $releases = Release::whereIn('id', array_column($rows, 'release_id'))

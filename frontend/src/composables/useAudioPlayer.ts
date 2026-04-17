@@ -37,8 +37,9 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
         if (!track) return
         if (!currentContext.value) return
 
-        // listenedTimeout.value = window.setTimeout(async () => {
+        listenedTimeout.value = window.setTimeout(async () => {
             if (hasBeenListened.value) return
+
             hasBeenListened.value = true
 
             const payload = {
@@ -49,7 +50,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
             }
 
             await api.post('/api/recentlyPlayed', payload)
-        // }, 20000)
+        }, 20000)
     }, {immediate: true})
 
     const onTimeUpdate = () => {

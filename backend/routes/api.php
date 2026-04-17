@@ -30,6 +30,7 @@ Route::prefix('admin')
         Route::controller(\App\Http\Controllers\AdminPanel\UserController::class)->group(function () {
             Route::get('/users', 'getAll');
             Route::delete('/users/{user}/delete', 'delete');
+            Route::get('/users/{user}', 'getDetails');
         });
         Route::controller(\App\Http\Controllers\AdminPanel\ReleaseController::class)->group(function () {
             Route::get('/releases', 'getReleases');
@@ -69,12 +70,12 @@ Route::controller(SearchController::class)->group(function () {
     Route::get('/search/users', 'getUsers');
 });
 
-Route::controller(LibraryItemController::class)->group(function () {
-    Route::get('/libraryItems/{id}', 'show');
-});
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/logout', [AuthController::class, 'logout']);
+
+    Route::controller(LibraryItemController::class)->group(function () {
+        Route::get('/libraryItems/{id}', 'show');
+    });
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'get');
@@ -130,7 +131,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::controller(SubscriptionController::class)->group(function () {
-        Route::post('/user/subscribe', 'subscribe');
         Route::get('/user/billing-portal', 'goToBillingPortal');
         Route::post('/subscription/checkout', 'goToCheckout');
         Route::get('/subscription/details', 'getDetails');
@@ -146,4 +146,3 @@ Route::controller(SubscriptionController::class)->group(function () {
     Route::get('/checkout/success', 'success')->name('checkout.success');
     Route::get('/checkout/cancel', 'cancel')->name('checkout.cancel');
 });
-

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Auth;
 
+use App\Actions\User\AssignRole;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\Hash;
 
 class SignUp
 {
+    public function __construct(
+        public AssignRole $assignRole,
+    )
+    {}
+
     public function handle($request): Model|User
     {
         $user = User::query()->create([
@@ -20,7 +26,7 @@ class SignUp
             'profile_picture' => config('media.defaults.profile_picture_url'),
         ]);
 
-        $user->roles()->attach(1);
+        $user = $this->assignRole->handle($user, 'user');
 
         Auth::login($user);
 

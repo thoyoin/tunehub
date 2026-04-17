@@ -13,7 +13,9 @@ class GetAuthUser
     {
         $user = Auth::user();
 
-        $user->load('roles', 'products');
+        $user->load('roles');
+
+        $user->append('is_subscribed');
 
         return $user;
     }

@@ -12,18 +12,14 @@ class MinioService
     {
         $path = Storage::disk('s3')->putFile('covers', $file);
 
-        $url = Storage::disk('s3')->url($path);
-
-        return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
+        return Storage::disk('s3')->url($path);
     }
 
     public function storeMerchCover($file): string
     {
         $path = Storage::disk('s3')->putFile('merch_covers', $file);
 
-        $url = Storage::disk('s3')->url($path);
-
-        return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
+        return Storage::disk('s3')->url($path);
     }
 
     public function storeProfile($file): string
@@ -34,9 +30,7 @@ class MinioService
             ],
         ]);
 
-        $url = Storage::disk('s3')->url($path);
-
-        return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
+        return Storage::disk('s3')->url($path);
     }
 
     public function storeTrack($file): string
@@ -47,9 +41,7 @@ class MinioService
             ],
         ]);
 
-        $url = Storage::disk('s3')->url($fileName);
-
-        return str_replace('http://minio:9000', 'http://127.0.0.1:9000', $url);
+        return Storage::disk('s3')->url($fileName);
     }
 
     public function destroyTrack($audioPath): void

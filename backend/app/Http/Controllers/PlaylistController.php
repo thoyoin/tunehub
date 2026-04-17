@@ -8,7 +8,6 @@ use App\Http\Requests\PlaylistUpdateRequest;
 use App\Models\Playlist;
 use App\Models\Track;
 use App\Services\PlaylistService;
-use App\Services\TrackService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -31,6 +30,8 @@ class PlaylistController extends Controller
 
     public function show(Playlist $playlist): JsonResponse
     {
+        Gate::authorize('view', $playlist);
+
         [$playlistItem, $tracks] = $this->playlistService->get($playlist);
 
         return response()->json([
@@ -68,6 +69,8 @@ class PlaylistController extends Controller
         Playlist $playlist,
         Request $request,
     ): JsonResponse {
+        Gate::authorize('update', $playlist);
+
         $visibility = $this->playlistService->updateVisibility($playlist, $request);
 
         return response()->json([
@@ -87,6 +90,8 @@ class PlaylistController extends Controller
 
     public function addTrack(Playlist $playlist, Track $track): JsonResponse
     {
+        Gate::authorize('update', $playlist);
+
         $response = $this->playlistService->addTrack($playlist, $track);
 
         return response()->json($response);

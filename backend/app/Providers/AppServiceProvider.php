@@ -22,14 +22,15 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton(Client::class, function () {
+
             $client = new Client([
-                'host' => env('CLICKHOUSE_HOST', 'tunehub-clickhouse-1'),
-                'port' => env('CLICKHOUSE_PORT', 8123),
-                'username' => env('CLICKHOUSE_USER', 'default'),
-                'password' => env('CLICKHOUSE_PASSWORD', 'default'),
+                'host' => config('services.clickhouse.host'),
+                'port' => config('services.clickhouse.port'),
+                'username' => config('services.clickhouse.username'),
+                'password' => config('services.clickhouse.password'),
             ]);
 
-            $client->database(env('CLICKHOUSE_DB', 'default'));
+            $client->database(config('services.clickhouse.db'));
 
             return $client;
         });

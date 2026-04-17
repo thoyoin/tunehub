@@ -17,7 +17,13 @@ class RecentlyPlayedController
 
     public function store(Request $request): JsonResponse
     {
-        $data = $request->only('id', 'item_type', 'track_id', 'track_artist_id', 'release_id');
+        $data = $request->validate([
+            'id' => ['required', 'integer'],
+            'item_type' => ['required', 'string', 'in:playlist,release'],
+            'track_id' => ['required', 'integer'],
+            'track_artist_id' => ['required', 'integer'],
+            'release_id' => ['required', 'integer'],
+        ]);
 
         $response = $this->recentlyPlayedService->store($data);
 

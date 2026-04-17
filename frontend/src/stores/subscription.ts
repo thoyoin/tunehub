@@ -15,7 +15,7 @@ export const useSubscriptionStore = defineStore('subscription', () => {
 
         try {
             const response = await api.post('/api/subscription/checkout', {
-                price_id: 'price_1TBa6jLLiCzKtruSYomynytQ',
+                price_id: import.meta.env.STRIPE_SUBSCRIPTION_PRICE_ID,
             })
 
             window.location.href = response.data.url

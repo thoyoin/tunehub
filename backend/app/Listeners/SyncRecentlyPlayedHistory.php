@@ -21,11 +21,24 @@ class SyncRecentlyPlayedHistory implements ShouldQueue
      */
     public function handle(TrackListened $event): void
     {
+        if (!in_array($event->itemType, ['release', 'playlist'], true)) {
+            return;
+        }
+
+        if (!is_numeric($event->itemId) || (int)$event->itemId <= 0) {
+            return;
+        }
+
+        if (!is_numeric($event->userId) || (int)$event->userId <= 0) {
+            return;
+        }
+
         $key = "user:{$event->userId}:recentlyPlayed";
 
         Redis::zadd(
             $key,
             now()->timestamp,
-            "{$event->itemType}:{$event->itemId}");
+            "{$event->itemType}:{$event->itemId}"
+        );
     }
 }

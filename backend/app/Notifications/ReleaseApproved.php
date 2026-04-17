@@ -39,7 +39,6 @@ class ReleaseApproved extends Notification implements ShouldQueue
             ->subject('Release Approved')
             ->greeting('Hello, ' . $notifiable->username)
             ->line('Your release "'. $this->release->title .'" has been approved.')
-            ->attach($this->release->cover_url)
             ->action('View', url('/release/' . $this->release->id))
             ->line('Keep going!');
     }

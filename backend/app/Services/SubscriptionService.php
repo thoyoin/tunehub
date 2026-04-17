@@ -6,6 +6,7 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
 
@@ -21,8 +22,8 @@ class SubscriptionService
 
         $checkout = $user->newSubscription('premium', $priceId)
             ->checkout([
-                'success_url' => 'http://127.0.0.1:5175/subscription/success',
-                'cancel_url' => 'http://127.0.0.1:5175/subscription/cancel',
+                'success_url' => config('app.frontend_url.success'),
+                'cancel_url' => config('app.frontend_url.cancel'),
             ]);
 
         if ($user->stripe_id) {
@@ -32,40 +33,53 @@ class SubscriptionService
         return $checkout->url;
     }
 
-    public function getDetails(Request $request)
+    public function getDetails(Request $request): array
     {
         $user = $request->user();
         $sub = $user->subscription('premium');
 
+        if (!$sub || !$sub->valid()) {
+            throw ValidationException::withMessages([
+                'subscription' => ['Premium subscription is not active.'],
+            ]);
+        }
+
         $stripeSub = $sub->asStripeSubscription();
+        $upcomingInvoice = $user->upcomingInvoice();
+        $subscriptionItem = $stripeSub->items->data[0] ?? null;
+
+        if (!$upcomingInvoice) {
+            throw ValidationException::withMessages([
+                'subscription' => ['Unable to fetch upcoming invoice for the current subscription.'],
+            ]);
+        }
+
+        if (!$subscriptionItem || !$subscriptionItem->price || !$subscriptionItem->plan) {
+            throw ValidationException::withMessages([
+                'subscription' => ['Subscription pricing data is unavailable.'],
+            ]);
+        }
 
         $data = [
-            'current_period_end' => Carbon::createFromTimestamp($user
-                ->upcomingInvoice()
-                ->period_end
-            )->toFormattedDateString(),
-            'current_period_start' => Carbon::createFromTimestamp($user
-                ->upcomingInvoice()
-                ->period_start
-            )->toFormattedDateString(),
-            'next_billing' => Carbon::create($user
-                ->upcomingInvoice()
+            'current_period_end' => Carbon::createFromTimestamp($upcomingInvoice->period_end)
+                ->toFormattedDateString(),
+            'current_period_start' => Carbon::createFromTimestamp($upcomingInvoice->period_start)
+                ->toFormattedDateString(),
+            'next_billing' => Carbon::create($upcomingInvoice
                 ->date()
                 ->toDateString()
             )->toFormattedDateString(),
-            'amount' => $stripeSub->items
-                ->data[0]
+            'amount' => $subscriptionItem
                 ->price
                 ->unit_amount,
-            'interval' => $stripeSub->items
-                ->data[0]
+            'interval' => $subscriptionItem
                 ->plan
                 ->interval,
             'currency' => $stripeSub->currency,
             'card' => [],
         ];
 
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(config('services.stripe.secret'));
 
         $pm = null;
 
@@ -101,6 +115,6 @@ class SubscriptionService
 
     public function goToBillingPortal(Request $request)
     {
-        return $request->user()->billingPortalUrl(env('APP_URL') . '/');
+        return $request->user()->billingPortalUrl(config('app.url') . '/');
     }
 }

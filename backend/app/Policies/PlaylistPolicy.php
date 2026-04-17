@@ -14,7 +14,11 @@ class PlaylistPolicy
      */
     public function before(User $user): bool|null
     {
-        if ($user->roles->contains('slug', 'admin')) {
+        if (
+            $user->roles()
+            ->where('slug', 'admin')
+            ->exists()
+        ) {
             return true;
         }
 
@@ -31,7 +35,7 @@ class PlaylistPolicy
      */
     public function view(User $user, Playlist $playlist): bool
     {
-        return false;
+        return $playlist->visibility === 'public' || $user->id === $playlist->user_id;
     }
 
     /**

@@ -13,7 +13,7 @@ class GetAllUsers
     {
         $search = $request->query('search');
 
-        return User::with(['playlists', 'tracks', 'roles'])
+        return User::with('roles')
             ->when($search, fn ($query) =>
                 $query->where('username', 'like', '%' . $search . '%')
                     ->orWhere('email', 'like', '%' . $search . '%')
