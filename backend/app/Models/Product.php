@@ -47,8 +47,14 @@ class Product extends Model
 
     public function order(): BelongsToMany
     {
-        return $this->belongsToMany(Order::class)
-            ->withPivot(['quantity', 'subtotal'])
+        return $this->belongsToMany(Order::class, 'order_product')
+            ->withPivot([
+                'product_variant_id',
+                'quantity',
+                'unit_price',
+                'subtotal',
+                'title_snapshot',
+            ])
             ->withTimestamps();
     }
 

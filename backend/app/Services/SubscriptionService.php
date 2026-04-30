@@ -7,23 +7,43 @@ namespace App\Services;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Stripe\PaymentMethod;
-use Stripe\Stripe;
+use Stripe\StripeClient;
 
 class SubscriptionService
 {
+    public function __construct(
+        public StripeClient $stripe,
+    )
+    {}
+
     public function goToCheckout(Request $request)
     {
         $user = $request->user();
 
-        $priceId = $request->input('price_id');
+        $inputPriceId = (string) $request->input('price_id');
+
+        $allowedPriceIds = config('services.stripe.premium_subscription_price_ids', []);
+
+        if (!in_array($inputPriceId, $allowedPriceIds, true)) {
+            throw ValidationException::withMessages([
+                'subscription' => ["Invalid subscription plan: {$inputPriceId}"]
+            ]);
+        }
+
+        $priceId = $this->stripe->prices->retrieve($inputPriceId);
+
+        if (!$priceId->active) {
+            throw ValidationException::withMessages([
+                'subscription' => ['Premium subscription is not available now.']
+            ]);
+        }
 
         $user->createOrGetStripeCustomer();
 
-        $checkout = $user->newSubscription('premium', $priceId)
+        $checkout = $user->newSubscription('premium', $inputPriceId)
             ->checkout([
-                'success_url' => config('app.frontend_url.success'),
-                'cancel_url' => config('app.frontend_url.cancel'),
+                'success_url' => config('app.frontend_url.subscription.success'),
+                'cancel_url' => config('app.frontend_url.subscription.cancel'),
             ]);
 
         if ($user->stripe_id) {
@@ -79,16 +99,14 @@ class SubscriptionService
             'card' => [],
         ];
 
-        Stripe::setApiKey(config('services.stripe.secret'));
-
         $pm = null;
 
         if ($stripeSub->default_payment_method) {
-            $pm = PaymentMethod::retrieve($stripeSub->default_payment_method);
+            $pm = $this->stripe->paymentMethods->retrieve($stripeSub->default_payment_method);
         }
 
         if (!$pm && $user->stripe_id) {
-            $methods = PaymentMethod::all([
+            $methods = $this->stripe->paymentMethods->all([
                 'customer' => $user->stripe_id,
                 'type' => 'card',
                 'limit' => 1,

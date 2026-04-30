@@ -22,10 +22,12 @@ class ReleasePolicy
 
     public function updateStatus(User $user, Release $release): bool
     {
-        return $user->roles()
-                ->where('slug', 'premium')
-                ->exists()
-            || $user->is_subscribed;
+        return $user->id === $release->user_id && (
+                $user->roles()
+                    ->where('slug', 'premium')
+                    ->exists()
+                || $user->is_subscribed
+            );
     }
 
     public function publish(User $user, Release $release): bool
@@ -83,10 +85,12 @@ class ReleasePolicy
      */
     public function delete(User $user, Release $release): bool
     {
-        return $user->id === $release->user_id || $user->roles()
+        return $user->id === $release->user_id && (
+            $user->roles()
                 ->where('slug', 'admin')
                 ->exists()
-            || $user->is_subscribed;
+            || $user->is_subscribed
+            );
     }
 
     /**

@@ -88,12 +88,16 @@ class AnalyticsService
 
     public function getNewPlaylists(): array
     {
-        $currentMonth = Playlist::where('created_at', '>', now()->subDays(30))
+        $currentMonthStart = now()->startOfMonth();
+        $previousMonthStart = now()->subMonthNoOverflow()->startOfMonth();
+
+        $currentMonth = Playlist::where('created_at', '>', $currentMonthStart)
             ->whereNot('slug', 'liked-tracks')
             ->count();
 
-        $pastMonth = Playlist::where('created_at', '>', now()->subDays(60))
-            ->where('created_at', '<=', now()->subDays(30))
+        $pastMonth = Playlist::where('created_at', '>', $previousMonthStart)
+            ->where('created_at', '<', $currentMonthStart)
+            ->whereNot('slug', 'liked-tracks')
             ->count();
 
         $growth = $this->countGrowth->handle($currentMonth, $pastMonth);
@@ -139,19 +143,32 @@ class AnalyticsService
             LIMIT 10
         ")->rows();
 
-        $artists = User::whereIn('id', array_column($top, 'artist_id'))
+        $artistIds = collect($top)
+            ->pluck('artist_id')
+            ->map(fn ($artist) => (int) $artist)
+            ->unique()
+            ->values();
+
+        if ($artistIds->isEmpty()) {
+            return collect();
+        }
+
+        $artists = User::whereIn('id', $artistIds->all())
             ->with('roles', 'tracks', 'playlists')
             ->get()
             ->keyBy('id');
 
-        return collect($top)->map(function ($row) use ($artists) {
-            $artist = $artists[$row['artist_id']];
+        return collect($top)
+            ->filter(fn ($row) => $artists->has((int) $row['artist_id']))
+            ->map(function ($row) use ($artists) {
+                $artist = $artists->get((int) $row['artist_id']);
 
-            return [
-                'artist' => $artist,
-                'streams' => $row['streams'],
-            ];
-        });
+                return [
+                    'artist' => $artist,
+                    'streams' => (int) $row['streams'],
+                ];
+            })
+            ->values();
     }
 
     public function getTopReleases(): Collection
@@ -166,17 +183,29 @@ class AnalyticsService
             LIMIT 10
         ")->rows();
 
-        $releases = Release::whereIn('id', array_column($rows, 'release_id'))
+        $releaseIds = collect($rows)
+            ->pluck('release_id')
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+
+        if ($releaseIds->isEmpty()) {
+            return collect();
+        }
+
+        $releases = Release::whereIn('id', $releaseIds->all())
             ->with('user', 'tracks')
             ->get()
             ->keyBy('id');
 
-        foreach ($rows as $row) {
-            $releases[$row['release_id']]->plays = $row['plays'];
-        }
+        return collect($rows)
+            ->filter(fn ($row) => $releases->has((int) $row['release_id']))
+            ->map(function ($row) use ($releases) {
+                $release = $releases->get((int) $row['release_id']);
+                $release->plays = (int) $row['plays'];
 
-        return collect(array_column($rows, 'release_id'))
-            ->map(fn ($id) => $releases[$id])
+                return $release;
+            })
             ->values();
     }
 }

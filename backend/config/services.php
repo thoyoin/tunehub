@@ -39,6 +39,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
         'public' => env('STRIPE_KEY'),
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'merch_webhook_secret' => env('STRIPE_MERCH_WEBHOOK_SECRET'),
+        'premium_subscription_price_ids' => array_filter(
+            explode(',', env('STRIPE_SUBSCRIPTION_PRICE_ID', '')),
+        ),
     ],
 
     'clickhouse' => [

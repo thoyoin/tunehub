@@ -5,21 +5,20 @@ import { useUsersStore } from '@/stores/AdminPanel/users.ts'
 
 const adminPanelStore = useUsersStore()
 
-const currentPage = ref(1)
-
 const users = computed(() => {
     return adminPanelStore.users?.data ?? []
 })
 
 const fetchPage = async (page) => {
-    currentPage.value = page
+    adminPanelStore.setPage(page)
 
     adminPanelStore.setLoading()
+
     await adminPanelStore.fetchUsers(page)
 }
 
 watch(() => adminPanelStore.search, async () => {
-    currentPage.value = 1
+    adminPanelStore.resetPage();
 
     adminPanelStore.setLoading();
     await adminPanelStore.fetchUsers(1, adminPanelStore.search)
@@ -154,15 +153,15 @@ onMounted(async () => {
                 >
                     <button
                         class="btn btn-pagination"
-                        @click="fetchPage(currentPage - 1)"
-                        :disabled="currentPage === 1"
+                        @click="fetchPage(adminPanelStore.currentPage - 1)"
+                        :disabled="adminPanelStore.currentPage === 1"
                     >
                         <img src="@/assets/svg/arrowLeft.svg" alt="prev">
                     </button>
                     <button
                         class="btn btn-pagination"
-                        @click="fetchPage(currentPage + 1)"
-                        :disabled="currentPage === adminPanelStore.users?.last_page"
+                        @click="fetchPage(adminPanelStore.currentPage + 1)"
+                        :disabled="adminPanelStore.currentPage === adminPanelStore.users?.last_page"
                     >
                         <img src="@/assets/svg/arrowRight.svg" alt="next">
                     </button>

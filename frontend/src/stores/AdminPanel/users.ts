@@ -13,20 +13,37 @@ export const useUsersStore = defineStore('users', () => {
     const viewUser = ref<User | null>(null);
     const viewUserDetailed = ref<UserDetailed | null>(null);
     const isLoading = ref<boolean>(false);
+    const currentPage = ref<number>(1);
+    let fetchUsersRequestId = 0;
+
+    const resetPage = () => {
+        currentPage.value = 1
+    }
+
+    const setPage = (page: number) => {
+        currentPage.value = page
+    }
 
     const fetchUsers = useDebounceFn(
-        async (page: number = 1, search: string | null = null): Promise<void> => {
+        async (page: number = currentPage.value, search: string | null = null): Promise<void> => {
+
+        const requestId = ++fetchUsersRequestId
 
         try {
-            const response = await api.get<PaginatedResponse<User>>(`/api/admin/users`, {
+            const response = await api.get<PaginatedResponse<User>>(
+                `/api/admin/users`, {
                 params: { page: page, search: search },
             });
+
+            if (requestId !== fetchUsersRequestId) return;
 
             users.value = response.data;
         } catch (e) {
             console.error(e);
         } finally {
-            isLoading.value = false;
+            if (requestId === fetchUsersRequestId) {
+                isLoading.value = false;
+            }
         }
     }, 300)
 
@@ -62,7 +79,7 @@ export const useUsersStore = defineStore('users', () => {
 
             await api.delete(`/api/admin/users/${id}/delete`);
 
-            await fetchUsers();
+            await fetchUsers(currentPage.value, search.value);
         } catch (e) {
             console.log(e);
         } finally {
@@ -72,6 +89,6 @@ export const useUsersStore = defineStore('users', () => {
 
     return {
         users, fetchUsers, setViewUser, viewUser, deleteUser, isLoading, setLoading, search,
-        fetchUserDetails, viewUserDetailed
+        fetchUserDetails, viewUserDetailed, currentPage, resetPage, setPage
     };
 });

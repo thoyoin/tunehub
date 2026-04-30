@@ -73,6 +73,7 @@ export const useLibraryStore = defineStore('library',() => {
                     visibility: playlistVisibility.value,
                 }
             )
+
             if (libraryItem.value.item.visibility) {
                 libraryItem.value.item.visibility = response.data.visibility;
             }

@@ -14,6 +14,16 @@ class Order extends Model
         'user_id',
         'status',
         'total_price',
+        'customer_name',
+        'customer_email',
+        'customer_address',
+        'stripe_payment_intent_id',
+        'stripe_session_id',
+    ];
+
+    protected $hidden = [
+        'stripe_session_id',
+        'stripe_payment_intent_id'
     ];
 
     public function user(): BelongsTo
@@ -23,8 +33,14 @@ class Order extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)
-            ->withPivot(['quantity', 'price'])
+        return $this->belongsToMany(Product::class, 'order_product')
+            ->withPivot([
+                'product_variant_id',
+                'quantity',
+                'unit_price',
+                'subtotal',
+                'title_snapshot',
+            ])
             ->withTimestamps();
     }
 }

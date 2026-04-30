@@ -21,8 +21,6 @@ return new class extends Migration
             $table->enum('status', ['pending', 'paid', 'confirmed', 'cancelled'])
                 ->default('pending');
             $table->unsignedBigInteger('total_price');
-            $table->string('currency')
-                ->default('usd');
             $table->string('stripe_session_id')
                 ->nullable();
             $table->string('stripe_payment_intent_id')

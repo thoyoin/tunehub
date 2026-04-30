@@ -9,9 +9,10 @@ import type {Playlist} from "@/types/Playlist";
 
 let singleton: AudioPlayerSingleton | null = null;
 
-export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
+export const useAudioPlayer = () => {
     if (singleton) return singleton;
 
+    const audioRef = ref<HTMLAudioElement | null>(null);
     const currentTrack = ref<Track | null>(null)
     const queue = ref<Track[]>([])
     const currentIndex = ref<number | null>(null)
@@ -25,6 +26,12 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
     const currentContext = ref<Release | Playlist | null>(null)
     const hasBeenListened = ref(false)
     const listenedTimeout = ref<number | null>(null)
+
+    const setAudioPlayer = (el: HTMLAudioElement | null) => {
+        if (audioRef.value === el) return;
+
+        audioRef.value = el
+    }
 
     watch(currentTrack, async (track) => {
         hasBeenListened.value = false
@@ -43,7 +50,6 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
             hasBeenListened.value = true
 
             const payload = {
-                ...currentContext.value,
                 track_id: track.id,
                 track_artist_id: track.user_id,
                 release_id: track.release_id ?? null
@@ -61,12 +67,37 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
     }
 
     const onLoadedMetadata = () => {
+        if (!audioRef.value) return;
+
         duration.value = audioRef.value.duration
     }
 
     const onEnded = () => {
         if (hasNext.value) next()
         else isPlaying.value = false
+    }
+
+    const parseStoredTrack = (value: string) => {
+        try {
+            const parsed = JSON.parse(value)
+
+            if (
+                typeof parsed !== "object" ||
+                parsed === null ||
+                    !('id' in parsed) ||
+                    !('user_id' in parsed) ||
+                    !('audio_url' in parsed) ||
+                typeof parsed.id !== 'number' ||
+                typeof parsed.user_id !== 'number' ||
+                typeof parsed.audio_url !== 'string'
+            ) {
+                return null;
+            }
+
+            return parsed as Track
+        } catch {
+            return null;
+        }
     }
 
     watch(audioRef, (newEl, oldEl) => {
@@ -80,12 +111,16 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
             newEl.volume = volume.value
 
             const lastPlayed = localStorage.getItem('lastPlayed')
-            if (lastPlayed) {
-                const parsed: Track = JSON.parse(lastPlayed)
-                currentTrack.value = parsed
 
-                if (parsed.audio_url) {
+            if (lastPlayed) {
+                const parsed = parseStoredTrack(lastPlayed)
+
+                if (parsed) {
+                    currentTrack.value = parsed
+
                     newEl.src = parsed.audio_url
+                } else {
+                    localStorage.removeItem('lastPlayed')
                 }
             }
 
@@ -204,7 +239,7 @@ export const useAudioPlayer = (audioRef: Ref<HTMLAudioElement>) => {
         currentTrack, queue, currentIndex, isPlaying, progress,
         currentTime, duration, volume, isMuted, hasNext, hasPrev,
         playTrack, toggle, toggleVolume, toggleTrack, currentContext,
-        next, prev, seek, formatTime, setVolume, hasTrack
+        next, prev, seek, formatTime, setVolume, hasTrack, setAudioPlayer
     }
 
     return singleton;

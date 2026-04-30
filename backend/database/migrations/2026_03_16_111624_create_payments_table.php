@@ -18,6 +18,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders')
+                ->onDelete('cascade');
             $table->string('provider');
             $table->string('provider_payment_id')->index();
             $table->string('currency')->default('usd');

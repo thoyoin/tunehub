@@ -78,13 +78,13 @@ const router = createRouter({
           component: ArtistCard
       },
       {
-          path: '/subscription/success',
-          name: 'subscription.success',
+          path: '/subscription/payment/success',
+          name: 'subscription.payment.success',
           component: SubscriptionSuccess,
       },
       {
-          path: '/subscription/cancel',
-          name: 'subscription.cancel',
+          path: '/subscription/payment/cancel',
+          name: 'subscription.payment.cancel',
           component: SubscriptionCancel,
       },
       {
@@ -142,6 +142,10 @@ router.beforeEach(async (to) => {
 
     if (!auth.isReady) {
         await auth.fetchUser()
+    }
+
+    if (auth.bootstrapError) {
+        return false
     }
 
     if (to.meta.requiresAuth && !auth.user) {

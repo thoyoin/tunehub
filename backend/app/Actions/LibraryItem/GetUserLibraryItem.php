@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Actions\LibraryItem;
 
+use App\Models\LibraryItem;
+
 class GetUserLibraryItem
 {
-    public function handle($id)
+    public function handle(int $libItemId): LibraryItem
     {
-        return $id
-            ->with('item')
-            ->with('user')
-            ->where('id', $id->id)
-            ->first();
+        return LibraryItem::with(['item', 'user'])
+            ->where('user_id', auth()->id())
+            ->where('id', $libItemId)
+            ->firstOrFail();
     }
 }

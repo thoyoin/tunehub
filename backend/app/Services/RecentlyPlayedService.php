@@ -7,25 +7,30 @@ namespace App\Services;
 use App\Events\TrackListened;
 use App\Models\Playlist;
 use App\Models\Release;
-use Illuminate\Http\JsonResponse;
+use App\Models\Track;
 use Illuminate\Support\Facades\Redis;
 
 class RecentlyPlayedService
 {
-    public function store($data): JsonResponse
+    public function store($data): void
     {
+        $track = Track::query()
+            ->whereKey($data['track_id'])
+            ->where('release_id', $data['release_id'])
+            ->with('release')
+            ->firstOrFail();
+
+        if ($track->user_id === auth()->id()) {
+            return;
+        }
+
         TrackListened::dispatch(
             auth()->id(),
-            $data['id'],
-            $data['track_id'],
-            $data['item_type'],
-            $data['track_artist_id'],
-            $data['release_id']
+            $track->release_id,
+            $track->id,
+            $track->release->item_type,
+            $track->user_id,
         );
-
-        return response()->json([
-            'sentData' => $data,
-        ]);
     }
 
     public function get(): ?array

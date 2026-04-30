@@ -22,7 +22,7 @@ const logout = async () => {
 
 const routeHome = () => {
     router.push('/')
-    libraryStore.clearAllSelectedItems()
+    libraryStore.clearSelectedItem()
 }
 </script>
 

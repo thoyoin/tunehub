@@ -25,7 +25,9 @@ class ArtistService
             return collect();
         }
 
-        $idsList = implode(',', $ids);
+        $idsList = collect($ids)
+            ->map(fn ($id) => (int) $id)
+            ->implode(',');
 
         $rows = $this->clickhouse->select("
             select
@@ -41,18 +43,17 @@ class ArtistService
             ]
         )->rows();
 
-
         $releases = Release::whereIn('id', array_column($rows, 'release_id'))
             ->get()
             ->keyBy('id');
 
-        foreach ($rows as $row) {
-            $releases[$row['release_id']]->plays = $row['plays'];
-        }
-
-        return collect(array_column($rows, 'release_id'))
-            ->map(fn ($id) => $releases[$id] ?? null)
-            ->filter()
+        return collect($rows)
+            ->filter(fn ($row) => $releases->has((int) $row['release_id']))
+            ->map(function ($row) use ($releases) {
+                $release = $releases->get((int)$row['release_id']);
+                $release->plays = (int)$row['plays'];
+                return $release;
+            })
             ->values();
     }
 

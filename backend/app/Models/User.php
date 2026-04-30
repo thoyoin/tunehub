@@ -25,13 +25,12 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
     protected $fillable = [
-        'slug',
         'username',
         'email',
         'password',
         'profile_picture',
-        'role_id'
     ];
 
     /**
@@ -44,6 +43,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'stripe_id',
+        'pm_type',
+        'pm_last_four',
+        'trial_ends_at',
     ];
 
     protected $appends = [

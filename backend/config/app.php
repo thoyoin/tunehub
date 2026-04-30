@@ -55,8 +55,14 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'frontend_url' => [
-        'success' => env('APP_CHECKOUT_SUCCESS_URL'),
-        'cancel' => env('APP_CHECKOUT_CANCEL_URL'),
+        'merch' => [
+            'success' => env('APP_CHECKOUT_MERCH_SUCCESS_URL'),
+            'cancel' => env('APP_CHECKOUT_MERCH_CANCEL_URL'),
+        ],
+        'subscription' => [
+            'success' => env('APP_CHECKOUT_SUBSCRIPTION_SUCCESS_URL'),
+            'cancel' => env('APP_CHECKOUT_SUBSCRIPTION_CANCEL_URL'),
+        ]
     ],
 
     /*

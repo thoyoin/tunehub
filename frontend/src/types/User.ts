@@ -1,5 +1,3 @@
-import Subscription from "@/pages/subscription/Subscription.vue";
-
 import type { Playlist } from './Playlist'
 import type { Track } from './Track'
 import type { Role } from './Role'

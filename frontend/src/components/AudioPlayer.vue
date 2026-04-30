@@ -1,19 +1,30 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import {onBeforeUnmount, onMounted, ref} from "vue";
 import router from "@/router";
 
 import { useAudioPlayer } from "@/composables/useAudioPlayer";
 import { useAuthStore } from "@/stores/auth";
 import { useReleaseStore } from "@/stores/release";
 
-const audioRef = ref(null);
+const audioRef = ref<HTMLAudioElement | null>(null);
 const auth = useAuthStore();
 const releaseStore = useReleaseStore();
 
 const { prev, hasTrack, volume, next, toggle,
     isPlaying, currentTrack, formatTime, currentTime,
     seek, progress, toggleVolume, isMuted, setVolume,
-} = useAudioPlayer(audioRef);
+    setAudioPlayer
+} = useAudioPlayer();
+
+onMounted(() => {
+    if (!audioRef.value) return;
+
+    setAudioPlayer(audioRef.value);
+})
+
+onBeforeUnmount(() => {
+    setAudioPlayer(null);
+})
 
 const handleGetRelease = async () => {
     if (currentTrack.value) {

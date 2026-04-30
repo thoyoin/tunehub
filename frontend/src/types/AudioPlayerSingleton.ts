@@ -19,6 +19,7 @@ export interface AudioPlayerSingleton {
     hasTrack: ComputedRef<boolean>
     currentContext: Ref<Release | Playlist | null>
 
+    setAudioPlayer: (el: HTMLAudioElement) => void
     playTrack: (track: Track, newQueue: Track[], item: Release | Playlist) => void
     toggle: () => void
     toggleVolume: () => void

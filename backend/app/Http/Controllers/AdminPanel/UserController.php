@@ -7,9 +7,12 @@ namespace App\Http\Controllers\AdminPanel;
 use App\Actions\AdminPanel\User\GetAllUsers;
 use App\Actions\AdminPanel\User\GetUserDetails;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class UserController
 {
@@ -20,9 +23,14 @@ class UserController
         return response()->json($users);
     }
 
-    public function delete(User $user): JsonResponse
+    /**
+     * @throws ValidationException
+     */
+    public function delete(User $user, UserService $userService): JsonResponse
     {
-        $user->delete();
+        Gate::authorize('destroy', $user);
+
+        $userService->destroyFromAdmin($user);
 
         Log::info('Moderation: user was deleted', [
             'username' => $user->username,

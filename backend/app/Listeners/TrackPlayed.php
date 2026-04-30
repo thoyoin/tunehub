@@ -25,20 +25,10 @@ class TrackPlayed implements ShouldQueue
             return;
         }
 
-        if (!is_numeric($event->trackId) || (int)$event->trackId <= 0) {
-            return;
-        }
-
-        if (!is_numeric($event->userId) || (int)$event->userId <= 0) {
-            return;
-        }
-
-        if (!is_numeric($event->trackArtistId) || (int)$event->trackArtistId <= 0) {
-            return;
-        }
-
-        if (!is_numeric($event->releaseId) || (int)$event->releaseId <= 0) {
-            return;
+        foreach ([$event->trackId, $event->userId, $event->trackArtistId, $event->itemId] as $id) {
+            if (!is_numeric($id) || (int) $id <= 0) {
+                return;
+            }
         }
 
         $this->clickhouse->insert('track_plays', [
@@ -47,7 +37,7 @@ class TrackPlayed implements ShouldQueue
                 $event->userId,
                 now()->timestamp,
                 $event->trackArtistId,
-                $event->releaseId
+                $event->itemId,
             ]
         ], ['track_id', 'user_id', 'played_at', 'track_artist_id', 'release_id']);
     }

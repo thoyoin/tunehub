@@ -18,16 +18,14 @@ class RecentlyPlayedController
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'id' => ['required', 'integer'],
-            'item_type' => ['required', 'string', 'in:playlist,release'],
             'track_id' => ['required', 'integer'],
             'track_artist_id' => ['required', 'integer'],
             'release_id' => ['required', 'integer'],
         ]);
 
-        $response = $this->recentlyPlayedService->store($data);
+        $this->recentlyPlayedService->store($data);
 
-        return response()->json($response);
+        return response()->json();
     }
 
     public function get(): JsonResponse

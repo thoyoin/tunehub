@@ -31,7 +31,6 @@ build/
 .yarnrc
 
 vendor/
-composer.lock
 
 backend/storage/*.key
 backend/storage/logs/*

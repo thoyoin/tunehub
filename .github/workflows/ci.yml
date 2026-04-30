@@ -87,10 +87,18 @@ jobs:
         working-directory: backend
         run: php artisan test
 
-      - name: Install frontend dependencies
+      - name: Install backend node dependencies
         working-directory: backend
         run: npm ci
 
-      - name: Build frontend
+      - name: Build backend
         working-directory: backend
+        run: npm run build
+
+      - name: Install frontend SPA dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend SPA
+        working-directory: frontend
         run: npm run build

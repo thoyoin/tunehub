@@ -23,6 +23,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::post('/stripe/webhook', [\Laravel\Cashier\Http\Controllers\WebhookController::class, 'handleWebhook']);
+Route::post('/stripe/merch/webhook', [\App\Http\Controllers\StripeMerchWebhookController::class, 'handle']);
 
 Route::prefix('admin')
     ->middleware(['auth:sanctum', 'admin'])

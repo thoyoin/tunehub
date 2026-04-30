@@ -104,13 +104,19 @@ class ArtistStudioService
             ->get()
             ->keyBy('id');
 
-        return collect($rows)->map(function ($row) use ($tracks) {
-            $track = $tracks[$row['track_id']];
+        if ($tracks->isEmpty()) {
+            return collect();
+        }
 
-            return [
-                'track' => $track,
-                'streams' => $row['streams'],
-            ];
+        return collect($rows)
+            ->filter(fn ($row) => $tracks->has((int) $row['track_id']))
+            ->map(function ($row) use ($tracks) {
+                $track = $tracks->get((int) $row['track_id']);
+
+                return [
+                    'track' => $track,
+                    'streams' => (int) $row['streams'],
+                ];
         });
     }
 
@@ -137,7 +143,7 @@ class ArtistStudioService
             ->get()
             ->keyBy('id');
 
-        foreach($rows as $row){
+        foreach($rows as $row) {
             $releases[$row['release_id']]->plays = $row['streams'];
         }
 
@@ -148,9 +154,27 @@ class ArtistStudioService
 
     public function dropMerch(Request $request): void
     {
-        $itemTitle = $request->input('item_title');
-        $itemDescription = $request->input('item_description');
-        $merchVariants = json_decode($request->input('merch_variants'), true);
+        $data = $request->validate([
+            'item_title' => 'required|string|max:55',
+            'item_description' => 'nullable|string|max:255',
+            'images' => 'nullable|array',
+            'images.*' => 'image|max:5120',
+            'merch_variants' => 'required|json'
+        ]);
+
+        $merchVariants = json_decode($data['merch_variants'], true);
+
+        validator([
+            'merch_variants' => $merchVariants,
+        ], [
+            'merch_variants' => ['required', 'array', 'min:1'],
+            'merch_variants.*.variant_name' => ['required', 'string', 'max:55'],
+            'merch_variants.*.price' => ['required', 'numeric', 'min:0.01'],
+            'merch_variants.*.stock' => ['required', 'integer', 'min:0'],
+        ])->validate();
+
+        $itemTitle = $data['item_title'];
+        $itemDescription = $data['item_description'] ?? null;
         $userId = auth()->id();
 
         DB::transaction(function () use (
