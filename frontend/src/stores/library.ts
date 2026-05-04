@@ -17,9 +17,7 @@ export const useLibraryStore = defineStore('library',() => {
     const isRelease = ref<boolean>(false);
     const userPlaylists = ref<Playlist[]>([]);
     const isLoading = ref<boolean>(false);
-    const playlistVisibility = ref<string>(
-        libraryItem.value?.visibility === 'public' ? 'public' : 'private'
-    );
+    const playlistVisibility = ref<string>('private');
     const isLibraryDataLoaded = ref<boolean>(false);
 
     const auth = useAuthStore();
@@ -103,6 +101,10 @@ export const useLibraryStore = defineStore('library',() => {
 
             libraryItem.value = response.data.libraryItem
             isRelease.value = response.data.isRelease;
+
+            if (!response.data.isRelease) {
+                playlistVisibility.value = response.data.libraryItem.visibility;
+            }
         } catch (e) {
             console.error(e)
 
