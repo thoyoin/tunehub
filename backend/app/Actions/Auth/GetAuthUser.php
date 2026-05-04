@@ -15,7 +15,7 @@ class GetAuthUser
 
         $user->load('roles');
 
-        $user->append('is_subscribed');
+        $user->append(['is_subscribed', 'is_admin']);
 
         return $user;
     }

@@ -157,7 +157,7 @@ router.beforeEach(async (to) => {
     }
 
     if (to.meta.requiresAdmin) {
-        const isAdmin = auth.user?.roles[0]?.slug === 'admin'
+        const isAdmin = auth.user?.is_admin
 
         if (!isAdmin) return '/'
     }

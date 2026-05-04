@@ -64,7 +64,7 @@ const routeHome = () => {
                         <form method="POST" @submit.prevent="logout">
                             <ul class="dropdown-menu">
                                 <li>
-                                    <template v-if="auth.user?.roles[0]?.slug === 'premium'">
+                                    <template v-if="auth.user?.is_subscribed">
                                         <button
                                             type="button"
                                             class="dropdown-item"

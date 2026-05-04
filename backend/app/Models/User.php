@@ -50,6 +50,8 @@ class User extends Authenticatable
 
     protected $appends = [
         'joined_at',
+        'is_admin',
+        'is_subscribed',
     ];
 
     /**
@@ -67,6 +69,18 @@ class User extends Authenticatable
     public function getIsSubscribedAttribute(): bool
     {
         return $this->subscribed('premium');
+    }
+
+    public function getIsAdminAttribute(): bool
+    {
+        if ($this->relationLoaded('roles')) {
+            return $this->roles
+                ->contains('slug', 'admin');
+        }
+
+        return $this->roles()
+            ->where('slug', 'admin')
+            ->exists();
     }
 
     public function getJoinedAtAttribute(): ?string

@@ -43,6 +43,7 @@ export interface User {
     tracks: Track[]
     roles: Role[]
     is_subscribed: boolean
+    is_admin: boolean
     subscriptions: Subscription[]
     products?: ArtistMerch[]
 }

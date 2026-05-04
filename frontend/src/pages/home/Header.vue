@@ -209,7 +209,7 @@ const routeHome = () => {
             </div>
             <div class="d-flex flex-row align-items-center">
                 <template v-if="auth.user">
-                    <template v-if="!auth.user?.is_subscribed && auth.user?.roles[0]?.slug !== 'admin'">
+                    <template v-if="!auth.user?.is_subscribed && !auth.user?.is_admin">
                         <button
                             @click="
                                 router.push({
@@ -221,7 +221,7 @@ const routeHome = () => {
                             Upgrade now
                         </button>
                     </template>
-                    <template v-else-if="auth.user?.roles[0]?.slug !== 'admin'">
+                    <template v-else-if="!auth.user?.is_admin">
                         <button
                             @click="router.push('/artists')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"
@@ -229,7 +229,7 @@ const routeHome = () => {
                             Artist Studio
                         </button>
                     </template>
-                    <template v-if="auth.user?.roles[0]?.slug === 'admin'">
+                    <template v-if="auth.user?.is_admin">
                         <button
                             @click="router.push('/admin/overview')"
                             class="btn btn-artists d-flex rounded-5 px-2 py-0 align-items-center me-5"

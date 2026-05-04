@@ -28,6 +28,8 @@ export const useAuthStore = defineStore('auth', () => {
                 const response = await api.get<{ user: User }>("/api/user");
 
                 user.value = response.data.user;
+
+                console.log(response.data.user);
             } catch (e) {
                 const error = e as AxiosError;
 
