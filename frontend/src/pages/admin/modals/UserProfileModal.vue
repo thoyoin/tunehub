@@ -71,7 +71,9 @@ const handleUserDeletion = async (id: number) => {
                                            "
                                 class="mt-2 opacity-75"
                             >
-                                {{ adminPanelStore.viewUser?.roles[0]?.name }}
+                                {{ adminPanelStore.viewUser?.roles
+                                    .find(r => r.slug === 'admin')?.name
+                                ?? adminPanelStore.viewUser?.roles[0]?.name}}
                             </span>
                         </div>
                         <div

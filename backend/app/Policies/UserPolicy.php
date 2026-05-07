@@ -18,10 +18,23 @@ class UserPolicy
             return false;
         }
 
-        if ($target->roles()->where('slug', 'admin')->exists()) {
+        if (!$admin->roles()->where('slug', 'admin')->exists()) {
             return false;
         }
 
-        return $admin->roles()->where('slug', 'admin')->exists();
+        $isTargetAdmin = $target->roles()->where('slug', 'target-admin')->exists();
+
+        if ($isTargetAdmin) {
+            $adminCount = User::whereHas('roles', function ($query) {
+                $query->where('slug', 'admin')
+                    ->count();
+            });
+
+            if ($adminCount <= 1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

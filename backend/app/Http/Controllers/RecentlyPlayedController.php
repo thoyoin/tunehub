@@ -19,7 +19,6 @@ class RecentlyPlayedController
     {
         $data = $request->validate([
             'track_id' => ['required', 'integer'],
-            'track_artist_id' => ['required', 'integer'],
             'release_id' => ['required', 'integer'],
         ]);
 

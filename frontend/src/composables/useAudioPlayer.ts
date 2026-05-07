@@ -26,6 +26,7 @@ export const useAudioPlayer = () => {
     const currentContext = ref<Release | Playlist | null>(null)
     const hasBeenListened = ref(false)
     const listenedTimeout = ref<number | null>(null)
+    const hasRestoredLastPlayed = ref<boolean>(false)
 
     const setAudioPlayer = (el: HTMLAudioElement | null) => {
         if (audioRef.value === el) return;
@@ -109,6 +110,10 @@ export const useAudioPlayer = () => {
 
         if (newEl) {
             newEl.volume = volume.value
+
+            if (!hasRestoredLastPlayed.value && !currentTrack.value) {
+                hasRestoredLastPlayed.value = true
+            }
 
             const lastPlayed = localStorage.getItem('lastPlayed')
 

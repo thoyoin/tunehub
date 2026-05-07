@@ -16,7 +16,12 @@ export const useAuthStore = defineStore('auth', () => {
 
     const errors = ref({});
 
-    const fetchUser = (): Promise<void> => {
+    const fetchUser = (force?: boolean): Promise<void> => {
+        if (force) {
+            fetchUserPromise = null;
+            isReady.value = false;
+        }
+
         if (fetchUserPromise) {
             return fetchUserPromise;
         }
@@ -28,8 +33,6 @@ export const useAuthStore = defineStore('auth', () => {
                 const response = await api.get<{ user: User }>("/api/user");
 
                 user.value = response.data.user;
-
-                console.log(response.data.user);
             } catch (e) {
                 const error = e as AxiosError;
 
@@ -38,10 +41,12 @@ export const useAuthStore = defineStore('auth', () => {
                     return;
                 }
 
+                user.value = null;
                 bootstrapError.value = error;
             } finally {
                 isReady.value = true;
                 fetchUserPromise = null;
+                errors.value = {};
             }
         })();
 

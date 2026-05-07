@@ -30,6 +30,8 @@ class StripeMerchWebhookService
                 return;
             }
 
+            if ($session->amount_total !== (int)$order->total_price * 100) abort(400);
+
             foreach ($order->products as $product) {
                 $variantId = $product->pivot->product_variant_id;
                 $quantity = (int) $product->pivot->quantity;
@@ -45,23 +47,27 @@ class StripeMerchWebhookService
                 $variant->decrement('stock', $quantity);
             }
 
-            Payment::create([
+            Payment::updateOrCreate([
                 'user_id' => $order->user_id,
                 'order_id' => $order->id,
                 'provider' => 'stripe',
                 'provider_payment_id' => $session->payment_intent ?? $session->id,
-                'currency' => $order->currency ?? $session->currency ?? 'usd',
+                'currency' => $session->currency ?? 'usd',
                 'amount' => $order->total_price,
                 'status' => 'success',
             ]);
+
+            $customerAddress = trim(
+                ($session->customer_details->address->country ?? '') . ', ' .
+                ($session->customer_details->address->city ?? '')
+            );
 
             $order->update([
                 'status' => 'paid',
                 'stripe_payment_intent_id' => $session->payment_intent,
                 'customer_name' => $session->customer_details->name,
                 'customer_email' => $session->customer_details->email,
-                'customer_address' => $session->customer_details->address->country .
-                    ', ' . $session->customer_details->address->city,
+                'customer_address' => $customerAddress,
             ]);
         });
     }

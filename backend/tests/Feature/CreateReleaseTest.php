@@ -16,9 +16,6 @@ class CreateReleaseTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * A basic feature test example.
-     */
     public function test_artist_can_create_release(): void
     {
         $artist = User::factory()->premium()->create();

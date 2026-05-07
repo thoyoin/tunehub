@@ -24,6 +24,10 @@ class RecentlyPlayedService
             return;
         }
 
+        if (!$this->canCountListen(auth()->id(), $track->id)) {
+            return;
+        }
+
         TrackListened::dispatch(
             auth()->id(),
             $track->release_id,
@@ -31,6 +35,30 @@ class RecentlyPlayedService
             $track->release->item_type,
             $track->user_id,
         );
+    }
+
+    public function canCountListen(int $userId, int $trackId): bool
+    {
+        $windowSeconds = 60;
+        $maxListensPerWindow = 1;
+        $now = now()->timestamp;
+        $key = "listen-rate:{$userId}:{$trackId}";
+        $windowStart = $now - $windowSeconds;
+
+        Redis::zremrangebyscore($key, '-inf', (string) $windowStart);
+
+        $listenCount = Redis::zcard($key);
+
+        if ($listenCount >= $maxListensPerWindow) {
+            Redis::expire($key, $windowSeconds);
+
+            return false;
+        }
+
+        Redis::zadd($key, $now, (string) $now);
+        Redis::expire($key, $windowSeconds);
+
+        return true;
     }
 
     public function get(): ?array

@@ -8,6 +8,7 @@ use App\Actions\Artist\GetArtistStreams;
 use App\Actions\Release\GetUserReleases;
 use App\Actions\Track\GetUserTracks;
 use App\Jobs\ArchiveStripeProduct;
+use App\Jobs\DeleteCoverFile;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Release;
@@ -138,17 +139,29 @@ class ArtistStudioService
                 streams DESC
         ", ['artist_id' => $artistId])->rows();
 
+        $releaseIds = collect($rows)
+            ->pluck('release_id')
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+
+        if ($releaseIds->isEmpty()) {
+            return collect();
+        }
+
         $releases = Release::where('user_id', $artistId)
-            ->whereIn('id', array_column($rows, 'release_id'))
+            ->whereIn('id', $releaseIds->all())
             ->get()
             ->keyBy('id');
 
-        foreach($rows as $row) {
-            $releases[$row['release_id']]->plays = $row['streams'];
-        }
+        return collect($rows)
+            ->filter(fn ($row) => $releases->has((int) $row['release_id']))
+            ->map(function ($row) use ($releases) {
+                $release = $releases->get((int) $row['release_id']);
+                $release->plays = (int) $row['streams'];
 
-        return collect(array_column($rows, 'release_id'))
-            ->map(fn ($id) => $releases[$id])
+                return $release;
+            })
             ->values();
     }
 
@@ -233,24 +246,62 @@ class ArtistStudioService
 
     public function updateMerch(Request $request, Product $merch): void
     {
-        $existingImages = json_decode($request->input('existing_images'), true) ?? [];
+        $data = $request->validate([
+            'item_title' => ['required', 'string', 'max:55'],
+            'item_description' => ['nullable', 'string', 'max:255'],
+            'existing_images' => ['nullable', 'json'],
+            'new_images' => ['nullable', 'array'],
+            'new_images.*' => ['image', 'max:5120'],
+            'merch_variants' => ['required', 'json'],
+        ]);
+
+        $existingImages = json_decode($data['existing_images'], true) ?? [];
         $existingImageUrls = array_column($existingImages, 'image_url');
-        $merchVariants = json_decode($request->input('merch_variants'), true);
+        $merchVariants = json_decode($data['merch_variants'], true) ?? [];
+
+        validator([
+            'existing_images' => $existingImages,
+            'merch_variants' => $merchVariants,
+        ], [
+            'existing_images' => ['array'],
+            'existing_images.*.id' => ['required', 'integer', 'exists:product_images,id'],
+            'existing_images.*.image_url' => ['required', 'string', 'max:2048'],
+            'merch_variants' => ['required', 'array', 'min:1'],
+            'merch_variants.*.id' => ['nullable', 'integer', 'exists:product_variants,id'],
+            'merch_variants.*.variant_name' => ['required', 'string', 'max:55'],
+            'merch_variants.*.price' => ['required', 'numeric', 'min:0.01'],
+            'merch_variants.*.stock' => ['required', 'integer', 'min:0'],
+        ])->validate();
 
         DB::transaction(function () use (
             $request,
             $merch,
             $existingImageUrls,
             $merchVariants,
+            $data,
         ) {
             $imagesToDelete = $merch->productImages()
                 ->whereNotIn('image_url', $existingImageUrls)
                 ->get();
 
-            foreach ($imagesToDelete as $image) {
-                $this->minioService->destroyCover($image->image_url);
-                $image->delete();
-            }
+            $imageUrlsToDelete = $imagesToDelete
+                ->pluck('image_url')
+                ->filter()
+                ->values()
+                ->all();
+
+            $imagesIdsToDelete = $imagesToDelete
+                ->pluck('id')
+                ->all();
+
+            $merch->productImages()
+                ->whereIn('id', $imagesIdsToDelete)
+                ->delete();
+
+            DB::afterCommit(function () use ($imageUrlsToDelete) {
+                foreach ($imageUrlsToDelete as $imageUrl) {
+                    DeleteCoverFile::dispatch($imageUrl);
+            }});
 
             $newImagePaths = [];
 
@@ -268,8 +319,8 @@ class ArtistStudioService
             $finalImages = array_merge($existingImageUrls, $newImagePaths);
 
             $merch->update([
-                'title' => $request->input('item_title'),
-                'description' => $request->input('item_description'),
+                'title' => $data['item_title'],
+                'description' => $data['item_description'],
                 'cover_url' => $finalImages[0] ?? null,
             ]);
 

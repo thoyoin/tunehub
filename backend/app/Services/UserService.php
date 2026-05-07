@@ -17,7 +17,7 @@ class UserService
         public MinioService $minioService,
     ) {}
 
-    public function update($request): ?Authenticatable
+    public function update($request): User
     {
         $data = $request->validate([
             'username' => [
@@ -46,8 +46,10 @@ class UserService
 
         $user->update($data);
 
+        $user = User::query()->findOrFail(auth()->id());
+
         Log::info('User was updated', [
-            'username' => $data['username'],
+            'username' => $user->username,
         ]);
 
         return $user;

@@ -117,6 +117,12 @@ class ArtistMerchService
                 'order_id' => (string) $order->id,
                 'user_id' => (string) $request->user()->id,
             ],
+            'payment_intent_data' => [
+                'metadata' => [
+                    'order_id' => (string) $order->id,
+                    'user_id' => (string) $request->user()->id,
+                ]
+            ],
         ]);
 
         $order->update([

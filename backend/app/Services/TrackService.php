@@ -104,18 +104,29 @@ class TrackService
             'artistId' => $artistId,
         ])->rows();
 
-        $tracks = Track::whereIn('id', array_column($rows, 'track_id'))
+        $trackIds = collect($rows)
+            ->pluck('track_id')
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+
+        if ($trackIds->isEmpty()) {
+            return collect();
+        }
+
+        $tracks = Track::whereIn('id', $trackIds)
             ->with('release')
             ->get()
             ->keyBy('id');
 
-        foreach ($rows as $row) {
-            $tracks[$row['track_id']]->plays = $row['plays'];
-        }
+        return collect($rows)
+            ->filter(fn ($row) => $tracks->has((int) $row['track_id']))
+            ->map(function ($row) use ($tracks) {
+                $track = $tracks->get((int)$row['track_id']);
+                $track->plays = (int)$row['plays'];
 
-        return collect(array_column($rows, 'track_id'))
-        ->map(fn ($id) => $tracks[$id] ?? null)
-        ->filter()
-        ->values();
+                return $track;
+            })
+            ->values();
     }
 }

@@ -72,7 +72,7 @@ export const useLibraryStore = defineStore('library',() => {
                 }
             )
 
-            if (libraryItem.value.item.visibility) {
+            if ('visibility' in libraryItem.value.item) {
                 libraryItem.value.item.visibility = response.data.visibility;
             }
         } catch (e) {

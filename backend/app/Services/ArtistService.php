@@ -27,21 +27,22 @@ class ArtistService
 
         $idsList = collect($ids)
             ->map(fn ($id) => (int) $id)
+            ->filter(fn ($id) => $id > 0)
             ->implode(',');
+
+        if ($idsList === '') {
+            return collect();
+        }
 
         $rows = $this->clickhouse->select("
             select
                 release_id,
                 sum(plays) as plays
                 from release_streams
-                where release_id IN (:ids)
+                where release_id IN ({$idsList})
             group by release_id
             order by plays desc
-        ",
-            [
-                'ids' =>  $idsList,
-            ]
-        )->rows();
+        ")->rows();
 
         $releases = Release::whereIn('id', array_column($rows, 'release_id'))
             ->get()

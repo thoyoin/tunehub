@@ -145,7 +145,15 @@ router.beforeEach(async (to) => {
     }
 
     if (auth.bootstrapError) {
-        return false
+        try {
+            await auth.fetchUser(true)
+        } catch {
+            if (to.meta.requiresAuth) {
+                return '/login';
+            }
+
+            return false;
+        }
     }
 
     if (to.meta.requiresAuth && !auth.user) {

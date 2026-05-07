@@ -127,7 +127,12 @@ onMounted(async () => {
                                         <span class="opacity-75">{{ user.email }}</span>
                                     </td>
                                     <td style="font-size: 15px">
-                                        <span class="opacity-75">{{ user.roles[0]?.name }}</span>
+                                        <span class="opacity-75">
+                                            {{
+                                                user.roles.find(r => r.slug === 'admin')?.name
+                                                ?? user.roles[0]?.name
+                                            }}
+                                        </span>
                                     </td>
                                     <td style="font-size: 15px">
                                         <span class="opacity-75">{{ user.joined_at }}</span>
