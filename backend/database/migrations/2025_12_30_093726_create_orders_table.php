@@ -18,7 +18,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->enum('status', ['pending', 'paid', 'confirmed', 'cancelled'])
+            $table->enum('status', ['pending', 'paid', 'confirmed', 'failed'])
                 ->default('pending');
             $table->unsignedBigInteger('total_price');
             $table->string('stripe_session_id')

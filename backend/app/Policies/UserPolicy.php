@@ -22,13 +22,12 @@ class UserPolicy
             return false;
         }
 
-        $isTargetAdmin = $target->roles()->where('slug', 'target-admin')->exists();
+        $isTargetAdmin = $target->roles()->where('slug', 'admin')->exists();
 
         if ($isTargetAdmin) {
             $adminCount = User::whereHas('roles', function ($query) {
-                $query->where('slug', 'admin')
-                    ->count();
-            });
+                $query->where('slug', 'admin');
+            })->count();
 
             if ($adminCount <= 1) {
                 return false;

@@ -47,15 +47,19 @@ class StripeMerchWebhookService
                 $variant->decrement('stock', $quantity);
             }
 
-            Payment::updateOrCreate([
-                'user_id' => $order->user_id,
-                'order_id' => $order->id,
-                'provider' => 'stripe',
-                'provider_payment_id' => $session->payment_intent ?? $session->id,
-                'currency' => $session->currency ?? 'usd',
-                'amount' => $order->total_price,
-                'status' => 'success',
-            ]);
+            Payment::updateOrCreate(
+                [
+                    'provider' => 'stripe',
+                    'provider_payment_id' => $session->payment_intent ?? $session->id,
+                ],
+                [
+                    'user_id' => $order->user_id,
+                    'order_id' => $order->id,
+                    'currency' => $session->currency ?? 'usd',
+                    'amount' => $order->total_price,
+                    'status' => 'success',
+                ]
+            );
 
             $customerAddress = trim(
                 ($session->customer_details->address->country ?? '') . ', ' .
@@ -89,15 +93,19 @@ class StripeMerchWebhookService
                 return;
             }
 
-            Payment::create([
-                'user_id' => $order->user_id,
-                'order_id' => $order->id,
-                'provider' => 'stripe',
-                'provider_payment_id' => $session->payment_intent ?? $session->id,
-                'currency' => $order->currency ?? $session->currency ?? 'usd',
-                'amount' => $order->total_price,
-                'status' => 'failed',
-            ]);
+            Payment::updateOrCreate(
+                [
+                    'provider_payment_id' => $session->payment_intent ?? $session->id,
+                    'provider' => 'stripe',
+                ],
+                [
+                    'user_id' => $order->user_id,
+                    'order_id' => $order->id,
+                    'currency' => $session->currency ?? 'usd',
+                    'amount' => $order->total_price,
+                    'status' => 'failed',
+                ]
+            );
 
             $order->update([
                 'status' => 'failed',

@@ -152,7 +152,7 @@ router.beforeEach(async (to) => {
                 return '/login';
             }
 
-            return false;
+            return true;
         }
     }
 
