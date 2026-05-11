@@ -255,7 +255,7 @@ class ArtistStudioService
             'merch_variants' => ['required', 'json'],
         ]);
 
-        $existingImages = json_decode($data['existing_images'], true) ?? [];
+        $existingImages = json_decode($data['existing_images'] ?? [], true) ?? [];
         $existingImageUrls = array_column($existingImages, 'image_url');
         $merchVariants = json_decode($data['merch_variants'], true) ?? [];
 
@@ -320,7 +320,7 @@ class ArtistStudioService
 
             $merch->update([
                 'title' => $data['item_title'],
-                'description' => $data['item_description'],
+                'description' => $data['item_description'] ?? null,
                 'cover_url' => $finalImages[0] ?? null,
             ]);
 

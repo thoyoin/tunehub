@@ -66,9 +66,11 @@ class StripeMerchWebhookService
                 ($session->customer_details->address->city ?? '')
             );
 
+            $paymentIntentId = $session->payment_intent ?? $session->id;
+
             $order->update([
                 'status' => 'paid',
-                'stripe_payment_intent_id' => $session->payment_intent,
+                'stripe_payment_intent_id' => $paymentIntentId,
                 'customer_name' => $session->customer_details->name,
                 'customer_email' => $session->customer_details->email,
                 'customer_address' => $customerAddress,
@@ -76,15 +78,15 @@ class StripeMerchWebhookService
         });
     }
 
-    public function handleCheckoutFailed($session): void
+    public function handleCheckoutFailed($paymentIntent): void
     {
-        $orderId = $session->metadata->order_id ?? null;
+        $orderId = $paymentIntent->metadata->order_id ?? null;
 
         if (!$orderId) {
             return;
         }
 
-        DB::transaction(function () use ($orderId, $session) {
+        DB::transaction(function () use ($orderId, $paymentIntent) {
             $order = Order::query()
                 ->lockForUpdate()
                 ->findOrFail($orderId);
@@ -95,13 +97,13 @@ class StripeMerchWebhookService
 
             Payment::updateOrCreate(
                 [
-                    'provider_payment_id' => $session->payment_intent ?? $session->id,
+                    'provider_payment_id' => $paymentIntent->id ?? null,
                     'provider' => 'stripe',
                 ],
                 [
                     'user_id' => $order->user_id,
                     'order_id' => $order->id,
-                    'currency' => $session->currency ?? 'usd',
+                    'currency' => $paymentIntent->currency ?? 'usd',
                     'amount' => $order->total_price,
                     'status' => 'failed',
                 ]
@@ -109,7 +111,7 @@ class StripeMerchWebhookService
 
             $order->update([
                 'status' => 'failed',
-                'stripe_payment_intent_id' => $session->payment_intent,
+                'stripe_payment_intent_id' => $paymentIntent->id ?? null,
             ]);
         });
     }
