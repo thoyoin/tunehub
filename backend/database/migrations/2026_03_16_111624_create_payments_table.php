@@ -24,8 +24,10 @@ return new class extends Migration
                 ->on('orders')
                 ->onDelete('cascade');
             $table->string('provider');
-            $table->string('provider_payment_id')->unique();
-            $table->string('currency')->default('usd');
+            $table->string('provider_payment_id')
+                ->unique();
+            $table->string('currency')
+                ->default('usd');
             $table->integer('amount');
             $table->enum('status', ['pending', 'failed', 'success']);
             $table->timestamps();

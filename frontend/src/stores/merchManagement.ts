@@ -33,6 +33,8 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
     const editingMerch = ref<ArtistMerch | null>(null)
     const editingMerchFiles = ref<{ file: File | null; preview: string }[]>([]);
 
+    const priceToCents = (price: number | string) => Math.round(Number(price) * 100);
+
     const galleryImages = computed(() => {
         const existingImages = (editingMerch.value?.product_images ?? []).map(image => ({
             ...image,
@@ -77,7 +79,12 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
 
             formData.append("item_title", itemTitle.value)
             formData.append("item_description", itemDescription.value)
-            formData.append("merch_variants", JSON.stringify(merchVariants.value))
+            const merchVariantsPayload = merchVariants.value.map(variant => ({
+                ...variant,
+                price: priceToCents(variant.price),
+            }));
+
+            formData.append("merch_variants", JSON.stringify(merchVariantsPayload))
 
             merchFiles.value.forEach(file => {
                 formData.append("images[]", file.file)
@@ -230,7 +237,8 @@ export const useMerchManagementStore = defineStore('merchManagement', () => {
         editingMerch.value = {
             ...item,
             product_variants: item.product_variants.map(variant => ({
-                ...variant
+                ...variant,
+                price: Number(variant.price) / 100,
             })),
             product_images: item.product_images.map(image => ({
                 ...image

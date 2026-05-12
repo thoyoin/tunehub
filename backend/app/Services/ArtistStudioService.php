@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class ArtistStudioService
 {
@@ -255,7 +256,7 @@ class ArtistStudioService
             'merch_variants' => ['required', 'json'],
         ]);
 
-        $existingImages = json_decode($data['existing_images'] ?? [], true) ?? [];
+        $existingImages = json_decode($data['existing_images'] ?? '[]', true) ?? [];
         $existingImageUrls = array_column($existingImages, 'image_url');
         $merchVariants = json_decode($data['merch_variants'], true) ?? [];
 
@@ -264,10 +265,20 @@ class ArtistStudioService
             'merch_variants' => $merchVariants,
         ], [
             'existing_images' => ['array'],
-            'existing_images.*.id' => ['required', 'integer', 'exists:product_images,id'],
+            'existing_images.*.id' => [
+                'required',
+                'integer',
+                Rule::exists('product_images', 'id')
+                    ->where('product_id', $merch->id),
+            ],
             'existing_images.*.image_url' => ['required', 'string', 'max:2048'],
             'merch_variants' => ['required', 'array', 'min:1'],
-            'merch_variants.*.id' => ['nullable', 'integer', 'exists:product_variants,id'],
+            'merch_variants.*.id' => [
+                'nullable',
+                'integer',
+                Rule::exists('product_variants', 'id')
+                    ->where('product_id', $merch->id),
+            ],
             'merch_variants.*.variant_name' => ['required', 'string', 'max:55'],
             'merch_variants.*.price' => ['required', 'numeric', 'min:0.01'],
             'merch_variants.*.stock' => ['required', 'integer', 'min:0'],

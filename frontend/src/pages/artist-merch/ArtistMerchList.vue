@@ -64,9 +64,12 @@ watch(
                         />
                         <div class="d-flex flex-column">
                             <span class="fw-bold">{{ product.title }}</span>
-                            <span class="mt-1 fw-light"
-                                >${{ product.product_variants[0]?.price }}</span
+                            <span
+
+                                class="mt-1 fw-light"
                             >
+                                ${{ product.product_variants[0]?.price / 100 }}
+                            </span>
                         </div>
                     </div>
                 </template>

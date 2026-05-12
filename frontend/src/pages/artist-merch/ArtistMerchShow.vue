@@ -134,7 +134,7 @@ const isSoldout = computed(() => {
                         {{ merchStore.artistMerch?.currency.toUpperCase() }}
                     </span>
                     <span class="ms-4 fs-4">
-                        ${{ selectedVariant?.price }}
+                        ${{ selectedVariant?.price / 100 }}
                     </span>
                 </div>
                 <div class="d-flex flex-column mt-4">

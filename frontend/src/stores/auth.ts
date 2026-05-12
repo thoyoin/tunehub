@@ -7,6 +7,8 @@ import type { User } from "@/types/User"
 import type { AxiosError } from "axios"
 
 let fetchUserPromise: Promise<void> | null = null;
+const BOOTSTRAP_RETRY_DELAY_MS = 5000;
+let lastBootstrapRetryAt = 0;
 
 export const useAuthStore = defineStore('auth', () => {
     const isReady = ref<boolean>(false);
@@ -43,6 +45,8 @@ export const useAuthStore = defineStore('auth', () => {
 
                 user.value = null;
                 bootstrapError.value = error;
+
+                throw error;
             } finally {
                 isReady.value = true;
                 fetchUserPromise = null;
@@ -51,6 +55,18 @@ export const useAuthStore = defineStore('auth', () => {
         })();
 
         return fetchUserPromise;
+    }
+
+    const shouldRetryBootstrap = (): boolean => {
+        const now = Date.now();
+
+        if ((now - lastBootstrapRetryAt) < BOOTSTRAP_RETRY_DELAY_MS) {
+            return false;
+        }
+
+        lastBootstrapRetryAt = now;
+
+        return true;
     }
 
     const logout = async (): Promise<void> => {
@@ -120,6 +136,6 @@ export const useAuthStore = defineStore('auth', () => {
 
     return {
         fetchUser, user, isReady, bootstrapError, logout, login, register, loading, errors,
-        clearAuthState
+        clearAuthState, shouldRetryBootstrap
     };
 })

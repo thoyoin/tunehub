@@ -9,6 +9,7 @@ use App\Models\Playlist;
 use App\Models\Release;
 use App\Models\Track;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class RecentlyPlayedService
 {
@@ -45,20 +46,35 @@ class RecentlyPlayedService
         $key = "listen-rate:{$userId}:{$trackId}";
         $windowStart = $now - $windowSeconds;
 
-        Redis::zremrangebyscore($key, '-inf', (string) $windowStart);
+        $member = (string) Str::uuid();
 
-        $listenCount = Redis::zcard($key);
+        $result = Redis::eval(
+            <<<'LUA'
+                redis.call('ZREMRANGEBYSCORE', KEYS[1], '-inf', ARGV[1])
 
-        if ($listenCount >= $maxListensPerWindow) {
-            Redis::expire($key, $windowSeconds);
+                local listenCount = redis.call('ZCARD', KEYS[1])
 
-            return false;
-        }
+                if listenCount >= tonumber(ARGV[2]) then
+                    redis.call('EXPIRE', KEYS[1], ARGV[3])
 
-        Redis::zadd($key, $now, (string) $now);
-        Redis::expire($key, $windowSeconds);
+                    return 0
+                end
 
-        return true;
+                redis.call('ZADD', KEYS[1], ARGV[4], ARGV[5])
+                redis.call('EXPIRE', KEYS[1], ARGV[3])
+
+                return 1
+            LUA,
+            1,
+            $key,
+            (string) $windowStart,
+            (string) $maxListensPerWindow,
+            (string) $windowSeconds,
+            (string) $now,
+            $member,
+        );
+
+        return (bool) $result;
     }
 
     public function get(): ?array

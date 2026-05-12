@@ -65,7 +65,7 @@ class CreateStripeProductForMerch implements ShouldQueue
             $price = $stripeClient->prices->create([
                 'product' => $stripeProduct->id,
                 'currency' => strtolower((string) $merch->currency),
-                'unit_amount' => (int) round($variant->price * 100),
+                'unit_amount' => (int) $variant->price,
                 'metadata' => [
                     'merch_id' => (string) $merch->id,
                     'variant_id' => (string) $variant->id,

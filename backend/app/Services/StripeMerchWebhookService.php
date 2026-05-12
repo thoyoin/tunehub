@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
 class StripeMerchWebhookService
@@ -30,7 +31,12 @@ class StripeMerchWebhookService
                 return;
             }
 
-            if ($session->amount_total !== (int)$order->total_price * 100) abort(400);
+            $stripeAmount = (int) $session->amount_total;
+            $orderAmount = (int) $order->total_price;
+
+            if ($stripeAmount !== $orderAmount) {
+                abort(400);
+            }
 
             foreach ($order->products as $product) {
                 $variantId = $product->pivot->product_variant_id;
@@ -56,7 +62,7 @@ class StripeMerchWebhookService
                     'user_id' => $order->user_id,
                     'order_id' => $order->id,
                     'currency' => $session->currency ?? 'usd',
-                    'amount' => $order->total_price,
+                    'amount' => $stripeAmount,
                     'status' => 'success',
                 ]
             );
@@ -95,9 +101,24 @@ class StripeMerchWebhookService
                 return;
             }
 
-            Payment::updateOrCreate(
+            $providerPaymentId = $paymentIntent->id ?? null;
+
+            if (!$providerPaymentId) {
+                return;
+            }
+
+            $existingPayment = Payment::query()
+                ->where('provider', 'stripe')
+                ->where('provider_payment_id', $providerPaymentId)
+                ->first();
+
+            if ($existingPayment?->status === 'success') {
+                return;
+            }
+
+            Payment::firstOrCreate(
                 [
-                    'provider_payment_id' => $paymentIntent->id ?? null,
+                    'provider_payment_id' => $providerPaymentId,
                     'provider' => 'stripe',
                 ],
                 [
@@ -111,7 +132,7 @@ class StripeMerchWebhookService
 
             $order->update([
                 'status' => 'failed',
-                'stripe_payment_intent_id' => $paymentIntent->id ?? null,
+                'stripe_payment_intent_id' => $providerPaymentId,
             ]);
         });
     }

@@ -35,10 +35,14 @@ const handleMerchItemUpdate = async () => {
 
         formData.append("item_title", itemTitle.value);
         formData.append("item_description", itemDescription.value ?? "");
-        formData.append(
-            "merch_variants",
-            JSON.stringify(merchStore.editingMerch?.product_variants ?? []),
+        const merchVariantsPayload = (merchStore.editingMerch?.product_variants ?? []).map(
+            (variant) => ({
+                ...variant,
+                price: Math.round(Number(variant.price) * 100),
+            }),
         );
+
+        formData.append("merch_variants", JSON.stringify(merchVariantsPayload));
 
         formData.append(
             "existing_images",
