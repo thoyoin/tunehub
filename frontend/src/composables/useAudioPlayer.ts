@@ -110,20 +110,21 @@ export const useAudioPlayer = () => {
         if (newEl) {
             newEl.volume = volume.value
 
-            if (!hasRestoredLastPlayed.value && !currentTrack.value) {
+            if (!hasRestoredLastPlayed.value) {
                 hasRestoredLastPlayed.value = true
 
-                const lastPlayed = localStorage.getItem('lastPlayed')
+                if (!currentTrack.value) {
+                    const lastPlayed = localStorage.getItem('lastPlayed')
 
-                if (lastPlayed) {
-                    const parsed = parseStoredTrack(lastPlayed)
+                    if (lastPlayed) {
+                        const parsed = parseStoredTrack(lastPlayed)
 
-                    if (parsed) {
-                        currentTrack.value = parsed
-
-                        newEl.src = parsed.audio_url
-                    } else {
-                        localStorage.removeItem('lastPlayed')
+                        if (parsed) {
+                            currentTrack.value = parsed
+                            newEl.src = parsed.audio_url
+                        } else {
+                            localStorage.removeItem('lastPlayed')
+                        }
                     }
                 }
             }

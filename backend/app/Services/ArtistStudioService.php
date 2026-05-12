@@ -256,9 +256,13 @@ class ArtistStudioService
             'merch_variants' => ['required', 'json'],
         ]);
 
-        $existingImages = json_decode($data['existing_images'] ?? '[]', true) ?? [];
-        $existingImageUrls = array_column($existingImages, 'image_url');
-        $merchVariants = json_decode($data['merch_variants'], true) ?? [];
+        $existingImagesPayload = $data['existing_images'] ?? '[]';
+
+        $existingImages = $existingImagesPayload === null
+            ? []
+            : json_decode($existingImagesPayload, true);
+
+        $merchVariants = json_decode($data['merch_variants'], true);
 
         validator([
             'existing_images' => $existingImages,
@@ -283,6 +287,10 @@ class ArtistStudioService
             'merch_variants.*.price' => ['required', 'numeric', 'min:0.01'],
             'merch_variants.*.stock' => ['required', 'integer', 'min:0'],
         ])->validate();
+
+        $existingImages = $existingImages ?? [];
+        $existingImageUrls = array_column($existingImages, 'image_url');
+        $merchVariants = $merchVariants ?? [];
 
         DB::transaction(function () use (
             $request,
