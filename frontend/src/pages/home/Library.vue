@@ -8,6 +8,11 @@
     import { useAudioPlayer } from '@/composables/useAudioPlayer'
     import type { LibraryItem } from "@/types/LibraryItem";
 
+    import { useAuthStore } from "@/stores/auth";
+    import { useLibraryStore } from "@/stores/library";
+    import { useAudioPlayer } from '@/composables/useAudioPlayer'
+    import type { LibraryItem } from "@/types/LibraryItem";
+
     const auth = useAuthStore();
     const libraryStore = useLibraryStore();
     const router = useRouter();
@@ -23,6 +28,8 @@
     const handleItemSelection = async (item: LibraryItem) => {
         try {
             await libraryStore.loadLibraryItem(item)
+
+            libraryStore.selectLibraryItem(item)
 
             const isRelease = item.item_type === 'release'
             const routeName = isRelease ? 'release' : 'playlist'
